@@ -3,7 +3,7 @@ import {
 } from 'react-native';
 
 
-const Main = () => {
+const Main = (props) => {
     return (
         <Text>main</Text>
     )

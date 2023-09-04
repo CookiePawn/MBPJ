@@ -34,11 +34,11 @@ const Loading = (props) => {
     diagonalAnimation.start();
 
     return (
-        <TouchableOpacity onPress={() => (props.navigation.navigate('Main'))}>
+        <TouchableOpacity onPress={() => (props.navigation.navigate('TabNavigator'))}>
             <Animated.View style={{ transform: [{ translateX: positionX }, { translateY: positionY }] }}>
                 <Image style={styles.image} source={require('../assets/loading.png')}/>
             </Animated.View>
-            <Text style={styles.title}>CNFT{'\n'}With</Text> 
+            <Text style={styles.title}>SM {'\n'}KOREA</Text> 
             <Text style={styles.info}>
                 CNFT 빅데이터를 분석 & 가공한 구독 시스템{'\n'}
                 분야별로 투자 할 수 있는 펀드 서비스 제공{'\n'}

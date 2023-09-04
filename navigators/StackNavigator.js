@@ -2,7 +2,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 //네비게이터
 import TabNavigator from './TabNavigator';
-import DrawerNavigator from './DrawerNavigator';
 
 //스크린
 import Loading  from '../screens/Loading';
@@ -24,7 +23,7 @@ const StackNavigator = () => {
                     //drawerLabel: () => null,
                 }}
             />
-            <Stack.Screen name='DrawerNavigator' component={DrawerNavigator}
+            <Stack.Screen name='TabNavigator' component={TabNavigator}
                 options = {{
                     title : '탭 네비게이터',
                     headerShown : false,
