@@ -10,11 +10,14 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 
 const Recruitment = (props) => {
+    const {params} = props.route;
+    const title = params? params.title:null;
+
     return (
         <View style={styles.view}>
             <View style={styles.infoView}>
                 <View style={styles.toolView}>
-                    <TouchableOpacity onPress={() => props.navigation.navigate("Main")}>
+                    <TouchableOpacity onPress={() => props.navigation.navigate("Category")}>
                         <Icon name="arrow-back-circle-outline" size={30} color="white"/>
                     </TouchableOpacity>
                     <Icon name="arrow-back-circle-outline" size={30} color="#bb2649"/>
@@ -33,7 +36,7 @@ const Recruitment = (props) => {
                 </View>
             </View>
             <View style={styles.categoryView}>
-                <Text style={styles.categoryTitle}>IT</Text>
+                <Text style={styles.categoryTitle}>{title}</Text>
                 <Text></Text>
                 <ScrollView showsVerticalScrollIndicator={false}>
 
@@ -95,14 +98,14 @@ const styles = StyleSheet.create({
 
     categoryView: {
         flex: 0.75,
-        borderTopLeftRadius: 80,
-        borderTopRightRadius: 80,
+        borderTopLeftRadius: 60,
+        borderTopRightRadius: 60,
         backgroundColor: 'white',
     },
     categoryTitle: {
         marginTop: 30,
         marginLeft: 30,
-        fontSize: 40,
+        fontSize: 30,
         fontWeight: 'bold',
         color: '#bb2649'
     },

@@ -1,11 +1,20 @@
 import {
-    Text
+    Text,
+    View,
+    TouchableOpacity
 } from 'react-native';
+import { Button } from 'react-native-web';
 
 
 const Main = (props) => {
     return (
-        <Text>main</Text>
+        <View>
+            <Text>main</Text>
+            <TouchableOpacity onPress={() => props.navigation.navigate("Category")}>
+                카테고리로 이동
+            </TouchableOpacity>
+        </View>
+        
     )
 }
 

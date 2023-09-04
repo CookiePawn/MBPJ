@@ -8,7 +8,6 @@ import StackNavigator from './StackNavigator'
 import Loading  from '../screens/Loading';
 import Main from '../screens/Main';
 import User from '../screens/User'
-import Recruitment from '../screens/Recruitment'
 
 const Tab = createBottomTabNavigator();
 
@@ -23,7 +22,6 @@ const TabNavigator = () => {
         >
             <Tab.Screen name='Main' component={Main}/>
             <Tab.Screen name='User' component={User}/>
-            <Tab.Screen name='Recruitment' component={Recruitment}/>
         </Tab.Navigator>
     )
 }

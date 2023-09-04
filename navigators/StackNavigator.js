@@ -6,6 +6,8 @@ import TabNavigator from './TabNavigator';
 //스크린
 import Loading  from '../screens/Loading';
 import Main from '../screens/Main';
+import Recruitment from '../screens/Recruitment'
+import Category from '../screens/Category'
 
 const Stack = createStackNavigator();
 
@@ -14,6 +16,7 @@ const StackNavigator = () => {
     return (
         <Stack.Navigator 
             initialRouteName='Loading'
+            screenOptions={{ headerShown: false }}
         >
             <Stack.Screen name="Loading" component={Loading}
                 options = {{
@@ -30,6 +33,8 @@ const StackNavigator = () => {
                     headerLeft: null
                 }}
             />
+            <Stack.Screen name='Recruitment' component={Recruitment}/>
+            <Stack.Screen name='Category' component={Category}/>
         </Stack.Navigator>
     )
 }
