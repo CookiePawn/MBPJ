@@ -6,6 +6,8 @@ import {
     TouchableOpacity,
     Animated
 } from 'react-native'
+import React from 'react';
+
 
 
 

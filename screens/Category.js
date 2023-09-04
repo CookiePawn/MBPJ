@@ -7,7 +7,7 @@ import {
     ScrollView,
     StyleSheet
 } from 'react-native';
-import { withSpring } from 'react-native-reanimated';
+import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons'
 
 

@@ -1,4 +1,6 @@
 import {createStackNavigator} from '@react-navigation/stack';
+import React from 'react';
+
 
 //네비게이터
 import TabNavigator from './TabNavigator';

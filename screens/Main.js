@@ -1,17 +1,21 @@
 import {
     Text,
     View,
-    TouchableOpacity
+    TouchableOpacity,
+    StyleSheet
 } from 'react-native';
-import { Button } from 'react-native-web';
+import React from 'react';
+
 
 
 const Main = (props) => {
     return (
         <View>
             <Text>main</Text>
-            <TouchableOpacity onPress={() => props.navigation.navigate("Category")}>
-                카테고리로 이동
+            <TouchableOpacity 
+                style={styles.button}
+                onPress={() => props.navigation.navigate("Category")}>
+                <Text>카테고리로 이동</Text>
             </TouchableOpacity>
         </View>
         
@@ -19,3 +23,11 @@ const Main = (props) => {
 }
 
 export default Main
+
+
+
+const styles = StyleSheet.create({
+    button: {
+        margin: 50,
+    },
+})

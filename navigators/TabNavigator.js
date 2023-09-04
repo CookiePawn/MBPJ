@@ -1,5 +1,6 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import React, { useContext, useEffect } from "react";
+import React from 'react';
+
 
 //네비게이터
 import StackNavigator from './StackNavigator'
