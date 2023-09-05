@@ -125,8 +125,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     profile: {
-        width: 100,
-        height: 100,
+        width: 90,
+        height: 90,
         borderRadius: 100,
     },
     nicknameText: {
@@ -140,11 +140,19 @@ const styles = StyleSheet.create({
 
     categoryView: {
         flex: 0.75,
-        borderTopLeftRadius: 60,
-        borderTopRightRadius: 60,
+        borderTopLeftRadius: 50,
+        borderTopRightRadius: 50,
         backgroundColor: 'white',
         alignItems: 'center',
         justifyContent: 'center',
+        shadowColor: 'black',
+        shadowOpacity: 0.4,
+        shadowRadius: 4.65,
+        shadowOffset: {
+            width: 0,
+            height: -2,
+        },
+        elevation: -2,
     }, 
     categoryButtonView: {
         flex: 0.2,

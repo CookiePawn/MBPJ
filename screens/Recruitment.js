@@ -20,12 +20,12 @@ const Recruitment = (props) => {
     //정렬
 
     const sortButtons = ['최신순', '평점순', '거리순'];
-    const [height, setHeight] = useState(0)
+    const [display, setDisplay] = useState('none')
 
     const CategorySort = () => {
         const [selectedSortButton, setSelectedSortButton] = useState(null);
         return (
-            <View style={[styles.categorySortView, {height: height}]}>
+            <View style={[styles.categorySortView, {height: 170, display: display}]}>
                 <Text 
                     style={{
                         fontSize: 30, fontWeight: 'bold', color: 'black', margin: 30
@@ -62,7 +62,7 @@ const Recruitment = (props) => {
         const [selectedCategoryButton, setSelectedCategoryButton] = useState(null);
       
         return (
-            <View style={{flexDirection: 'row', borderBottomWidth: 1.5, borderBottomColor: '#bb2649', borderTopWidth: 1.5, borderTopColor: '#bb2649'}}>
+            <View style={{flexDirection: 'row'}}>
                 {categoryButtons.map((button) => (
                     <TouchableOpacity 
                     key={button} 
@@ -109,7 +109,7 @@ const Recruitment = (props) => {
                         <Text style={styles.categoryTitle}>{title}</Text>
                     </View>
                     <View style={{width: '15%'}}>
-                        <TouchableOpacity onPress={() => setHeight(height === 0 ? 170 : 0)}>
+                        <TouchableOpacity onPress={() => setDisplay(display === '' ? 'none' : '')}>
                             <Icon name="options-outline" size={33} color="black" style={{marginTop: 30, marginRight: 30}}/>
                         </TouchableOpacity>
                     </View>
@@ -124,9 +124,76 @@ const Recruitment = (props) => {
                         <ButtonGroup/>
                     </ScrollView>
                 </View>
-                <ScrollView showsVerticalScrollIndicator={false}>
-
-                </ScrollView>
+                <View style={{flex: 1, borderTopColor: 'gray', borderTopWidth: 1.5,}}>
+                    <ScrollView 
+                        style={styles.listScrollView}
+                        showsVerticalScrollIndicator={false}>
+                        <TouchableOpacity>
+                            <View stlye={styles.listView}>
+                                <View style={styles.listSubView}>
+                                    <Text style={styles.listText}>리스트 1</Text>
+                                </View>
+                            </View>    
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <View stlye={styles.listView}>
+                                <View style={styles.listSubView}>
+                                    <Text style={styles.listText}>리스트 1</Text>
+                                </View>
+                            </View>    
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <View stlye={styles.listView}>
+                                <View style={styles.listSubView}>
+                                    <Text style={styles.listText}>리스트 1</Text>
+                                </View>
+                            </View>    
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <View stlye={styles.listView}>
+                                <View style={styles.listSubView}>
+                                    <Text style={styles.listText}>리스트 1</Text>
+                                </View>
+                            </View>    
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <View stlye={styles.listView}>
+                                <View style={styles.listSubView}>
+                                    <Text style={styles.listText}>리스트 1</Text>
+                                </View>
+                            </View>    
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <View stlye={styles.listView}>
+                                <View style={styles.listSubView}>
+                                    <Text style={styles.listText}>리스트 1</Text>
+                                </View>
+                            </View>    
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <View stlye={styles.listView}>
+                                <View style={styles.listSubView}>
+                                    <Text style={styles.listText}>리스트 1</Text>
+                                </View>
+                            </View>    
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <View stlye={styles.listView}>
+                                <View style={styles.listSubView}>
+                                    <Text style={styles.listText}>리스트 1</Text>
+                                </View>
+                            </View>    
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <View stlye={styles.listView}>
+                                <View style={styles.listSubView}>
+                                    <Text style={styles.listText}>리스트 1</Text>
+                                </View>
+                            </View>    
+                        </TouchableOpacity>
+                        
+                    </ScrollView>
+                </View>
             </View>
         </View>
     )
@@ -159,6 +226,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+        borderBottomWidth: 1.5, 
+        borderBottomColor: '#bb2649',
     },
     profileView: {
         flex: 0.5,
@@ -169,8 +238,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     profile: {
-        width: 100,
-        height: 100,
+        width: 90,
+        height: 90,
         borderRadius: 100,
     },
     nicknameText: {
@@ -194,14 +263,22 @@ const styles = StyleSheet.create({
 
     categoryView: {
         flex: 0.75,
-        borderTopLeftRadius: 60,
-        borderTopRightRadius: 60,
+        borderTopLeftRadius: 50,
+        borderTopRightRadius: 50,
         backgroundColor: 'white',
+        shadowColor: 'black',
+        shadowOpacity: 0.4,
+        shadowRadius: 4.65,
+        shadowOffset: {
+            width: 0,
+            height: -2,
+        },
+        elevation: -2,
     },
     categoryTitle: {
         marginTop: 30,
         marginLeft: 30,
-        marginBottom: 25,
+        marginBottom: 15,
         fontSize: 30,
         fontWeight: 'bold',
         color: '#bb2649',
@@ -217,4 +294,31 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 15,
     },
+
+
+    //채용 리스트
+    listScrollView: {
+        flex: 1,
+    },
+    listView: {
+        width: '100%',
+    },
+    listSubView: {
+        width: '100%',
+        marginTop: 5,
+        marginBottom: 5,
+        backgroundColor: 'white',
+        borderRadius: 5,
+        shadowColor: 'black',
+        shadowOpacity: 0.4,
+        shadowRadius: 4.65,
+        shadowOffset: {
+            width: 2,
+            height: 2,
+        },
+        elevation: 2
+    },
+    listText: {
+        height: 100,
+    }
 })
