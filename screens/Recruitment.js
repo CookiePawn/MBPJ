@@ -128,7 +128,9 @@ const Recruitment = (props) => {
                     <ScrollView 
                         style={styles.listScrollView}
                         showsVerticalScrollIndicator={false}>
-                        <TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => props.navigation.navigate("Recruitmentinfo", {title: '리스트 1'})}
+                        >
                             <View stlye={styles.listView}>
                                 <View style={styles.listSubView}>
                                     <Text style={styles.listText}>리스트 1</Text>

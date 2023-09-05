@@ -9,6 +9,7 @@ import TabNavigator from './TabNavigator';
 import Loading  from '../screens/Loading';
 import Main from '../screens/Main';
 import Recruitment from '../screens/Recruitment'
+import RecruitmentInfo from '../screens/RecruitmentInfo'
 import Category from '../screens/Category'
 
 const Stack = createStackNavigator();
@@ -36,6 +37,7 @@ const StackNavigator = () => {
                 }}
             />
             <Stack.Screen name='Recruitment' component={Recruitment}/>
+            <Stack.Screen name='Recruitmentinfo' component={RecruitmentInfo}/>
             <Stack.Screen name='Category' component={Category}/>
         </Stack.Navigator>
     )
