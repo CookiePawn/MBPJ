@@ -6,8 +6,9 @@ import React from 'react';
 import TabNavigator from './TabNavigator';
 
 //스크린
-import Loading  from '../screens/Loading';
-import Main from '../screens/Main';
+import Main from '../screens/Main'
+import User from '../screens/User'
+import Login from '../screens/Login'
 import Recruitment from '../screens/Recruitment'
 import RecruitmentInfo from '../screens/RecruitmentInfo'
 import Category from '../screens/Category'
@@ -18,17 +19,10 @@ const Stack = createStackNavigator();
 const StackNavigator = () => {
     return (
         <Stack.Navigator 
-            initialRouteName='Loading'
+            initialRouteName='Login'
             screenOptions={{ headerShown: false }}
         >
-            <Stack.Screen name="Loading" component={Loading}
-                options = {{
-                    title : '로딩',
-                    headerShown : false,
-                    headerLeft: null,
-                    //drawerLabel: () => null,
-                }}
-            />
+            <Stack.Screen name='Login' component={Login}/>
             <Stack.Screen name='TabNavigator' component={TabNavigator}
                 options = {{
                     title : '탭 네비게이터',

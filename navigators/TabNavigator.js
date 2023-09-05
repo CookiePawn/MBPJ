@@ -6,9 +6,12 @@ import React from 'react';
 import StackNavigator from './StackNavigator'
 
 //스크린
-import Loading  from '../screens/Loading';
-import Main from '../screens/Main';
+import Main from '../screens/Main'
 import User from '../screens/User'
+import Login from '../screens/Login'
+import Recruitment from '../screens/Recruitment'
+import RecruitmentInfo from '../screens/RecruitmentInfo'
+import Category from '../screens/Category'
 
 const Tab = createBottomTabNavigator();
 
