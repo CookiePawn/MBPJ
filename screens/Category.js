@@ -36,52 +36,33 @@ const Category = (props) => {
             </View>
             <View style={styles.categoryView}>
                 <View style={styles.categoryButtonView}>
-                    <Button 
-                        title="IT" 
+                    <TouchableOpacity
                         style={styles.categoryButton}
                         onPress={() => props.navigation.navigate("Recruitment", {title: 'IT'})}
-                    />
-                    <Button 
-                        title="디자인" 
+                    >
+                        <Image
+                            style={{width: 100, height: 100,}}
+                            source={require('../assets/it.jpg')}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity
                         style={styles.categoryButton}
                         onPress={() => props.navigation.navigate("Recruitment", {title: '디자인'})}
-                    />
-                </View>
-                <View style={styles.categoryButtonView}>
-                    <Button 
-                        title="IT1" 
+                    >
+                        <Image
+                            style={{width: 100, height: 100,}}
+                            source={require('../assets/design.jpg')}
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity
                         style={styles.categoryButton}
-                        onPress={() => props.navigation.navigate("Recruitment", {title: 'IT'})}
-                    />
-                    <Button 
-                        title="디자인1" 
-                        style={styles.categoryButton}
-                        onPress={() => props.navigation.navigate("Recruitment", {title: '디자인'})}
-                    />
-                </View>
-                <View style={styles.categoryButtonView}>
-                    <Button 
-                        title="IT2"
-                        style={styles.categoryButton} 
-                        onPress={() => props.navigation.navigate("Recruitment", {title: 'IT'})}
-                    />
-                    <Button 
-                        title="디자인2" 
-                        style={styles.categoryButton}
-                        onPress={() => props.navigation.navigate("Recruitment", {title: '디자인'})}
-                    />
-                </View>
-                <View style={styles.categoryButtonView}>
-                    <Button 
-                        title="IT3" 
-                        style={styles.categoryButton}
-                        onPress={() => props.navigation.navigate("Recruitment", {title: 'IT'})}
-                    />
-                    <Button 
-                        title="디자인3" 
-                        style={styles.categoryButton}
-                        onPress={() => props.navigation.navigate("Recruitment", {title: '디자인'})}
-                    />
+                        onPress={() => props.navigation.navigate("Recruitment", {title: '회계'})}
+                    >
+                        <Image
+                            style={{width: 100, height: 100,}}
+                            source={require('../assets/accounting.jpg')}
+                        />
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>
