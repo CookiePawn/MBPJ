@@ -26,9 +26,13 @@ const RecruitmentInfo = (props) => {
 
                 </View>
                 <View style={styles.toolView}> 
-                    <Icon name="notifications-outline" size={30} color="white"/>
+                    <TouchableOpacity onPress={() => props.navigation.navigate("TabNavigator", {screen:'User'})}>
+                        <Icon name="notifications-outline" size={30} color="white"/>
+                    </TouchableOpacity>
                     <Icon name="arrow-back-circle-outline" size={10} color="#bb2649"/>
-                    <Icon name="settings-outline" size={30} color="white"/>
+                    <TouchableOpacity onPress={() => props.navigation.navigate("TabNavigator", {screen:'User'})}>
+                        <Icon name="settings-outline" size={30} color="white"/>
+                    </TouchableOpacity>
                 </View>
             </View>
             <View style={styles.backgroundSubView}>

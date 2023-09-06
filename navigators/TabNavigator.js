@@ -1,5 +1,5 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 
 //네비게이터
@@ -17,15 +17,27 @@ const Tab = createBottomTabNavigator();
 
 
 const TabNavigator = () => {
+
+    //메인 화면에서 로딩으로 인한 탭바 관리
+    const [isTabBarVisible, setTabBarVisible] = useState(false);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setTabBarVisible(true);
+        }, 4000);
+    }, []);
+
+
     return (
         <Tab.Navigator 
             initialRouteName = "Main"
             screenOptions={{
-                headerShown: false
+                headerShown: false,
+                tabBarStyle: { display: isTabBarVisible ? 'flex' : 'none' },
             }}
         >
             <Tab.Screen name='Main' component={Main}/>
-            <Tab.Screen name='User' component={User}/>
+            <Tab.Screen name='User' component={User} options={{unmountOnBlur: true}}/>
         </Tab.Navigator>
     )
 }

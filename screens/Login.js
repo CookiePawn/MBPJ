@@ -17,63 +17,6 @@ const Login = (props) => {
     //아이디 비번 저장
     const [id, setID] = useState();
     const [pw, setPW] = useState();
-
-
-    //로딩 이미지 애니메이션 초기값
-    const positionX = new Animated.Value(0);
-    const positionY = new Animated.Value(0);
-
-    //로딩 이벤트
-    const [isLoading, setLoading] = useState(true);
-
-    useEffect(() => {
-        setTimeout(() => {
-            setLoading(false);
-        }, 4000);
-
-
-        
-
-        //로딩 이미지 애니메이션
-        const diagonalAnimation = Animated.loop(
-            Animated.parallel([
-                Animated.timing(positionX, {
-                    toValue: -300,
-                    duration: 20000,
-                    useNativeDriver: true,
-                }),
-                Animated.timing(positionY, {
-                    toValue: -100,
-                    duration: 20000,
-                    useNativeDriver: true,
-                }),
-            ])
-        );
-        diagonalAnimation.start();
-
-        //로딩 기능 초기화
-        return () => {
-            diagonalAnimation.stop();
-            positionX.setValue(0); // Reset the animated values
-            positionY.setValue(0);
-        };
-    }, []);
-
-
-
-  
-  
-  
-    if (isLoading) {
-        return (
-            <View>
-                <Animated.View style={{ transform: [{ translateX: positionX }, { translateY: positionY }] }}>
-                    <Image style={styles.image} source={require('../assets/loading.png')}/>
-                </Animated.View>
-                <Text style={styles.title}>SM {'\n'}KOREA</Text>
-            </View>
-        );
-    }
    
     
   
@@ -101,7 +44,7 @@ const Login = (props) => {
                     style = {styles.loginBtn}
                     title = "Login"
                     onPress = {() => {
-                    props.navigation.navigate('TabNavigator')}}
+                    props.navigation.navigate('TabNavigator', {screen:'Main'})}}
                 >
                     <Text style = {{color: 'white', fontWeight: 'bold'}}>로그인</Text>
                 </TouchableOpacity>
@@ -192,22 +135,6 @@ const Login = (props) => {
   
   
 const styles = StyleSheet.create({
-
-    //로딩창
-    image : {
-        width: 750,
-        height: 1624,
-    },
-    title : {
-        position: 'absolute',
-        bottom: 820,
-        left: 10,
-        fontSize: 35,
-        color: 'white',
-        fontWeight: 'bold',
-        marginLeft: 16,
-        marginBottom: 16,
-    },
 
 
     //로그인

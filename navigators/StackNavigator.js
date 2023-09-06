@@ -19,17 +19,15 @@ const Stack = createStackNavigator();
 const StackNavigator = () => {
     return (
         <Stack.Navigator 
-            initialRouteName='Login'
+            initialRouteName='TabNavigator'
             screenOptions={{ headerShown: false }}
         >
-            <Stack.Screen name='Login' component={Login}/>
             <Stack.Screen name='TabNavigator' component={TabNavigator}
                 options = {{
                     title : '탭 네비게이터',
-                    headerShown : false,
-                    headerLeft: null
                 }}
             />
+            <Stack.Screen name='Login' component={Login}/>
             <Stack.Screen name='Recruitment' component={Recruitment}/>
             <Stack.Screen name='Recruitmentinfo' component={RecruitmentInfo}/>
             <Stack.Screen name='Category' component={Category}/>
