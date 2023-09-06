@@ -5,13 +5,66 @@ import {
     TouchableOpacity,
     Button,
     ScrollView,
-    StyleSheet
+    StyleSheet,
+    Dimensions
 } from 'react-native';
-import React from 'react';
+import React, {Component} from 'react';
 import Icon from 'react-native-vector-icons/Ionicons'
+import Swiper from 'react-native-swiper/src'
+const { width } = Dimensions.get('window')
+
+
+
+const ImageSlider = (props) => {
+    return (
+        <Swiper
+            style={styles.wrapper}
+            loop={true}
+            index={0}
+        >
+            <View
+                style={styles.slide}
+            >
+                <Text style={styles.slideText}>IT</Text>
+                <TouchableOpacity onPress={() => props.navi.navigation.navigate("Recruitment", {title: 'IT'})}>
+                    <Image style={styles.slideImage} source={require('../assets/it.jpg')} />
+                </TouchableOpacity>
+            </View>
+            <View
+                style={styles.slide}
+            >
+                <Text style={styles.slideText}>디자인</Text>
+                <TouchableOpacity onPress={() => props.navi.navigation.navigate("Recruitment", {title: '디자인'})}>
+                    <Image style={styles.slideImage} source={require('../assets/design.jpg')} />
+                </TouchableOpacity>
+            </View>
+            <View
+                style={styles.slide}
+            >
+                <Text style={styles.slideText}>회계</Text>
+                <TouchableOpacity onPress={() => props.navi.navigation.navigate("Recruitment", {title: '회계'})}>
+                    <Image style={styles.slideImage} source={require('../assets/accounting.jpg')} />
+                </TouchableOpacity>
+            </View>
+            <View
+                style={styles.slide}
+            >
+                <Text style={styles.slideText}>투자</Text>
+                <TouchableOpacity onPress={() => props.navi.navigation.navigate("Recruitment", {title: '투자'})}>
+                    <Image style={styles.slideImage} source={require('../assets/loading.png')} />
+                </TouchableOpacity>
+            </View>
+        </Swiper>
+    )
+}
+
+
+
 
 
 const Category = (props) => {
+
+
     return (
         <View style={styles.view}>
             <View style={styles.infoView}>
@@ -39,34 +92,13 @@ const Category = (props) => {
                 </View>
             </View>
             <View style={styles.categoryView}>
-                <View style={styles.categoryButtonView}>
-                    <TouchableOpacity
-                        style={styles.categoryButton}
-                        onPress={() => props.navigation.navigate("Recruitment", {title: 'IT'})}
-                    >
-                        <Image
-                            style={{width: 100, height: 100,}}
-                            source={require('../assets/it.jpg')}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.categoryButton}
-                        onPress={() => props.navigation.navigate("Recruitment", {title: '디자인'})}
-                    >
-                        <Image
-                            style={{width: 100, height: 100,}}
-                            source={require('../assets/design.jpg')}
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.categoryButton}
-                        onPress={() => props.navigation.navigate("Recruitment", {title: '회계'})}
-                    >
-                        <Image
-                            style={{width: 100, height: 100,}}
-                            source={require('../assets/accounting.jpg')}
-                        />
-                    </TouchableOpacity>
+                <View style={styles.slideView}>
+                    <ImageSlider
+                        navi = {props}
+                    /> 
+                </View>
+                <View style={{flex: 0.4, backgroundColor: 'lightskyblue'}}>
+
                 </View>
             </View>
         </View>
@@ -128,8 +160,6 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 50,
         borderTopRightRadius: 50,
         backgroundColor: 'white',
-        alignItems: 'center',
-        justifyContent: 'center',
         shadowColor: 'black',
         shadowOpacity: 0.4,
         shadowRadius: 4.65,
@@ -139,14 +169,30 @@ const styles = StyleSheet.create({
         },
         elevation: -2,
     }, 
-    categoryButtonView: {
-        flex: 0.2,
-        flexDirection: 'row',
-    },
-    categoryButton: {
-        marginLeft: 5,
-        marginRight: 5,
-    },
 
 
+    //카테고리 이미지 슬라이드
+    slideView: {
+        flex: 0.6,
+        backgroundColor: '#1111'
+    },
+    wrapper: { 
+    },
+    slide: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'transparent',
+    },
+    slideText: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        color: '#bb2649',
+        marginTop: 30,
+        marginBottom: 10,
+    },
+    slideImage: {
+        width,
+        height: '90%',
+        borderRadius: 0,
+    },
 })

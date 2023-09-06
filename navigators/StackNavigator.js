@@ -9,6 +9,7 @@ import TabNavigator from './TabNavigator';
 import Main from '../screens/Main'
 import User from '../screens/User'
 import Login from '../screens/Login'
+import Test from '../screens/Test'
 import Recruitment from '../screens/Recruitment'
 import RecruitmentInfo from '../screens/RecruitmentInfo'
 import Category from '../screens/Category'
@@ -27,7 +28,8 @@ const StackNavigator = () => {
                     title : '탭 네비게이터',
                 }}
             />
-            <Stack.Screen name='Login' component={Login}/>
+            <Stack.Screen name='Login' component={Login} options={{unmountOnBlur: true}}/>
+            <Stack.Screen name='Test' component={Test}/>
             <Stack.Screen name='Recruitment' component={Recruitment}/>
             <Stack.Screen name='Recruitmentinfo' component={RecruitmentInfo}/>
             <Stack.Screen name='Category' component={Category}/>
