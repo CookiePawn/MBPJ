@@ -9,6 +9,7 @@ import TabNavigator from './TabNavigator';
 import Main from '../screens/Main'
 import User from '../screens/User'
 import Login from '../screens/Login'
+import SignUp from '../screens/SignUp'
 import Test from '../screens/Test'
 import Recruitment from '../screens/Recruitment'
 import RecruitmentInfo from '../screens/RecruitmentInfo'
@@ -29,6 +30,7 @@ const StackNavigator = () => {
                 }}
             />
             <Stack.Screen name='Login' component={Login} options={{unmountOnBlur: true}}/>
+            <Stack.Screen name='SignUp' component={SignUp} options={{unmountOnBlur: true}}/>
             <Stack.Screen name='Test' component={Test}/>
             <Stack.Screen name='Recruitment' component={Recruitment}/>
             <Stack.Screen name='Recruitmentinfo' component={RecruitmentInfo}/>
