@@ -13,20 +13,16 @@ const User = (props) => {
     const id = params ? params.id : null;
     const pw = params ? params.pw : null;
     const name = params ? params.name : null;
-    const nickname = params ? params.nickname : null;
+    const email = params ? params.email : null;
     const phone = params ? params.phone : null;
+    const crn = params ? params.crn : null;
 
     return (
-        <View>
+        <View style={{flex:1}}>
             <Text>User</Text>
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => props.navigation.navigate("Login")}>
-                <Text>로그인</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.button}
-                onPress={() => props.navigation.navigate("Login")}>
+                onPress={() => props.navigation.navigate("Main")}>
                 <Text>로그아웃</Text>
             </TouchableOpacity>
             <View style={styles.container}>
@@ -37,10 +33,12 @@ const User = (props) => {
                     <Text style={styles.value}>{pw}</Text>
                     <Text style={styles.label}>NAME</Text>
                     <Text style={styles.value}>{name}</Text>
-                    <Text style={styles.label}>NICKNAME</Text>
-                    <Text style={styles.value}>{nickname}</Text>
+                    <Text style={styles.label}>Email</Text>
+                    <Text style={styles.value}>{email}</Text>
                     <Text style={styles.label}>PHONE</Text>
                     <Text style={styles.value}>{phone}</Text>
+                    <Text style={styles.label}>사업자 등록 번호</Text>
+                    <Text style={styles.value}>{crn}</Text>
                 </View>
             </View>
         </View>

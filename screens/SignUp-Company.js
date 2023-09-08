@@ -87,7 +87,7 @@ const SignUp = (props) => {
                     CRN: crn
                 });
                 alert('회원가입이 완료되었습니다!')
-                props.navigation.navigate("Login")
+                props.navigation.navigate("CompanyLogin")
             } catch (error) {
                 console.log(error)
             }
@@ -100,7 +100,7 @@ const SignUp = (props) => {
     return (
         <View style={styles.mainView}>
             <View style={styles.titleView}>
-                <Text style={styles.titleText}>가입하기</Text>
+                <Text style={styles.titleText}>기업 가입하기</Text>
             </View>
             <View style={styles.textInputView}>
                 <CustomTextInput
@@ -145,7 +145,7 @@ const SignUp = (props) => {
                     <Text style={styles.loginButtonText}>
                         이미 계정이 있으신가요?
                         <TouchableOpacity 
-                            onPress={() => {props.navigation.navigate('Login')}}
+                            onPress={() => {props.navigation.navigate('CompanyLogin')}}
                         >
                             <Text style={styles.loginButtonSubText}>로그인</Text>
                         </TouchableOpacity>

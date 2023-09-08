@@ -13,6 +13,9 @@ const { width } = Dimensions.get('window')
 
 const StartPage = (props) => {
 
+    //현재 페이지 상태
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [buttonText, setButtonText] = useState('개인회원 로그인 바로가기');
 
 
     return (
@@ -26,30 +29,32 @@ const StartPage = (props) => {
                     loop={false}
                     dotStyle={{ backgroundColor: '#D9D9D9' }}
                     activeDotStyle={{ width: 30, backgroundColor: '#5552E2' }}
+                    onIndexChanged={(index) => {
+                        setCurrentIndex(index);
+                        switch (index) {
+                            case 0:
+                                setButtonText('개인회원 로그인 바로가기');
+                                break;
+                            case 1:
+                                setButtonText('기업회원 로그인 바로가기');
+                                break;
+                            default:
+                                // 기타 경우 처리
+                                break;
+                        }
+                    }}
                 >
                     <View
                         style={styles.slide}
                     >
-                        <Image style={styles.image} source={require('../assets/start-thinking.png')} />
-                        <Text style={styles.text}>협업할 사람을 찾기</Text>
-                        <Text style={styles.text}>힘드신가요?</Text>
-                        <Text style={styles.subText}>간단하게 사람을 찾아보세요!</Text>
+                        <Image style={styles.image} source={require('../assets/start-solo.png')} />
+                        <Text style={styles.text}>개인 회원이에요!</Text>
                     </View>
                     <View
                         style={styles.slide}
                     >
-                        <Image style={styles.image} source={require('../assets/start-thinking.png')} />
-                        <Text style={styles.text}>내 전문 분야를</Text>
-                        <Text style={styles.text}>등록하세요!</Text>
-                        <Text style={styles.subText}>한 눈에 내 능력을 뽐내세요!</Text>
-                    </View>
-                    <View
-                        style={styles.slide}
-                    >
-                        <Image style={styles.image} source={require('../assets/start-thinking.png')} />
-                        <Text style={styles.text}>인기있는 기업을</Text>
-                        <Text style={styles.text}>추천해드립니다!</Text>
-                        <Text style={styles.subText}>더 다양한 기업을 보세요!</Text>
+                        <Image style={styles.image} source={require('../assets/start-enter.png')} />
+                        <Text style={styles.text}>기업 회원이에요!</Text>
                     </View>
                 </Swiper>
             </View>
@@ -57,10 +62,20 @@ const StartPage = (props) => {
                 <TouchableOpacity 
                     style={styles.startButton}
                     onPress={() => {
-                        props.navigation.navigate('Main')
+                        switch (currentIndex) {
+                            case 0:
+                                props.navigation.navigate('PersonLogin')
+                                break;
+                            case 1:
+                                props.navigation.navigate('CompanyLogin')
+                                break;
+                            default:
+                                // 기타 경우 처리
+                                break;
+                        }
                     }}
                 >
-                    <Text style={styles.buttonText}>시작하기</Text>
+                    <Text style={styles.buttonText}>{buttonText}</Text>
                 </TouchableOpacity>
             </View>
         </View>    
@@ -91,13 +106,8 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#fff',
-        fontSize: 32,
+        fontSize: 30,
         fontWeight: 'bold',
-    },
-    subText: {
-        color: '#fff',
-        fontSize: 14,
-        marginTop: 12,
     },
     image: {
         width,

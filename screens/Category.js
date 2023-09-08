@@ -69,7 +69,7 @@ const Category = (props) => {
         <View style={styles.view}>
             <View style={styles.infoView}>
                 <View style={styles.toolView}>
-                    <TouchableOpacity onPress={() => props.navigation.navigate("TabNavigator")}>
+                    <TouchableOpacity onPress={() => props.navigation.navigate("Main")}>
                         <Icon name="arrow-back-circle-outline" size={30} color="white"/>
                     </TouchableOpacity>
                     <Icon name="arrow-back-circle-outline" size={30} color="#bb2649"/>

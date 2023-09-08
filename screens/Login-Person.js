@@ -12,6 +12,8 @@ import { useState, useEffect } from 'react'
 
 
 
+
+
 const CustomTextInput = (props) => {
     return (
         <View>
@@ -29,16 +31,17 @@ const CustomTextInput = (props) => {
 
 
 
-const SignUp = (props) => {
 
+
+
+const Login = (props) => {
     const [user, setUser] = useState([])
     const [id, setID] = useState('')
     const [pw, setPW] = useState('')
-    const [name, setName] = useState('')
-    const [phone, setPhone] = useState('')
-    const [email, setEmail] = useState('')
 
     const isFocused = useIsFocused();
+
+
 
     useEffect(() => {
         const readFromDB = async () => {
@@ -57,64 +60,39 @@ const SignUp = (props) => {
     }, [isFocused]);
 
 
-    const signUp = async () => {
-        let bool = true;
-
-        if (id === '' || pw === '' || name === '' || phone === '' || email === '') {
-            alert('빈칸을 채워주세요')
-            return;
-        }
-
+    const login = () => {
+        let bool = false
         user.map((row, idx) => {
-            if (row.perPhone == phone) {
-                bool = false
-                alert('이미 등록된 전화번호입니다')
-            } else if (row.perID == id) {
-                bool = false
-                alert('이미 등록된 아이디입니다')
+            if (row.perID == id && row.perPW == pw) {
+                props.navigation.navigate("User", {
+                    id: row.perID,
+                    pw: row.perPW,
+                    phone: row.perPhone,
+                    name: row.perName,
+                    email: row.perEmail
+                });
+                alert(`어서오세요 ${row.perName}님!`)
+                setID('')
+                setPW('')
+                bool = true
             }
         })
-        if (bool) {
-            //db에 넣어라
-            try {
-                await addDoc(collection(db, 'PersonLogin'), {
-                    perID: id,
-                    perPW: pw,
-                    perName: name,
-                    perEmail: email,
-                    perPhone: phone
-                });
-                alert('회원가입이 완료되었습니다!')
-                props.navigation.navigate("PersonLogin")
-            } catch (error) {
-                console.log(error)
-            }
+        if (!bool) {
+            alert('ID 또는 PASSWORD가 틀렸습니다')
+            setID('')
+            setPW('')
         }
     }
+
 
 
 
     return (
         <View style={styles.mainView}>
             <View style={styles.titleView}>
-                <Text style={styles.titleText}>개인 가입하기</Text>
+                <Text style={styles.titleText}>개인 로그인</Text>
             </View>
             <View style={styles.textInputView}>
-                <CustomTextInput
-                    name='이름'
-                    named='을'
-                    onChangeText={(e) => setName(e)}
-                />
-                <CustomTextInput
-                    name='전화번호'
-                    named='를'
-                    onChangeText={(e) => setPhone(e)}
-                />
-                <CustomTextInput
-                    name='이메일'
-                    named='을'
-                    onChangeText={(e) => setEmail(e)}
-                />
                 <CustomTextInput
                     name='아이디'
                     named='를'
@@ -129,17 +107,17 @@ const SignUp = (props) => {
             <View style={styles.buttonView}>
                 <TouchableOpacity 
                     style={styles.signButton}
-                    onPress={signUp}
+                    onPress={login}
                 >
-                    <Text style={styles.signButtonText}>회원가입</Text>
+                    <Text style={styles.signButtonText}>로그인</Text>
                 </TouchableOpacity>
                 <View style={styles.buttonSubView}>
                     <Text style={styles.loginButtonText}>
-                        이미 계정이 있으신가요?
+                        아직 회원이 아니신가요?
                         <TouchableOpacity 
-                            onPress={() => {props.navigation.navigate('PersonLogin')}}
+                            onPress={() => {props.navigation.navigate('PersonSignUp')}}
                         >
-                            <Text style={styles.loginButtonSubText}>로그인</Text>
+                            <Text style={styles.loginButtonSubText}>회원가입</Text>
                         </TouchableOpacity>
                     </Text>
                 </View>
@@ -149,31 +127,34 @@ const SignUp = (props) => {
 }
 
 
-export default SignUp
+export default Login
+
+
 
 
 
 const styles = StyleSheet.create({
+
+    //로그인
     mainView: {
-        flex: 1, 
+        flex: 1,
         backgroundColor: 'white',
         alignItems: 'center',
     },
-
-    //회원가입 페이지
     titleView: {
-        flex: 0.2,
+        flex: 0.15,
         alignItems: 'center',
         justifyContent: 'center',
     },
     titleText: {
         color: 'black',
-        fontWeight: 'bold',
         fontSize: 20,
+        fontWeight: 'bold'
     },
 
+
     textInputView: {
-        flex: 0.6,
+        flex: 0.3,
         width: '90%',
     },
     textInputTitleText: {
@@ -192,10 +173,10 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
 
-    
+
 
     buttonView: {
-        flex: 0.2,
+        flex: 0.4,
         width: '90%',
     },
     signButton: {
@@ -223,5 +204,6 @@ const styles = StyleSheet.create({
     buttonSubView: {
         width: '100%',
         alignItems: 'center',
+        marginTop: 290,
     },
 })
