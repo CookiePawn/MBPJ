@@ -74,13 +74,13 @@ const StartPage = (props) => {
                     onPress={() => {
                         switch (currentIndex) {
                             case 0:
-                                props.navigation.navigate('TabNavigator', {screen: 'Main'})
+                                props.navigation.navigate('Main')
                                 break;
                             case 1:
-                                props.navigation.navigate('Login')
+                                props.navigation.navigate('PersonSignUp')
                                 break;
                             case 2:
-                                props.navigation.navigate('Login')
+                                props.navigation.navigate('CompanySignUp')
                                 break;
                             default:
                                 // 기타 경우 처리
