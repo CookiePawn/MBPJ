@@ -6,8 +6,7 @@ import React from 'react';
 import TabNavigator from './TabNavigator';
 
 //스크린
-import Main from '../screens/Main'
-import User from '../screens/User'
+import StartPage from '../screens/StartPage';
 import Login from '../screens/Login'
 import SignUp from '../screens/SignUp'
 import Test from '../screens/Test'
@@ -21,7 +20,7 @@ const Stack = createStackNavigator();
 const StackNavigator = () => {
     return (
         <Stack.Navigator 
-            initialRouteName='TabNavigator'
+            initialRouteName='StartPage'
             screenOptions={{ headerShown: false }}
         >
             <Stack.Screen name='TabNavigator' component={TabNavigator}
@@ -29,6 +28,7 @@ const StackNavigator = () => {
                     title : '탭 네비게이터',
                 }}
             />
+            <Stack.Screen name='StartPage' component={StartPage} options={{unmountOnBlur: true}}/>
             <Stack.Screen name='Login' component={Login} options={{unmountOnBlur: true}}/>
             <Stack.Screen name='SignUp' component={SignUp} options={{unmountOnBlur: true}}/>
             <Stack.Screen name='Test' component={Test}/>
