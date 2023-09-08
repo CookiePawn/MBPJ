@@ -57,7 +57,7 @@ const StartPage = (props) => {
                 <TouchableOpacity 
                     style={styles.startButton}
                     onPress={() => {
-                        props.navigation.navigate('Main')
+                        props.navigation.navigate('Category')
                     }}
                 >
                     <Text style={styles.buttonText}>시작하기</Text>

@@ -1,198 +1,223 @@
 import {
-    Text,
     View,
-    Image,
+    Text,
     TouchableOpacity,
-    Button,
-    ScrollView,
     StyleSheet,
-    Dimensions
-} from 'react-native';
-import React, {Component} from 'react';
+    Dimensions,
+} from 'react-native'
+import {
+    LineChart,
+    BarChart,
+    PieChart,
+    ProgressChart,
+    ContributionGraph,
+    StackedBarChart
+} from "react-native-chart-kit";
 import Icon from 'react-native-vector-icons/Ionicons'
-import Swiper from 'react-native-swiper/src'
-const { width } = Dimensions.get('window')
+import React, { useState } from 'react'
 
 
 
-const ImageSlider = (props) => {
+
+
+
+const CustomCategory = (props) => {
     return (
-        <Swiper
-            style={styles.wrapper}
-            loop={true}
-            index={0}
-        >
-            <View
-                style={styles.slide}
-            >
-                <Text style={styles.slideText}>IT</Text>
-                <TouchableOpacity onPress={() => props.navi.navigation.navigate("Recruitment", {title: 'IT'})}>
-                    <Image style={styles.slideImage} source={require('../assets/it.jpg')} />
+        <View style={styles.categoryListSubView}>
+            <View style={styles.categoryListSubSubView}>
+                <TouchableOpacity style={styles.categoryButton}>
+                    <Text style={styles.categoryButtonText}>{props.category1}</Text>
                 </TouchableOpacity>
             </View>
-            <View
-                style={styles.slide}
-            >
-                <Text style={styles.slideText}>디자인</Text>
-                <TouchableOpacity onPress={() => props.navi.navigation.navigate("Recruitment", {title: '디자인'})}>
-                    <Image style={styles.slideImage} source={require('../assets/design.jpg')} />
+            <View style={styles.categoryListSubSubView}>
+                <TouchableOpacity style={styles.categoryButton}>
+                    <Text style={styles.categoryButtonText}>{props.category2}</Text>
                 </TouchableOpacity>
             </View>
-            <View
-                style={styles.slide}
-            >
-                <Text style={styles.slideText}>회계</Text>
-                <TouchableOpacity onPress={() => props.navi.navigation.navigate("Recruitment", {title: '회계'})}>
-                    <Image style={styles.slideImage} source={require('../assets/accounting.jpg')} />
+            <View style={styles.categoryListSubSubView}>
+                <TouchableOpacity style={styles.categoryButton}>
+                    <Text style={styles.categoryButtonText}>{props.category3}</Text>
                 </TouchableOpacity>
             </View>
-            <View
-                style={styles.slide}
-            >
-                <Text style={styles.slideText}>투자</Text>
-                <TouchableOpacity onPress={() => props.navi.navigation.navigate("Recruitment", {title: '투자'})}>
-                    <Image style={styles.slideImage} source={require('../assets/loading.png')} />
-                </TouchableOpacity>
-            </View>
-        </Swiper>
+        </View>
     )
 }
+
 
 
 
 
 
 const Category = (props) => {
+    const data = {
+        labels: ["IT", "디자인", "미디어"], // optional
+        data: [1.93, 0.23, 0.67]
+    };
+
+    const chartConfig = {
+        backgroundGradientFrom: "white",
+        backgroundGradientFromOpacity: 0,
+        backgroundGradientTo: "white",
+        backgroundGradientToOpacity: 1,
+        color: (opacity = 1) => `rgba(135, 206, 250, ${opacity})`,
+        strokeWidth: 3, // optional, default 3
+        barPercentage: 0.5,
+        useShadowColorFromDataset: false // optional
+    };
+
+
 
 
     return (
-        <View style={styles.view}>
-            <View style={styles.infoView}>
-                <View style={styles.toolView}>
-                    <TouchableOpacity onPress={() => props.navigation.navigate("Main")}>
-                        <Icon name="arrow-back-circle-outline" size={30} color="white"/>
-                    </TouchableOpacity>
-                    <Icon name="arrow-back-circle-outline" size={30} color="#bb2649"/>
+        <View style={styles.mainView}>
+            <View style={styles.categoryView}>
+                <View style={styles.categoryTitleView}>
+                    <View style={styles.categoryTitleTextView}>
+                        <Text style={styles.categoryTitleText}>
+                            카테고리{'\n'}
+                            <Text style={styles.categoryTitleSubText}>카테고리를 선택하세요</Text>
+                        </Text>
+                    </View>
+                    <View style={styles.categoryTitleIconView}>
+                        <TouchableOpacity
+                            onPress={() => { props.navigation.navigate('LoginGuide') }}
+                        >
+                            <Icon name="person" size={25} color="black" style={[styles.icon, {marginLeft: 60}]} />
+                        </TouchableOpacity>
+                        <Icon name="notifications-outline" size={30} color="black" style={styles.icon} />
+                        <Icon name="settings-outline" size={30} color="black" style={styles.icon} />
+                    </View>
                 </View>
-                <View style={styles.profileView}>
-                    <Image
-                        style={styles.profile}
-                        source={require('../assets/profile.png')}
+                <View style={styles.categoryListView}>
+                    <CustomCategory
+                        category1="인기 / 추천"
+                        category2="IT"
+                        category3="회계"
                     />
-                    <Text style={styles.nicknameText}>김우희 님</Text>
-                </View>
-                <View style={styles.toolView}> 
-                    <TouchableOpacity onPress={() => props.navigation.navigate("TabNavigator", {screen:'User'})}>
-                        <Icon name="notifications-outline" size={30} color="white"/>
-                    </TouchableOpacity>
-                    <Icon name="arrow-back-circle-outline" size={10} color="#bb2649"/>
-                    <TouchableOpacity onPress={() => props.navigation.navigate("TabNavigator", {screen:'User'})}>
-                        <Icon name="settings-outline" size={30} color="white"/>
-                    </TouchableOpacity>
+                    <CustomCategory
+                        category1="디자인"
+                        category2="법률"
+                        category3="미디어"
+                    />
+                    <CustomCategory
+                        category1="마케팅"
+                        category2="기획"
+                        category3="기타"
+                    />
                 </View>
             </View>
-            <View style={styles.categoryView}>
-                <View style={styles.slideView}>
-                    <ImageSlider
-                        navi = {props}
-                    /> 
+            <View style={styles.trendView}>
+                <View style={styles.categoryTitleView}>
+                    <View style={styles.categoryTitleTextView}>
+                        <Text style={styles.categoryTitleText}>
+                            요즘 트렌드{'\n'}
+                            <Text style={styles.categoryTitleSubText}>카테고리</Text>
+                        </Text>
+                    </View>
                 </View>
-                <View style={{flex: 0.4, backgroundColor: 'lightskyblue'}}>
-
+                <View style={styles.trendImageView}>
+                    <ProgressChart
+                        data={data}
+                        width={Dimensions.get("window").width*0.9}
+                        height={220}
+                        strokeWidth={16}
+                        radius={32}
+                        chartConfig={chartConfig}
+                        hideLegend={false}
+                    />
                 </View>
             </View>
         </View>
     )
 }
 
+
 export default Category
 
+
+
+
 const styles = StyleSheet.create({
-    view: {
-        flex: 1,
-        backgroundColor: '#bb2649',
-    },
-    
-    
-
-
-
-
-    //프로필
-
-    infoView: {
-        flex: 0.25,
-        display: 'flex',
-        flexDirection: 'row',
-    },
-    toolView: {
-        flex: 0.25,
-        position: 'relative',
-        bottom: 50,
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    profileView: {
-        flex: 0.5,
-        display: 'flex',
-        position: 'relative',
-        top: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    profile: {
-        width: 90,
-        height: 90,
-        borderRadius: 100,
-    },
-    nicknameText: {
-        fontSize: 23,
-        fontWeight: 'bold',
-        color: 'white',
-    },
-
 
     //카테고리
-
-    categoryView: {
-        flex: 0.75,
-        borderTopLeftRadius: 50,
-        borderTopRightRadius: 50,
+    mainView: {
+        flex: 1,
         backgroundColor: 'white',
-        shadowColor: 'black',
-        shadowOpacity: 0.4,
-        shadowRadius: 4.65,
-        shadowOffset: {
-            width: 0,
-            height: -2,
-        },
-        elevation: -2,
-    }, 
+        alignItems: 'center',
+    },
 
-
-    //카테고리 이미지 슬라이드
-    slideView: {
+    //카테고리 뷰
+    categoryView: {
         flex: 0.6,
-        backgroundColor: '#1111'
+        width: '90%',
     },
-    wrapper: { 
+    categoryTitleView: {
+        flex: 0.3,
+        flexDirection: 'row',
     },
-    slide: {
+    categoryTitleTextView: {
+        flex: 0.5,
+        justifyContent: 'center',
+    },
+    categoryTitleText: {
+        marginTop: 20,
+        color: 'black',
+        fontSize: 24,
+        fontWeight: 'bold'
+    },
+    categoryTitleSubText: {
+        color: 'rgba(153, 153, 153, 0.60)',
+        fontSize: 16,
+        fontWeight: 400,
+    },
+    categoryTitleIconView: {
+        flex: 0.5,
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'transparent',
     },
-    slideText: {
-        fontSize: 30,
-        fontWeight: 'bold',
-        color: '#bb2649',
-        marginTop: 30,
-        marginBottom: 10,
+    icon: {
+        marginLeft: 10,
+        marginRight: 10,
     },
-    slideImage: {
-        width,
-        height: '90%',
-        borderRadius: 0,
+
+
+    categoryListView: {
+        flex: 0.7,
     },
+    categoryListSubView: {
+        flex: 0.333333,
+        flexDirection: 'row',
+    },
+    categoryListSubSubView: {
+        flex: 0.3333333,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    categoryButton: {
+        width: '92%',
+        height: '92%',
+        backgroundColor: '#D9D9D9',
+        borderRadius: 12,
+        alignItems: 'center',
+    },
+    categoryButtonText: {
+        fontSize: 12,
+        fontWeight: 500
+    },
+
+
+
+
+    //트랜드 뷰
+    trendView: {
+        flex: 0.4,
+        width: '90%',
+    },
+
+    trendImageView: {
+        flex: 0.7,
+    },
+
+
 })

@@ -4,7 +4,6 @@ import React from 'react';
 
 
 //스크린
-import Main from '../screens/Main';
 import User from '../screens/User';
 import StartPage from '../screens/StartPage';
 import LoginGuide from '../screens/LoginGuide'
@@ -26,16 +25,17 @@ const StackNavigator = () => {
             screenOptions={{ headerShown: false }}
         >
             <Stack.Screen name='StartPage' component={StartPage} options={{unmountOnBlur: true}}/>
+            <Stack.Screen name='Category' component={Category} options={{unmountOnBlur: true}}/>
             <Stack.Screen name='LoginGuide' component={LoginGuide} options={{unmountOnBlur: true}}/>
-            <Stack.Screen name='Main' component={Main}/>
-            <Stack.Screen name='User' component={User} options={{unmountOnBlur: true}}/>
             <Stack.Screen name='PersonLogin' component={PersonLogin} options={{unmountOnBlur: true}}/>
             <Stack.Screen name='CompanyLogin' component={CompanyLogin} options={{unmountOnBlur: true}}/>
             <Stack.Screen name='PersonSignUp' component={PersonSignUp} options={{unmountOnBlur: true}}/>
             <Stack.Screen name='CompanySignUp' component={CompanySignUp} options={{unmountOnBlur: true}}/>
+
+
+            <Stack.Screen name='User' component={User} options={{unmountOnBlur: true}}/>
             <Stack.Screen name='Recruitment' component={Recruitment}/>
             <Stack.Screen name='Recruitmentinfo' component={RecruitmentInfo}/>
-            <Stack.Screen name='Category' component={Category}/>
         </Stack.Navigator>
     )
 }
