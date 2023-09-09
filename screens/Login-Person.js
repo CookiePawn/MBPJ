@@ -8,7 +8,9 @@ import {
 import db from '../DB/FireBase'
 import { collection, getDocs, addDoc } from 'firebase/firestore';
 import { useIsFocused } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons'
 import { useState, useEffect } from 'react'
+import Category from './Category';
 
 
 
@@ -90,7 +92,14 @@ const Login = (props) => {
     return (
         <View style={styles.mainView}>
             <View style={styles.titleView}>
-                <Text style={styles.titleText}>개인 로그인</Text>
+                <View style={styles.backbuttonView}>
+                    <TouchableOpacity onPress={() => {props.navigation.navigate('LoginGuide')}}>
+                        <Icon style={styles.backButton} name="arrow-back-circle-outline"></Icon>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.titleTextView}>
+                    <Text style={styles.titleText}>개인 로그인</Text>
+                </View>
             </View>
             <View style={styles.textInputView}>
                 <CustomTextInput
@@ -139,23 +148,37 @@ const styles = StyleSheet.create({
     mainView: {
         flex: 1,
         backgroundColor: 'white',
-        alignItems: 'center',
+        alignItems : 'center',
+        justifyContent: 'center'
     },
     titleView: {
         flex: 0.15,
-        alignItems: 'center',
+        width: '90%',
+    },
+    titleTextView: {
+        marginTop: '5%',
         justifyContent: 'center',
+        alignItems: 'center'
     },
     titleText: {
         color: 'black',
         fontSize: 20,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+    },
+    backbuttonView : {
+        width: '100%',
+        justifyContent: 'flex-start',
+        alignItems : 'flex-start',
+    },
+    backButton : {
+        fontSize : 25
     },
 
 
     textInputView: {
         flex: 0.3,
         width: '90%',
+        justifyContent: 'center',
     },
     textInputTitleText: {
         color: '#9EA3B2',
@@ -206,4 +229,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 290,
     },
+
 })
