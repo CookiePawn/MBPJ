@@ -87,7 +87,7 @@ const SignUp = (props) => {
                     CRN: crn
                 });
                 alert('회원가입이 완료되었습니다!')
-                props.navigation.navigate("CompanyLogin")
+                props.navigation.navigate("Category")
             } catch (error) {
                 console.log(error)
             }

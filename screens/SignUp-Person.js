@@ -85,7 +85,7 @@ const SignUp = (props) => {
                     perPhone: phone
                 });
                 alert('회원가입이 완료되었습니다!')
-                props.navigation.navigate("PersonLogin")
+                props.navigation.navigate("Category")
             } catch (error) {
                 console.log(error)
             }

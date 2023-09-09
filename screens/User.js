@@ -22,6 +22,11 @@ const User = (props) => {
             <Text>User</Text>
             <TouchableOpacity
                 style={styles.button}
+                onPress={() => props.navigation.navigate("Category")}>
+                <Text>카테고리로 가기</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.button}
                 onPress={() => props.navigation.navigate("Main")}>
                 <Text>로그아웃</Text>
             </TouchableOpacity>
