@@ -64,7 +64,7 @@ const Login = (props) => {
         let bool = false
         user.map((row, idx) => {
             if (row.perID == id && row.perPW == pw) {
-                props.navigation.navigate("User", {
+                props.navigation.navigate("Category", {
                     id: row.perID,
                     pw: row.perPW,
                     phone: row.perPhone,

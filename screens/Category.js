@@ -49,6 +49,18 @@ const CustomCategory = (props) => {
 
 
 const Category = (props) => {
+
+    //로그인 확인
+    const { params } = props.route;
+    const id = params ? params.id : null;
+    const pw = params ? params.pw : null;
+    const name = params ? params.name : null;
+    const email = params ? params.email : null;
+    const phone = params ? params.phone : null;
+    const crn = params ? params.crn : null;
+
+
+
     const data = {
         labels: ["IT", "디자인", "미디어"], // optional
         data: [1.93, 0.23, 0.67]
@@ -80,9 +92,30 @@ const Category = (props) => {
                     </View>
                     <View style={styles.categoryTitleIconView}>
                         <TouchableOpacity
-                            onPress={() => { props.navigation.navigate('LoginGuide') }}
+                            onPress={() => {
+                                if (id === null) {
+                                    props.navigation.navigate('LoginGuide')
+                                } else if (id !== null && crn === null) {
+                                    props.navigation.navigate('PersonUser', {
+                                        id: id,
+                                        pw: pw,
+                                        phone: phone,
+                                        name: name,
+                                        email: email,
+                                    })
+                                } else if (id !== null && crn !== null) {
+                                    props.navigation.navigate('CompanyUser', {
+                                        id: id,
+                                        pw: pw,
+                                        phone: phone,
+                                        name: name,
+                                        email: email,
+                                        CRN: crn
+                                    })
+                                }
+                            }}
                         >
-                            <Icon name="person" size={25} color="black" style={[styles.icon, {marginLeft: 60}]} />
+                            <Icon name="person" size={25} color="black" style={[styles.icon, { marginLeft: 60 }]} />
                         </TouchableOpacity>
                         <Icon name="notifications-outline" size={30} color="black" style={styles.icon} />
                         <Icon name="settings-outline" size={30} color="black" style={styles.icon} />
@@ -118,7 +151,7 @@ const Category = (props) => {
                 <View style={styles.trendImageView}>
                     <ProgressChart
                         data={data}
-                        width={Dimensions.get("window").width*0.9}
+                        width={Dimensions.get("window").width * 0.9}
                         height={220}
                         strokeWidth={16}
                         radius={32}

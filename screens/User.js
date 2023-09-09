@@ -22,12 +22,19 @@ const User = (props) => {
             <Text>User</Text>
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => props.navigation.navigate("Category")}>
+                onPress={() => props.navigation.navigate("Category", {
+                    id: id,
+                    pw: pw,
+                    phone: phone,
+                    name: name,
+                    email: email,
+                    crn: crn
+                })}>
                 <Text>카테고리로 가기</Text>
             </TouchableOpacity>
             <TouchableOpacity
                 style={styles.button}
-                onPress={() => props.navigation.navigate("Main")}>
+                onPress={() => props.navigation.navigate("LoginGuide")}>
                 <Text>로그아웃</Text>
             </TouchableOpacity>
             <View style={styles.container}>
