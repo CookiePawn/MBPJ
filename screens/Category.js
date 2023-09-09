@@ -93,9 +93,9 @@ const Category = (props) => {
                     <View style={styles.categoryTitleIconView}>
                         <TouchableOpacity
                             onPress={() => {
-                                if (id === null) {
+                                if (id == null) {
                                     props.navigation.navigate('LoginGuide')
-                                } else if (id !== null && crn === null) {
+                                } else if (id != null && crn == null) {
                                     props.navigation.navigate('PersonUser', {
                                         id: id,
                                         pw: pw,
@@ -103,7 +103,7 @@ const Category = (props) => {
                                         name: name,
                                         email: email,
                                     })
-                                } else if (id !== null && crn !== null) {
+                                } else if (id != null && crn != null) {
                                     props.navigation.navigate('CompanyUser', {
                                         id: id,
                                         pw: pw,

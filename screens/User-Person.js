@@ -144,8 +144,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         shadowColor: 'gray',
         shadowOffset: {
-            width: 10,
-            height: 10,
+            width: 8,
+            height: 8,
         },
         shadowOpacity: 0.456,
         shadowRadius: 5,

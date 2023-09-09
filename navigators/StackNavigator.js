@@ -25,7 +25,7 @@ const Stack = createStackNavigator();
 const StackNavigator = () => {
     return (
         <Stack.Navigator 
-            initialRouteName='PersonUser'
+            initialRouteName='StartPage'
             screenOptions={{ headerShown: false }}
         >
             <Stack.Screen name='StartPage' component={StartPage} options={{unmountOnBlur: true}}/>
