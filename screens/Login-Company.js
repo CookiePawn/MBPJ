@@ -93,14 +93,12 @@ const Login = (props) => {
     return (
         <View style={styles.mainView}>
             <View style={styles.titleView}>
-                <View style={styles.backbuttonView}>
-                    <TouchableOpacity onPress={() => {props.navigation.navigate('LoginGuide')}}>
-                        <Icon style={styles.backButton} name="arrow-back-circle-outline"></Icon>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.titleTextView}>
-                    <Text style={styles.titleText}>기업 로그인</Text>
-                </View>
+                <TouchableOpacity 
+                    style= {styles.backButton}
+                    onPress={() => {props.navigation.navigate('Category')}}>
+                    <Icon style={styles.backButtonIcon} name="arrow-back-circle-outline"></Icon>
+                </TouchableOpacity>
+                <Text style={styles.titleText}>개인 로그인</Text>
             </View>
             <View style={styles.textInputView}>
                 <CustomTextInput
@@ -155,24 +153,20 @@ const styles = StyleSheet.create({
     titleView: {
         flex: 0.15,
         width: '90%',
-    },
-    titleTextView: {
-        marginTop: '5%',
+        alignItems: 'center',
         justifyContent: 'center',
-        alignItems: 'center'
     },
     titleText: {
         color: 'black',
         fontSize: 20,
         fontWeight: 'bold',
     },
-    backbuttonView : {
-        width: '100%',
-        justifyContent: 'flex-start',
-        alignItems : 'flex-start',
-    },
     backButton : {
-        fontSize : 25
+        position : 'absolute',
+        left : 0,
+    },
+    backButtonIcon : {
+        fontSize : 25,
     },
 
 
