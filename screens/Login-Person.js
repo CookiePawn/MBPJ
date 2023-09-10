@@ -65,6 +65,7 @@ const Login = (props) => {
         user.map((row, idx) => {
             if (row.perID == id && row.perPW == pw) {
                 props.navigation.navigate("Category", {
+                    num: row.id,
                     id: row.perID,
                     pw: row.perPW,
                     phone: row.perPhone,
@@ -142,7 +143,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     titleView: {
-        flex: 0.15,
+        flex: 0.15,   
         alignItems: 'center',
         justifyContent: 'center',
     },

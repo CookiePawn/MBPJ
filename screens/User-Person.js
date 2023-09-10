@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 const PersonUser = (props) => {
 
     const { params } = props.route;
+    const num = params ? params.num : null;
     const id = params ? params.id : null;
     const pw = params ? params.pw : null;
     const name = params ? params.name : null;
@@ -22,33 +23,75 @@ const PersonUser = (props) => {
     return (
         <View style={styles.mainView}>
             <View style={styles.profileView}>
-                <Image
-                    style={styles.profileImage}
-                    source={require('../assets/profile.png')}
-                />
-                <Text style={styles.profileText}>{name} 님</Text>
-                <View style={styles.profileSubView}>
-                    <Text style={styles.profileSubText}>
-                        1{'\n'}
-                        <Text style={styles.profileSubSubText}>
-                            관심
+                <View style={{alignItems: 'center', width: '90%'}}>
+                    <TouchableOpacity
+                        style={{
+                            position: 'absolute',
+                            left: 0,
+                            top: '20%',
+                        }}
+                        onPress={()=> {
+                            props.navigation.navigate('Category', {
+                                num: num,
+                                id: id,
+                                pw: pw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                            })
+                        }}
+                    >
+                        <Icon 
+                            name="home-outline" 
+                            size={25} 
+                            color="black"
+                        />    
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={{
+                            position: 'absolute',
+                            right: 0,
+                            top: '20%',
+                        }}
+                        onPress={()=> {
+                            props.navigation.navigate('Category')
+                            alert('로그아웃되었습니다')
+                        }}
+                    >
+                        <Icon 
+                            name="log-out-outline" 
+                            size={25} 
+                            color="black"
+                        />    
+                    </TouchableOpacity>
+                    <Image
+                        style={styles.profileImage}
+                        source={require('../assets/profile.png')}
+                    />
+                    <Text style={styles.profileText}>{name} 님</Text>
+                    <View style={styles.profileSubView}>
+                        <Text style={styles.profileSubText}>
+                            1{'\n'}
+                            <Text style={styles.profileSubSubText}>
+                                관심
+                            </Text>
                         </Text>
-                    </Text>
-                    <Text style={{ color: '#BEBDBD', fontSize: 15, margin: 30, }}>|</Text>
-                    <Text style={styles.profileSubText}>
-                        1{'\n'}
-                        <Text style={styles.profileSubSubText}>
-                            등급
+                        <Text style={{ color: '#BEBDBD', fontSize: 15, margin: 30, }}>|</Text>
+                        <Text style={styles.profileSubText}>
+                            1{'\n'}
+                            <Text style={styles.profileSubSubText}>
+                                등급
+                            </Text>
                         </Text>
-                    </Text>
-                    <Text style={{ color: '#BEBDBD', fontSize: 15, margin: 30, }}>|</Text>
-                    <Text style={styles.profileSubText}>
-                        100{'\n'}
-                        <Text style={styles.profileSubSubText}>
-                            등급
+                        <Text style={{ color: '#BEBDBD', fontSize: 15, margin: 30, }}>|</Text>
+                        <Text style={styles.profileSubText}>
+                            100{'\n'}
+                            <Text style={styles.profileSubSubText}>
+                                리뷰
+                            </Text>
                         </Text>
-                    </Text>
-                </View>
+                    </View>    
+                </View>   
             </View>
             <View style={styles.settingView}>
                 <View style={styles.settingSubView}>
@@ -79,7 +122,18 @@ const PersonUser = (props) => {
                 </View>
             </View>
             <View style={styles.introduceView}>
-
+                <View style={styles.introduceSubView}>
+                    <Text style={styles.introduceTitleText}>내 소개</Text>
+                    <TouchableOpacity style={styles.introduceButton}>
+                        <Image 
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                            }}
+                            source={require('../assets/profile.png')}
+                        />
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
     )
@@ -139,7 +193,7 @@ const styles = StyleSheet.create({
     },
     settingSubView: {
         width: '90%',
-        height: '95%',
+        height: '90%',
         borderRadius: 10,
         backgroundColor: 'white',
         shadowColor: 'gray',
@@ -192,6 +246,24 @@ const styles = StyleSheet.create({
 
     introduceView: {
         flex: 0.38,
-        backgroundColor: 'white'
+        alignItems: 'center',
+    },
+    introduceSubView: {
+        flex: 1, 
+        width: '90%',
+    },
+    introduceTitleText: {
+        color: 'black',
+        fontSize: 16,
+        fontWeight: 'bold',
+        paddingTop: 20,
+        paddingBottom: 20,
+    },
+    introduceButton: {
+        width: '100%',
+        height: '60%',
+        backgroundColor: '#D9D9D9',
+        borderRadius: 10,
+        overflow: 'hidden',
     },
 })
