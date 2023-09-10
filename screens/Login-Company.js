@@ -67,6 +67,7 @@ const Login = (props) => {
         user.map((row, idx) => {
             if (row.comID == id && row.comPW == pw) {
                 props.navigation.navigate("Category", {
+                    num: row.id,
                     id: row.comID,
                     pw: row.comPW,
                     phone: row.comPhone,

@@ -1,6 +1,7 @@
 import {
     View,
     Text,
+    Image,
     TouchableOpacity,
     StyleSheet,
     Dimensions,
@@ -26,16 +27,28 @@ const CustomCategory = (props) => {
         <View style={styles.categoryListSubView}>
             <View style={styles.categoryListSubSubView}>
                 <TouchableOpacity style={styles.categoryButton}>
+                    <Image
+                        style={styles.categoryButtonImage}
+                        source={props.image1}
+                    />
                     <Text style={styles.categoryButtonText}>{props.category1}</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.categoryListSubSubView}>
                 <TouchableOpacity style={styles.categoryButton}>
+                    <Image
+                        style={styles.categoryButtonImage}
+                        source={props.image2}
+                    />
                     <Text style={styles.categoryButtonText}>{props.category2}</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.categoryListSubSubView}>
                 <TouchableOpacity style={styles.categoryButton}>
+                    <Image
+                        style={styles.categoryButtonImage}
+                        source={props.image3}
+                    />
                     <Text style={styles.categoryButtonText}>{props.category3}</Text>
                 </TouchableOpacity>
             </View>
@@ -52,6 +65,7 @@ const Category = (props) => {
 
     //로그인 확인
     const { params } = props.route;
+    const num = params ? params.num : null;
     const id = params ? params.id : null;
     const pw = params ? params.pw : null;
     const name = params ? params.name : null;
@@ -93,18 +107,20 @@ const Category = (props) => {
                     <View style={styles.categoryTitleIconView}>
                         <TouchableOpacity
                             onPress={() => {
-                                if (id == null) {
+                                if (num == null) {
                                     props.navigation.navigate('LoginGuide')
-                                } else if (id != null && crn == null) {
+                                } else if (num != null && crn == null) {
                                     props.navigation.navigate('PersonUser', {
+                                        num: num,
                                         id: id,
                                         pw: pw,
                                         phone: phone,
                                         name: name,
                                         email: email,
                                     })
-                                } else if (id != null && crn != null) {
+                                } else if (num != null && crn != null) {
                                     props.navigation.navigate('CompanyUser', {
+                                        num: num,
                                         id: id,
                                         pw: pw,
                                         phone: phone,
@@ -124,18 +140,27 @@ const Category = (props) => {
                 <View style={styles.categoryListView}>
                     <CustomCategory
                         category1="인기 / 추천"
+                        image1={require('../assets/category-best.jpg')}
                         category2="IT"
+                        image2={require('../assets/category-it.jpg')}
                         category3="회계"
+                        image3={require('../assets/category-accounting.jpg')}
                     />
                     <CustomCategory
                         category1="디자인"
+                        image1={require('../assets/category-design.jpg')}
                         category2="법률"
+                        image2={require('../assets/category-theLaw.jpg')}
                         category3="미디어"
+                        image3={require('../assets/category-media.jpg')}
                     />
                     <CustomCategory
                         category1="마케팅"
+                        image1={require('../assets/category-marketing.jpg')}
                         category2="기획"
+                        image2={require('../assets/category-planning.jpg')}
                         category3="기타"
+                        image3={require('../assets/category-more.jpg')}
                     />
                 </View>
             </View>
@@ -233,10 +258,18 @@ const styles = StyleSheet.create({
         backgroundColor: '#D9D9D9',
         borderRadius: 12,
         alignItems: 'center',
+        overflow: 'hidden',
     },
     categoryButtonText: {
+        color: 'white',
         fontSize: 12,
-        fontWeight: 500
+        fontWeight: 500,
+        position: 'absolute',
+        bottom: 10,
+    },
+    categoryButtonImage: {
+        width: '100%',
+        height: '100%',
     },
 
 

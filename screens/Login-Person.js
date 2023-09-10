@@ -10,7 +10,6 @@ import { collection, getDocs, addDoc } from 'firebase/firestore';
 import { useIsFocused } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useState, useEffect } from 'react'
-import Category from './Category';
 
 
 
@@ -67,6 +66,7 @@ const Login = (props) => {
         user.map((row, idx) => {
             if (row.perID == id && row.perPW == pw) {
                 props.navigation.navigate("Category", {
+                    num: row.id,
                     id: row.perID,
                     pw: row.perPW,
                     phone: row.perPhone,
