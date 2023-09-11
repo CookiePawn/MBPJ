@@ -96,9 +96,9 @@ const Login = (props) => {
                 <TouchableOpacity 
                     style= {styles.backButton}
                     onPress={() => {props.navigation.navigate('Category')}}>
-                    <Icon style={styles.backButtonIcon} name="arrow-back-circle-outline"></Icon>
+                    <Icon style={styles.backButtonIcon} name="home-outline"></Icon>
                 </TouchableOpacity>
-                <Text style={styles.titleText}>개인 로그인</Text>
+                <Text style={styles.titleText}>기업 로그인</Text>
             </View>
             <View style={styles.textInputView}>
                 <CustomTextInput
@@ -221,6 +221,5 @@ const styles = StyleSheet.create({
     buttonSubView: {
         width: '100%',
         alignItems: 'center',
-        marginTop: 290,
     },
 })

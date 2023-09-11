@@ -15,6 +15,7 @@ import RecruitmentInfo from '../screens/RecruitmentInfo'
 import Category from '../screens/Category'
 import PersonUser from '../screens/User-Person';
 import CompanyUser from '../screens/User-Company';
+import Map from '../screens/Map';
 
 
 
@@ -34,10 +35,11 @@ const StackNavigator = () => {
             <Stack.Screen name='CompanyLogin' component={CompanyLogin} options={{unmountOnBlur: true}}/>
             <Stack.Screen name='PersonSignUp' component={PersonSignUp} options={{unmountOnBlur: true}}/>
             <Stack.Screen name='CompanySignUp' component={CompanySignUp} options={{unmountOnBlur: true}}/>
-
-
             <Stack.Screen name='PersonUser' component={PersonUser} options={{unmountOnBlur: true}}/>
             <Stack.Screen name='CompanyUser' component={CompanyUser} options={{unmountOnBlur: true}}/>
+
+            {/*미완성*/}
+            <Stack.Screen name='Map' component={Map}/>
             <Stack.Screen name='Recruitment' component={Recruitment}/>
             <Stack.Screen name='Recruitmentinfo' component={RecruitmentInfo}/>
         </Stack.Navigator>

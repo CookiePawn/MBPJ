@@ -44,7 +44,12 @@ const CustomCategory = (props) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.categoryListSubSubView}>
-                <TouchableOpacity style={styles.categoryButton}>
+                <TouchableOpacity 
+                    style={styles.categoryButton}
+                    onPress={()=>{
+                        props.navi.navigation.navigate(`${props.screen}`, props.params)
+                    }}
+                >
                     <Image
                         style={styles.categoryButtonImage}
                         source={props.image3}
@@ -155,12 +160,23 @@ const Category = (props) => {
                         image3={require('../assets/category-media.jpg')}
                     />
                     <CustomCategory
+                        navi={props}
+                        params={{
+                            num: num,
+                            id: id,
+                            pw: pw,
+                            phone: phone,
+                            name: name,
+                            email: email,
+                            CRN: crn
+                        }}
                         category1="마케팅"
                         image1={require('../assets/category-marketing.jpg')}
                         category2="기획"
                         image2={require('../assets/category-planning.jpg')}
-                        category3="기타"
-                        image3={require('../assets/category-more.jpg')}
+                        category3="내 주변 기업"
+                        image3={require('../assets/category-maps.jpg')}
+                        screen='Map'
                     />
                 </View>
             </View>
