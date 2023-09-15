@@ -26,9 +26,10 @@ const Map = (props) => {
 
     //위치 정보
     const [region, setRegion] = useState({
-        latitude: 0,
-        longitude: 0,
+          latitude: 0,
+          longitude: 0,
     });
+
     const [km, setKm] = useState(0)
     const [followsUser, setFollowUser] = useState(true)
 
@@ -63,8 +64,7 @@ const Map = (props) => {
                 latitude: 36.800280020840844,
                 longitude: 127.07498548034647,
             }} 
-            title="선문대학교 아산캠퍼스" 
-            description={`거리: ${(Number(km) / 1000).toFixed(2)} km`}
+            title="선문대학교 아산캠퍼스"
             onPress={ () => {
                 const distance = Geolib.getDistance(
                     region,
@@ -76,17 +76,33 @@ const Map = (props) => {
         />
         <Marker 
             coordinate={{
-                latitude: 36.79871597276918,
-                longitude: 127.07595879175446,
+                latitude: 36.77195296845993,
+                longitude: 127.06000439331741,
             }} 
-            title="선문대학교 아산캠퍼스 인문대" 
+            title="백지환 집" 
+            onPress={ () => {
+                const distance = Geolib.getDistance(
+                    region,
+                    {latitude: 36.77195296845993,
+                    longitude: 127.06000439331741,}
+                );
+                setKm(distance)
+            }}
         />
         <Marker 
             coordinate={{
-                latitude:  36.79745361477695,
-                longitude: 127.07720128122577,
+                latitude:  36.83040711295872,
+                longitude: 127.18970055646777,
             }} 
-            title="선문대학교 아산캠퍼스 학생회관" 
+            title="김우희 집" 
+            onPress={ () => {
+                const distance = Geolib.getDistance(
+                    region,
+                    {latitude:  36.83040711295872,
+                    longitude: 127.18970055646777,}
+                );
+                setKm(distance)
+            }}
         />
         <Marker 
             coordinate={{
@@ -94,7 +110,6 @@ const Map = (props) => {
                 longitude: 127.01613316976758,
             }} 
             title="안준철 집" 
-            description={`거리: ${(Number(km) / 1000).toFixed(2)} km`}
             onPress={ () => {
                 const distance = Geolib.getDistance(
                     region,
@@ -105,6 +120,9 @@ const Map = (props) => {
             }}
         />
       </MapView>
+      <Text style={styles.distanceText}>
+        {`현재 위치로부터 ${Number(km / 1000).toFixed(2)} km`}
+      </Text>
         <TouchableOpacity 
             style={styles.homeButton}
             onPress={() => {
@@ -177,4 +195,19 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.45,
         shadowRadius: 10,
     },
+    distanceText: {
+        position: 'absolute',
+        top: 50,
+        left: 20,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 5,
+        shadowColor: 'black',
+        shadowOffset: {
+          width: 3,
+          height: 3,
+        },
+        shadowOpacity: 0.45,
+        shadowRadius: 10,
+      },
 })

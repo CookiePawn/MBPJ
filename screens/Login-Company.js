@@ -10,7 +10,6 @@ import { collection, getDocs, addDoc } from 'firebase/firestore';
 import { useIsFocused } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useState, useEffect } from 'react'
-import { log } from 'react-native-reanimated';
 
 
 
