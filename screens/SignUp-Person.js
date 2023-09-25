@@ -97,7 +97,7 @@ const SignUp = (props) => {
     return (
         <View style={styles.mainView}>
             <View style={styles.titleView}>
-                <Text style={styles.titleText}>개인 가입하기</Text>
+                <Text style={styles.titleText}>가입하기</Text>
             </View>
             <View style={styles.textInputView}>
                 <CustomTextInput

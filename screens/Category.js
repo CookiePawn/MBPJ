@@ -146,7 +146,7 @@ const Category = (props) => {
                         <TouchableOpacity
                             onPress={() => {
                                 if (num == null) {
-                                    props.navigation.navigate('LoginGuide')
+                                    props.navigation.navigate('PersonLogin')
                                 } else if (num != null && crn == null) {
                                     props.navigation.navigate('PersonUser', {
                                         num: num,
@@ -155,16 +155,6 @@ const Category = (props) => {
                                         phone: phone,
                                         name: name,
                                         email: email,
-                                    })
-                                } else if (num != null && crn != null) {
-                                    props.navigation.navigate('CompanyUser', {
-                                        num: num,
-                                        id: id,
-                                        pw: pw,
-                                        phone: phone,
-                                        name: name,
-                                        email: email,
-                                        CRN: crn
                                     })
                                 }
                             }}

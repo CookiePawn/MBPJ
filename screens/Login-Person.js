@@ -97,7 +97,7 @@ const Login = (props) => {
                     onPress={() => {props.navigation.navigate('Category')}}>
                     <Icon style={styles.backButtonIcon} name="home-outline"></Icon>
                 </TouchableOpacity>
-                <Text style={styles.titleText}>개인 로그인</Text>
+                <Text style={styles.titleText}>로그인</Text>
             </View>
             <View style={styles.textInputView}>
                 <CustomTextInput

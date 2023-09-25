@@ -5,16 +5,10 @@ import React from 'react';
 
 //스크린
 import StartPage from '../screens/StartPage';
-import LoginGuide from '../screens/LoginGuide'
 import PersonLogin from '../screens/Login-Person'
-import CompanyLogin from '../screens/Login-Company'
 import PersonSignUp from '../screens/SignUp-Person'
-import CompanySignUp from'../screens/SignUp-Company'
-import Recruitment from '../screens/Recruitment'
-import RecruitmentInfo from '../screens/RecruitmentInfo'
 import Category from '../screens/Category'
 import PersonUser from '../screens/User-Person';
-import CompanyUser from '../screens/User-Company';
 import Map from '../screens/Map';
 
 
@@ -30,18 +24,12 @@ const StackNavigator = () => {
         >
             <Stack.Screen name='StartPage' component={StartPage} options={{unmountOnBlur: true}}/>
             <Stack.Screen name='Category' component={Category} options={{unmountOnBlur: true}}/>
-            <Stack.Screen name='LoginGuide' component={LoginGuide} options={{unmountOnBlur: true}}/>
             <Stack.Screen name='PersonLogin' component={PersonLogin} options={{unmountOnBlur: true}}/>
-            <Stack.Screen name='CompanyLogin' component={CompanyLogin} options={{unmountOnBlur: true}}/>
             <Stack.Screen name='PersonSignUp' component={PersonSignUp} options={{unmountOnBlur: true}}/>
-            <Stack.Screen name='CompanySignUp' component={CompanySignUp} options={{unmountOnBlur: true}}/>
             <Stack.Screen name='PersonUser' component={PersonUser} options={{unmountOnBlur: true}}/>
-            <Stack.Screen name='CompanyUser' component={CompanyUser} options={{unmountOnBlur: true}}/>
 
             {/*미완성*/}
             <Stack.Screen name='Map' component={Map}/>
-            <Stack.Screen name='Recruitment' component={Recruitment}/>
-            <Stack.Screen name='Recruitmentinfo' component={RecruitmentInfo}/>
         </Stack.Navigator>
     )
 }
