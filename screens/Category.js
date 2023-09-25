@@ -3,6 +3,7 @@ import {
     Text,
     Image,
     TouchableOpacity,
+    ScrollView,
     StyleSheet,
     Dimensions,
 } from 'react-native'
@@ -26,24 +27,6 @@ const CustomCategory = (props) => {
     return (
         <View style={styles.categoryListSubView}>
             <View style={styles.categoryListSubSubView}>
-                <TouchableOpacity style={styles.categoryButton}>
-                    <Image
-                        style={styles.categoryButtonImage}
-                        source={props.image1}
-                    />
-                    <Text style={styles.categoryButtonText}>{props.category1}</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.categoryListSubSubView}>
-                <TouchableOpacity style={styles.categoryButton}>
-                    <Image
-                        style={styles.categoryButtonImage}
-                        source={props.image2}
-                    />
-                    <Text style={styles.categoryButtonText}>{props.category2}</Text>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.categoryListSubSubView}>
                 <TouchableOpacity 
                     style={styles.categoryButton}
                     onPress={()=>{
@@ -52,9 +35,9 @@ const CustomCategory = (props) => {
                 >
                     <Image
                         style={styles.categoryButtonImage}
-                        source={props.image3}
+                        source={props.image}
                     />
-                    <Text style={styles.categoryButtonText}>{props.category3}</Text>
+                    <Text style={styles.categoryButtonText}>{props.category}</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -162,45 +145,61 @@ const Category = (props) => {
                             <Icon name="person" size={25} color="black" style={[styles.icon, { marginLeft: 60 }]} />
                         </TouchableOpacity>
                         <Icon name="notifications-outline" size={30} color="black" style={styles.icon} />
-                        <Icon name="settings-outline" size={30} color="black" style={styles.icon} />
                     </View>
                 </View>
                 <View style={styles.categoryListView}>
-                    <CustomCategory
-                        category1="인기 / 추천"
-                        image1={require('../assets/category-best.jpg')}
-                        category2="IT"
-                        image2={require('../assets/category-it.jpg')}
-                        category3="회계"
-                        image3={require('../assets/category-accounting.jpg')}
-                    />
-                    <CustomCategory
-                        category1="디자인"
-                        image1={require('../assets/category-design.jpg')}
-                        category2="법률"
-                        image2={require('../assets/category-theLaw.jpg')}
-                        category3="미디어"
-                        image3={require('../assets/category-media.jpg')}
-                    />
-                    <CustomCategory
-                        navi={props}
-                        params={{
-                            num: num,
-                            id: id,
-                            pw: pw,
-                            phone: phone,
-                            name: name,
-                            email: email,
-                            CRN: crn
-                        }}
-                        category1="마케팅"
-                        image1={require('../assets/category-marketing.jpg')}
-                        category2="기획"
-                        image2={require('../assets/category-planning.jpg')}
-                        category3="내 주변 기업"
-                        image3={require('../assets/category-maps.jpg')}
-                        screen='Map'
-                    />
+                    <ScrollView 
+                        style={styles.categoryListScrollView}
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}
+                        showsVerticalScrollIndicator={false}
+                    >
+                        <CustomCategory
+                            navi={props}
+                            params={{
+                                num: num,
+                                id: id,
+                                pw: pw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                CRN: crn
+                            }}
+                            category="공동 참업자 모집"
+                            image={require('../assets/category-it.jpg')}
+                            screen='Category'
+                        />
+                        <CustomCategory
+                            navi={props}
+                            params={{
+                                num: num,
+                                id: id,
+                                pw: pw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                CRN: crn
+                            }}
+                            category="팀원 모집"
+                            image={require('../assets/category-design.jpg')}
+                            screen='Category'
+                        />
+                        <CustomCategory
+                            navi={props}
+                            params={{
+                                num: num,
+                                id: id,
+                                pw: pw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                CRN: crn
+                            }}
+                            category="주변 개입/기업 보기"
+                            image={require('../assets/category-maps.jpg')}
+                            screen='Map'
+                        />
+                    </ScrollView>
                 </View>
             </View>
             <View style={styles.trendView}>
@@ -244,8 +243,9 @@ const styles = StyleSheet.create({
 
     //카테고리 뷰
     categoryView: {
-        flex: 0.6,
+        flex: 0.4,
         width: '90%',
+        margin: 50,
     },
     categoryTitleView: {
         flex: 0.3,
@@ -257,11 +257,13 @@ const styles = StyleSheet.create({
     },
     categoryTitleText: {
         marginTop: 20,
+        lineHeight: 25,
         color: 'black',
         fontSize: 24,
         fontWeight: 'bold'
     },
     categoryTitleSubText: {
+        marginTop: 10,
         color: 'rgba(153, 153, 153, 0.60)',
         fontSize: 16,
         fontWeight: 400,
@@ -279,20 +281,25 @@ const styles = StyleSheet.create({
 
 
     categoryListView: {
-        flex: 0.7,
+        flex: 1,
+        marginTop: 20,
+    },
+    categoryListScrollView: {
+        flex: 1,
+        flexDirection: 'row',
     },
     categoryListSubView: {
-        flex: 0.333333,
+        flex: 1,
         flexDirection: 'row',
     },
     categoryListSubSubView: {
-        flex: 0.3333333,
         alignItems: 'center',
         justifyContent: 'center',
     },
     categoryButton: {
-        width: '92%',
-        height: '92%',
+        width: 230,
+        height: 230,
+        marginRight: 24,
         backgroundColor: '#D9D9D9',
         borderRadius: 12,
         alignItems: 'center',
@@ -300,10 +307,11 @@ const styles = StyleSheet.create({
     },
     categoryButtonText: {
         color: 'white',
-        fontSize: 12,
-        fontWeight: 500,
+        fontSize: 16,
+        fontWeight: 'bold',
         position: 'absolute',
-        bottom: 10,
+        top: 17,
+        left: 17,
     },
     categoryButtonImage: {
         width: '100%',
