@@ -150,7 +150,11 @@ const Category = (props) => {
 
 
     return (
-        <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
+        <ScrollView 
+            style={{flex: 1, backgroundColor: 'white'}}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}    
+        >
             <View style={styles.mainView}>
                 <View style={styles.categoryView}>
                     <View style={styles.categoryTitleView}>
@@ -198,11 +202,10 @@ const Category = (props) => {
                                     phone: phone,
                                     name: name,
                                     email: email,
-                                    CRN: crn
                                 }}
                                 category="공동 참업자 모집"
                                 image={require('../assets/category-it.jpg')}
-                                screen='Category'
+                                screen='Cofounder'
                             />
                             <CustomCategory
                                 navi={props}
@@ -213,11 +216,10 @@ const Category = (props) => {
                                     phone: phone,
                                     name: name,
                                     email: email,
-                                    CRN: crn
                                 }}
                                 category="팀원 모집"
                                 image={require('../assets/category-design.jpg')}
-                                screen='Category'
+                                screen='Team'
                             />
                             <CustomCategory
                                 navi={props}
@@ -228,7 +230,6 @@ const Category = (props) => {
                                     phone: phone,
                                     name: name,
                                     email: email,
-                                    CRN: crn
                                 }}
                                 category="주변 개입/기업 보기"
                                 image={require('../assets/category-maps.jpg')}
@@ -244,6 +245,22 @@ const Category = (props) => {
                                 이런 사람은 어때요?{'\n'}
                                 <Text style={styles.categoryTitleSubText}>필요한 사람을 직접 찾아보세요</Text>
                             </Text>
+                        </View>
+                        <View style={styles.categoryTitleIconView}>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    props.navigation.navigate('People', {
+                                        num: num,
+                                        id: id,
+                                        pw: pw,
+                                        phone: phone,
+                                        name: name,
+                                        email: email,
+                                    })
+                                }}
+                            >
+                                <Text style={styles.moreText}>더보기</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                     <ScrollView 
@@ -296,6 +313,11 @@ const Category = (props) => {
                                 이런 스타트업은 어때요?{'\n'}
                                 <Text style={styles.categoryTitleSubText}>다양한 스타트업을 확인해보세요</Text>
                             </Text>
+                        </View>
+                        <View style={styles.categoryTitleIconView}>
+                            <TouchableOpacity>
+                                <Text style={styles.moreText}>더보기</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
                     <View style={styles.startUpListView}>
@@ -461,6 +483,11 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 94,
     },
+    moreText: {
+        color: '#999',
+        fontSize: 12,
+        position: 'absolute',
+    },  
     peopleListScrollView: {
         marginTop: 20,
         flexDirection: 'row',
