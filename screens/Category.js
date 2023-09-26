@@ -3,17 +3,13 @@ import {
     Text,
     Image,
     TouchableOpacity,
+    ActivityIndicator,
     ScrollView,
     StyleSheet,
     Dimensions,
 } from 'react-native'
 import {
-    LineChart,
-    BarChart,
     PieChart,
-    ProgressChart,
-    ContributionGraph,
-    StackedBarChart
 } from "react-native-chart-kit";
 import Icon from 'react-native-vector-icons/Ionicons'
 import React, { useState, useEffect } from 'react'
@@ -62,7 +58,7 @@ const CustomPeople = (props) => {
                 <Text style={styles.peopleListInfoText}>{props.info}</Text>
             </View>    
         </TouchableOpacity>
-    )
+    ) 
 }
 
 
@@ -109,7 +105,7 @@ const Category = (props) => {
     useEffect(() => {
         const fetchImage = async () => {
             try {
-                const storageRef = ref(storage, '/image/user/profile/');
+                const storageRef = ref(storage, '/userProfile');
                 const result = await listAll(storageRef);
                 const imageUrls = [];
                 // 각 아이템의 URL과 이름을 가져와 imageUrls 배열에 저장
@@ -314,19 +310,23 @@ const Category = (props) => {
                         showsHorizontalScrollIndicator={false}
                         showsVerticalScrollIndicator={false}
                     >
+
+
                         {imageUrl.map((imageUrlItem, idx) => {
                             if (idx >= 7) return null;
 
                             let url = imageUrlItem.url;
                             let name = imageUrlItem.name;
                             const matchingUsers = user.filter((item) => item.image === name);
+
                             return matchingUsers.map((matchingUserItem) => (
                                 <CustomPeople
-                                image={{ uri: url }}
-                                name={matchingUserItem.name}
-                                info={matchingUserItem.info}
+                                    key={idx}
+                                    image={{ uri: url }}
+                                    name={matchingUserItem.name}
+                                    info={matchingUserItem.info}
                                 />
-                            ));
+                            ));   
                         })}
                     </ScrollView>
                 </View>

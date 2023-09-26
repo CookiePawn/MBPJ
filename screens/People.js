@@ -58,7 +58,7 @@ const People = (props) => {
     useEffect(() => {
         const fetchImage = async () => {
             try {
-                const storageRef = ref(storage, '/image/user/profile/');
+                const storageRef = ref(storage, '/userProfile');
                 const result = await listAll(storageRef);
                 const imageUrls = [];
                 // 각 아이템의 URL과 이름을 가져와 imageUrls 배열에 저장
@@ -139,6 +139,7 @@ const People = (props) => {
                         const matchingUsers = user.filter((item) => item.image === name);
                         return matchingUsers.map((matchingUserItem) => (
                             <CustomList
+                                key={idx}
                                 image={{ uri: url }}
                                 name={matchingUserItem.name}
                                 info={matchingUserItem.info}
@@ -199,6 +200,7 @@ const styles = StyleSheet.create({
         height: 70,
         borderRadius: 100,
         margin: 10,
+        marginRight: 20,
     },
     listSubSubView: {
         flex: 1,
