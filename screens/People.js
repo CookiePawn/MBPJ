@@ -7,6 +7,12 @@ import {
     StyleSheet,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
+import React, { useState, useEffect } from 'react'
+import storage from '../DB/Storage'
+import db from '../DB/FireBase'
+import { collection, getDocs, } from 'firebase/firestore';
+import { listAll, getDownloadURL, ref, } from '@firebase/storage';
+import { useIsFocused } from '@react-navigation/native';
 
 
 
@@ -41,6 +47,53 @@ const People = (props) => {
     const name = params ? params.name : null;
     const email = params ? params.email : null;
     const phone = params ? params.phone : null;
+
+
+    //db
+    const [imageUrl, setImageUrl] = useState([]);
+    const [user, setUser] = useState([])
+
+    const isFocused = useIsFocused();
+
+    useEffect(() => {
+        const fetchImage = async () => {
+            try {
+                const storageRef = ref(storage, '/image/user/profile/');
+                const result = await listAll(storageRef);
+                const imageUrls = [];
+                // 각 아이템의 URL과 이름을 가져와 imageUrls 배열에 저장
+                for (const item of result.items) {
+                    const url = await getDownloadURL(item);
+                    imageUrls.push({ url, name: item.name });
+                }
+                setImageUrl(imageUrls);
+            } catch (error) {
+                console.error('이미지 로딩 오류:', error);
+            }
+        };
+        const readFromDB = async () => {
+            try {
+                const data = await getDocs(collection(db, 'userInfo'));
+                let tempArray = [];
+                data.forEach((doc) => {
+                    tempArray.push({ ...doc.data(), id: doc.id });
+                });
+                setUser(tempArray);
+            } catch (error) {
+                console.log("Error fetching data:", error.message);
+            }
+        };
+        fetchImage();
+        readFromDB();
+    }, [isFocused]);
+
+
+
+
+
+
+
+
 
     return (
         <View style={styles.mainView}>
@@ -78,76 +131,20 @@ const People = (props) => {
                     showsHorizontalScrollIndicator={false}
                     showsVerticalScrollIndicator={false}
                 >
-                    <CustomList
-                        image= {require('../assets/peopleImage/moohee.png')}
-                        name= '김우희'
-                        info= 'Backend Developer'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/rlacodnjs.jpeg')}
-                        name= '김채원'
-                        info= 'Frontend Delveloper'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/rnjsdmsql.jpg')}
-                        name= '권은비'
-                        info= 'UI/UX Designer'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/whdbfl.jpg')}
-                        name= '조유리'
-                        info= 'Backend Delveloper'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/cyeks.png')}
-                        name= '쵸단'
-                        info= 'Backend Delveloper'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/sakura.jpg')}
-                        name= '사쿠라'
-                        info= 'Backend Delveloper'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/tlstjdus.jpg')}
-                        name= '신서연'
-                        info= 'Backend Delveloper'
-                    />
-                    <CustomList
-                        image= {require('../assets/peopleImage/moohee.png')}
-                        name= '김우희'
-                        info= 'Backend Developer'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/rlacodnjs.jpeg')}
-                        name= '김채원'
-                        info= 'Frontend Delveloper'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/rnjsdmsql.jpg')}
-                        name= '권은비'
-                        info= 'UI/UX Designer'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/whdbfl.jpg')}
-                        name= '조유리'
-                        info= 'Backend Delveloper'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/cyeks.png')}
-                        name= '쵸단'
-                        info= 'Backend Delveloper'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/sakura.jpg')}
-                        name= '사쿠라'
-                        info= 'Backend Delveloper'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/tlstjdus.jpg')}
-                        name= '신서연'
-                        info= 'Backend Delveloper'
-                    />
+                    {imageUrl.map((imageUrlItem, idx) => {
+                        if (idx >= 7) return null;
+
+                        let url = imageUrlItem.url;
+                        let name = imageUrlItem.name;
+                        const matchingUsers = user.filter((item) => item.image === name);
+                        return matchingUsers.map((matchingUserItem) => (
+                            <CustomList
+                                image={{ uri: url }}
+                                name={matchingUserItem.name}
+                                info={matchingUserItem.info}
+                            />
+                        ));
+                    })}
                 </ScrollView>
             </View>
         </View>

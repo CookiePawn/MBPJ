@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
         borderColor: '#E8E8E8',
     },
     nameText: {
-        fontSize: 20,
+        fontSize: 17,
         fontWeight: 'bold',
         lineHeight: 40,
 
