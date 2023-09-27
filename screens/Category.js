@@ -94,7 +94,6 @@ const Category = (props) => {
     const name = params ? params.name : null;
     const email = params ? params.email : null;
     const phone = params ? params.phone : null;
-    const crn = params ? params.crn : null;
 
     //db
     const [imageUrl, setImageUrl] = useState([]);
@@ -210,8 +209,8 @@ const Category = (props) => {
                                 onPress={() => {
                                     if (num == null) {
                                         props.navigation.navigate('PersonLogin')
-                                    } else if (num != null && crn == null) {
-                                        props.navigation.navigate('PersonUser', {
+                                    } else if (num != null) {
+                                        props.navigation.navigate('MyPage', {
                                             num: num,
                                             id: id,
                                             pw: pw,

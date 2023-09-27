@@ -8,7 +8,8 @@ import StartPage from '../screens/StartPage';
 import PersonLogin from '../screens/Login-Person'
 import PersonSignUp from '../screens/SignUp-Person'
 import Category from '../screens/Category'
-import PersonUser from '../screens/User-Person';
+import MyPage from '../screens/MyPage';
+import MyProfile from '../screens/MyProfile'
 import Map from '../screens/Map';
 import People from '../screens/People';
 import Cofounder from '../screens/Cofounder';
@@ -29,13 +30,15 @@ const StackNavigator = () => {
             <Stack.Screen name='Category' component={Category} options={{unmountOnBlur: true}}/>
             <Stack.Screen name='PersonLogin' component={PersonLogin} options={{unmountOnBlur: true}}/>
             <Stack.Screen name='PersonSignUp' component={PersonSignUp} options={{unmountOnBlur: true}}/>
-            <Stack.Screen name='PersonUser' component={PersonUser} options={{unmountOnBlur: true}}/>
+            
 
             {/*미완성*/}
             <Stack.Screen name='Map' component={Map}/>
             <Stack.Screen name='People' component={People}/>
             <Stack.Screen name='Cofounder' component={Cofounder}/>
             <Stack.Screen name='Team' component={Team}/>
+            <Stack.Screen name='MyPage' component={MyPage}/>
+            <Stack.Screen name='MyProfile' component={MyProfile}/>
         </Stack.Navigator>
     )
 }
