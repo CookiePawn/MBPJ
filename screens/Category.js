@@ -70,10 +70,12 @@ const CustomStartUp = (props) => {
                     style={styles.startUpListImage}
                     source={props.image}
                 />
-                <Text style={styles.startUpNameText}>
-                    {props.name}{'\n'}
-                    <Text style={styles.startUpInfoText}>{props.info}</Text>
-                </Text>
+                <View style={styles.startUpInfoTextView}>
+                    <Text style={styles.startUpNameText}>
+                        {props.name}{'\n'}
+                        <Text style={styles.startUpInfoText}>{props.info}</Text>
+                    </Text>    
+                </View>
             </View>   
         </TouchableOpacity>
     )
@@ -96,13 +98,15 @@ const Category = (props) => {
     const phone = params ? params.phone : null;
 
     //db
-    const [imageUrl, setImageUrl] = useState([]);
+    const [userImage, setUserImage] = useState([]);
+    const [startupImage, setStartupImage] = useState([]);
     const [user, setUser] = useState([])
+    const [startup, setStartup] = useState([])
 
     const isFocused = useIsFocused();
 
     useEffect(() => {
-        const fetchImage = async () => {
+        const userImage = async () => {
             try {
                 const storageRef = ref(storage, '/userProfile');
                 const result = await listAll(storageRef);
@@ -112,12 +116,27 @@ const Category = (props) => {
                     const url = await getDownloadURL(item);
                     imageUrls.push({ url, name: item.name });
                 }
-                setImageUrl(imageUrls);
+                setUserImage(imageUrls);
             } catch (error) {
                 console.error('이미지 로딩 오류:', error);
             }
         };
-        const readFromDB = async () => {
+        const startupImage = async () => {
+            try {
+                const storageRef = ref(storage, '/startupProfile');
+                const result = await listAll(storageRef);
+                const imageUrls = [];
+                // 각 아이템의 URL과 이름을 가져와 imageUrls 배열에 저장
+                for (const item of result.items) {
+                    const url = await getDownloadURL(item);
+                    imageUrls.push({ url, name: item.name });
+                }
+                setStartupImage(imageUrls);
+            } catch (error) {
+                console.error('이미지 로딩 오류:', error);
+            }
+        };
+        const userDB = async () => {
             try {
                 const data = await getDocs(collection(db, 'userInfo'));
                 let tempArray = [];
@@ -129,8 +148,22 @@ const Category = (props) => {
                 console.log("Error fetching data:", error.message);
             }
         };
-        fetchImage();
-        readFromDB();
+        const startupDB = async () => {
+            try {
+                const data = await getDocs(collection(db, 'startupInfo'));
+                let tempArray = [];
+                data.forEach((doc) => {
+                    tempArray.push({ ...doc.data(), id: doc.id });
+                });
+                setStartup(tempArray);
+            } catch (error) {
+                console.log("Error fetching data:", error.message);
+            }
+        };
+        userImage();
+        startupImage();
+        userDB();
+        startupDB();
     }, [isFocused]);
 
 
@@ -309,23 +342,30 @@ const Category = (props) => {
                         showsHorizontalScrollIndicator={false}
                         showsVerticalScrollIndicator={false}
                     >
-
-
-                        {imageUrl.map((imageUrlItem, idx) => {
+                        {user.map((userItem, idx) => {
                             if (idx >= 7) return null;
 
-                            let url = imageUrlItem.url;
-                            let name = imageUrlItem.name;
-                            const matchingUsers = user.filter((item) => item.image === name);
+                            const userUrl = userImage.filter((item) => item.name === userItem.image);
 
-                            return matchingUsers.map((matchingUserItem) => (
+                            if (userUrl.length > 0) {
+                                return userUrl.map((urlItem, urlIdx) => (
+                                    <CustomPeople
+                                        key={idx}
+                                        image={{ uri: urlItem.url }}
+                                        name={userItem.name}
+                                        info={userItem.info}
+                                    />
+                                ));
+                            }
+                            
+                            return (
                                 <CustomPeople
                                     key={idx}
-                                    image={{ uri: url }}
-                                    name={matchingUserItem.name}
-                                    info={matchingUserItem.info}
+                                    image={require('../assets/start-solo.png')}
+                                    name={userItem.name}
+                                    info={userItem.info}
                                 />
-                            ));   
+                            );
                         })}
                     </ScrollView>
                 </View>
@@ -344,35 +384,31 @@ const Category = (props) => {
                         </View>
                     </View>
                     <View style={styles.startUpListView}>
-                        <CustomStartUp
-                            image={require('../assets/category-it.jpg')}
-                            name= 'JunTech'
-                            info= 'Health care application 개발'
-                        />
-                        <View style={styles.startUpBoreder}/>
-                        <CustomStartUp
-                            image={require('../assets/profile.png')}
-                            name= 'Instagram'
-                            info= '인재 개발'
-                        />
-                        <View style={styles.startUpBoreder}/>
-                        <CustomStartUp
-                            image={require('../assets/start-solo.png')}
-                            name= 'GoMin'
-                            info= '어떤거 개발할까 고민중'
-                        />
-                        <View style={styles.startUpBoreder}/>
-                        <CustomStartUp
-                            image={require('../assets/start-enter.png')}
-                            name= '모트라스'
-                            info= '현대 3개 차종 엔진 개발 및 생산'
-                        />
-                        <View style={styles.startUpBoreder}/>
-                        <CustomStartUp
-                            image={require('../assets/start-thinking.png')}
-                            name= '숯숯'
-                            info= '김우희 지갑 개발'
-                        />
+                        {startup.map((startupItem, idx) => {
+                            if (idx >= 5) return null;
+
+                            const startupUrl = startupImage.filter((item) => item.name === startupItem.image);
+
+                            if (startupUrl.length > 0) {
+                                return startupUrl.map((urlItem, urlIdx) => (
+                                    <CustomStartUp
+                                        key={idx}
+                                        image={{ uri: urlItem.url }}
+                                        name={startupItem.name}
+                                        info={startupItem.info}
+                                    />
+                                ));
+                            }
+                            
+                            return (
+                                <CustomStartUp
+                                    key={idx}
+                                    image={require('../assets/start-solo.png')}
+                                    name={startupItem.name}
+                                    info={startupItem.info}
+                                />
+                            );
+                        })}
                     </View>
                 </View>
 
@@ -569,7 +605,14 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginRight: 10,
     },
+    startUpInfoTextView: {
+        flex: 1,
+        height: 80,
+        borderBottomWidth: 1,
+        borderColor: '#E8E8E8',
+    },
     startUpNameText: {
+        paddingTop: 10,
         fontSize: 16,
         fontWeight: 'bold',
         lineHeight: 28,
@@ -577,13 +620,6 @@ const styles = StyleSheet.create({
     startUpInfoText: {
         fontSize: 12,
         color: 'rgba(0, 0, 0, 0.60)',
-    },
-    startUpBoreder: {
-        width: '90%',
-        height: 1,
-        borderColor: '#E8E8E8',
-        borderWidth: 1,
-        marginLeft: 70,
     },
 
 

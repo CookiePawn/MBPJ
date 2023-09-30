@@ -128,23 +128,32 @@ const People = (props) => {
             </View>
             <View style={styles.listView}>
                 <ScrollView
+                    style={{marginBottom: 150,}}
                     showsHorizontalScrollIndicator={false}
                     showsVerticalScrollIndicator={false}
                 >
-                    {imageUrl.map((imageUrlItem, idx) => {
-                        if (idx >= 7) return null;
+                    {user.map((userItem, idx) => {
+                        const userUrl = imageUrl.filter((item) => item.name === userItem.image);
 
-                        let url = imageUrlItem.url;
-                        let name = imageUrlItem.name;
-                        const matchingUsers = user.filter((item) => item.image === name);
-                        return matchingUsers.map((matchingUserItem) => (
+                        if (userUrl.length > 0) {
+                            return userUrl.map((urlItem, urlIdx) => (
+                                <CustomList
+                                    key={idx}
+                                    image={{ uri: urlItem.url }}
+                                    name={userItem.name}
+                                    info={userItem.info}
+                                />
+                            ));
+                        }
+                        
+                        return (
                             <CustomList
                                 key={idx}
-                                image={{ uri: url }}
-                                name={matchingUserItem.name}
-                                info={matchingUserItem.info}
+                                image={require('../assets/start-solo.png')}
+                                name={userItem.name}
+                                info={userItem.info}
                             />
-                        ));
+                        );
                     })}
                 </ScrollView>
             </View>
