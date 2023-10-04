@@ -14,7 +14,7 @@ import Map from '../screens/Map';
 import People from '../screens/People';
 import Cofounder from '../screens/Cofounder';
 import Team from '../screens/Team';
-
+import Chatbot from '../screens/Chatbot';
 
 
 const Stack = createStackNavigator();
@@ -23,7 +23,7 @@ const Stack = createStackNavigator();
 const StackNavigator = () => {
     return (
         <Stack.Navigator 
-            initialRouteName='StartPage'
+            initialRouteName='Chatbot'
             screenOptions={{ headerShown: false }}
         >
             <Stack.Screen name='StartPage' component={StartPage} options={{unmountOnBlur: true}}/>
@@ -39,6 +39,7 @@ const StackNavigator = () => {
             <Stack.Screen name='Team' component={Team}/>
             <Stack.Screen name='MyPage' component={MyPage}/>
             <Stack.Screen name='MyProfile' component={MyProfile}/>
+            <Stack.Screen name="Chatbot" component={Chatbot}/>
         </Stack.Navigator>
     )
 }
