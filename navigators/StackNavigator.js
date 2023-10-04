@@ -31,6 +31,7 @@ const StackNavigator = () => {
             <Stack.Screen name='PersonLogin' component={PersonLogin} options={{unmountOnBlur: true}}/>
             <Stack.Screen name='PersonSignUp' component={PersonSignUp} options={{unmountOnBlur: true}}/>
             
+            
 
             {/*미완성*/}
             <Stack.Screen name='Map' component={Map}/>

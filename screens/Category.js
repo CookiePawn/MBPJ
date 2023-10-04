@@ -3,7 +3,6 @@ import {
     Text,
     Image,
     TouchableOpacity,
-    ActivityIndicator,
     ScrollView,
     StyleSheet,
     Dimensions,
@@ -96,6 +95,7 @@ const Category = (props) => {
     const name = params ? params.name : null;
     const email = params ? params.email : null;
     const phone = params ? params.phone : null;
+    const image = params ? params.image : null;
 
     //db
     const [userImage, setUserImage] = useState([]);
@@ -250,6 +250,7 @@ const Category = (props) => {
                                             phone: phone,
                                             name: name,
                                             email: email,
+                                            image: image,
                                         })
                                     }
                                 }}
@@ -275,6 +276,7 @@ const Category = (props) => {
                                     phone: phone,
                                     name: name,
                                     email: email,
+                                    image: image,
                                 }}
                                 category="공동 참업자 모집"
                                 image={require('../assets/category-it.jpg')}
@@ -289,6 +291,7 @@ const Category = (props) => {
                                     phone: phone,
                                     name: name,
                                     email: email,
+                                    image: image,
                                 }}
                                 category="팀원 모집"
                                 image={require('../assets/category-design.jpg')}
@@ -303,6 +306,7 @@ const Category = (props) => {
                                     phone: phone,
                                     name: name,
                                     email: email,
+                                    image: image,
                                 }}
                                 category="주변 개입/기업 보기"
                                 image={require('../assets/category-maps.jpg')}
@@ -329,6 +333,7 @@ const Category = (props) => {
                                         phone: phone,
                                         name: name,
                                         email: email,
+                                        image: image,
                                     })
                                 }}
                             >
@@ -387,6 +392,7 @@ const Category = (props) => {
                                         phone: phone,
                                         name: name,
                                         email: email,
+                                        image: image,
                                     })
                                 }}
                             >

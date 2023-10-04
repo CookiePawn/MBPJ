@@ -6,6 +6,11 @@ import {
     StyleSheet,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
+import React, { useState, useEffect } from 'react'
+import storage from '../DB/Storage'
+import { listAll, getDownloadURL, ref, } from '@firebase/storage';
+import { useIsFocused } from '@react-navigation/native';
+
 
 
 const MyPage = (props) => {
@@ -17,6 +22,38 @@ const MyPage = (props) => {
     const name = params ? params.name : null;
     const email = params ? params.email : null;
     const phone = params ? params.phone : null;
+    const image = params ? params.image : null;
+
+
+
+
+    //db
+    const [imageUrl, setImageUrl] = useState([]);
+    let tmp = false
+
+    const isFocused = useIsFocused();
+
+    useEffect(() => {
+        const fetchImage = async () => {
+            try {
+                const storageRef = ref(storage, '/userProfile');
+                const result = await listAll(storageRef);
+                const imageUrls = [];
+                // 각 아이템의 URL과 이름을 가져와 imageUrls 배열에 저장
+                for (const item of result.items) {
+                    const url = await getDownloadURL(item);
+                    imageUrls.push({ url, name: item.name });
+                }
+                setImageUrl(imageUrls);
+            } catch (error) {
+                console.error('이미지 로딩 오류:', error);
+            }
+        };
+        fetchImage();
+    }, [isFocused]);
+
+
+
 
 
     return (
@@ -41,6 +78,7 @@ const MyPage = (props) => {
                             phone: phone,
                             name: name,
                             email: email,
+                            image: image,
                         })
                     }}
                 >
@@ -48,10 +86,28 @@ const MyPage = (props) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.profileView}>
-                <Image 
-                    style={styles.profileImage}
-                    source={require('../assets/peopleImage/moohee.png')}
-                />
+                {imageUrl.map((item, idx) => {
+                    tmp = true
+                    if(item.name == image) {
+                        return(
+                            <Image 
+                                key={idx}
+                                style={styles.profileImage}
+                                source={{ uri : item.url}}
+                            />
+                        )    
+                    } else {
+                        if(!tmp && idx == imageUrl.length-1) {
+                            return (
+                                <Image 
+                                    key={idx}
+                                    style={styles.profileImage}
+                                    source={require('../assets/start-solo.png')}
+                                />
+                            )
+                        }
+                    }
+                })}
                 <View style={styles.profileInfoView}>
                     <Text style={styles.nameText}>{name}</Text>
                     <Text style={styles.infoText}>소속 : 없음</Text>
@@ -66,7 +122,8 @@ const MyPage = (props) => {
                         pw: pw,
                         phone: phone,
                         name: name,
-                        email: email,    
+                        email: email,  
+                        image: image,  
                     })
                 }}
             >

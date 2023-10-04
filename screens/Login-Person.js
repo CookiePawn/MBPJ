@@ -47,7 +47,7 @@ const Login = (props) => {
     useEffect(() => {
         const readFromDB = async () => {
             try {
-                const data = await getDocs(collection(db, 'PersonLogin'));
+                const data = await getDocs(collection(db, 'userInfo'));
                 let tempArray = [];
                 data.forEach((doc) => {
                     tempArray.push({ ...doc.data(), id: doc.id });
@@ -70,10 +70,11 @@ const Login = (props) => {
                     id: row.perID,
                     pw: row.perPW,
                     phone: row.perPhone,
-                    name: row.perName,
-                    email: row.perEmail
+                    name: row.name,
+                    email: row.perEmail,
+                    image: row.image,
                 });
-                alert(`어서오세요 ${row.perName}님!`)
+                alert(`어서오세요 ${row.name}님!`)
                 setID('')
                 setPW('')
                 bool = true

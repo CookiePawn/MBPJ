@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
     View,
     Text,
@@ -11,6 +10,10 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons'
 import db from '../DB/FireBase'
 import { doc, updateDoc } from 'firebase/firestore';
+import React, { useState, useEffect } from 'react'
+import storage from '../DB/Storage'
+import { listAll, getDownloadURL, ref, } from '@firebase/storage';
+import { useIsFocused } from '@react-navigation/native';
 
 
 
@@ -24,9 +27,36 @@ const MyProfile = (props) => {
     const name = params ? params.name : null;
     const email = params ? params.email : null;
     const phone = params ? params.phone : null;
+    const image = params ? params.image : null;
 
     //개인정보 수정
     const [rePw, setRePw] = useState('')
+
+
+    //db
+    const [imageUrl, setImageUrl] = useState([]);
+    let tmp = false
+
+    const isFocused = useIsFocused();
+
+    useEffect(() => {
+        const fetchImage = async () => {
+            try {
+                const storageRef = ref(storage, '/userProfile');
+                const result = await listAll(storageRef);
+                const imageUrls = [];
+                // 각 아이템의 URL과 이름을 가져와 imageUrls 배열에 저장
+                for (const item of result.items) {
+                    const url = await getDownloadURL(item);
+                    imageUrls.push({ url, name: item.name });
+                }
+                setImageUrl(imageUrls);
+            } catch (error) {
+                console.error('이미지 로딩 오류:', error);
+            }
+        };
+        fetchImage();
+    }, [isFocused]);
 
 
 
@@ -77,6 +107,7 @@ const MyProfile = (props) => {
                             phone: phone,
                             name: name,
                             email: email,
+                            image: image,
                         })
                     }}
                 >
@@ -84,10 +115,28 @@ const MyProfile = (props) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.profileView}>
-                <Image 
-                    style={styles.image} 
-                    source={require('../assets/peopleImage/moohee.png')}
-                />
+                {imageUrl.map((item, idx) => {
+                    if(item.name == image) {
+                        tmp = true
+                        return(
+                            <Image 
+                                key={idx}
+                                style={styles.image}
+                                source={{ uri : item.url}}
+                            />
+                        )    
+                    } else {
+                        if(!tmp && idx == imageUrl.length-1) {
+                            return (
+                                <Image 
+                                    key={idx}
+                                    style={styles.image}
+                                    source={require('../assets/start-solo.png')}
+                                />
+                            )
+                        }
+                    }
+                })}
                 <TouchableOpacity 
                     style={styles.imageBtn}
                 >
@@ -135,6 +184,7 @@ const MyProfile = (props) => {
                             phone: phone,
                             name: name,
                             email: email,
+                            image: image,
                         })
                     }}
                 >

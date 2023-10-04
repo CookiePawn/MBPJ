@@ -48,6 +48,7 @@ const People = (props) => {
     const name = params ? params.name : null;
     const email = params ? params.email : null;
     const phone = params ? params.phone : null;
+    const image = params ? params.image : null;
 
 
     //검색
@@ -125,6 +126,7 @@ const People = (props) => {
                             phone: phone,
                             name: name,
                             email: email,
+                            image: image,
                         })
                     }}
                 >

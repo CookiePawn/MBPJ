@@ -43,7 +43,7 @@ const SignUp = (props) => {
     useEffect(() => {
         const readFromDB = async () => {
             try {
-                const data = await getDocs(collection(db, 'PersonLogin'));
+                const data = await getDocs(collection(db, 'userInfo'));
                 let tempArray = [];
                 data.forEach((doc) => {
                     tempArray.push({ ...doc.data(), id: doc.id });
@@ -77,10 +77,10 @@ const SignUp = (props) => {
         if (bool) {
             //db에 넣어라
             try {
-                await addDoc(collection(db, 'PersonLogin'), {
+                await addDoc(collection(db, 'userInfo'), {
                     perID: id,
                     perPW: pw,
-                    perName: name,
+                    name: name,
                     perEmail: email,
                     perPhone: phone
                 });
