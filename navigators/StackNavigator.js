@@ -14,6 +14,7 @@ import Map from '../screens/Map';
 import People from '../screens/People';
 import Cofounder from '../screens/Cofounder';
 import Team from '../screens/Team';
+import PeopleInfo from '../screens/Info-People';
 import Chatbot from '../screens/Chatbot';
 
 
@@ -23,7 +24,7 @@ const Stack = createStackNavigator();
 const StackNavigator = () => {
     return (
         <Stack.Navigator 
-            initialRouteName='Chatbot'
+            initialRouteName='StartPage'
             screenOptions={{ headerShown: false }}
         >
             <Stack.Screen name='StartPage' component={StartPage} options={{unmountOnBlur: true}}/>
@@ -36,6 +37,7 @@ const StackNavigator = () => {
             {/*미완성*/}
             <Stack.Screen name='Map' component={Map}/>
             <Stack.Screen name='People' component={People}/>
+            <Stack.Screen name='PeopleInfo' component={PeopleInfo}/>
             <Stack.Screen name='Cofounder' component={Cofounder}/>
             <Stack.Screen name='Team' component={Team}/>
             <Stack.Screen name='MyPage' component={MyPage}/>
