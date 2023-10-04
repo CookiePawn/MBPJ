@@ -47,7 +47,11 @@ const CustomCategory = (props) => {
 
 const CustomPeople = (props) => {
     return(
-        <TouchableOpacity>
+        <TouchableOpacity
+            onPress={() => {
+                props.navi.navigation.navigate('PeopleInfo', props.params)
+            }}
+        >
             <View style={styles.peopleListView}>
                 <Image
                     style={styles.peopleListImage}
@@ -359,6 +363,16 @@ const Category = (props) => {
                                         image={{ uri: urlItem.url }}
                                         name={userItem.name}
                                         info={userItem.info}
+                                        navi={props}
+                                        params={{
+                                            num: num,
+                                            id: id,
+                                            pw: pw,
+                                            phone: phone,
+                                            name: name,
+                                            email: email,
+                                            image: image,
+                                        }}
                                     />
                                 ));
                             }
@@ -369,6 +383,16 @@ const Category = (props) => {
                                     image={require('../assets/start-solo.png')}
                                     name={userItem.name}
                                     info={userItem.info}
+                                    navi={props}
+                                    params={{
+                                        num: num,
+                                        id: id,
+                                        pw: pw,
+                                        phone: phone,
+                                        name: name,
+                                        email: email,
+                                        image: image,
+                                    }}
                                 />
                             );
                         })}
