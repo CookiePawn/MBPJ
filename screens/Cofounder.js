@@ -2,11 +2,13 @@ import {
     View,
     Text,
     Image,
+    TextInput,
     TouchableOpacity,
     ScrollView,
     StyleSheet,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
+import React, { useEffect, useState } from 'react'
 
 
 
@@ -42,6 +44,10 @@ const Cofounder = (props) => {
     const email = params ? params.email : null;
     const phone = params ? params.phone : null;
 
+
+    //검색
+    const [search, setSearch] = useState('')
+
     return (
         <View style={styles.mainView}>
             <View style={styles.titleView}>
@@ -72,6 +78,16 @@ const Cofounder = (props) => {
                 >
                     <Icon name='home-outline' size={25} color='black'/>
                 </TouchableOpacity>
+            </View>
+            <View style={styles.searchView}>
+                <TextInput
+                    style={styles.searchTextinput}
+                    placeholder='검색어를 입력하세요'
+                    placeholderTextColor='#777'
+                    value={search}
+                    onChangeText={(e)=>{setSearch(e)}}
+                    maxLength={20}
+                />
             </View>
             <View style={styles.listView}>
                 <ScrollView
@@ -189,6 +205,26 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 
+
+    //검색창
+    searchView: {
+        width: '90%',
+        height: 50,
+        backgroundColor: '#F6F6F6',
+        borderRadius: 20,
+        flexDirection: 'row',
+        marginBottom: 20,
+    },
+    searchTextinput: {
+        flex: 1,
+        backgroundColor: '#F6F6F6',
+        borderRadius: 20,
+        paddingLeft: 10,
+    },
+
+
+
+    //스타트업 리스트
     listView: {
         width: '90%',
     },

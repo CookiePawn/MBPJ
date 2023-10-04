@@ -378,7 +378,18 @@ const Category = (props) => {
                             </Text>
                         </View>
                         <View style={styles.categoryTitleIconView}>
-                            <TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={() => {
+                                    props.navigation.navigate('Team', {
+                                        num: num,
+                                        id: id,
+                                        pw: pw,
+                                        phone: phone,
+                                        name: name,
+                                        email: email,
+                                    })
+                                }}
+                            >
                                 <Text style={styles.moreText}>더보기</Text>
                             </TouchableOpacity>
                         </View>

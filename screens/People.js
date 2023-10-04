@@ -2,6 +2,7 @@ import {
     View,
     Text,
     Image,
+    TextInput,
     TouchableOpacity,
     ScrollView,
     StyleSheet,
@@ -47,6 +48,10 @@ const People = (props) => {
     const name = params ? params.name : null;
     const email = params ? params.email : null;
     const phone = params ? params.phone : null;
+
+
+    //검색
+    const [search, setSearch] = useState('')
 
 
     //db
@@ -126,6 +131,16 @@ const People = (props) => {
                     <Icon name='home-outline' size={25} color='black'/>
                 </TouchableOpacity>
             </View>
+            <View style={styles.searchView}>
+                <TextInput
+                    style={styles.searchTextinput}
+                    placeholder='검색어를 입력하세요'
+                    placeholderTextColor='#777'
+                    value={search}
+                    onChangeText={(e)=>{setSearch(e)}}
+                    maxLength={20}
+                />
+            </View>
             <View style={styles.listView}>
                 <ScrollView
                     style={{marginBottom: 150,}}
@@ -135,25 +150,50 @@ const People = (props) => {
                     {user.map((userItem, idx) => {
                         const userUrl = imageUrl.filter((item) => item.name === userItem.image);
 
-                        if (userUrl.length > 0) {
-                            return userUrl.map((urlItem, urlIdx) => (
+
+
+                        if (search == '') {
+                            if (userUrl.length > 0) {
+                                return userUrl.map((urlItem, urlIdx) => (
+                                    <CustomList
+                                        key={idx}
+                                        image={{ uri: urlItem.url }}
+                                        name={userItem.name}
+                                        info={userItem.info}
+                                    />
+                                ));
+                            }
+                            
+                            return (
                                 <CustomList
                                     key={idx}
-                                    image={{ uri: urlItem.url }}
+                                    image={require('../assets/start-solo.png')}
                                     name={userItem.name}
                                     info={userItem.info}
                                 />
-                            ));
+                            );    
+                        } else if (userItem.name.includes(search)) {
+                            if (userUrl.length > 0) {
+                                return userUrl.map((urlItem, urlIdx) => (
+                                    <CustomList
+                                        key={idx}
+                                        image={{ uri: urlItem.url }}
+                                        name={userItem.name}
+                                        info={userItem.info}
+                                    />
+                                ));
+                            }
+                            
+                            return (
+                                <CustomList
+                                    key={idx}
+                                    image={require('../assets/start-solo.png')}
+                                    name={userItem.name}
+                                    info={userItem.info}
+                                />
+                            ); 
                         }
                         
-                        return (
-                            <CustomList
-                                key={idx}
-                                image={require('../assets/start-solo.png')}
-                                name={userItem.name}
-                                info={userItem.info}
-                            />
-                        );
                     })}
                 </ScrollView>
             </View>
@@ -178,6 +218,7 @@ const styles = StyleSheet.create({
     },
 
 
+
     //content
     titleView: {
         width: '90%',
@@ -196,6 +237,30 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 
+
+
+    //검색창
+    searchView: {
+        width: '90%',
+        height: 50,
+        backgroundColor: '#F6F6F6',
+        borderRadius: 20,
+        flexDirection: 'row',
+        marginBottom: 20,
+    },
+    searchTextinput: {
+        flex: 1,
+        backgroundColor: '#F6F6F6',
+        borderRadius: 20,
+        paddingLeft: 10,
+    },
+
+
+
+
+
+
+    //사람 목록
     listView: {
         width: '90%',
     },

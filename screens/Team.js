@@ -2,11 +2,18 @@ import {
     View,
     Text,
     Image,
+    TextInput,
     TouchableOpacity,
     ScrollView,
     StyleSheet,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
+import React, { useState, useEffect } from 'react'
+import storage from '../DB/Storage'
+import db from '../DB/FireBase'
+import { collection, getDocs, } from 'firebase/firestore';
+import { listAll, getDownloadURL, ref, } from '@firebase/storage';
+import { useIsFocused } from '@react-navigation/native';
 
 
 
@@ -42,6 +49,48 @@ const Team = (props) => {
     const email = params ? params.email : null;
     const phone = params ? params.phone : null;
 
+
+    //검색
+    const [search, setSearch] = useState('')
+
+    //db
+    const [startupImage, setStartupImage] = useState([]);
+    const [startup, setStartup] = useState([])
+
+    const isFocused = useIsFocused();
+
+    useEffect(() => {
+        const startupImage = async () => {
+            try {
+                const storageRef = ref(storage, '/startupProfile');
+                const result = await listAll(storageRef);
+                const imageUrls = [];
+                // 각 아이템의 URL과 이름을 가져와 imageUrls 배열에 저장
+                for (const item of result.items) {
+                    const url = await getDownloadURL(item);
+                    imageUrls.push({ url, name: item.name });
+                }
+                setStartupImage(imageUrls);
+            } catch (error) {
+                console.error('이미지 로딩 오류:', error);
+            }
+        };
+        const startupDB = async () => {
+            try {
+                const data = await getDocs(collection(db, 'startupInfo'));
+                let tempArray = [];
+                data.forEach((doc) => {
+                    tempArray.push({ ...doc.data(), id: doc.id });
+                });
+                setStartup(tempArray);
+            } catch (error) {
+                console.log("Error fetching data:", error.message);
+            }
+        };
+        startupImage();
+        startupDB();
+    }, [isFocused]);
+
     return (
         <View style={styles.mainView}>
             <View style={styles.titleView}>
@@ -73,81 +122,70 @@ const Team = (props) => {
                     <Icon name='home-outline' size={25} color='black'/>
                 </TouchableOpacity>
             </View>
+            <View style={styles.searchView}>
+                <TextInput
+                    style={styles.searchTextinput}
+                    placeholder='검색어를 입력하세요'
+                    placeholderTextColor='#777'
+                    value={search}
+                    onChangeText={(e)=>{setSearch(e)}}
+                    maxLength={20}
+                />
+            </View>
             <View style={styles.listView}>
                 <ScrollView
                     showsHorizontalScrollIndicator={false}
                     showsVerticalScrollIndicator={false}
                 >
-                    <CustomList
-                        image= {require('../assets/category-it.jpg')}
-                        name= '김우희'
-                        info= '모바일 어플리케이션 창업자 모집'
-                    />
-                    <CustomList
-                        image={require('../assets/start-solo.png')}
-                        name= '김채원'
-                        info= 'Health care application'
-                    />
-                    <CustomList
-                        image={require('../assets/category-design.jpg')}
-                        name= '권은비'
-                        info= 'UI/UX'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/whdbfl.jpg')}
-                        name= '조유리'
-                        info= '모트라스'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/cyeks.png')}
-                        name= '쵸단'
-                        info= 'Backend Delveloper'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/sakura.jpg')}
-                        name= '사쿠라'
-                        info= 'Backend Delveloper'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/tlstjdus.jpg')}
-                        name= '신서연'
-                        info= 'Backend Delveloper'
-                    />
-                    <CustomList
-                        image= {require('../assets/peopleImage/moohee.png')}
-                        name= '김우희'
-                        info= 'Backend Developer'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/rlacodnjs.jpeg')}
-                        name= '김채원'
-                        info= 'Frontend Delveloper'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/rnjsdmsql.jpg')}
-                        name= '권은비'
-                        info= 'UI/UX Designer'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/whdbfl.jpg')}
-                        name= '조유리'
-                        info= 'Backend Delveloper'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/cyeks.png')}
-                        name= '쵸단'
-                        info= 'Backend Delveloper'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/sakura.jpg')}
-                        name= '사쿠라'
-                        info= 'Backend Delveloper'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/tlstjdus.jpg')}
-                        name= '신서연'
-                        info= 'Backend Delveloper'
-                    />
+                    {startup.map((startupItem, idx) => {
+                        if (idx >= 5) return null;
+
+                        const startupUrl = startupImage.filter((item) => item.name === startupItem.image);
+
+
+                        if (search == '') {
+                            if (startupUrl.length > 0) {
+                                return startupUrl.map((urlItem, urlIdx) => (
+                                    <CustomList
+                                        key={idx}
+                                        image={{ uri: urlItem.url }}
+                                        name={startupItem.name}
+                                        info={startupItem.info}
+                                    />
+                                ));
+                            }
+                            
+                            return (
+                                <CustomList
+                                    key={idx}
+                                    image={require('../assets/start-solo.png')}
+                                    name={startupItem.name}
+                                    info={startupItem.info}
+                                />
+                            );
+                        } else if (startupItem.info.includes(search)) {
+                            if (startupUrl.length > 0) {
+                                return startupUrl.map((urlItem, urlIdx) => (
+                                    <CustomList
+                                        key={idx}
+                                        image={{ uri: urlItem.url }}
+                                        name={startupItem.name}
+                                        info={startupItem.info}
+                                    />
+                                ));
+                            }
+                            
+                            return (
+                                <CustomList
+                                    key={idx}
+                                    image={require('../assets/start-solo.png')}
+                                    name={startupItem.name}
+                                    info={startupItem.info}
+                                />
+                            );
+                        }
+                        
+                    })}
                 </ScrollView>
             </View>
         </View>
@@ -189,6 +227,27 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 
+
+
+    //검색창
+    searchView: {
+        width: '90%',
+        height: 50,
+        backgroundColor: '#F6F6F6',
+        borderRadius: 20,
+        flexDirection: 'row',
+        marginBottom: 20,
+    },
+    searchTextinput: {
+        flex: 1,
+        backgroundColor: '#F6F6F6',
+        borderRadius: 20,
+        paddingLeft: 10,
+    },
+
+
+
+    //스타트업 리스트
     listView: {
         width: '90%',
     },
