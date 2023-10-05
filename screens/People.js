@@ -19,7 +19,11 @@ import { useIsFocused } from '@react-navigation/native';
 
 const CustomList = (props) => {
     return (
-        <TouchableOpacity>
+        <TouchableOpacity
+            onPress={() => {
+                props.navi.navigation.navigate('PeopleInfo', props.params)
+            }}
+        >
             <View style= {styles.listSubView}>
                 <Image 
                     style= {styles.profileImage}
@@ -162,6 +166,17 @@ const People = (props) => {
                                         image={{ uri: urlItem.url }}
                                         name={userItem.name}
                                         info={userItem.info}
+                                        navi={props}
+                                        params={{
+                                            num: num,
+                                            id: id,
+                                            pw: pw,
+                                            phone: phone,
+                                            name: name,
+                                            email: email,
+                                            image: image,
+                                            people: userItem.id,
+                                        }}
                                     />
                                 ));
                             }
@@ -172,6 +187,17 @@ const People = (props) => {
                                     image={require('../assets/start-solo.png')}
                                     name={userItem.name}
                                     info={userItem.info}
+                                    navi={props}
+                                        params={{
+                                            num: num,
+                                            id: id,
+                                            pw: pw,
+                                            phone: phone,
+                                            name: name,
+                                            email: email,
+                                            image: image,
+                                            people: userItem.id,
+                                        }}
                                 />
                             );    
                         } else if (userItem.name.includes(search)) {
@@ -182,6 +208,17 @@ const People = (props) => {
                                         image={{ uri: urlItem.url }}
                                         name={userItem.name}
                                         info={userItem.info}
+                                        navi={props}
+                                        params={{
+                                            num: num,
+                                            id: id,
+                                            pw: pw,
+                                            phone: phone,
+                                            name: name,
+                                            email: email,
+                                            image: image,
+                                            people: userItem.id,
+                                        }}
                                     />
                                 ));
                             }
@@ -192,6 +229,17 @@ const People = (props) => {
                                     image={require('../assets/start-solo.png')}
                                     name={userItem.name}
                                     info={userItem.info}
+                                    navi={props}
+                                        params={{
+                                            num: num,
+                                            id: id,
+                                            pw: pw,
+                                            phone: phone,
+                                            name: name,
+                                            email: email,
+                                            image: image,
+                                            people: userItem.id,
+                                        }}
                                 />
                             ); 
                         }

@@ -372,6 +372,7 @@ const Category = (props) => {
                                             name: name,
                                             email: email,
                                             image: image,
+                                            people: userItem.id,
                                         }}
                                     />
                                 ));
@@ -392,6 +393,7 @@ const Category = (props) => {
                                         name: name,
                                         email: email,
                                         image: image,
+                                        people: userItem.id,
                                     }}
                                 />
                             );

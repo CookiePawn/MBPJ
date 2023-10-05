@@ -15,6 +15,7 @@ import People from '../screens/People';
 import Cofounder from '../screens/Cofounder';
 import Team from '../screens/Team';
 import PeopleInfo from '../screens/Info-People';
+import EditPeopleInfo from '../screens/Info-People-edit'
 import Chatbot from '../screens/Chatbot';
 
 
@@ -38,6 +39,7 @@ const StackNavigator = () => {
             <Stack.Screen name='Map' component={Map}/>
             <Stack.Screen name='People' component={People}/>
             <Stack.Screen name='PeopleInfo' component={PeopleInfo}/>
+            <Stack.Screen name='EditPeopleInfo' component={EditPeopleInfo}/>
             <Stack.Screen name='Cofounder' component={Cofounder}/>
             <Stack.Screen name='Team' component={Team}/>
             <Stack.Screen name='MyPage' component={MyPage}/>

@@ -130,7 +130,20 @@ const MyPage = (props) => {
                 <Text style={styles.profileBtnText}>프로필 보기</Text>
             </TouchableOpacity>
             <View style={styles.btnListView}>
-                <TouchableOpacity style={styles.btnListSubView}>
+                <TouchableOpacity 
+                    style={styles.btnListSubView}
+                    onPress={()=>{
+                        props.navigation.navigate('EditPeopleInfo', {
+                            num: num,
+                            id: id,
+                            pw: pw,
+                            phone: phone,
+                            name: name,
+                            email: email,
+                            image: image,
+                        })
+                    }}
+                >
                     <Icon name='create-outline' size={25} color='black'/>
                     <Text style={styles.btnListText}>내 페이지 수정</Text>
                 </TouchableOpacity>
