@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef} from 'react';
 import { 
     View,
     Text,
     TouchableOpacity,
     StyleSheet,
+    Animated,
+    ScrollView,
+    Dimensions
 } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Marker, Polyline } from 'react-native-maps';
 //사용자 위치 가져오기
 import * as Location from 'expo-location';
 //위도 경도로 거리 계산하기
 import * as Geolib from 'geolib';
 import Icon from 'react-native-vector-icons/Ionicons'
+//import { Polyline } from 'react-native-svg';
 
 
 const Map = (props) => {
@@ -33,8 +37,54 @@ const Map = (props) => {
     const [km, setKm] = useState(0)
     const [followsUser, setFollowUser] = useState(true)
 
+    //마커 위치 및 이름 데이터
+    const marker = [
+        {
+            coordinate : {
+                latitude: 36.800280020840844,
+                longitude: 127.07498548034647,
+            },
+            title : "선문대학교 아산캠퍼스"
+        },
+        {
+            coordinate : {
+                latitude: 36.77195296845993,
+                longitude: 127.06000439331741,
+            },
+            title : "백지환 집" 
+        },
+        {
+            coordinate : {
+                latitude:  36.83040711295872,
+                longitude: 127.18970055646777,
+            },
+            title : "김우희 집" 
+        },
+        {
+            coordinate : {
+                latitude:  36.78893051067183,
+                longitude: 127.01613316976758,
+            },
+            title : "안준철 집" 
+        },
+    ]
+
+    const [state, setState] = useState(marker)
+
+    const [selectMarker, setSelectMarker] = useState({
+        latitude : region.latitude,
+        longitude : region.longitude,
+})
+
+    let mapIndex = 0
+    let mapAnimation = new Animated.Value(0)
+    const _map = useRef(null)
+    const _scrollView = React.useRef(null)
+    const CARD_WIDTH = 355
+
     //사용자 위치 받기
     useEffect(() => {
+
         (async () => {
           let { status } = await Location.requestForegroundPermissionsAsync();
           if (status === 'granted') {
@@ -47,83 +97,84 @@ const Map = (props) => {
             setTimeout(() => {
                 setFollowUser(false)
             }, 2000);
-          }
+            }
         })();
+
       }, []); // 빈 배열을 전달하여 componentDidMount와 같이 처음 한 번만 실행
 
+
+      //스크롤 이벤트 발생 시 실행
+    const handleOnScroll = event => {
+        let index = parseInt(event.nativeEvent.contentOffset.x/Dimensions.get('window').width)
+            if (index >= marker.length) {
+                index = marker.length - 1
+            }
+            if (index <= 0) {
+                index = 0
+            }
+
+            const regionTimeout = setTimeout(() => {
+                if (mapIndex != index || (mapIndex == 0 && index == 0)) {
+                    mapIndex = index
+                    const {coordinate} = marker[index]
+                    setSelectMarker(marker[index].coordinate)
+                    _map.current.animateToRegion(
+                        {
+                            ...coordinate,
+                            region : marker[index].latitude,
+                            region : marker[index].longitude,
+                        }, 350);
+                }
+            }, 10)
+    }
+
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: 'white' }}>
       <MapView
-        style={{ flex: 1 }}
+        style={{ flex: 2 }}
         region={region}
         showsUserLocation={true}
         followsUserLocation={followsUser}
+        ref = {_map}
       >
-        <Marker 
-            coordinate={{
-                latitude: 36.800280020840844,
-                longitude: 127.07498548034647,
-            }} 
-            title="선문대학교 아산캠퍼스"
-            onPress={ () => {
-                const distance = Geolib.getDistance(
-                    region,
-                    {latitude: 36.800280020840844,
-                    longitude: 127.07498548034647,}
-                );
-                setKm(distance)
-            }}
+
+        {
+            state.map((marker, index) => {
+                return (
+                    <Marker
+                        key = {index}
+                        coordinate={marker.coordinate}
+                        title = {marker.title}
+                        onPress={ () => {
+                            const distance = Geolib.getDistance(
+                                region,
+                                {latitude: marker.coordinate.latitude,
+                                longitude: marker.coordinate.longitude,}
+                            );
+                            setKm(distance)
+                            setSelectMarker(marker.coordinate)
+                        }}
+                    >
+
+                    </Marker>
+                )
+            })
+        }
+
+
+        <Polyline
+            coordinates={[
+                {latitude: region.latitude, longitude: region.longitude},
+                {latitude: selectMarker.latitude, longitude: selectMarker.longitude},
+            ]}
+            strokeColor="#000"
+            strokeColors={[
+                '#FF1234',
+            ]}
+            strokeWidth={6}
         />
-        <Marker 
-            coordinate={{
-                latitude: 36.77195296845993,
-                longitude: 127.06000439331741,
-            }} 
-            title="백지환 집" 
-            onPress={ () => {
-                const distance = Geolib.getDistance(
-                    region,
-                    {latitude: 36.77195296845993,
-                    longitude: 127.06000439331741,}
-                );
-                setKm(distance)
-            }}
-        />
-        <Marker 
-            coordinate={{
-                latitude:  36.83040711295872,
-                longitude: 127.18970055646777,
-            }} 
-            title="김우희 집" 
-            onPress={ () => {
-                const distance = Geolib.getDistance(
-                    region,
-                    {latitude:  36.83040711295872,
-                    longitude: 127.18970055646777,}
-                );
-                setKm(distance)
-            }}
-        />
-        <Marker 
-            coordinate={{
-                latitude:  36.78893051067183,
-                longitude: 127.01613316976758,
-            }} 
-            title="안준철 집" 
-            onPress={ () => {
-                const distance = Geolib.getDistance(
-                    region,
-                    {latitude:  36.78893051067183,
-                    longitude: 127.01613316976758,}
-                );
-                setKm(distance)
-            }}
-        />
-      </MapView>
-      <Text style={styles.distanceText}>
-        {`현재 위치로부터 ${Number(km / 1000).toFixed(2)} km`}
-      </Text>
-        <TouchableOpacity 
+
+<TouchableOpacity 
             style={styles.homeButton}
             onPress={() => {
                 props.navigation.navigate('Category', {
@@ -137,7 +188,7 @@ const Map = (props) => {
                 })
             }} 
         >
-            <Icon name="home-outline" size={30} color="black"/>
+        <Icon name="home-outline" size={30} color="black"/>
         </TouchableOpacity>
         <TouchableOpacity 
             style={styles.userButton}
@@ -150,6 +201,41 @@ const Map = (props) => {
         >
             <Icon name="location-outline" size={30} color="black"/>
         </TouchableOpacity>
+
+      </MapView>
+
+    <Animated.ScrollView
+        horizontal
+        scrollEventThrottle = {3}
+        showsHorizontalScrollIndicator = {false}
+        style = {styles.scrollView}
+        contentContainerStyle={{ width: `${state.length * 100}%`, paddingRight : 80}}
+        pagingEnabled
+        onScroll = {e => handleOnScroll(e)}
+    >
+        {
+            state.map((marker, index) => {
+                return (
+                    <TouchableOpacity key = {index} style = {{...styles.card}}
+                        onPress = {() => {
+                            console.log(marker.coordinate.latitude)
+                            console.log(marker.coordinate.longitude)
+                        }}>
+                        <Text
+                            numberOfLines = {1}
+                            style = {styles.cardTitle}
+                        >
+                            {marker.title}
+                        </Text>
+                    </TouchableOpacity>
+                )
+            })
+        }
+    </Animated.ScrollView>
+
+      <Text style={styles.distanceText}>
+        {`현재 위치로부터 ${Number(km / 1000).toFixed(2)} km`}
+      </Text>
     </View>
   );
 };
@@ -161,7 +247,7 @@ export default Map
 const styles = StyleSheet.create({
     homeButton: {
         position: 'absolute',
-        bottom: 20,
+        bottom: 210,
         right: 80,
         backgroundColor: 'white',
         borderRadius: 10,
@@ -179,7 +265,7 @@ const styles = StyleSheet.create({
     },
     userButton: {
         position: 'absolute',
-        bottom: 20,
+        bottom: 210,
         right: 20,
         backgroundColor: 'white',
         borderRadius: 10,
@@ -210,4 +296,31 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.45,
         shadowRadius: 10,
       },
+
+      scrollView : {
+        flex : 1,
+        backgroundColor : '#00ff0000',
+        position : 'absolute',
+        bottom : 10,
+        height : 200,
+      },
+
+      card : {
+        alignItems : 'center',
+        backgroundColor : "#FFF",
+        marginHorizontal : 10,
+        overflow : 'hidden',
+        marginTop : 10,
+        height : '90%',
+        width : 355,
+        borderRadius : 50,
+        borderWidth : 1,
+        borderColor : 'rgba(0, 0, 0, 0.1)',
+      },
+
+      cardTitle : {
+        fontSize : 20,
+        fontWeight : "bold"
+      },
+
 })
