@@ -37,7 +37,7 @@ const Map = (props) => {
     const [km, setKm] = useState(0)
     const [followsUser, setFollowUser] = useState(true)
 
-
+    //마커 위치 및 이름 데이터
     const marker = [
         {
             coordinate : {
@@ -103,6 +103,7 @@ const Map = (props) => {
       }, []); // 빈 배열을 전달하여 componentDidMount와 같이 처음 한 번만 실행
 
 
+      //스크롤 이벤트 발생 시 실행
     const handleOnScroll = event => {
         let index = parseInt(event.nativeEvent.contentOffset.x/Dimensions.get('window').width)
             if (index >= marker.length) {
@@ -113,9 +114,10 @@ const Map = (props) => {
             }
 
             const regionTimeout = setTimeout(() => {
-                if (mapIndex != index) {
+                if (mapIndex != index || (mapIndex == 0 && index == 0)) {
                     mapIndex = index
                     const {coordinate} = marker[index]
+                    setSelectMarker(marker[index].coordinate)
                     _map.current.animateToRegion(
                         {
                             ...coordinate,
@@ -167,7 +169,7 @@ const Map = (props) => {
             ]}
             strokeColor="#000"
             strokeColors={[
-                '#FF0000',
+                '#FF1234',
             ]}
             strokeWidth={6}
         />
@@ -204,7 +206,7 @@ const Map = (props) => {
 
     <Animated.ScrollView
         horizontal
-        scrollEventThrottle = {50}
+        scrollEventThrottle = {3}
         showsHorizontalScrollIndicator = {false}
         style = {styles.scrollView}
         contentContainerStyle={{ width: `${state.length * 100}%`, paddingRight : 80}}
@@ -245,7 +247,7 @@ export default Map
 const styles = StyleSheet.create({
     homeButton: {
         position: 'absolute',
-        bottom: 20,
+        bottom: 210,
         right: 80,
         backgroundColor: 'white',
         borderRadius: 10,
@@ -263,7 +265,7 @@ const styles = StyleSheet.create({
     },
     userButton: {
         position: 'absolute',
-        bottom: 20,
+        bottom: 210,
         right: 20,
         backgroundColor: 'white',
         borderRadius: 10,
@@ -297,6 +299,10 @@ const styles = StyleSheet.create({
 
       scrollView : {
         flex : 1,
+        backgroundColor : '#00ff0000',
+        position : 'absolute',
+        bottom : 10,
+        height : 200,
       },
 
       card : {
