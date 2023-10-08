@@ -6,7 +6,8 @@ import {
     StyleSheet,
     Animated,
     ScrollView,
-    Dimensions
+    Dimensions,
+    Platform
 } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 //사용자 위치 가져오기
@@ -80,7 +81,8 @@ const Map = (props) => {
     let mapAnimation = new Animated.Value(0)
     const _map = useRef(null)
     const _scrollView = React.useRef(null)
-    const CARD_WIDTH = 355
+    const CARD_WIDTH = Dimensions.get('window').width * 0.95
+    const SPACING_CARD = Dimensions.get('window').width * 0.025
 
     //사용자 위치 받기
     useEffect(() => {
@@ -170,11 +172,14 @@ const Map = (props) => {
             strokeColor="#000"
             strokeColors={[
                 '#FF1234',
+                '#50bcdf'
             ]}
             strokeWidth={6}
         />
 
-<TouchableOpacity 
+      </MapView>
+
+      <TouchableOpacity 
             style={styles.homeButton}
             onPress={() => {
                 props.navigation.navigate('Category', {
@@ -188,7 +193,7 @@ const Map = (props) => {
                 })
             }} 
         >
-        <Icon name="home-outline" size={30} color="black"/>
+            <Icon name="home-outline" size={30} color="black"/>
         </TouchableOpacity>
         <TouchableOpacity 
             style={styles.userButton}
@@ -202,25 +207,26 @@ const Map = (props) => {
             <Icon name="location-outline" size={30} color="black"/>
         </TouchableOpacity>
 
-      </MapView>
-
     <Animated.ScrollView
         horizontal
         scrollEventThrottle = {3}
         showsHorizontalScrollIndicator = {false}
         style = {styles.scrollView}
-        contentContainerStyle={{ width: `${state.length * 100}%`, paddingRight : 80}}
+        contentContainerStyle={[{ width: `${state.length * 100}%`}]}
         pagingEnabled
         onScroll = {e => handleOnScroll(e)}
+        snapToAlignment = 'center'
+        contentInset={{
+            top : 0,
+            bottom : 0,
+            left : SPACING_CARD,
+            right : SPACING_CARD,
+        }}
     >
         {
             state.map((marker, index) => {
                 return (
-                    <TouchableOpacity key = {index} style = {{...styles.card}}
-                        onPress = {() => {
-                            console.log(marker.coordinate.latitude)
-                            console.log(marker.coordinate.longitude)
-                        }}>
+                    <TouchableOpacity key = {index} style = {[{width : CARD_WIDTH}, styles.card]}>
                         <Text
                             numberOfLines = {1}
                             style = {styles.cardTitle}
@@ -263,6 +269,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.45,
         shadowRadius: 10,
     },
+
     userButton: {
         position: 'absolute',
         bottom: 210,
@@ -281,6 +288,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.45,
         shadowRadius: 10,
     },
+
     distanceText: {
         position: 'absolute',
         top: 50,
@@ -301,6 +309,7 @@ const styles = StyleSheet.create({
         flex : 1,
         backgroundColor : '#00ff0000',
         position : 'absolute',
+        left : 0,
         bottom : 10,
         height : 200,
       },
@@ -312,7 +321,6 @@ const styles = StyleSheet.create({
         overflow : 'hidden',
         marginTop : 10,
         height : '90%',
-        width : 355,
         borderRadius : 50,
         borderWidth : 1,
         borderColor : 'rgba(0, 0, 0, 0.1)',
