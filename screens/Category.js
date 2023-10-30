@@ -589,6 +589,7 @@ const styles = StyleSheet.create({
         color: '#999',
         fontSize: 12,
         position: 'absolute',
+        marginTop: 20
     },  
     peopleListScrollView: {
         marginTop: 20,
@@ -597,7 +598,7 @@ const styles = StyleSheet.create({
     peopleListView: {
         width: 158,
         height: 222,
-        marginTop: 20,
+        marginTop: 10,
         marginRight: 15,
         borderColor: '#DDD',
         borderRadius: 12,
@@ -632,7 +633,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
     },
     startUpListView: {
-        marginTop: 30,
+        marginTop: 10,
     },
     startUpListSubView: {
         width: '100%',
@@ -658,11 +659,12 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         fontSize: 16,
         fontWeight: 'bold',
-        lineHeight: 28,
+        lineHeight: 35,
     },
     startUpInfoText: {
         fontSize: 12,
         color: 'rgba(0, 0, 0, 0.60)',
+        fontWeight: 'light'
     },
 
 

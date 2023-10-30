@@ -32,7 +32,7 @@ const CustomList = (props) => {
                 <View style={styles.listSubSubView}>
                     <Text style={styles.nameText}>{props.name}</Text>
                     <Text style={styles.infoText}>{props.info}</Text>
-                    <Icon name='heart-outline' size={25} color='red' style={[styles.icon, {right: 10, bottom: 10,}]}/>
+                    <Icon name='heart-outline' size={20} color='red' style={[styles.icon, {right: 10, bottom: 15,}]}/>
                 </View>
             </View>    
         </TouchableOpacity>
@@ -303,6 +303,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F6F6F6',
         borderRadius: 20,
         paddingLeft: 10,
+        marginLeft: 5
     },
 
 
@@ -320,11 +321,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     profileImage: {
-        width: 70,
-        height: 70,
+        width: 60,
+        height: 60,
         borderRadius: 100,
         margin: 10,
         marginRight: 20,
+        marginTop: 13
     },
     listSubSubView: {
         flex: 1,
@@ -335,7 +337,7 @@ const styles = StyleSheet.create({
     nameText: {
         fontSize: 20,
         fontWeight: 'bold',
-        lineHeight: 40,
+        marginBottom: 15
     },
     infoText: {
         fontSize: 12,
