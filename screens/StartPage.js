@@ -2,7 +2,7 @@ import {
     View,
     Text,
     StyleSheet,
-    Image, 
+    Image,
     Dimensions,
     TouchableOpacity,
 } from 'react-native'
@@ -17,7 +17,7 @@ const StartPage = (props) => {
 
     return (
         <View style={{
-            flex: 1, 
+            flex: 1,
             backgroundColor: '#181420'
         }}>
             <View style={styles.imageSlideView}>
@@ -54,7 +54,7 @@ const StartPage = (props) => {
                 </Swiper>
             </View>
             <View style={styles.buttonView}>
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={styles.startButton}
                     onPress={() => {
                         props.navigation.navigate('Category')
@@ -63,7 +63,7 @@ const StartPage = (props) => {
                     <Text style={styles.buttonText}>시작하기</Text>
                 </TouchableOpacity>
             </View>
-        </View>    
+        </View>
     )
 }
 

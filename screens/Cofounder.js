@@ -15,17 +15,17 @@ import React, { useEffect, useState } from 'react'
 const CustomList = (props) => {
     return (
         <TouchableOpacity>
-            <View style= {styles.listSubView}>
-                <Image 
-                    style= {styles.profileImage}
-                    source= {props.image}
+            <View style={styles.listSubView}>
+                <Image
+                    style={styles.profileImage}
+                    source={props.image}
                 />
                 <View style={styles.listSubSubView}>
                     <Text style={styles.nameText}>{props.info}</Text>
                     <Text style={styles.infoText}>{props.name}</Text>
-                    <Icon name='heart-outline' size={20} color='red' style={[styles.icon, {right: 10, bottom: 10,}]}/>
+                    <Icon name='heart-outline' size={20} color='red' style={[styles.icon, { right: 10, bottom: 10, }]} />
                 </View>
-            </View>    
+            </View>
         </TouchableOpacity>
     )
 }
@@ -53,20 +53,20 @@ const Cofounder = (props) => {
         <View style={styles.mainView}>
             <View style={styles.titleView}>
                 <TouchableOpacity
-                    style={[styles.icon, {left: 0,}]}
-                    onPress={()=>{
+                    style={[styles.icon, { left: 0, }]}
+                    onPress={() => {
                         props.navigation.goBack()
                     }}
                 >
-                    <Icon name='arrow-back-outline' size={25} color='black'/>
+                    <Icon name='arrow-back-outline' size={25} color='black' />
                 </TouchableOpacity>
                 <Text style={styles.titleText}>
                     공동 창업자 모집
                 </Text>
-                <Icon name='notifications-outline' size={25} color='black' style={[styles.icon, {right: 0,}]}/>
+                <Icon name='notifications-outline' size={25} color='black' style={[styles.icon, { right: 0, }]} />
                 <TouchableOpacity
-                    style={[styles.icon, {right: 40,}]}
-                    onPress={()=>{
+                    style={[styles.icon, { right: 40, }]}
+                    onPress={() => {
                         props.navigation.navigate('Category', {
                             num: num,
                             id: id,
@@ -78,7 +78,7 @@ const Cofounder = (props) => {
                         })
                     }}
                 >
-                    <Icon name='home-outline' size={25} color='black'/>
+                    <Icon name='home-outline' size={25} color='black' />
                 </TouchableOpacity>
             </View>
             <View style={styles.searchView}>
@@ -87,7 +87,7 @@ const Cofounder = (props) => {
                     placeholder='검색어를 입력하세요'
                     placeholderTextColor='#777'
                     value={search}
-                    onChangeText={(e)=>{setSearch(e)}}
+                    onChangeText={(e) => { setSearch(e) }}
                     maxLength={20}
                 />
             </View>
@@ -97,74 +97,74 @@ const Cofounder = (props) => {
                     showsVerticalScrollIndicator={false}
                 >
                     <CustomList
-                        image= {require('../assets/category-it.jpg')}
-                        name= '김우희'
-                        info= '모바일 어플리케이션 창업자 모집'
+                        image={require('../assets/category-it.jpg')}
+                        name='김우희'
+                        info='모바일 어플리케이션 창업자 모집'
                     />
                     <CustomList
                         image={require('../assets/start-solo.png')}
-                        name= '김채원'
-                        info= 'Health care application'
+                        name='김채원'
+                        info='Health care application'
                     />
                     <CustomList
                         image={require('../assets/category-design.jpg')}
-                        name= '권은비'
-                        info= 'UI/UX'
+                        name='권은비'
+                        info='UI/UX'
                     />
                     <CustomList
                         image={require('../assets/peopleImage/whdbfl.jpg')}
-                        name= '조유리'
-                        info= '모트라스'
+                        name='조유리'
+                        info='모트라스'
                     />
                     <CustomList
                         image={require('../assets/peopleImage/cyeks.png')}
-                        name= '쵸단'
-                        info= 'Backend Delveloper'
+                        name='쵸단'
+                        info='Backend Delveloper'
                     />
                     <CustomList
                         image={require('../assets/peopleImage/sakura.jpg')}
-                        name= '사쿠라'
-                        info= 'Backend Delveloper'
+                        name='사쿠라'
+                        info='Backend Delveloper'
                     />
                     <CustomList
                         image={require('../assets/peopleImage/tlstjdus.jpg')}
-                        name= '신서연'
-                        info= 'Backend Delveloper'
+                        name='신서연'
+                        info='Backend Delveloper'
                     />
                     <CustomList
-                        image= {require('../assets/peopleImage/moohee.png')}
-                        name= '김우희'
-                        info= 'Backend Developer'
+                        image={require('../assets/peopleImage/moohee.png')}
+                        name='김우희'
+                        info='Backend Developer'
                     />
                     <CustomList
                         image={require('../assets/peopleImage/rlacodnjs.jpeg')}
-                        name= '김채원'
-                        info= 'Frontend Delveloper'
+                        name='김채원'
+                        info='Frontend Delveloper'
                     />
                     <CustomList
                         image={require('../assets/peopleImage/rnjsdmsql.jpg')}
-                        name= '권은비'
-                        info= 'UI/UX Designer'
+                        name='권은비'
+                        info='UI/UX Designer'
                     />
                     <CustomList
                         image={require('../assets/peopleImage/whdbfl.jpg')}
-                        name= '조유리'
-                        info= 'Backend Delveloper'
+                        name='조유리'
+                        info='Backend Delveloper'
                     />
                     <CustomList
                         image={require('../assets/peopleImage/cyeks.png')}
-                        name= '쵸단'
-                        info= 'Backend Delveloper'
+                        name='쵸단'
+                        info='Backend Delveloper'
                     />
                     <CustomList
                         image={require('../assets/peopleImage/sakura.jpg')}
-                        name= '사쿠라'
-                        info= 'Backend Delveloper'
+                        name='사쿠라'
+                        info='Backend Delveloper'
                     />
                     <CustomList
                         image={require('../assets/peopleImage/tlstjdus.jpg')}
-                        name= '신서연'
-                        info= 'Backend Delveloper'
+                        name='신서연'
+                        info='Backend Delveloper'
                     />
                 </ScrollView>
             </View>
@@ -180,7 +180,7 @@ export default Cofounder
 
 
 const styles = StyleSheet.create({
-    
+
     //메인 뷰
     mainView: {
         flex: 1,

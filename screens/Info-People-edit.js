@@ -198,7 +198,7 @@ const PersonInfo = (props) => {
 
             <TouchableOpacity
                 style={styles.chatBtn}
-                onPress={async() => {
+                onPress={async () => {
                     try {
                         const docRef = doc(db, 'userInfo', num);
 

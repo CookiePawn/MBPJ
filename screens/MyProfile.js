@@ -65,7 +65,7 @@ const MyProfile = (props) => {
             // Firestore에서 해당 문서의 참조 가져오기
             const userDocRef = doc(db, 'PersonLogin', num);
 
-            await updateDoc(userDocRef, {perPW: rePw});
+            await updateDoc(userDocRef, { perPW: rePw });
             alert('개인정보가 변경되었습니다!')
         } catch (error) {
             console.error('비밀번호 업데이트 오류:', error);
@@ -86,20 +86,20 @@ const MyProfile = (props) => {
         <View style={styles.mainView}>
             <View style={styles.titleView}>
                 <TouchableOpacity
-                    style={[styles.icon, {left: 0,}]}
-                    onPress={()=>{
+                    style={[styles.icon, { left: 0, }]}
+                    onPress={() => {
                         props.navigation.goBack()
                     }}
                 >
-                    <Icon name='arrow-back-outline' size={25} color='black'/>
+                    <Icon name='arrow-back-outline' size={25} color='black' />
                 </TouchableOpacity>
                 <Text style={styles.titleText}>
                     내 프로필
                 </Text>
-                <Icon name='notifications-outline' size={25} color='black' style={[styles.icon, {right: 0,}]}/>
+                <Icon name='notifications-outline' size={25} color='black' style={[styles.icon, { right: 0, }]} />
                 <TouchableOpacity
-                    style={[styles.icon, {right: 40,}]}
-                    onPress={()=>{
+                    style={[styles.icon, { right: 40, }]}
+                    onPress={() => {
                         props.navigation.navigate('Category', {
                             num: num,
                             id: id,
@@ -111,24 +111,24 @@ const MyProfile = (props) => {
                         })
                     }}
                 >
-                    <Icon name='home-outline' size={25} color='black'/>
+                    <Icon name='home-outline' size={25} color='black' />
                 </TouchableOpacity>
             </View>
             <View style={styles.profileView}>
                 {imageUrl.map((item, idx) => {
-                    if(item.name == image) {
+                    if (item.name == image) {
                         tmp = true
-                        return(
-                            <Image 
+                        return (
+                            <Image
                                 key={idx}
                                 style={styles.image}
-                                source={{ uri : item.url}}
+                                source={{ uri: item.url }}
                             />
-                        )    
+                        )
                     } else {
-                        if(!tmp && idx == imageUrl.length-1) {
+                        if (!tmp && idx == imageUrl.length - 1) {
                             return (
-                                <Image 
+                                <Image
                                     key={idx}
                                     style={styles.image}
                                     source={require('../assets/start-solo.png')}
@@ -137,10 +137,10 @@ const MyProfile = (props) => {
                         }
                     }
                 })}
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={styles.imageBtn}
                 >
-                    <Text style={styles.imageBtnText}>사진 변경</Text>    
+                    <Text style={styles.imageBtnText}>사진 변경</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.changeProfileView}>
@@ -169,13 +169,13 @@ const MyProfile = (props) => {
                         placeholder={pw}
                         placeholderTextColor='#777'
                         value={rePw}
-                        onChangeText={(e)=>{setRePw(e)}}
+                        onChangeText={(e) => { setRePw(e) }}
                         maxLength={20}
                     />
                 </View>
                 <TouchableOpacity
                     style={styles.saveBtn}
-                    onPress={()=> {
+                    onPress={() => {
                         infoChange()
                         props.navigation.navigate('MyPage', {
                             num: num,
@@ -190,7 +190,7 @@ const MyProfile = (props) => {
                 >
                     <Text style={styles.saveBtnText}>저장하기</Text>
                 </TouchableOpacity>
-            </View>    
+            </View>
         </View>
     )
 }
@@ -203,7 +203,7 @@ export default MyProfile
 
 
 const styles = StyleSheet.create({
-    
+
     //메인 뷰
     mainView: {
         flex: 1,

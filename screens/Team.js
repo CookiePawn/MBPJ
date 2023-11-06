@@ -20,17 +20,17 @@ import { useIsFocused } from '@react-navigation/native';
 const CustomList = (props) => {
     return (
         <TouchableOpacity>
-            <View style= {styles.listSubView}>
-                <Image 
-                    style= {styles.profileImage}
-                    source= {props.image}
+            <View style={styles.listSubView}>
+                <Image
+                    style={styles.profileImage}
+                    source={props.image}
                 />
                 <View style={styles.listSubSubView}>
                     <Text style={styles.nameText}>{props.info}</Text>
                     <Text style={styles.infoText}>{props.name}</Text>
-                    <Icon name='heart-outline' size={20} color='red' style={[styles.icon, {right: 10, bottom: 10,}]}/>
+                    <Icon name='heart-outline' size={20} color='red' style={[styles.icon, { right: 10, bottom: 10, }]} />
                 </View>
-            </View>    
+            </View>
         </TouchableOpacity>
     )
 }
@@ -96,20 +96,20 @@ const Team = (props) => {
         <View style={styles.mainView}>
             <View style={styles.titleView}>
                 <TouchableOpacity
-                    style={[styles.icon, {left: 0,}]}
-                    onPress={()=>{
+                    style={[styles.icon, { left: 0, }]}
+                    onPress={() => {
                         props.navigation.goBack()
                     }}
                 >
-                    <Icon name='arrow-back-outline' size={25} color='black'/>
+                    <Icon name='arrow-back-outline' size={25} color='black' />
                 </TouchableOpacity>
                 <Text style={styles.titleText}>
                     팀원 모집
                 </Text>
-                <Icon name='notifications-outline' size={25} color='black' style={[styles.icon, {right: 0,}]}/>
+                <Icon name='notifications-outline' size={25} color='black' style={[styles.icon, { right: 0, }]} />
                 <TouchableOpacity
-                    style={[styles.icon, {right: 40,}]}
-                    onPress={()=>{
+                    style={[styles.icon, { right: 40, }]}
+                    onPress={() => {
                         props.navigation.navigate('Category', {
                             num: num,
                             id: id,
@@ -121,7 +121,7 @@ const Team = (props) => {
                         })
                     }}
                 >
-                    <Icon name='home-outline' size={25} color='black'/>
+                    <Icon name='home-outline' size={25} color='black' />
                 </TouchableOpacity>
             </View>
             <View style={styles.searchView}>
@@ -130,7 +130,7 @@ const Team = (props) => {
                     placeholder='검색어를 입력하세요'
                     placeholderTextColor='#777'
                     value={search}
-                    onChangeText={(e)=>{setSearch(e)}}
+                    onChangeText={(e) => { setSearch(e) }}
                     maxLength={20}
                 />
             </View>
@@ -156,7 +156,7 @@ const Team = (props) => {
                                     />
                                 ));
                             }
-                            
+
                             return (
                                 <CustomList
                                     key={idx}
@@ -176,7 +176,7 @@ const Team = (props) => {
                                     />
                                 ));
                             }
-                            
+
                             return (
                                 <CustomList
                                     key={idx}
@@ -186,7 +186,7 @@ const Team = (props) => {
                                 />
                             );
                         }
-                        
+
                     })}
                 </ScrollView>
             </View>
@@ -202,7 +202,7 @@ export default Team
 
 
 const styles = StyleSheet.create({
-    
+
     //메인 뷰
     mainView: {
         flex: 1,

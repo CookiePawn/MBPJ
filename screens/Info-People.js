@@ -58,20 +58,20 @@ const PersonInfo = (props) => {
             try {
                 // 문서 ID인 num을 사용하여 문서 참조 생성
                 const docRef = doc(db, 'userInfo', people);
-            
+
                 // 문서 데이터 가져오기
                 const docSnap = await getDoc(docRef);
-            
+
                 if (docSnap.exists()) {
-                  // 문서가 존재하는 경우
-                  const userData = { ...docSnap.data(), id: docSnap.id };
-                  setUser(userData);
+                    // 문서가 존재하는 경우
+                    const userData = { ...docSnap.data(), id: docSnap.id };
+                    setUser(userData);
                 } else {
-                  console.log('해당 문서가 존재하지 않습니다.');
+                    console.log('해당 문서가 존재하지 않습니다.');
                 }
-              } catch (error) {
+            } catch (error) {
                 console.error("Error fetching data:", error.message);
-              }
+            }
         };
         fetchImage();
         userDB()
@@ -85,17 +85,17 @@ const PersonInfo = (props) => {
         <View style={styles.mainView}>
             <View style={styles.titleView}>
                 <TouchableOpacity
-                    style={[styles.icon, {left: 0,}]}
-                    onPress={()=>{
+                    style={[styles.icon, { left: 0, }]}
+                    onPress={() => {
                         props.navigation.goBack()
                     }}
                 >
-                    <Icon name='arrow-back-outline' size={25} color='black'/>
+                    <Icon name='arrow-back-outline' size={25} color='black' />
                 </TouchableOpacity>
-                <Icon name='notifications-outline' size={25} color='black' style={[styles.icon, {right: 0,}]}/>
+                <Icon name='notifications-outline' size={25} color='black' style={[styles.icon, { right: 0, }]} />
                 <TouchableOpacity
-                    style={[styles.icon, {right: 40,}]}
-                    onPress={()=>{
+                    style={[styles.icon, { right: 40, }]}
+                    onPress={() => {
                         props.navigation.navigate('Category', {
                             num: num,
                             id: id,
@@ -107,24 +107,24 @@ const PersonInfo = (props) => {
                         })
                     }}
                 >
-                    <Icon name='home-outline' size={25} color='black'/>
+                    <Icon name='home-outline' size={25} color='black' />
                 </TouchableOpacity>
             </View>
             <View style={styles.profileView}>
                 {imageUrl.map((item, idx) => {
                     tmp = true
-                    if(item.name == image) {
-                        return(
-                            <Image 
+                    if (item.name == image) {
+                        return (
+                            <Image
                                 key={idx}
                                 style={styles.profileImage}
-                                source={{ uri : item.url}}
+                                source={{ uri: item.url }}
                             />
-                        )    
+                        )
                     } else {
-                        if(!tmp && idx == imageUrl.length-1) {
+                        if (!tmp && idx == imageUrl.length - 1) {
                             return (
-                                <Image 
+                                <Image
                                     key={idx}
                                     style={styles.profileImage}
                                     source={require('../assets/start-solo.png')}
@@ -138,37 +138,37 @@ const PersonInfo = (props) => {
                     <Text style={styles.infoText}>소속 : {user.infoGroup}</Text>
                 </View>
                 <View style={styles.likeView}>
-                    <Icon name='heart' size={20} color='red'/>
+                    <Icon name='heart' size={20} color='red' />
                     <Text style={styles.likeText}>{user.infoHeart}</Text>
                 </View>
             </View>
             <ScrollView style={styles.inforView}>
-                <View style={{flex:1}}>
-                    <Text style = {styles.bigText}>직종</Text>
+                <View style={{ flex: 1 }}>
+                    <Text style={styles.bigText}>직종</Text>
                     <Text style={styles.smallText}>{user.info}</Text>
 
-                    <Text style = {styles.bigText}>설명</Text>
+                    <Text style={styles.bigText}>설명</Text>
                     <Text style={styles.smallText}>{user.infoIntroduce}</Text>
 
-                    <Text style = {styles.bigText}>경력</Text>
+                    <Text style={styles.bigText}>경력</Text>
                     <Text style={styles.smallText}>{user.infoCareer}</Text>
 
-                    <Text style = {styles.bigText}>프로젝트</Text>
+                    <Text style={styles.bigText}>프로젝트</Text>
                     <TouchableOpacity
-                        onPress={()=> {
+                        onPress={() => {
                             Linking.openURL(user.infoProject);
                         }}
                     >
-                        <Text style={[styles.smallText, {color: 'lightskyblue'}]}>{user.infoProject}</Text>    
+                        <Text style={[styles.smallText, { color: 'lightskyblue' }]}>{user.infoProject}</Text>
                     </TouchableOpacity>
 
-                    <View style ={{flexDirection:'row'}}>
-                        <Text sttle = {styles.midText}>포트폴리오 다운로드   </Text>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Text sttle={styles.midText}>포트폴리오 다운로드   </Text>
                         <Icon name='folder-outline' size={20} style={styles.fileicon}></Icon>
                     </View>
                 </View>
             </ScrollView>
-            
+
             <TouchableOpacity
                 style={styles.chatBtn}
             >
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         alignItems: 'center',
     },
-    
+
 
     //content
     titleView: {
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
     smallText: {
         color: 'rgba(153, 153, 153, 0.60)',
         fontSize: 14,
-        fontWeight:'400',
+        fontWeight: '400',
         marginBottom: 35,
     },
     midText: {
@@ -274,16 +274,16 @@ const styles = StyleSheet.create({
     chatBtn: {
         backgroundColor: '#5552E2',
         height: 60,
-        width: '90%',   
-        marginTop:10,
+        width: '90%',
+        marginTop: 10,
         marginBottom: 20,
-        borderRadius:30,
+        borderRadius: 30,
         alignItems: 'center',
         justifyContent: 'center',
     },
     chatBtnText: {
-        color:'white',
-        fontSize:16,
-        fontWeight:600,
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 600,
     }
 })

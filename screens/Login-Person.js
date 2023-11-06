@@ -22,10 +22,10 @@ const CustomTextInput = (props) => {
             <TextInput
                 style={styles.textInput}
                 placeholder={`${props.name}${props.named} 입력해주세요`}
-                maxLength = {20}
+                maxLength={20}
                 onChangeText={props.onChangeText}
             />
-        </View>    
+        </View>
     )
 }
 
@@ -93,9 +93,9 @@ const Login = (props) => {
     return (
         <View style={styles.mainView}>
             <View style={styles.titleView}>
-                <TouchableOpacity 
-                    style= {styles.backButton}
-                    onPress={() => {props.navigation.navigate('Category')}}>
+                <TouchableOpacity
+                    style={styles.backButton}
+                    onPress={() => { props.navigation.navigate('Category') }}>
                     <Icon style={styles.backButtonIcon} name="home-outline"></Icon>
                 </TouchableOpacity>
                 <Text style={styles.titleText}>로그인</Text>
@@ -113,7 +113,7 @@ const Login = (props) => {
                 />
             </View>
             <View style={styles.buttonView}>
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={styles.signButton}
                     onPress={login}
                 >
@@ -122,15 +122,15 @@ const Login = (props) => {
                 <View style={styles.buttonSubView}>
                     <Text style={styles.loginButtonText}>
                         아직 회원이 아니신가요?
-                        <TouchableOpacity 
-                            onPress={() => {props.navigation.navigate('PersonSignUp')}}
+                        <TouchableOpacity
+                            onPress={() => { props.navigation.navigate('PersonSignUp') }}
                         >
                             <Text style={styles.loginButtonSubText}>회원가입</Text>
                         </TouchableOpacity>
                     </Text>
                 </View>
             </View>
-        </View>    
+        </View>
     )
 }
 
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     mainView: {
         flex: 1,
         backgroundColor: 'white',
-        alignItems : 'center',
+        alignItems: 'center',
         justifyContent: 'center'
     },
     titleView: {
@@ -161,12 +161,12 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
     },
-    backButton : {
-        position : 'absolute',
-        left : 0,
+    backButton: {
+        position: 'absolute',
+        left: 0,
     },
-    backButtonIcon : {
-        fontSize : 25,
+    backButtonIcon: {
+        fontSize: 25,
     },
 
 

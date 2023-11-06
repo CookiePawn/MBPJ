@@ -60,17 +60,17 @@ const MyPage = (props) => {
         <View style={styles.mainView}>
             <View style={styles.iconView}>
                 <TouchableOpacity
-                    style={[styles.icon, {left: 0,}]}
-                    onPress={()=> {
+                    style={[styles.icon, { left: 0, }]}
+                    onPress={() => {
                         props.navigation.goBack()
                     }}
                 >
-                    <Icon name='arrow-back-outline' size={25} color='black'/>    
+                    <Icon name='arrow-back-outline' size={25} color='black' />
                 </TouchableOpacity>
-                <Icon name='notifications-outline' size={25} color='black' style={[styles.icon, {right: 0,}]}/>
+                <Icon name='notifications-outline' size={25} color='black' style={[styles.icon, { right: 0, }]} />
                 <TouchableOpacity
-                    style={[styles.icon, {right: 40,}]}
-                    onPress={()=>{
+                    style={[styles.icon, { right: 40, }]}
+                    onPress={() => {
                         props.navigation.navigate('Category', {
                             num: num,
                             id: id,
@@ -82,24 +82,24 @@ const MyPage = (props) => {
                         })
                     }}
                 >
-                    <Icon name='home-outline' size={25} color='black'/>
+                    <Icon name='home-outline' size={25} color='black' />
                 </TouchableOpacity>
             </View>
             <View style={styles.profileView}>
                 {imageUrl.map((item, idx) => {
                     tmp = true
-                    if(item.name == image) {
-                        return(
-                            <Image 
+                    if (item.name == image) {
+                        return (
+                            <Image
                                 key={idx}
                                 style={styles.profileImage}
-                                source={{ uri : item.url}}
+                                source={{ uri: item.url }}
                             />
-                        )    
+                        )
                     } else {
-                        if(!tmp && idx == imageUrl.length-1) {
+                        if (!tmp && idx == imageUrl.length - 1) {
                             return (
-                                <Image 
+                                <Image
                                     key={idx}
                                     style={styles.profileImage}
                                     source={require('../assets/start-solo.png')}
@@ -113,26 +113,26 @@ const MyPage = (props) => {
                     <Text style={styles.infoText}>소속 : 없음</Text>
                 </View>
             </View>
-            <TouchableOpacity 
+            <TouchableOpacity
                 style={styles.profileBtn}
-                onPress={()=> {
+                onPress={() => {
                     props.navigation.navigate('MyProfile', {
                         num: num,
                         id: id,
                         pw: pw,
                         phone: phone,
                         name: name,
-                        email: email,  
-                        image: image,  
+                        email: email,
+                        image: image,
                     })
                 }}
             >
                 <Text style={styles.profileBtnText}>프로필 보기</Text>
             </TouchableOpacity>
             <View style={styles.btnListView}>
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={styles.btnListSubView}
-                    onPress={()=>{
+                    onPress={() => {
                         props.navigation.navigate('EditPeopleInfo', {
                             num: num,
                             id: id,
@@ -144,25 +144,25 @@ const MyPage = (props) => {
                         })
                     }}
                 >
-                    <Icon name='create-outline' size={25} color='black'/>
+                    <Icon name='create-outline' size={25} color='black' />
                     <Text style={styles.btnListText}>내 페이지 수정</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.btnListSubView}>
-                    <Icon name='business-outline' size={25} color='black'/>
+                    <Icon name='business-outline' size={25} color='black' />
                     <Text style={styles.btnListText}>내 스타트업</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.btnListSubView}>
-                    <Icon name='heart-outline' size={25} color='black'/>
+                    <Icon name='heart-outline' size={25} color='black' />
                     <Text style={styles.btnListText}>관심</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.btnListSubView}>
-                    <Icon name='bulb-outline' size={25} color='black'/>
+                    <Icon name='bulb-outline' size={25} color='black' />
                     <Text style={styles.btnListText}>도움말</Text>
                 </TouchableOpacity>
             </View>
-            <TouchableOpacity 
+            <TouchableOpacity
                 style={styles.logoutBtn}
-                onPress={()=> {
+                onPress={() => {
                     props.navigation.navigate('Category')
                     alert('로그아웃 되었습니다!')
                 }}
@@ -171,7 +171,7 @@ const MyPage = (props) => {
             </TouchableOpacity>
         </View>
     )
-} 
+}
 
 
 

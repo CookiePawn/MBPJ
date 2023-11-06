@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef} from 'react';
-import { 
+import React, { useEffect, useState, useRef } from 'react';
+import {
     View,
     Text,
     TouchableOpacity,
@@ -31,8 +31,8 @@ const Map = (props) => {
 
     //위치 정보
     const [region, setRegion] = useState({
-          latitude: 0,
-          longitude: 0,
+        latitude: 0,
+        longitude: 0,
     });
 
     const [km, setKm] = useState(0)
@@ -41,41 +41,41 @@ const Map = (props) => {
     //마커 위치 및 이름 데이터
     const marker = [
         {
-            coordinate : {
+            coordinate: {
                 latitude: 36.800280020840844,
                 longitude: 127.07498548034647,
             },
-            title : "선문대학교 아산캠퍼스"
+            title: "선문대학교 아산캠퍼스"
         },
         {
-            coordinate : {
+            coordinate: {
                 latitude: 36.77195296845993,
                 longitude: 127.06000439331741,
             },
-            title : "백지환 집" 
+            title: "백지환 집"
         },
         {
-            coordinate : {
-                latitude:  36.83040711295872,
+            coordinate: {
+                latitude: 36.83040711295872,
                 longitude: 127.18970055646777,
             },
-            title : "김우희 집" 
+            title: "김우희 집"
         },
         {
-            coordinate : {
-                latitude:  36.78893051067183,
+            coordinate: {
+                latitude: 36.78893051067183,
                 longitude: 127.01613316976758,
             },
-            title : "안준철 집" 
+            title: "안준철 집"
         },
     ]
 
     const [state, setState] = useState(marker)
 
     const [selectMarker, setSelectMarker] = useState({
-        latitude : region.latitude,
-        longitude : region.longitude,
-})
+        latitude: region.latitude,
+        longitude: region.longitude,
+    })
 
     let mapIndex = 0
     let mapAnimation = new Animated.Value(0)
@@ -88,162 +88,164 @@ const Map = (props) => {
     useEffect(() => {
 
         (async () => {
-          let { status } = await Location.requestForegroundPermissionsAsync();
-          if (status === 'granted') {
-            let location = await Location.getCurrentPositionAsync({});
-            // 위치를 가져온 후에 region을 업데이트합니다.
-            setRegion({
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
-            });
-            setTimeout(() => {
-                setFollowUser(false)
-            }, 2000);
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status === 'granted') {
+                let location = await Location.getCurrentPositionAsync({});
+                // 위치를 가져온 후에 region을 업데이트합니다.
+                setRegion({
+                    latitude: location.coords.latitude,
+                    longitude: location.coords.longitude,
+                });
+                setTimeout(() => {
+                    setFollowUser(false)
+                }, 2000);
             }
         })();
 
-      }, []); // 빈 배열을 전달하여 componentDidMount와 같이 처음 한 번만 실행
+    }, []); // 빈 배열을 전달하여 componentDidMount와 같이 처음 한 번만 실행
 
 
-      //스크롤 이벤트 발생 시 실행
+    //스크롤 이벤트 발생 시 실행
     const handleOnScroll = event => {
-        let index = parseInt(event.nativeEvent.contentOffset.x/Dimensions.get('window').width)
-            if (index >= marker.length) {
-                index = marker.length - 1
-            }
-            if (index <= 0) {
-                index = 0
-            }
+        let index = parseInt(event.nativeEvent.contentOffset.x / Dimensions.get('window').width)
+        if (index >= marker.length) {
+            index = marker.length - 1
+        }
+        if (index <= 0) {
+            index = 0
+        }
 
-            const regionTimeout = setTimeout(() => {
-                if (mapIndex != index || (mapIndex == 0 && index == 0)) {
-                    mapIndex = index
-                    const {coordinate} = marker[index]
-                    setSelectMarker(marker[index].coordinate)
-                    _map.current.animateToRegion(
-                        {
-                            ...coordinate,
-                            region : marker[index].latitude,
-                            region : marker[index].longitude,
-                        }, 350);
-                }
-            }, 10)
+        const regionTimeout = setTimeout(() => {
+            if (mapIndex != index || (mapIndex == 0 && index == 0)) {
+                mapIndex = index
+                const { coordinate } = marker[index]
+                setSelectMarker(marker[index].coordinate)
+                _map.current.animateToRegion(
+                    {
+                        ...coordinate,
+                        region: marker[index].latitude,
+                        region: marker[index].longitude,
+                    }, 350);
+            }
+        }, 10)
     }
 
-  return (
-    <View style={{ flex: 1, backgroundColor: 'white' }}>
-      <MapView
-        style={{ flex: 2 }}
-        region={region}
-        showsUserLocation={true}
-        followsUserLocation={followsUser}
-        ref = {_map}
-      >
+    return (
+        <View style={{ flex: 1, backgroundColor: 'white' }}>
+            <MapView
+                style={{ flex: 2 }}
+                region={region}
+                showsUserLocation={true}
+                followsUserLocation={followsUser}
+                ref={_map}
+            >
 
-        {
-            state.map((marker, index) => {
-                return (
-                    <Marker
-                        key = {index}
-                        coordinate={marker.coordinate}
-                        title = {marker.title}
-                        onPress={ () => {
-                            const distance = Geolib.getDistance(
-                                region,
-                                {latitude: marker.coordinate.latitude,
-                                longitude: marker.coordinate.longitude,}
-                            );
-                            setKm(distance)
-                            setSelectMarker(marker.coordinate)
-                        }}
-                    >
+                {
+                    state.map((marker, index) => {
+                        return (
+                            <Marker
+                                key={index}
+                                coordinate={marker.coordinate}
+                                title={marker.title}
+                                onPress={() => {
+                                    const distance = Geolib.getDistance(
+                                        region,
+                                        {
+                                            latitude: marker.coordinate.latitude,
+                                            longitude: marker.coordinate.longitude,
+                                        }
+                                    );
+                                    setKm(distance)
+                                    setSelectMarker(marker.coordinate)
+                                }}
+                            >
 
-                    </Marker>
-                )
-            })
-        }
+                            </Marker>
+                        )
+                    })
+                }
 
 
-        <Polyline
-            coordinates={[
-                {latitude: region.latitude, longitude: region.longitude},
-                {latitude: selectMarker.latitude, longitude: selectMarker.longitude},
-            ]}
-            strokeColor="#000"
-            strokeColors={[
-                '#FF1234',
-                '#50bcdf'
-            ]}
-            strokeWidth={6}
-        />
+                <Polyline
+                    coordinates={[
+                        { latitude: region.latitude, longitude: region.longitude },
+                        { latitude: selectMarker.latitude, longitude: selectMarker.longitude },
+                    ]}
+                    strokeColor="#000"
+                    strokeColors={[
+                        '#FF1234',
+                        '#50bcdf'
+                    ]}
+                    strokeWidth={6}
+                />
 
-      </MapView>
+            </MapView>
 
-      <TouchableOpacity 
-            style={styles.homeButton}
-            onPress={() => {
-                props.navigation.navigate('Category', {
-                    num: num,
-                    id: id,
-                    pw: pw,
-                    phone: phone,
-                    name: name,
-                    email: email,
-                    CRN: crn,
-                })
-            }} 
-        >
-            <Icon name="home-outline" size={30} color="black"/>
-        </TouchableOpacity>
-        <TouchableOpacity 
-            style={styles.userButton}
-            onPress={() => {
-                setFollowUser(true)
-                setTimeout(() => {
-                    setFollowUser(false)
-                }, 1000);
-            }} 
-        >
-            <Icon name="location-outline" size={30} color="black"/>
-        </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.homeButton}
+                onPress={() => {
+                    props.navigation.navigate('Category', {
+                        num: num,
+                        id: id,
+                        pw: pw,
+                        phone: phone,
+                        name: name,
+                        email: email,
+                        CRN: crn,
+                    })
+                }}
+            >
+                <Icon name="home-outline" size={30} color="black" />
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.userButton}
+                onPress={() => {
+                    setFollowUser(true)
+                    setTimeout(() => {
+                        setFollowUser(false)
+                    }, 1000);
+                }}
+            >
+                <Icon name="location-outline" size={30} color="black" />
+            </TouchableOpacity>
 
-    <Animated.ScrollView
-        horizontal
-        scrollEventThrottle = {3}
-        showsHorizontalScrollIndicator = {false}
-        style = {styles.scrollView}
-        contentContainerStyle={[{ width: `${state.length * 100}%`}]}
-        pagingEnabled
-        onScroll = {e => handleOnScroll(e)}
-        snapToAlignment = 'center'
-        contentInset={{
-            top : 0,
-            bottom : 0,
-            left : SPACING_CARD,
-            right : SPACING_CARD,
-        }}
-    >
-        {
-            state.map((marker, index) => {
-                return (
-                    <TouchableOpacity key = {index} style = {[{width : CARD_WIDTH}, styles.card]}>
-                        <Text
-                            numberOfLines = {1}
-                            style = {styles.cardTitle}
-                        >
-                            {marker.title}
-                        </Text>
-                    </TouchableOpacity>
-                )
-            })
-        }
-    </Animated.ScrollView>
+            <Animated.ScrollView
+                horizontal
+                scrollEventThrottle={3}
+                showsHorizontalScrollIndicator={false}
+                style={styles.scrollView}
+                contentContainerStyle={[{ width: `${state.length * 100}%` }]}
+                pagingEnabled
+                onScroll={e => handleOnScroll(e)}
+                snapToAlignment='center'
+                contentInset={{
+                    top: 0,
+                    bottom: 0,
+                    left: SPACING_CARD,
+                    right: SPACING_CARD,
+                }}
+            >
+                {
+                    state.map((marker, index) => {
+                        return (
+                            <TouchableOpacity key={index} style={[{ width: CARD_WIDTH }, styles.card]}>
+                                <Text
+                                    numberOfLines={1}
+                                    style={styles.cardTitle}
+                                >
+                                    {marker.title}
+                                </Text>
+                            </TouchableOpacity>
+                        )
+                    })
+                }
+            </Animated.ScrollView>
 
-      <Text style={styles.distanceText}>
-        {`현재 위치로부터 ${Number(km / 1000).toFixed(2)} km`}
-      </Text>
-    </View>
-  );
+            <Text style={styles.distanceText}>
+                {`현재 위치로부터 ${Number(km / 1000).toFixed(2)} km`}
+            </Text>
+        </View>
+    );
 };
 
 export default Map
@@ -298,37 +300,37 @@ const styles = StyleSheet.create({
         padding: 5,
         shadowColor: 'black',
         shadowOffset: {
-          width: 3,
-          height: 3,
+            width: 3,
+            height: 3,
         },
         shadowOpacity: 0.45,
         shadowRadius: 10,
-      },
+    },
 
-      scrollView : {
-        flex : 1,
-        backgroundColor : '#00ff0000',
-        position : 'absolute',
-        left : 0,
-        bottom : 10,
-        height : 200,
-      },
+    scrollView: {
+        flex: 1,
+        backgroundColor: '#00ff0000',
+        position: 'absolute',
+        left: 0,
+        bottom: 10,
+        height: 200,
+    },
 
-      card : {
-        alignItems : 'center',
-        backgroundColor : "#FFF",
-        marginHorizontal : 10,
-        overflow : 'hidden',
-        marginTop : 10,
-        height : '90%',
-        borderRadius : 50,
-        borderWidth : 1,
-        borderColor : 'rgba(0, 0, 0, 0.1)',
-      },
+    card: {
+        alignItems: 'center',
+        backgroundColor: "#FFF",
+        marginHorizontal: 10,
+        overflow: 'hidden',
+        marginTop: 10,
+        height: '90%',
+        borderRadius: 50,
+        borderWidth: 1,
+        borderColor: 'rgba(0, 0, 0, 0.1)',
+    },
 
-      cardTitle : {
-        fontSize : 20,
-        fontWeight : "bold"
-      },
+    cardTitle: {
+        fontSize: 20,
+        fontWeight: "bold"
+    },
 
 })

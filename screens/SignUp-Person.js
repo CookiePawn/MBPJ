@@ -19,10 +19,10 @@ const CustomTextInput = (props) => {
             <TextInput
                 style={styles.textInput}
                 placeholder={`${props.name}${props.named} 입력해주세요`}
-                maxLength = {20}
+                maxLength={20}
                 onChangeText={props.onChangeText}
             />
-        </View>    
+        </View>
     )
 }
 
@@ -127,7 +127,7 @@ const SignUp = (props) => {
                 />
             </View>
             <View style={styles.buttonView}>
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={styles.signButton}
                     onPress={signUp}
                 >
@@ -136,15 +136,15 @@ const SignUp = (props) => {
                 <View style={styles.buttonSubView}>
                     <Text style={styles.loginButtonText}>
                         이미 계정이 있으신가요?
-                        <TouchableOpacity 
-                            onPress={() => {props.navigation.navigate('PersonLogin')}}
+                        <TouchableOpacity
+                            onPress={() => { props.navigation.navigate('PersonLogin') }}
                         >
                             <Text style={styles.loginButtonSubText}>로그인</Text>
                         </TouchableOpacity>
                     </Text>
                 </View>
             </View>
-        </View>    
+        </View>
     )
 }
 
@@ -155,7 +155,7 @@ export default SignUp
 
 const styles = StyleSheet.create({
     mainView: {
-        flex: 1, 
+        flex: 1,
         backgroundColor: 'white',
         alignItems: 'center',
     },
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
 
-    
+
 
     buttonView: {
         flex: 0.2,

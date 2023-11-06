@@ -27,9 +27,9 @@ const CustomCategory = (props) => {
     return (
         <View style={styles.categoryListSubView}>
             <View style={styles.categoryListSubSubView}>
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={styles.categoryButton}
-                    onPress={()=>{
+                    onPress={() => {
                         props.navi.navigation.navigate(`${props.screen}`, props.params)
                     }}
                 >
@@ -46,7 +46,7 @@ const CustomCategory = (props) => {
 
 
 const CustomPeople = (props) => {
-    return(
+    return (
         <TouchableOpacity
             onPress={() => {
                 props.navi.navigation.navigate('PeopleInfo', props.params)
@@ -59,14 +59,14 @@ const CustomPeople = (props) => {
                 />
                 <Text style={styles.peopleListNameText}>{props.name}</Text>
                 <Text style={styles.peopleListInfoText}>{props.info}</Text>
-            </View>    
+            </View>
         </TouchableOpacity>
-    ) 
+    )
 }
 
 
 const CustomStartUp = (props) => {
-    return(
+    return (
         <TouchableOpacity>
             <View style={styles.startUpListSubView}>
                 <Image
@@ -77,9 +77,9 @@ const CustomStartUp = (props) => {
                     <Text style={styles.startUpNameText}>
                         {props.name}{'\n'}
                         <Text style={styles.startUpInfoText}>{props.info}</Text>
-                    </Text>    
+                    </Text>
                 </View>
-            </View>   
+            </View>
         </TouchableOpacity>
     )
 }
@@ -176,43 +176,43 @@ const Category = (props) => {
 
     const data = [
         {
-          name: "Java",
-          population: 21500000,
-          color: "rgba(131, 167, 234, 1)",
-          legendFontColor: "#7F7F7F",
-          legendFontSize: 15
+            name: "Java",
+            population: 21500000,
+            color: "rgba(131, 167, 234, 1)",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15
         },
         {
-          name: "Toronto",
-          population: 2800000,
-          color: "#F00",
-          legendFontColor: "#7F7F7F",
-          legendFontSize: 15
+            name: "Toronto",
+            population: 2800000,
+            color: "#F00",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15
         },
         {
-          name: "Beijing",
-          population: 527612,
-          color: "red",
-          legendFontColor: "#7F7F7F",
-          legendFontSize: 15
+            name: "Beijing",
+            population: 527612,
+            color: "red",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15
         },
         {
-          name: "New York",
-          population: 8538000,
-          color: "#ffffff",
-          legendFontColor: "#7F7F7F",
-          legendFontSize: 15
+            name: "New York",
+            population: 8538000,
+            color: "#ffffff",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15
         },
         {
-          name: "Moscow",
-          population: 11920000,
-          color: "rgb(0, 0, 255)",
-          legendFontColor: "#7F7F7F",
-          legendFontSize: 15
+            name: "Moscow",
+            population: 11920000,
+            color: "rgb(0, 0, 255)",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15
         }
-      ];
+    ];
 
-      const chartConfig = {
+    const chartConfig = {
         backgroundGradientFrom: "#1E2923",
         backgroundGradientFromOpacity: 0,
         backgroundGradientTo: "#08130D",
@@ -221,16 +221,16 @@ const Category = (props) => {
         strokeWidth: 2, // optional, default 3
         barPercentage: 0.5,
         useShadowColorFromDataset: false // optional
-      };
+    };
 
 
 
 
     return (
-        <ScrollView 
-            style={{flex: 1, backgroundColor: 'white'}}
+        <ScrollView
+            style={{ flex: 1, backgroundColor: 'white' }}
             showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}    
+            showsVerticalScrollIndicator={false}
         >
             <View style={styles.mainView}>
                 <View style={styles.categoryView}>
@@ -265,7 +265,7 @@ const Category = (props) => {
                         </View>
                     </View>
                     <View style={styles.categoryListView}>
-                        <ScrollView 
+                        <ScrollView
                             style={styles.categoryListScrollView}
                             horizontal={true}
                             showsHorizontalScrollIndicator={false}
@@ -345,7 +345,7 @@ const Category = (props) => {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <ScrollView 
+                    <ScrollView
                         style={styles.peopleListScrollView}
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
@@ -377,7 +377,7 @@ const Category = (props) => {
                                     />
                                 ));
                             }
-                            
+
                             return (
                                 <CustomPeople
                                     key={idx}
@@ -442,7 +442,7 @@ const Category = (props) => {
                                     />
                                 ));
                             }
-                            
+
                             return (
                                 <CustomStartUp
                                     key={idx}
@@ -479,7 +479,7 @@ const Category = (props) => {
                 </View>
             </View>
         </ScrollView>
-        
+
     )
 }
 
@@ -579,7 +579,7 @@ const styles = StyleSheet.create({
 
 
     //사람 추천 뷰
-    peopleView:{
+    peopleView: {
         flex: 0.4,
         width: '90%',
         marginTop: 20,
@@ -590,7 +590,7 @@ const styles = StyleSheet.create({
         fontSize: 12,
         position: 'absolute',
         marginTop: 20
-    },  
+    },
     peopleListScrollView: {
         marginTop: 20,
         flexDirection: 'row',

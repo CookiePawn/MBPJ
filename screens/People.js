@@ -24,17 +24,17 @@ const CustomList = (props) => {
                 props.navi.navigation.navigate('PeopleInfo', props.params)
             }}
         >
-            <View style= {styles.listSubView}>
-                <Image 
-                    style= {styles.profileImage}
-                    source= {props.image}
+            <View style={styles.listSubView}>
+                <Image
+                    style={styles.profileImage}
+                    source={props.image}
                 />
                 <View style={styles.listSubSubView}>
                     <Text style={styles.nameText}>{props.name}</Text>
                     <Text style={styles.infoText}>{props.info}</Text>
-                    <Icon name='heart-outline' size={20} color='red' style={[styles.icon, {right: 10, bottom: 15,}]}/>
+                    <Icon name='heart-outline' size={20} color='red' style={[styles.icon, { right: 10, bottom: 15, }]} />
                 </View>
-            </View>    
+            </View>
         </TouchableOpacity>
     )
 }
@@ -109,20 +109,20 @@ const People = (props) => {
         <View style={styles.mainView}>
             <View style={styles.titleView}>
                 <TouchableOpacity
-                    style={[styles.icon, {left: 0,}]}
-                    onPress={()=>{
+                    style={[styles.icon, { left: 0, }]}
+                    onPress={() => {
                         props.navigation.goBack()
                     }}
                 >
-                    <Icon name='arrow-back-outline' size={25} color='black'/>
+                    <Icon name='arrow-back-outline' size={25} color='black' />
                 </TouchableOpacity>
                 <Text style={styles.titleText}>
                     이런 사람은 어때요?
                 </Text>
-                <Icon name='notifications-outline' size={25} color='black' style={[styles.icon, {right: 0,}]}/>
+                <Icon name='notifications-outline' size={25} color='black' style={[styles.icon, { right: 0, }]} />
                 <TouchableOpacity
-                    style={[styles.icon, {right: 40,}]}
-                    onPress={()=>{
+                    style={[styles.icon, { right: 40, }]}
+                    onPress={() => {
                         props.navigation.navigate('Category', {
                             num: num,
                             id: id,
@@ -134,7 +134,7 @@ const People = (props) => {
                         })
                     }}
                 >
-                    <Icon name='home-outline' size={25} color='black'/>
+                    <Icon name='home-outline' size={25} color='black' />
                 </TouchableOpacity>
             </View>
             <View style={styles.searchView}>
@@ -143,13 +143,13 @@ const People = (props) => {
                     placeholder='검색어를 입력하세요'
                     placeholderTextColor='#777'
                     value={search}
-                    onChangeText={(e)=>{setSearch(e)}}
+                    onChangeText={(e) => { setSearch(e) }}
                     maxLength={20}
                 />
             </View>
             <View style={styles.listView}>
                 <ScrollView
-                    style={{marginBottom: 150,}}
+                    style={{ marginBottom: 150, }}
                     showsHorizontalScrollIndicator={false}
                     showsVerticalScrollIndicator={false}
                 >
@@ -180,7 +180,7 @@ const People = (props) => {
                                     />
                                 ));
                             }
-                            
+
                             return (
                                 <CustomList
                                     key={idx}
@@ -188,18 +188,18 @@ const People = (props) => {
                                     name={userItem.name}
                                     info={userItem.info}
                                     navi={props}
-                                        params={{
-                                            num: num,
-                                            id: id,
-                                            pw: pw,
-                                            phone: phone,
-                                            name: name,
-                                            email: email,
-                                            image: image,
-                                            people: userItem.id,
-                                        }}
+                                    params={{
+                                        num: num,
+                                        id: id,
+                                        pw: pw,
+                                        phone: phone,
+                                        name: name,
+                                        email: email,
+                                        image: image,
+                                        people: userItem.id,
+                                    }}
                                 />
-                            );    
+                            );
                         } else if (userItem.name.includes(search)) {
                             if (userUrl.length > 0) {
                                 return userUrl.map((urlItem, urlIdx) => (
@@ -222,7 +222,7 @@ const People = (props) => {
                                     />
                                 ));
                             }
-                            
+
                             return (
                                 <CustomList
                                     key={idx}
@@ -230,20 +230,20 @@ const People = (props) => {
                                     name={userItem.name}
                                     info={userItem.info}
                                     navi={props}
-                                        params={{
-                                            num: num,
-                                            id: id,
-                                            pw: pw,
-                                            phone: phone,
-                                            name: name,
-                                            email: email,
-                                            image: image,
-                                            people: userItem.id,
-                                        }}
+                                    params={{
+                                        num: num,
+                                        id: id,
+                                        pw: pw,
+                                        phone: phone,
+                                        name: name,
+                                        email: email,
+                                        image: image,
+                                        people: userItem.id,
+                                    }}
                                 />
-                            ); 
+                            );
                         }
-                        
+
                     })}
                 </ScrollView>
             </View>
@@ -259,7 +259,7 @@ export default People
 
 
 const styles = StyleSheet.create({
-    
+
     //메인 뷰
     mainView: {
         flex: 1,
