@@ -1,5 +1,5 @@
 import storage from './Storage'
-import { listAll, getDownloadURL, ref, } from '@firebase/storage';
+import { listAll, getDownloadURL, ref, uploadBytesResumable } from '@firebase/storage';
 import db from './FireBase'
 import { 
     collection, 
@@ -176,6 +176,58 @@ export const updateUserProfile = async (num, rePw) => {
 
 
 
+//사용자 프로필 사진 업로드
+export const updateUserImage = async (uri, id) => {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+
+
+    const metadata = {
+        contentType: 'image/jpeg',
+    };
+
+    // Firebase Storage의 참조를 만듭니다. 여기서 `ref`는 import한 함수를 사용합니다.
+    const storageRef = ref(storage, `/userProfile/${id}`);
+    const uploadTask = uploadBytesResumable(storageRef, blob, metadata);
+
+
+    uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+            // 진행 상태를 추적할 수 있음 (옵션)
+        },
+        (error) => {
+            // 업로드 중 오류 처리
+            console.log(error);
+            alert('업로드 중 오류가 발생했습니다.');
+        },
+        () => {
+            // 성공적으로 업로드된 경우 다운로드 URL을 가져옵니다.
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                console.log('다운로드 URL:', downloadURL);
+                // 다운로드 URL을 이용한 후속 작업...
+            }).catch((error) => {
+                // 에러 처리
+                console.error("다운로드 URL을 가져오는 중 오류 발생:", error);
+            });
+        }
+    );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -200,9 +252,13 @@ export const addUser = async (id, pw, name, email, phone) => {
             perPW: pw,
             name: name,
             perEmail: email,
-            perPhone: phone
+            perPhone: phone,
+            infoHeart: 0,
+            infoGroup: '없음',
         });
     } catch (error) {
         console.log(error)
     }
 }
+
+

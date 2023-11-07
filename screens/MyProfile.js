@@ -11,8 +11,12 @@ import Icon from 'react-native-vector-icons/Ionicons'
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 
+
+import * as ImagePicker from 'expo-image-picker';
+
+
 //db 로드
-import { loadUserImages, updateUserProfile } from '../DB/LoadDB'
+import { loadUserImages, updateUserProfile, updateUserImage } from '../DB/LoadDB'
 
 
 
@@ -30,6 +34,7 @@ const MyProfile = (props) => {
 
     //개인정보 수정
     const [rePw, setRePw] = useState('')
+    const [profileImg, setProfileImg] = useState(null)
 
 
     //db
@@ -48,6 +53,48 @@ const MyProfile = (props) => {
     }, [isFocused]);
 
 
+    const [foundImage, setFoundImage] = useState(null);
+    
+    useEffect(() => {
+        if (imageUrl.length > 0) {
+            const matchImage = imageUrl.find(item => item.name === id);
+            setFoundImage(matchImage);
+        }
+    }, [imageUrl]);
+
+
+
+
+
+    const requestGalleryPermission = async () => {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+            alert('갤러리 접근 권한이 필요합니다!');
+            return false;
+        }
+        return true;
+    };
+
+
+    const pickImage = async () => {
+        // 갤러리 접근 권한 요청
+        const hasPermission = await requestGalleryPermission();
+        if (!hasPermission) return;
+
+        // 이미지 선택기를 여는 부분
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        if (!result.cancelled) {
+            // 선택한 이미지를 Firebase Storage에 업로드하는 함수 호출
+            updateUserImage(result.assets[0].uri, id);
+            setProfileImg(result.assets[0].uri)
+        }
+    };
 
 
 
@@ -90,30 +137,24 @@ const MyProfile = (props) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.profileView}>
-                {imageUrl.map((item, idx) => {
-                    if (item.name == image) {
-                        tmp = true
-                        return (
-                            <Image
-                                key={idx}
-                                style={styles.image}
-                                source={{ uri: item.url }}
-                            />
-                        )
-                    } else {
-                        if (!tmp && idx == imageUrl.length - 1) {
-                            return (
-                                <Image
-                                    key={idx}
-                                    style={styles.image}
-                                    source={require('../assets/start-solo.png')}
-                                />
-                            )
-                        }
-                    }
-                })}
+                {
+                    // profileImg가 null이 아니면 바로 profileImg를 사용하고,
+                    // 그렇지 않을 경우 기존의 imageUrl 배열을 순회합니다.
+                    profileImg ? (
+                        <Image
+                            style={styles.image}
+                            source={{ uri: profileImg }}
+                        />
+                    ) : (
+                        <Image
+                            style={styles.image}
+                            source={foundImage ? { uri: foundImage.url } : require('../assets/start-solo.png')}
+                        />
+                    )
+                }
                 <TouchableOpacity
                     style={styles.imageBtn}
+                    onPress={pickImage}
                 >
                     <Text style={styles.imageBtnText}>사진 변경</Text>
                 </TouchableOpacity>
@@ -164,11 +205,11 @@ const MyProfile = (props) => {
                                 name: name,
                                 email: email,
                                 image: image,
-                            })    
+                            })
                         } else {
                             alert('비밀번호를 입력해주세요')
                         }
-                        
+
                     }}
                 >
                     <Text style={styles.saveBtnText}>저장하기</Text>

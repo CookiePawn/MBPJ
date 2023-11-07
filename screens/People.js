@@ -135,7 +135,7 @@ const People = (props) => {
                     showsVerticalScrollIndicator={false}
                 >
                     {user.map((userItem, idx) => {
-                        const userUrl = imageUrl.filter((item) => item.name === userItem.image);
+                        const userUrl = imageUrl.filter((item) => item.name === userItem.perID);
 
 
 

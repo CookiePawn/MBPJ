@@ -145,6 +145,12 @@ const Category = (props) => {
 
 
 
+
+
+
+
+
+
     const data = [
         {
             name: "Java",
@@ -325,7 +331,7 @@ const Category = (props) => {
                         {user.map((userItem, idx) => {
                             if (idx >= 7) return null;
 
-                            const userUrl = userImage.filter((item) => item.name === userItem.image);
+                            const userUrl = userImage.filter((item) => item.name === userItem.perID);
 
                             if (userUrl.length > 0) {
                                 return userUrl.map((urlItem, urlIdx) => (

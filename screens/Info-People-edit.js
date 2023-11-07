@@ -72,6 +72,21 @@ const PersonInfo = (props) => {
 
 
 
+    const [foundImage, setFoundImage] = useState(null);
+
+    useEffect(() => {
+        if (user.perID && imageUrl.length > 0) {
+            const matchImage = imageUrl.find(item => item.name === user.perID);
+            setFoundImage(matchImage);
+        }
+    }, [user, imageUrl]);
+
+
+
+
+
+
+
 
     return (
         <View style={styles.mainView}>
@@ -103,28 +118,10 @@ const PersonInfo = (props) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.profileView}>
-                {imageUrl.map((item, idx) => {
-                    tmp = true
-                    if (item.name == image) {
-                        return (
-                            <Image
-                                key={idx}
-                                style={styles.profileImage}
-                                source={{ uri: item.url }}
-                            />
-                        )
-                    } else {
-                        if (!tmp && idx == imageUrl.length - 1) {
-                            return (
-                                <Image
-                                    key={idx}
-                                    style={styles.profileImage}
-                                    source={require('../assets/start-solo.png')}
-                                />
-                            )
-                        }
-                    }
-                })}
+                <Image
+                    style={styles.profileImage}
+                    source={foundImage ? { uri: foundImage.url } : require('../assets/start-solo.png')}
+                />
                 <View style={styles.profileInfoView}>
                     <Text style={styles.nameText}>{user.name}</Text>
                     <Text style={styles.infoText}>소속 : {user.infoGroup}</Text>

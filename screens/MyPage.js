@@ -31,7 +31,7 @@ const MyPage = (props) => {
 
     //db
     const [imageUrl, setImageUrl] = useState([]);
-    let tmp = false
+
 
     const isFocused = useIsFocused();
 
@@ -44,6 +44,15 @@ const MyPage = (props) => {
         fetchImage();
     }, [isFocused]);
 
+
+    const [foundImage, setFoundImage] = useState(null);
+    
+    useEffect(() => {
+        if (imageUrl.length > 0) {
+            const matchImage = imageUrl.find(item => item.name === id);
+            setFoundImage(matchImage);
+        }
+    }, [imageUrl]);
 
 
 
@@ -78,28 +87,10 @@ const MyPage = (props) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.profileView}>
-                {imageUrl.map((item, idx) => {
-                    tmp = true
-                    if (item.name == image) {
-                        return (
-                            <Image
-                                key={idx}
-                                style={styles.profileImage}
-                                source={{ uri: item.url }}
-                            />
-                        )
-                    } else {
-                        if (!tmp && idx == imageUrl.length - 1) {
-                            return (
-                                <Image
-                                    key={idx}
-                                    style={styles.profileImage}
-                                    source={require('../assets/start-solo.png')}
-                                />
-                            )
-                        }
-                    }
-                })}
+                <Image
+                    style={styles.profileImage}
+                    source={foundImage ? { uri: foundImage.url } : require('../assets/start-solo.png')}
+                />
                 <View style={styles.profileInfoView}>
                     <Text style={styles.nameText}>{name}</Text>
                     <Text style={styles.infoText}>소속 : 없음</Text>

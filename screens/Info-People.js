@@ -52,8 +52,8 @@ const PersonInfo = (props) => {
     }, [isFocused]);
 
     useEffect(() => {
-        if (user.image && imageUrl.length > 0) {
-            const matchImage = imageUrl.find(item => item.name === user.image);
+        if (user.perID && imageUrl.length > 0) {
+            const matchImage = imageUrl.find(item => item.name === user.perID);
             setFoundImage(matchImage);
         }
     }, [user, imageUrl]);
