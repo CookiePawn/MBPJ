@@ -7,9 +7,7 @@ import {
     StyleSheet,
     Dimensions,
 } from 'react-native'
-// import {
-//     PieChart,
-// } from "react-native-chart-kit";
+
 import Icon from 'react-native-vector-icons/Ionicons'
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
@@ -24,13 +22,6 @@ import {
 
 //그래프 import
 import { PieChart } from "react-native-gifted-charts"; 
-
-// import {VictoryPie} from 'victory-native';
-
-// const graphicColor = ['#388087', '#6fb3b8', '#badfe7']; // Colors
-// const wantedGraphicData = [{ y: 10 }, { y: 50 }, { y: 40 }]; // Data that we want to display
-// const defaultGraphicData = [{ y: 0 }, { y: 0 }, { y: 100 }]; // Data used to make the animate prop work
-
 
 
 
@@ -150,11 +141,6 @@ const Category = (props) => {
     }, [isFocused]);
 
 
-    // const [graphicData, setGraphicData] = useState(defaultGraphicData);
-
-    // useEffect(() => {
-    //     setGraphicData(wantedGraphicData); // Setting the data that we want to display
-    // }, []);
 
     const pieData = [
         {
@@ -530,14 +516,7 @@ const Category = (props) => {
                         </View>
                     </View>
                     <View>
-                    {/* <VictoryPie
-                        animate={{ easing: 'exp' }}
-                        data={graphicData}
-                        width={250}
-                        height={250}
-                        colorScale={graphicColor}
-                        innerRadius={50}
-                    /> */}
+                    
                     <View>
                         <View style={{padding: 20, alignItems: 'center'}}>
                             <PieChart
@@ -566,16 +545,7 @@ const Category = (props) => {
                     </View>
                     
                     </View>
-                    {/* <View style={styles.trendImageView}>
-                        <PieChart
-                            data={data}
-                            width={Dimensions.get("window").width}
-                            height={220}
-                            chartConfig={chartConfig}
-                            accessor={"population"}
-                            backgroundColor={"transparent"}
-                        />
-                    </View> */}
+
                 </View>
             </View>
         </ScrollView>
