@@ -23,7 +23,6 @@ const CustomList = (props) => {
                 <View style={styles.listSubSubView}>
                     <Text style={styles.nameText}>{props.info}</Text>
                     <Text style={styles.infoText}>{props.name}</Text>
-                    <Icon name='heart-outline' size={20} color='red' style={[styles.icon, { right: 10, bottom: 10, }]} />
                 </View>
             </View>
         </TouchableOpacity>

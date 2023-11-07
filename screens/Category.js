@@ -13,15 +13,18 @@ import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 
 //db 로드
-import { 
-    loadUserImages, 
+import {
+    loadUserImages,
     loadUsers,
-    loadStartUpImages, 
-    loadStartUps, 
+    loadStartUpImages,
+    loadStartUps,
 } from '../DB/LoadDB'
 
-//그래프 import
-import { PieChart } from "react-native-gifted-charts"; 
+
+//차트
+import CustomChart from '../components/CustomChart';
+
+
 
 
 
@@ -70,7 +73,11 @@ const CustomPeople = (props) => {
 
 const CustomStartUp = (props) => {
     return (
-        <TouchableOpacity>
+        <TouchableOpacity
+            onPress={() => {
+                props.navi.navigation.navigate('StartUpInfo', props.params)
+            }}
+        >
             <View style={styles.startUpListSubView}>
                 <Image
                     style={styles.startUpListImage}
@@ -120,7 +127,7 @@ const Category = (props) => {
         const fetchUsers = async () => {
             const users = await loadUsers()
             setUser(users)
-        } 
+        }
 
         const fetchStartUpImage = async () => {
             const images = await loadStartUpImages()
@@ -129,7 +136,7 @@ const Category = (props) => {
         const fetchStartUps = async () => {
             const startups = await loadStartUps()
             setStartup(startups)
-        } 
+        }
 
         fetchUserImage()
         fetchUsers()
@@ -137,140 +144,11 @@ const Category = (props) => {
         fetchStartUps()
 
 
-        
+
     }, [isFocused]);
 
 
 
-    const pieData = [
-        {
-            value: 47,
-            color: '#009FFF',
-            gradientCenterColor: '#006DFF',
-            focused: true,
-        },
-        {value: 40, color: '#93FCF8', gradientCenterColor: '#3BE9DE'},
-        {value: 16, color: '#BDB2FA', gradientCenterColor: '#8F80F3'},
-        {value: 3, color: '#FFA5BA', gradientCenterColor: '#FF7F97'},
-    ];
-
-    const renderDot = color => {
-        return (
-            <View
-                style={{
-                    height: 10,
-                    width: 10,
-                    borderRadius: 5,
-                    backgroundColor: color,
-                    marginRight: 10,
-                }}
-            />
-        );
-    };
-
-    const renderLegendComponent = () => {
-          return (
-            <>
-            <View
-                style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    marginBottom: 10,
-                    marginLeft: 50,
-                }}
-            >
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        width: 120,
-                        marginRight: 20,
-                    }}>
-                    {renderDot('#006DFF')}
-                    <Text style={{color: 'black'}}>Excellent: 47%</Text>
-                </View>
-                <View
-                    style={{flexDirection: 'row', alignItems: 'center', width: 120}}>
-                    {renderDot('#8F80F3')}
-                    <Text style={{color: 'black'}}>Okay: 16%</Text>
-                </View>
-            </View>
-            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        width: 120,
-                        marginRight: 20,
-                        marginLeft: 50,
-                    }}>
-                    {renderDot('#3BE9DE')}
-                    <Text style={{color: 'black'}}>Good: 40%</Text>
-                </View>
-                <View
-                    style={{flexDirection: 'row', alignItems: 'center', width: 120}}>
-                    {renderDot('#FF7F97')}
-                    <Text style={{color: 'black'}}>Poor: 3%</Text>
-                </View>
-              </View>
-            </>
-          );
-        };
-
-
-
-
-
-
-
-    const data = [
-        {
-            name: "Java",
-            population: 21500000,
-            color: "rgba(131, 167, 234, 1)",
-            legendFontColor: "#7F7F7F",
-            legendFontSize: 15
-        },
-        {
-            name: "Toronto",
-            population: 2800000,
-            color: "#F00",
-            legendFontColor: "#7F7F7F",
-            legendFontSize: 15
-        },
-        {
-            name: "Beijing",
-            population: 527612,
-            color: "red",
-            legendFontColor: "#7F7F7F",
-            legendFontSize: 15
-        },
-        {
-            name: "New York",
-            population: 8538000,
-            color: "#ffffff",
-            legendFontColor: "#7F7F7F",
-            legendFontSize: 15
-        },
-        {
-            name: "Moscow",
-            population: 11920000,
-            color: "rgb(0, 0, 255)",
-            legendFontColor: "#7F7F7F",
-            legendFontSize: 15
-        }
-    ];
-
-    const chartConfig = {
-        backgroundGradientFrom: "#1E2923",
-        backgroundGradientFromOpacity: 0,
-        backgroundGradientTo: "#08130D",
-        backgroundGradientToOpacity: 0.5,
-        color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-        strokeWidth: 2, // optional, default 3
-        barPercentage: 0.5,
-        useShadowColorFromDataset: false // optional
-    };
 
 
 
@@ -460,7 +338,7 @@ const Category = (props) => {
                         <View style={styles.categoryTitleIconView}>
                             <TouchableOpacity
                                 onPress={() => {
-                                    props.navigation.navigate('Team', {
+                                    props.navigation.navigate('StartUpList', {
                                         num: num,
                                         id: id,
                                         pw: pw,
@@ -479,7 +357,7 @@ const Category = (props) => {
                         {startup.map((startupItem, idx) => {
                             if (idx >= 5) return null;
 
-                            const startupUrl = startupImage.filter((item) => item.name === startupItem.image);
+                            const startupUrl = startupImage.filter((item) => item.name === startupItem.name);
 
                             if (startupUrl.length > 0) {
                                 return startupUrl.map((urlItem, urlIdx) => (
@@ -488,6 +366,17 @@ const Category = (props) => {
                                         image={{ uri: urlItem.url }}
                                         name={startupItem.name}
                                         info={startupItem.info}
+                                        navi={props}
+                                        params={{
+                                            num: num,
+                                            id: id,
+                                            pw: pw,
+                                            phone: phone,
+                                            name: name,
+                                            email: email,
+                                            image: image,
+                                            people: startupItem.id,
+                                        }}
                                     />
                                 ));
                             }
@@ -498,6 +387,17 @@ const Category = (props) => {
                                     image={require('../assets/start-solo.png')}
                                     name={startupItem.name}
                                     info={startupItem.info}
+                                    navi={props}
+                                    params={{
+                                        num: num,
+                                        id: id,
+                                        pw: pw,
+                                        phone: phone,
+                                        name: name,
+                                        email: email,
+                                        image: image,
+                                        people: startupItem.id,
+                                    }}
                                 />
                             );
                         })}
@@ -515,37 +415,7 @@ const Category = (props) => {
                             </Text>
                         </View>
                     </View>
-                    <View>
-                    
-                    <View>
-                        <View style={{padding: 20, alignItems: 'center'}}>
-                            <PieChart
-                                data={pieData}
-                                donut
-                                showGradient
-                                sectionAutoFocus
-                                radius={90}
-                                innerRadius={60}
-                                focusOnPress
-                          
-                                centerLabelComponent={() => {
-                                    return (
-                                        <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                                            <Text
-                                                style={{fontSize: 22, color: 'black', fontWeight: 'bold'}}>
-                                                47%
-                                            </Text>
-                                            <Text style={{fontSize: 14, color: 'black', fontWeight: 'bold'}}>Excellent</Text>
-                                        </View>
-                                    );
-                                }}
-                            />
-                        </View>
-                      {renderLegendComponent()}
-                    </View>
-                    
-                    </View>
-
+                    <CustomChart />
                 </View>
             </View>
         </ScrollView>
@@ -729,7 +599,7 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         fontSize: 16,
         fontWeight: 'bold',
-        lineHeight: 35,
+        lineHeight: 30,
     },
     startUpInfoText: {
         fontSize: 12,

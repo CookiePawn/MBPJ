@@ -11,12 +11,14 @@ import Category from '../screens/Category'
 import MyPage from '../screens/MyPage';
 import MyProfile from '../screens/MyProfile'
 import Map from '../screens/Map';
-import People from '../screens/People';
+import People from '../screens/List-People';
 import Cofounder from '../screens/Cofounder';
 import Team from '../screens/Team';
 import PeopleInfo from '../screens/Info-People';
 import EditPeopleInfo from '../screens/Info-People-edit'
 import StartupStep from '../screens/StartupStep';
+import StartUpList from '../screens/List-StartUp';
+import StartUpInfo from '../screens/Info-StartUp';
 
 
 const Stack = createStackNavigator();
@@ -45,6 +47,8 @@ const StackNavigator = () => {
             <Stack.Screen name='MyPage' component={MyPage}/>
             <Stack.Screen name='MyProfile' component={MyProfile}/>
             <Stack.Screen name='StartupStep' component={StartupStep}/>
+            <Stack.Screen name='StartUpList' component={StartUpList}/>
+            <Stack.Screen name='StartUpInfo' component={StartUpInfo}/>
         </Stack.Navigator>
     )
 }

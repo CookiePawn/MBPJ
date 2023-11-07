@@ -122,6 +122,29 @@ export const loadStartUps= async () => {
 };
 
 
+//특정 스타트업 정보 로드 
+export const loadStartUpSelect = async (people) => {
+    let userData = {};
+    try {
+        // 문서 ID인 num을 사용하여 문서 참조 생성
+        const docRef = doc(db, 'startupInfo', people);
+        
+        // 문서 데이터 가져오기
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            // 문서가 존재하는 경우
+            userData = { ...docSnap.data(), id: docSnap.id };
+        } else {
+            console.log('해당 문서가 존재하지 않습니다.');
+        }
+    } catch (error) {
+        console.error("Error fetching data:", error.message);
+    }
+    return userData
+};
+
+
 
 
 
