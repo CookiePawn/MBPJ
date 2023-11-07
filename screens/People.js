@@ -9,11 +9,10 @@ import {
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import React, { useState, useEffect } from 'react'
-import storage from '../DB/Storage'
-import db from '../DB/FireBase'
-import { collection, getDocs, } from 'firebase/firestore';
-import { listAll, getDownloadURL, ref, } from '@firebase/storage';
 import { useIsFocused } from '@react-navigation/native';
+
+//db 로드
+import { loadUserImages, loadUsers } from '../DB/LoadDB'
 
 
 
@@ -67,34 +66,16 @@ const People = (props) => {
 
     useEffect(() => {
         const fetchImage = async () => {
-            try {
-                const storageRef = ref(storage, '/userProfile');
-                const result = await listAll(storageRef);
-                const imageUrls = [];
-                // 각 아이템의 URL과 이름을 가져와 imageUrls 배열에 저장
-                for (const item of result.items) {
-                    const url = await getDownloadURL(item);
-                    imageUrls.push({ url, name: item.name });
-                }
-                setImageUrl(imageUrls);
-            } catch (error) {
-                console.error('이미지 로딩 오류:', error);
-            }
+            const images = await loadUserImages();
+            setImageUrl(images);
         };
-        const readFromDB = async () => {
-            try {
-                const data = await getDocs(collection(db, 'userInfo'));
-                let tempArray = [];
-                data.forEach((doc) => {
-                    tempArray.push({ ...doc.data(), id: doc.id });
-                });
-                setUser(tempArray);
-            } catch (error) {
-                console.log("Error fetching data:", error.message);
-            }
+        const fetchUserInfo = async () => {
+            const users = await loadUsers();
+            setUser(users);
         };
+
         fetchImage();
-        readFromDB();
+        fetchUserInfo();
     }, [isFocused]);
 
 

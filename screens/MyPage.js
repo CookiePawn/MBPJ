@@ -7,9 +7,11 @@ import {
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import React, { useState, useEffect } from 'react'
-import storage from '../DB/Storage'
-import { listAll, getDownloadURL, ref, } from '@firebase/storage';
 import { useIsFocused } from '@react-navigation/native';
+
+
+//db 로드
+import { loadUserImages } from '../DB/LoadDB'
 
 
 
@@ -34,21 +36,12 @@ const MyPage = (props) => {
     const isFocused = useIsFocused();
 
     useEffect(() => {
+
         const fetchImage = async () => {
-            try {
-                const storageRef = ref(storage, '/userProfile');
-                const result = await listAll(storageRef);
-                const imageUrls = [];
-                // 각 아이템의 URL과 이름을 가져와 imageUrls 배열에 저장
-                for (const item of result.items) {
-                    const url = await getDownloadURL(item);
-                    imageUrls.push({ url, name: item.name });
-                }
-                setImageUrl(imageUrls);
-            } catch (error) {
-                console.error('이미지 로딩 오류:', error);
-            }
+            const images = await loadUserImages();
+            setImageUrl(images);
         };
+    
         fetchImage();
     }, [isFocused]);
 

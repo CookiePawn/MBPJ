@@ -9,11 +9,10 @@ import {
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import React, { useState, useEffect } from 'react'
-import storage from '../DB/Storage'
-import db from '../DB/FireBase'
-import { doc, getDoc } from 'firebase/firestore';
-import { listAll, getDownloadURL, ref, } from '@firebase/storage';
 import { useIsFocused } from '@react-navigation/native';
+
+//db 로드
+import { loadUserImages, loadUserSelect } from '../DB/LoadDB'
 
 
 const PersonInfo = (props) => {
@@ -40,41 +39,16 @@ const PersonInfo = (props) => {
 
     useEffect(() => {
         const fetchImage = async () => {
-            try {
-                const storageRef = ref(storage, '/userProfile');
-                const result = await listAll(storageRef);
-                const imageUrls = [];
-                // 각 아이템의 URL과 이름을 가져와 imageUrls 배열에 저장
-                for (const item of result.items) {
-                    const url = await getDownloadURL(item);
-                    imageUrls.push({ url, name: item.name });
-                }
-                setImageUrl(imageUrls);
-            } catch (error) {
-                console.error('이미지 로딩 오류:', error);
-            }
+            const images = await loadUserImages();
+            setImageUrl(images);
         };
-        const userDB = async () => {
-            try {
-                // 문서 ID인 num을 사용하여 문서 참조 생성
-                const docRef = doc(db, 'userInfo', people);
-
-                // 문서 데이터 가져오기
-                const docSnap = await getDoc(docRef);
-
-                if (docSnap.exists()) {
-                    // 문서가 존재하는 경우
-                    const userData = { ...docSnap.data(), id: docSnap.id };
-                    setUser(userData);
-                } else {
-                    console.log('해당 문서가 존재하지 않습니다.');
-                }
-            } catch (error) {
-                console.error("Error fetching data:", error.message);
-            }
+        const fetchUserInfo = async () => {
+            const users = await loadUserSelect(people);
+            setUser(users);
         };
+
         fetchImage();
-        userDB()
+        fetchUserInfo();
     }, [isFocused]);
 
     useEffect(() => {

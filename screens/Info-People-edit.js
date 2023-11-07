@@ -10,11 +10,14 @@ import {
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import React, { useState, useEffect } from 'react'
-import storage from '../DB/Storage'
-import db from '../DB/FireBase'
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
-import { listAll, getDownloadURL, ref, } from '@firebase/storage';
 import { useIsFocused } from '@react-navigation/native';
+
+//db 로드
+import { 
+    loadUserImages, 
+    loadUserSelect,
+    UpdateUserProject,
+} from '../DB/LoadDB'
 
 
 const PersonInfo = (props) => {
@@ -45,47 +48,25 @@ const PersonInfo = (props) => {
     const isFocused = useIsFocused();
 
     useEffect(() => {
+
         const fetchImage = async () => {
-            try {
-                const storageRef = ref(storage, '/userProfile');
-                const result = await listAll(storageRef);
-                const imageUrls = [];
-                // 각 아이템의 URL과 이름을 가져와 imageUrls 배열에 저장
-                for (const item of result.items) {
-                    const url = await getDownloadURL(item);
-                    imageUrls.push({ url, name: item.name });
-                }
-                setImageUrl(imageUrls);
-            } catch (error) {
-                console.error('이미지 로딩 오류:', error);
-            }
+            const images = await loadUserImages();
+            setImageUrl(images);
         };
-        const userDB = async () => {
-            try {
-                // 문서 ID인 num을 사용하여 문서 참조 생성
-                const docRef = doc(db, 'userInfo', num);
+        const fetchUserInfo = async () => {
+            const users = await loadUserSelect(num);
+            setUser(users);
 
-                // 문서 데이터 가져오기
-                const docSnap = await getDoc(docRef);
+            setEInfo(users.info || '');
+            setECareer(users.infoCareer || '');
+            setEIntroduce(users.infoIntroduce || '');
+            setEProject(users.infoProject || '');
 
-                if (docSnap.exists()) {
-                    // 문서가 존재하는 경우
-                    const userData = { ...docSnap.data(), id: docSnap.id };
-                    setUser(userData);
-
-                    setEInfo(userData.info || '');
-                    setECareer(userData.infoCareer || '');
-                    setEIntroduce(userData.infoIntroduce || '');
-                    setEProject(userData.infoProject || '');
-                } else {
-                    console.log('해당 문서가 존재하지 않습니다.');
-                }
-            } catch (error) {
-                console.error("Error fetching data:", error.message);
-            }
         };
+
         fetchImage();
-        userDB()
+        fetchUserInfo();
+
     }, [isFocused]);
 
 
@@ -198,17 +179,9 @@ const PersonInfo = (props) => {
 
             <TouchableOpacity
                 style={styles.chatBtn}
-                onPress={async () => {
-                    try {
-                        const docRef = doc(db, 'userInfo', num);
-
-                        await updateDoc(docRef, {
-                            info: eInfo,
-                            infoCareer: eCareer,
-                            infoIntroduce: eIntroduce,
-                            infoProject: eProject,
-                        });
-                        alert('정보가 수정되었습니다!')
+                onPress={
+                    async () => {
+                        await UpdateUserProject(num, eInfo, eCareer, eIntroduce, eProject);
                         props.navigation.navigate("MyPage", {
                             num: num,
                             id: id,
@@ -217,11 +190,10 @@ const PersonInfo = (props) => {
                             name: name,
                             email: email,
                             image: image,
-                        })
-                    } catch (error) {
-                        console.error("Error fetching data:", error.message);
+                        })    
                     }
-                }}
+                    
+                }
             >
                 <Text style={styles.chatBtnText}>저장하기</Text>
             </TouchableOpacity>
