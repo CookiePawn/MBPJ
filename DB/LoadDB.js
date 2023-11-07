@@ -1,7 +1,31 @@
 import storage from './Storage'
 import { listAll, getDownloadURL, ref, } from '@firebase/storage';
 import db from './FireBase'
-import { collection, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { 
+    collection, 
+    getDocs, 
+    doc, 
+    getDoc, 
+    updateDoc,
+    addDoc,
+} from 'firebase/firestore';
+
+
+
+
+
+
+
+
+
+//로드 문
+//로드 문
+//로드 문
+//로드 문
+
+
+
+
 
 
 //유저 이미지 로드  
@@ -102,8 +126,22 @@ export const loadStartUps= async () => {
 
 
 
+
+
+
+
+
+//업데이트 문
+//업데이트 문
+//업데이트 문
+//업데이트 문
+
+
+
+
+
 //내 페이지 수정
-export const UpdateUserProject = async (num, eInfo, eCareer, eIntroduce, eProject) => {
+export const updateUserProject = async (num, eInfo, eCareer, eIntroduce, eProject) => {
     try {
         const docRef = doc(db, 'userInfo', num);
 
@@ -116,5 +154,55 @@ export const UpdateUserProject = async (num, eInfo, eCareer, eIntroduce, eProjec
         alert('정보가 수정되었습니다!')
     } catch (error) {
         console.error("Error fetching data:", error.message);
+    }
+}
+
+
+
+
+//내 프로필 수정
+export const updateUserProfile = async (num, rePw) => {
+    try {
+        // Firestore에서 해당 문서의 참조 가져오기
+        const userDocRef = doc(db, 'PersonLogin', num);
+
+        await updateDoc(userDocRef, { perPW: rePw });
+    } catch (error) {
+        console.error('비밀번호 업데이트 오류:', error);
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//DB 추가문
+//DB 추가문
+//DB 추가문
+//DB 추가문
+
+
+
+//회원가입 추가
+export const addUser = async (id, pw, name, email, phone) => {
+    try {
+        await addDoc(collection(db, 'userInfo'), {
+            perID: id,
+            perPW: pw,
+            name: name,
+            perEmail: email,
+            perPhone: phone
+        });
+    } catch (error) {
+        console.log(error)
     }
 }

@@ -16,7 +16,7 @@ import { useIsFocused } from '@react-navigation/native';
 import { 
     loadUserImages, 
     loadUserSelect,
-    UpdateUserProject,
+    updateUserProject,
 } from '../DB/LoadDB'
 
 
@@ -181,7 +181,7 @@ const PersonInfo = (props) => {
                 style={styles.chatBtn}
                 onPress={
                     async () => {
-                        await UpdateUserProject(num, eInfo, eCareer, eIntroduce, eProject);
+                        await updateUserProject(num, eInfo, eCareer, eIntroduce, eProject);
                         props.navigation.navigate("MyPage", {
                             num: num,
                             id: id,

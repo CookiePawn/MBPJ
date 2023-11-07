@@ -36,7 +36,6 @@ const MyPage = (props) => {
     const isFocused = useIsFocused();
 
     useEffect(() => {
-
         const fetchImage = async () => {
             const images = await loadUserImages();
             setImageUrl(images);

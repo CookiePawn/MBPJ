@@ -5,10 +5,13 @@ import {
     TouchableOpacity,
     StyleSheet,
 } from 'react-native'
-import db from '../DB/FireBase'
-import { collection, getDocs, addDoc } from 'firebase/firestore';
 import { useIsFocused } from '@react-navigation/native';
 import { useState, useEffect } from 'react'
+
+
+//db 로드
+import { loadUsers, addUser } from '../DB/LoadDB'
+import { add } from 'react-native-reanimated';
 
 
 
@@ -41,19 +44,12 @@ const SignUp = (props) => {
     const isFocused = useIsFocused();
 
     useEffect(() => {
-        const readFromDB = async () => {
-            try {
-                const data = await getDocs(collection(db, 'userInfo'));
-                let tempArray = [];
-                data.forEach((doc) => {
-                    tempArray.push({ ...doc.data(), id: doc.id });
-                });
-                setUser(tempArray);
-            } catch (error) {
-                console.log("Error fetching data:", error.message);
-            }
+        const fetchUser = async () => {
+            const users = await loadUsers();
+            setUser(users);
         };
-        readFromDB();
+
+        fetchUser();
     }, [isFocused]);
 
 
@@ -77,13 +73,7 @@ const SignUp = (props) => {
         if (bool) {
             //db에 넣어라
             try {
-                await addDoc(collection(db, 'userInfo'), {
-                    perID: id,
-                    perPW: pw,
-                    name: name,
-                    perEmail: email,
-                    perPhone: phone
-                });
+                await addUser(id, pw, name, email, phone)
                 alert('회원가입이 완료되었습니다!')
                 props.navigation.navigate("Category")
             } catch (error) {

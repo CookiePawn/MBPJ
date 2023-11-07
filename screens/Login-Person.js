@@ -5,11 +5,13 @@ import {
     TouchableOpacity,
     StyleSheet,
 } from 'react-native'
-import db from '../DB/FireBase'
-import { collection, getDocs, addDoc } from 'firebase/firestore';
 import { useIsFocused } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons'
 import { useState, useEffect } from 'react'
+
+
+//db 로드
+import { loadUsers } from '../DB/LoadDB'
 
 
 
@@ -45,19 +47,12 @@ const Login = (props) => {
 
 
     useEffect(() => {
-        const readFromDB = async () => {
-            try {
-                const data = await getDocs(collection(db, 'userInfo'));
-                let tempArray = [];
-                data.forEach((doc) => {
-                    tempArray.push({ ...doc.data(), id: doc.id });
-                });
-                setUser(tempArray);
-            } catch (error) {
-                console.log("Error fetching data:", error.message);
-            }
+        const fetchUser = async () => {
+            const users = await loadUsers();
+            setUser(users);
         };
-        readFromDB();
+
+        fetchUser();
     }, [isFocused]);
 
 

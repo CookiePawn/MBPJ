@@ -9,11 +9,16 @@ import {
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import React, { useState, useEffect } from 'react'
-import storage from '../DB/Storage'
-import db from '../DB/FireBase'
-import { collection, getDocs, } from 'firebase/firestore';
-import { listAll, getDownloadURL, ref, } from '@firebase/storage';
 import { useIsFocused } from '@react-navigation/native';
+
+
+//db 로드
+import { 
+    loadStartUpImages, 
+    loadStartUps, 
+} from '../DB/LoadDB'
+
+
 
 
 
@@ -61,35 +66,16 @@ const Team = (props) => {
     const isFocused = useIsFocused();
 
     useEffect(() => {
-        const startupImage = async () => {
-            try {
-                const storageRef = ref(storage, '/startupProfile');
-                const result = await listAll(storageRef);
-                const imageUrls = [];
-                // 각 아이템의 URL과 이름을 가져와 imageUrls 배열에 저장
-                for (const item of result.items) {
-                    const url = await getDownloadURL(item);
-                    imageUrls.push({ url, name: item.name });
-                }
-                setStartupImage(imageUrls);
-            } catch (error) {
-                console.error('이미지 로딩 오류:', error);
-            }
+        const fetchStartUpImage = async () => {
+            const images = await loadStartUpImages()
+            setStartupImage(images)
         };
-        const startupDB = async () => {
-            try {
-                const data = await getDocs(collection(db, 'startupInfo'));
-                let tempArray = [];
-                data.forEach((doc) => {
-                    tempArray.push({ ...doc.data(), id: doc.id });
-                });
-                setStartup(tempArray);
-            } catch (error) {
-                console.log("Error fetching data:", error.message);
-            }
-        };
-        startupImage();
-        startupDB();
+        const fetchStartUps = async () => {
+            const startups = await loadStartUps()
+            setStartup(startups)
+        } 
+        fetchStartUpImage()
+        fetchStartUps()
     }, [isFocused]);
 
     return (

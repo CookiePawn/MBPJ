@@ -8,12 +8,11 @@ import {
     StyleSheet,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-import db from '../DB/FireBase'
-import { doc, updateDoc } from 'firebase/firestore';
 import React, { useState, useEffect } from 'react'
-import storage from '../DB/Storage'
-import { listAll, getDownloadURL, ref, } from '@firebase/storage';
 import { useIsFocused } from '@react-navigation/native';
+
+//db 로드
+import { loadUserImages, updateUserProfile } from '../DB/LoadDB'
 
 
 
@@ -41,36 +40,12 @@ const MyProfile = (props) => {
 
     useEffect(() => {
         const fetchImage = async () => {
-            try {
-                const storageRef = ref(storage, '/userProfile');
-                const result = await listAll(storageRef);
-                const imageUrls = [];
-                // 각 아이템의 URL과 이름을 가져와 imageUrls 배열에 저장
-                for (const item of result.items) {
-                    const url = await getDownloadURL(item);
-                    imageUrls.push({ url, name: item.name });
-                }
-                setImageUrl(imageUrls);
-            } catch (error) {
-                console.error('이미지 로딩 오류:', error);
-            }
+            const images = await loadUserImages();
+            setImageUrl(images);
         };
-        fetchImage();
+
+        fetchImage()
     }, [isFocused]);
-
-
-
-    const infoChange = async () => {
-        try {
-            // Firestore에서 해당 문서의 참조 가져오기
-            const userDocRef = doc(db, 'PersonLogin', num);
-
-            await updateDoc(userDocRef, { perPW: rePw });
-            alert('개인정보가 변경되었습니다!')
-        } catch (error) {
-            console.error('비밀번호 업데이트 오류:', error);
-        }
-    };
 
 
 
@@ -176,16 +151,24 @@ const MyProfile = (props) => {
                 <TouchableOpacity
                     style={styles.saveBtn}
                     onPress={() => {
-                        infoChange()
-                        props.navigation.navigate('MyPage', {
-                            num: num,
-                            id: id,
-                            pw: rePw,
-                            phone: phone,
-                            name: name,
-                            email: email,
-                            image: image,
-                        })
+                        if (rePw != '') {
+                            async () => {
+                                await updateUserProfile(num, rePw)
+                            }
+                            alert('개인정보가 변경되었습니다!')
+                            props.navigation.navigate('MyPage', {
+                                num: num,
+                                id: id,
+                                pw: rePw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                image: image,
+                            })    
+                        } else {
+                            alert('비밀번호를 입력해주세요')
+                        }
+                        
                     }}
                 >
                     <Text style={styles.saveBtnText}>저장하기</Text>
