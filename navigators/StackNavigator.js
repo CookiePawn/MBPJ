@@ -16,6 +16,7 @@ import Cofounder from '../screens/Cofounder';
 import Team from '../screens/Team';
 import PeopleInfo from '../screens/Info-People';
 import EditPeopleInfo from '../screens/Info-People-edit'
+import StartupStep from '../screens/StartupStep';
 
 
 const Stack = createStackNavigator();
@@ -43,6 +44,7 @@ const StackNavigator = () => {
             <Stack.Screen name='Team' component={Team}/>
             <Stack.Screen name='MyPage' component={MyPage}/>
             <Stack.Screen name='MyProfile' component={MyProfile}/>
+            <Stack.Screen name='StartupStep' component={StartupStep}/>
         </Stack.Navigator>
     )
 }
