@@ -151,7 +151,19 @@ const StartUpInfo = (props) => {
             </View>
             <ScrollView style={styles.inforView}>
                 <View style={{ flex: 1 }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => {
+                            props.navigation.navigate('StartupStep', {
+                                num: num,
+                                id: id,
+                                pw: pw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                image: image,
+                            })
+                        }}
+                    >
                         <Text
                             style={[
                                 styles.smallText,
