@@ -135,10 +135,6 @@ const MyPage = (props) => {
                     <Text style={styles.btnListText}>내 스타트업</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.btnListSubView}>
-                    <Icon name='heart-outline' size={25} color='black' />
-                    <Text style={styles.btnListText}>관심</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.btnListSubView}>
                     <Icon name='bulb-outline' size={25} color='black' />
                     <Text style={styles.btnListText}>도움말</Text>
                 </TouchableOpacity>
@@ -235,7 +231,7 @@ const styles = StyleSheet.create({
     //버튼 리스트 뷰
     btnListView: {
         width: '90%',
-        height: 200,
+        height: 160,
         marginTop: 30,
         borderColor: '#DDD',
         borderBottomWidth: 1

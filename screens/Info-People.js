@@ -124,11 +124,6 @@ const PersonInfo = (props) => {
                     >
                         <Text style={[styles.smallText, { color: 'lightskyblue' }]}>{user.infoProject}</Text>
                     </TouchableOpacity>
-
-                    <View style={{ flexDirection: 'row' }}>
-                        <Text sttle={styles.midText}>포트폴리오 다운로드   </Text>
-                        <Icon name='folder-outline' size={20} style={styles.fileicon}></Icon>
-                    </View>
                 </View>
             </ScrollView>
 

@@ -39,7 +39,6 @@ const MyProfile = (props) => {
 
     //db
     const [imageUrl, setImageUrl] = useState([]);
-    let tmp = false
 
     const isFocused = useIsFocused();
 
@@ -182,7 +181,7 @@ const MyProfile = (props) => {
                     <Text style={styles.changeProfileSubTitle}>비밀번호</Text>
                     <TextInput
                         style={styles.changeProfileSubTextInput}
-                        placeholder={pw}
+                        placeholder={rePw}
                         placeholderTextColor='#777'
                         value={rePw}
                         onChangeText={(e) => { setRePw(e) }}
