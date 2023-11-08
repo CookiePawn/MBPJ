@@ -136,13 +136,8 @@ const StartUpInfo = (props) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.profileView}>
-                <Image
-                    style={styles.profileImage}
-                    source={foundImage ? { uri: foundImage.url } : require('../assets/start-solo.png')}
-                />
                 <View style={styles.profileInfoView}>
                     <Text style={styles.nameText}>{startup.name}</Text>
-                    <Text style={styles.infoText}>소속 : {startup.infoGroup}</Text>
                 </View>
                 <View style={styles.likeView}>
                     <Icon name='heart' size={20} color='red' />
@@ -151,6 +146,12 @@ const StartUpInfo = (props) => {
             </View>
             <ScrollView style={styles.inforView}>
                 <View style={{ flex: 1 }}>
+                    <View style={styles.imageView}>
+                        <Image
+                            style={styles.profileImage}
+                            source={foundImage ? { uri: foundImage.url } : require('../assets/category-it.jpg')}
+                        />
+                    </View>
                     <TouchableOpacity
                         onPress={() => {
                             props.navigation.navigate('StartupStep', {
@@ -181,10 +182,10 @@ const StartUpInfo = (props) => {
                     <Text style={styles.smallText}>{startup.info}</Text>
 
                     <Text style={styles.bigText}>소개</Text>
-                    <Text style={styles.smallText}>{startup.infoIntroduce}</Text>
+                    <Text style={styles.smallText}>{startup.introduce}</Text>
 
                     <Text style={styles.bigText}>기술 / 스택</Text>
-                    <Text style={styles.smallText}>{startup.infoCareer}</Text>
+                    <Text style={styles.smallText}>{startup.stack}</Text>
 
                     <Text style={styles.bigText}>멤버</Text>
                     <ScrollView
@@ -281,17 +282,20 @@ const styles = StyleSheet.create({
     //프로필 세션
     profileView: {
         width: '90%',
-        height: 100,
+        height: 60,
         marginTop: 30,
         flexDirection: 'row',
     },
+
+    imageView: {
+        width: '100%',
+        alignItems: 'center',
+        marginBottom: 30,
+    },
     profileImage: {
-        width: 80,
-        height: 80,
-        borderRadius: 100,
-        margin: 10,
-        marginLeft: 0,
-        marginRight: 20,
+        width: '100%',
+        height: 400,
+        borderRadius: 30,
     },
     profileInfoView: {
         flex: 1,
@@ -323,7 +327,7 @@ const styles = StyleSheet.create({
     inforView: {
         width: '90%',
         height: 500,
-        marginTop: 30,
+        marginTop: 0,
     },
     bigText: {
         color: '#111',

@@ -130,7 +130,20 @@ const MyPage = (props) => {
                     <Icon name='create-outline' size={25} color='black' />
                     <Text style={styles.btnListText}>내 페이지 수정</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnListSubView}>
+                <TouchableOpacity 
+                    style={styles.btnListSubView}
+                    onPress={() => {
+                        props.navigation.navigate('StartUpEdit', {
+                            num: num,
+                            id: id,
+                            pw: pw,
+                            phone: phone,
+                            name: name,
+                            email: email,
+                            image: image,
+                        })
+                    }}
+                >
                     <Icon name='business-outline' size={25} color='black' />
                     <Text style={styles.btnListText}>내 스타트업</Text>
                 </TouchableOpacity>
