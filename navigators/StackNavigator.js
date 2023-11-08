@@ -29,7 +29,7 @@ const Stack = createStackNavigator();
 const StackNavigator = () => {
     return (
         <Stack.Navigator 
-            initialRouteName='StartUpEdit'
+            initialRouteName='StartPage'
             screenOptions={{ headerShown: false }}
         >
             <Stack.Screen name='StartPage' component={StartPage} options={{unmountOnBlur: true}}/>

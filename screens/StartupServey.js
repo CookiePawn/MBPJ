@@ -539,6 +539,7 @@ const styles = StyleSheet.create({
     btView:{
         flexDirection:'row',
         marginTop: 15,
+        justifyContent: 'center'
     },
 
     //질문 텍스트
@@ -570,7 +571,7 @@ const styles = StyleSheet.create({
         height: 34,
         borderRadius: 20,
         position: 'relative',
-        marginLeft: 90,
+        //marginLeft: 90,
     },
     noBt: {
         backgroundColor:'#f1f1f1',
