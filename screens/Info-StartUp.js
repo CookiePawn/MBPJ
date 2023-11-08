@@ -245,6 +245,9 @@ const StartUpInfo = (props) => {
 
             <TouchableOpacity
                 style={styles.chatBtn}
+                onPress={() => {
+                    props.navigation.navigate('LetterPage')
+                }}
             >
                 <Text style={styles.chatBtnText}>채팅하기</Text>
             </TouchableOpacity>
