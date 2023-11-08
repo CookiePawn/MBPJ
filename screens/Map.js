@@ -31,6 +31,7 @@ const Map = (props) => {
     const email = params ? params.email : null;
     const phone = params ? params.phone : null;
     const crn = params ? params.crn : null;
+    const image = params ? params.image : null;
 
     //위치 정보
     const [region, setRegion] = useState({
@@ -140,42 +141,20 @@ const Map = (props) => {
 
     return (
         <View style={{ flex: 1, backgroundColor: 'white' }}>
-            <View style = {[{flex : 0.25}, styles.headerView]}>
-                <TouchableOpacity style = {styles.headerIcon}
-                    onPress={() => {
-                        props.navigation.navigate('Category', {
-                            num: num,
-                            id: id,
-                            pw: pw,
-                            phone: phone,
-                            name: name,
-                            email: email,
-                            CRN: crn,
-                        })
-                    }}>
-                    <Icon name = "arrow-back-outline" size = {25}/>
-                </TouchableOpacity>
-                <Text style = {styles.headerText}>
-                    내 주변 개인/스타트업
-                </Text>
+            <View style={styles.titleView}>
                 <TouchableOpacity
-                    style={styles.homeButton}
+                    style={[styles.icon, { left: 0, }]}
                     onPress={() => {
-                        props.navigation.navigate('Category', {
-                            num: num,
-                            id: id,
-                            pw: pw,
-                            phone: phone,
-                            name: name,
-                            email: email,
-                            CRN: crn,
-                        })
+                        props.navigation.goBack()
                     }}
                 >
-                    <Icon name="home-outline" size={23} color="black" />
+                    <Icon name='arrow-back-outline' size={25} color='black' />
                 </TouchableOpacity>
+                <Text style={styles.titleText}>
+                    내 주변 기업 찾기
+                </Text>
                 <TouchableOpacity
-                    style={styles.userButton}
+                    style={[styles.icon, {right: 0,}]}
                     onPress={() => {
                         setFollowUser(true)
                         setTimeout(() => {
@@ -184,6 +163,23 @@ const Map = (props) => {
                     }}
                 >
                     <Icon name="location-outline" size={25} color="black" />
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={[styles.icon, { right: 40, }]}
+                    onPress={() => {
+                        props.navigation.navigate('Category', {
+                            num: num,
+                            id: id,
+                            pw: pw,
+                            phone: phone,
+                            name: name,
+                            email: email,
+                            image: image,
+                        })
+                    }}
+                >
+                    <Icon name='home-outline' size={25} color='black' />
                 </TouchableOpacity>
             </View>
 
@@ -277,6 +273,26 @@ export default Map
 
 
 const styles = StyleSheet.create({
+
+    //아이콘 뷰
+    titleView: {
+        width: '90%',
+        height: 100,
+        alignItems: 'center',
+        marginBottom: 30,
+        marginLeft: 16,
+    },
+    icon: {
+        position: 'absolute',
+        bottom: 0,
+    },
+    titleText: {
+        position: 'absolute',
+        bottom: 0,
+        fontSize: 23,
+        fontWeight: 'bold',
+    },
+
     homeButton: {
         position : 'absolute',
         right : 40,
@@ -316,11 +332,11 @@ const styles = StyleSheet.create({
 
     card: {
         alignItems: 'center',
-        backgroundColor: "#FFF",
+        backgroundColor: "#fff",
         marginHorizontal: SCREEN_WIDTH * 0.025,
         overflow: 'hidden',
         marginTop: 10,
-        height: '90%',
+        height: '100%',
         borderRadius: 50,
         borderWidth: 1,
         borderColor: 'rgba(0, 0, 0, 0.1)',
@@ -328,7 +344,8 @@ const styles = StyleSheet.create({
 
     cardTitle: {
         fontSize: 20,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        marginTop: 16,
     },
 
     headerView : {
@@ -339,10 +356,9 @@ const styles = StyleSheet.create({
     },
 
     headerText : {
-        fontWeight : '500',
-        fontSize : 25,
-        left : 20,
-        bottom : 10,
+        fontWeight : 'bold',
+        fontSize : 23,
+        textAlign: 'center',
     },
 
     headerIcon : {
