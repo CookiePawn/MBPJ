@@ -12,7 +12,13 @@ import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 
 //db 로드
-import { loadUserImages, loadUserSelect } from '../DB/LoadDB'
+import {
+    loadUserImages,
+    loadUserSelect,
+    loadMember,
+    loadStartUps,
+    loadStartUpImages,
+} from '../DB/LoadDB'
 
 
 const PersonInfo = (props) => {
@@ -33,7 +39,12 @@ const PersonInfo = (props) => {
     //db
     const [imageUrl, setImageUrl] = useState([]);
     const [user, setUser] = useState([])
+    const [startupImage, setStartupImage] = useState([]);
+    const [startup, setStartup] = useState([]);
     const [foundImage, setFoundImage] = useState(null);
+    const [member, setMember] = useState()
+
+    const [admin, setAdmin] = useState([]);
 
     const isFocused = useIsFocused();
 
@@ -46,9 +57,36 @@ const PersonInfo = (props) => {
             const users = await loadUserSelect(people);
             setUser(users);
         };
+        const fetchStartUpImage = async () => {
+            const images = await loadStartUpImages()
+            setStartupImage(images)
+        };
+        const fetchStartupInfo = async () => {
+            const startups = await loadStartUps();
+            setStartup(startups);
+        };
 
-        fetchImage();
-        fetchUserInfo();
+
+
+
+
+        const fetchMember = async () => {
+            const members = await loadMember();
+            const newMembers = []; // 새로운 멤버를 임시 저장할 배열을 생성합니다.
+
+            members.forEach((item) => {
+                if (people === item.perID) {
+                    newMembers.push({ suID: item.suID, admin: item.admin }); // 조건에 맞는 suID만 임시 배열에 추가합니다.
+                }
+            });
+            setMember(newMembers); // 상태를 한 번만 업데이트합니다.
+        };
+
+        fetchImage()
+        fetchUserInfo()
+        fetchMember()
+        fetchStartUpImage()
+        fetchStartupInfo()
     }, [isFocused]);
 
     useEffect(() => {
@@ -57,6 +95,44 @@ const PersonInfo = (props) => {
             setFoundImage(matchImage);
         }
     }, [user, imageUrl]);
+
+
+
+    useEffect(() => {
+        const fetchAdmins = () => {
+            if (member && member.length > 0) {
+                const adminMembers = member.filter(memberInfo => memberInfo.admin === 1);
+                const adminIDs = adminMembers.map(adminMember => adminMember.suID);
+                setAdmin(adminIDs);
+            }
+        };
+
+        fetchAdmins();
+    }, [member]);
+
+
+
+
+    const getFilteredStartups = () => {
+        if (!member || member.length === 0) {
+            return []; // 빈 배열을 반환하거나 이 경우를 적절히 처리하세요.
+        }
+
+        return startup.filter((item) =>
+            member.some(memberInfo => memberInfo.suID === item.id)
+        );
+    };
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -98,7 +174,6 @@ const PersonInfo = (props) => {
                 />
                 <View style={styles.profileInfoView}>
                     <Text style={styles.nameText}>{user.name}</Text>
-                    <Text style={styles.infoText}>소속 : {user.infoGroup}</Text>
                 </View>
                 <View style={styles.likeView}>
                     <Icon name='heart' size={20} color='red' />
@@ -124,6 +199,33 @@ const PersonInfo = (props) => {
                     >
                         <Text style={[styles.smallText, { color: 'lightskyblue' }]}>{user.infoProject}</Text>
                     </TouchableOpacity>
+                    <Text style={styles.bigText}>소속 스타트업</Text>
+                    <ScrollView
+                        style={styles.memberScrollView}
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}
+                    >
+                        {getFilteredStartups().map((item, idx) => {
+                            const matchingStartupImage = startupImage.find(startupImg => startupImg.name === item.name);
+                            const isAdmin = admin.includes(item.id);
+
+                            return (
+                                <View key={idx} style={[styles.memberView, { borderColor: isAdmin ? 'blue' : 'rgba(0, 0, 0, 0.05)' }]}>
+                                    {isAdmin && (
+                                        <Icon name='checkmark-circle' color='blue' size={25} style={{ marginLeft: 10 }} />
+                                    )}
+                                    <Image
+                                        style={styles.userImage}
+                                        source={matchingStartupImage ? { uri: matchingStartupImage.url } : require('../assets/start-solo.png')}
+                                    />
+                                    <Text style={styles.userName}>
+                                        {item.name}{'\n'}
+                                        <Text style={styles.userInfo}>{item.info}</Text>
+                                    </Text>
+                                </View>
+                            );
+                        })}
+                    </ScrollView>
                 </View>
             </ScrollView>
 
@@ -246,5 +348,40 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 16,
         fontWeight: 600,
-    }
+    },
+
+
+
+    //소속 스타트업
+    memberScrollView: {
+        flexDirection: 'row'
+    },
+    memberView: {
+        height: 100,
+        marginRight: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: 'rgba(0, 0, 0, 0.05)'
+    },
+    userImage: {
+        width: 60,
+        height: 60,
+        borderRadius: 100,
+        marginLeft: 5,
+    },
+    userName: {
+        marginLeft: 10,
+        marginRight: 15,
+        fontWeight: 500,
+        fontSize: 20,
+    },
+    userInfo: {
+        color: 'rgba(0, 0, 0, 0.60)',
+        fontSize: 12,
+        fontWeight: 400,
+        lineHeight: 23,
+    },
+
 })
