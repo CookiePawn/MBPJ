@@ -45,7 +45,11 @@ export const Stat0 = (props) => {
                 maxLength={20}
             />
             <Text style={styles.title}>스타트업 단계</Text>
-            <TouchableOpacity>
+            <TouchableOpacity
+                onPress={() => {
+                    props.navi.navigation.navigate('StartupServey', props.params)
+                }}
+            >
                 <Text style={[styles.textInput, { color: '#c9c9c9' }]}>측정하기 ▷</Text>
             </TouchableOpacity>
             <Text style={styles.title}>주제</Text>
