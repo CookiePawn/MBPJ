@@ -210,9 +210,9 @@ const PersonInfo = (props) => {
                             const isAdmin = admin.includes(item.id);
 
                             return (
-                                <View key={idx} style={[styles.memberView, { borderColor: isAdmin ? 'blue' : 'rgba(0, 0, 0, 0.05)' }]}>
+                                <View key={idx} style={[styles.memberView, { borderColor: isAdmin ? 'gold' : 'rgba(0, 0, 0, 0.05)' }]}>
                                     {isAdmin && (
-                                        <Icon name='checkmark-circle' color='blue' size={25} style={{ marginLeft: 10 }} />
+                                        <Icon name='star' color='gold' size={25} style={{ marginLeft: 10 }} />
                                     )}
                                     <Image
                                         style={styles.userImage}
@@ -232,10 +232,18 @@ const PersonInfo = (props) => {
             <TouchableOpacity
                 style={styles.chatBtn}
                 onPress={() => {
-                    props.navigation.navigate('LetterPage')
+                    props.navigation.navigate('LetterPage', {
+                        num: num,
+                        id: id,
+                        pw: pw,
+                        phone: phone,
+                        name: name,
+                        email: email,
+                        image: image,
+                    })
                 }}
             >
-                <Text style={styles.chatBtnText}>채팅하기</Text>
+                <Text style={styles.chatBtnText}>쪽지 보내기</Text>
             </TouchableOpacity>
         </View>
     )

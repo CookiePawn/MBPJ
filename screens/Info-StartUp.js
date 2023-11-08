@@ -105,6 +105,8 @@ const StartUpInfo = (props) => {
         }
     }, [imageUrl]);
 
+
+
     useEffect(() => {
         const fetchAdmin = () => {
             if (member && member.length > 0) {
@@ -233,9 +235,9 @@ const StartUpInfo = (props) => {
                             const matchingUserImage = userImage.find(userImg => userImg.name === item.perID);
 
                             return (
-                                <View key={idx} style = {[styles.memberView, { borderColor: item.id === admin ? 'blue' : 'rgba(0, 0, 0, 0.05)' }]}>
+                                <View key={idx} style = {[styles.memberView, { borderColor: item.id === admin ? 'gold' : 'rgba(0, 0, 0, 0.05)' }]}>
                                     {item.id == admin && (
-                                        <Icon name='checkmark-circle' color='blue' size={25} style={{ marginLeft: 10 }} />
+                                        <Icon name='star' color='gold' size={25} style={{ marginLeft: 10 }} />
                                     )}
                                     <Image
                                         style={styles.userImage}
@@ -251,15 +253,31 @@ const StartUpInfo = (props) => {
                     </ScrollView>
                 </View>
             </ScrollView >
+            <View style={styles.btnView}>
+                <TouchableOpacity
+                    style={[styles.chatBtn, {left: 0}]}
+                >
+                    <Text style={styles.chatBtnText}>가입하기</Text>
+                </TouchableOpacity>    
+                <TouchableOpacity
+                    style={[styles.chatBtn, {right: 0}]}
+                    onPress={() => {
+                        props.navigation.navigate('LetterPage', {
+                            num: num,
+                            id: id,
+                            pw: pw,
+                            phone: phone,
+                            name: name,
+                            email: email,
+                            image: image,
+                        })
+                    }}
+                >
+                    <Text style={styles.chatBtnText}>쪽지하기</Text>
+                </TouchableOpacity>  
+            </View>
 
-            <TouchableOpacity
-                style={styles.chatBtn}
-                onPress={() => {
-                    props.navigation.navigate('LetterPage')
-                }}
-            >
-                <Text style={styles.chatBtnText}>채팅하기</Text>
-            </TouchableOpacity>
+            
         </View >
     )
 }
@@ -400,15 +418,21 @@ const styles = StyleSheet.create({
 
 
     //채팅 세션
+    btnView: {
+        flexDirection: 'row',
+        width: '90%',
+        height: 100,
+    },
     chatBtn: {
         backgroundColor: '#5552E2',
         height: 60,
-        width: '90%',
+        width: '47%',
         marginTop: 10,
         marginBottom: 20,
         borderRadius: 30,
         alignItems: 'center',
         justifyContent: 'center',
+        position: 'absolute',
     },
     chatBtnText: {
         color: 'white',
