@@ -19,6 +19,7 @@ import EditPeopleInfo from '../screens/Info-People-edit'
 import StartupStep from '../screens/StartupStep';
 import StartUpList from '../screens/List-StartUp';
 import StartUpInfo from '../screens/Info-StartUp';
+import StartupServey from '../screens/StartupServey';
 
 
 const Stack = createStackNavigator();
@@ -49,6 +50,7 @@ const StackNavigator = () => {
             <Stack.Screen name='StartupStep' component={StartupStep}/>
             <Stack.Screen name='StartUpList' component={StartUpList}/>
             <Stack.Screen name='StartUpInfo' component={StartUpInfo}/>
+            <Stack.Screen name='StartupServey' component={StartupServey}/>
         </Stack.Navigator>
     )
 }
