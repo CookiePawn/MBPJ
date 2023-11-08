@@ -17,6 +17,9 @@ import * as Geolib from 'geolib';
 import Icon from 'react-native-vector-icons/Ionicons'
 //import { Polyline } from 'react-native-svg';
 
+const SCREEN_WIDTH = Dimensions.get('window').width
+const CARD_WIDTH = Dimensions.get('window').width * 0.95
+const SPACING_CARD = Dimensions.get('window').width * 0.025
 
 const Map = (props) => {
     //로그인 확인
@@ -68,6 +71,13 @@ const Map = (props) => {
             },
             title: "안준철 집"
         },
+        {
+            coordinate : {
+                latitude : 36.798153,
+                longitude : 127.102002,
+            },
+            title : "아웃백 펜타포트점"
+        },
     ]
 
     const [state, setState] = useState(marker)
@@ -81,8 +91,6 @@ const Map = (props) => {
     let mapAnimation = new Animated.Value(0)
     const _map = useRef(null)
     const _scrollView = React.useRef(null)
-    const CARD_WIDTH = Dimensions.get('window').width * 0.95
-    const SPACING_CARD = Dimensions.get('window').width * 0.025
 
     //사용자 위치 받기
     useEffect(() => {
@@ -132,6 +140,53 @@ const Map = (props) => {
 
     return (
         <View style={{ flex: 1, backgroundColor: 'white' }}>
+            <View style = {[{flex : 0.25}, styles.headerView]}>
+                <TouchableOpacity style = {styles.headerIcon}
+                    onPress={() => {
+                        props.navigation.navigate('Category', {
+                            num: num,
+                            id: id,
+                            pw: pw,
+                            phone: phone,
+                            name: name,
+                            email: email,
+                            CRN: crn,
+                        })
+                    }}>
+                    <Icon name = "arrow-back-outline" size = {25}/>
+                </TouchableOpacity>
+                <Text style = {styles.headerText}>
+                    내 주변 개인/스타트업
+                </Text>
+                <TouchableOpacity
+                    style={styles.homeButton}
+                    onPress={() => {
+                        props.navigation.navigate('Category', {
+                            num: num,
+                            id: id,
+                            pw: pw,
+                            phone: phone,
+                            name: name,
+                            email: email,
+                            CRN: crn,
+                        })
+                    }}
+                >
+                    <Icon name="home-outline" size={23} color="black" />
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.userButton}
+                    onPress={() => {
+                        setFollowUser(true)
+                        setTimeout(() => {
+                            setFollowUser(false)
+                        }, 1000);
+                    }}
+                >
+                    <Icon name="location-outline" size={25} color="black" />
+                </TouchableOpacity>
+            </View>
+
             <MapView
                 style={{ flex: 2 }}
                 region={region}
@@ -173,41 +228,13 @@ const Map = (props) => {
                     ]}
                     strokeColor="#000"
                     strokeColors={[
-                        '#FF1234',
-                        '#50bcdf'
+                        '#000000',
                     ]}
-                    strokeWidth={6}
+                    strokeWidth={4}
                 />
 
             </MapView>
 
-            <TouchableOpacity
-                style={styles.homeButton}
-                onPress={() => {
-                    props.navigation.navigate('Category', {
-                        num: num,
-                        id: id,
-                        pw: pw,
-                        phone: phone,
-                        name: name,
-                        email: email,
-                        CRN: crn,
-                    })
-                }}
-            >
-                <Icon name="home-outline" size={30} color="black" />
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.userButton}
-                onPress={() => {
-                    setFollowUser(true)
-                    setTimeout(() => {
-                        setFollowUser(false)
-                    }, 1000);
-                }}
-            >
-                <Icon name="location-outline" size={30} color="black" />
-            </TouchableOpacity>
 
             <Animated.ScrollView
                 horizontal
@@ -217,7 +244,7 @@ const Map = (props) => {
                 contentContainerStyle={[{ width: `${state.length * 100}%` }]}
                 pagingEnabled
                 onScroll={e => handleOnScroll(e)}
-                snapToAlignment='center'
+                snapToAlignment="center"
                 contentInset={{
                     top: 0,
                     bottom: 0,
@@ -241,9 +268,6 @@ const Map = (props) => {
                 }
             </Animated.ScrollView>
 
-            <Text style={styles.distanceText}>
-                {`현재 위치로부터 ${Number(km / 1000).toFixed(2)} km`}
-            </Text>
         </View>
     );
 };
@@ -254,41 +278,15 @@ export default Map
 
 const styles = StyleSheet.create({
     homeButton: {
-        position: 'absolute',
-        bottom: 210,
-        right: 80,
-        backgroundColor: 'white',
-        borderRadius: 10,
-        width: 50,
-        height: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-        shadowColor: 'black',
-        shadowOffset: {
-            width: 3,
-            height: 3,
-        },
-        shadowOpacity: 0.45,
-        shadowRadius: 10,
+        position : 'absolute',
+        right : 40,
+        bottom : 10,
     },
 
     userButton: {
-        position: 'absolute',
-        bottom: 210,
-        right: 20,
-        backgroundColor: 'white',
-        borderRadius: 10,
-        width: 50,
-        height: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-        shadowColor: 'black',
-        shadowOffset: {
-            width: 3,
-            height: 3,
-        },
-        shadowOpacity: 0.45,
-        shadowRadius: 10,
+        position : 'absolute',
+        right : 10,
+        bottom : 10,
     },
 
     distanceText: {
@@ -319,7 +317,7 @@ const styles = StyleSheet.create({
     card: {
         alignItems: 'center',
         backgroundColor: "#FFF",
-        marginHorizontal: 10,
+        marginHorizontal: SCREEN_WIDTH * 0.025,
         overflow: 'hidden',
         marginTop: 10,
         height: '90%',
@@ -331,6 +329,25 @@ const styles = StyleSheet.create({
     cardTitle: {
         fontSize: 20,
         fontWeight: "bold"
+    },
+
+    headerView : {
+        width : SCREEN_WIDTH,
+        backgroundColor : '#FFF',
+        alignItems : 'flex-end',
+        flexDirection : 'row'
+    },
+
+    headerText : {
+        fontWeight : '500',
+        fontSize : 25,
+        left : 20,
+        bottom : 10,
+    },
+
+    headerIcon : {
+        left : 10,
+        bottom : 10,
     },
 
 })
