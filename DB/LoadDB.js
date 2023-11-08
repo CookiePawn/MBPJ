@@ -146,6 +146,23 @@ export const loadStartUpSelect = async (people) => {
 
 
 
+//소속 스타트업 - 소속 스타트업 로드 
+export const loadMember= async () => {
+    let tempArray = [];
+    try {
+        const data = await getDocs(collection(db, 'startupMember'));
+
+        data.forEach((doc) => {
+            tempArray.push({ ...doc.data(), id: doc.id });
+        });
+    } catch (error) {
+        console.log("Error fetching data:", error.message);
+    }
+    return tempArray
+};
+
+
+
 
 
 
@@ -284,4 +301,35 @@ export const addUser = async (id, pw, name, email, phone) => {
     }
 }
 
+
+export const addStartUp = async (name, step, title, introduce, stack, perID) => {
+    try {
+        // startupInfo 컬렉션에 문서 추가
+        const docRef = await addDoc(collection(db, 'startupInfo'), {
+            name: name,
+            step: step,
+            info: title,
+            introduce: introduce,
+            stack: stack,
+        });
+
+        // 생성된 문서의 ID 가져오기
+        const suID = docRef.id;
+
+        try {
+            // startupMember 컬렉션에 문서 추가, suID를 참조로 사용
+            await addDoc(collection(db, 'startupMember'), {
+                perID: perID,
+                suID: suID, // 여기에 suID 저장
+                DATE: new Date(),
+                admin: 1,
+            });
+        } catch (error) {
+            console.log("Error adding startupMember document:", error);
+        }
+
+    } catch (error) {
+        console.log("Error adding startupInfo document:", error);
+    }
+};
 

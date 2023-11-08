@@ -22,7 +22,7 @@ import {
 
 
 //차트
-import CustomChart from '../components/CustomChart';
+import CustomChart from '../components/Category/CustomChart';
 
 
 
