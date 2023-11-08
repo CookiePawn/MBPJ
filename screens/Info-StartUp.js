@@ -12,27 +12,13 @@ import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 
 //db 로드
-import { loadStartUpImages, loadStartUpSelect, loadUsers, loadUserImages } from '../DB/LoadDB'
-
-
-
-
-
-const CustomPeople = (props) => {
-    return (
-        <View style={styles.memberView}>
-            <Image style={styles.userImage} source={props.image} />
-            <Text style={styles.userName}>
-                {props.name}{'\n'}
-                <Text style={styles.userInfo}>{props.info}</Text>
-            </Text>
-        </View>
-    )
-
-}
-
-
-
+import {
+    loadStartUpImages,
+    loadStartUpSelect,
+    loadUsers,
+    loadUserImages,
+    loadMember,
+} from '../DB/LoadDB'
 
 
 
@@ -67,6 +53,9 @@ const StartUpInfo = (props) => {
     const [startup, setStartup] = useState([]);
     const [user, setUser] = useState([]);
     const [userImage, setUserImage] = useState([]);
+    const [member, setMember] = useState()
+
+    const [admin, setAdmin] = useState()
     const [foundImage, setFoundImage] = useState(null);
 
     const isFocused = useIsFocused();
@@ -88,12 +77,26 @@ const StartUpInfo = (props) => {
             const images = await loadUserImages()
             setUserImage(images)
         };
+        const fetchMember = async () => {
+            const members = await loadMember();
+            const newMembers = []; // 새로운 멤버를 임시 저장할 배열을 생성합니다.
+
+            members.forEach((item) => {
+                if (people === item.suID) {
+                    newMembers.push({ perID: item.perID, admin: item.admin }); // 조건에 맞는 suID만 임시 배열에 추가합니다.
+                }
+            });
+            setMember(newMembers); // 상태를 한 번만 업데이트합니다.
+        };
 
         fetchStartUpImage();
         fetchStartupInfo();
         fetchUserInfo();
         fetchUserImage();
+        fetchMember()
     }, [isFocused]);
+
+
 
     useEffect(() => {
         if (startup.name && imageUrl.length > 0) {
@@ -101,6 +104,35 @@ const StartUpInfo = (props) => {
             setFoundImage(matchImage);
         }
     }, [imageUrl]);
+
+    useEffect(() => {
+        const fetchAdmin = () => {
+            if (member && member.length > 0) {
+                const adminMember = member.find(memberInfo => memberInfo.admin === 1);
+                if (adminMember) {
+                    setAdmin(adminMember.perID);
+                }
+            }
+        };
+
+        fetchAdmin();
+    }, [member]);
+
+
+
+
+
+    const getFilteredUsers = () => {
+        if (!member || member.length === 0) {
+            return []; // 빈 배열을 반환하거나 이 경우를 적절히 처리하세요.
+        }
+
+        return user.filter((item) =>
+            member.some(memberInfo => memberInfo.perID === item.id)
+        );
+    };
+
+
 
 
 
@@ -144,7 +176,11 @@ const StartUpInfo = (props) => {
                     <Text style={styles.likeText}>100</Text>
                 </View>
             </View>
-            <ScrollView style={styles.inforView}>
+            <ScrollView
+                style={styles.inforView}
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+            >
                 <View style={{ flex: 1 }}>
                     <View style={styles.imageView}>
                         <Image
@@ -193,55 +229,28 @@ const StartUpInfo = (props) => {
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
                     >
-                        {user.map((userItem, idx) => {
-
-                            const userUrl = userImage.filter((item) => item.name === userItem.perID);
-
-                            if (userUrl.length > 0) {
-                                return userUrl.map((urlItem, urlIdx) => (
-                                    <CustomPeople
-                                        key={idx}
-                                        image={{ uri: urlItem.url }}
-                                        name={userItem.name}
-                                        info={userItem.info}
-                                        navi={props}
-                                        params={{
-                                            num: num,
-                                            id: id,
-                                            pw: pw,
-                                            phone: phone,
-                                            name: name,
-                                            email: email,
-                                            image: image,
-                                            people: userItem.id,
-                                        }}
-                                    />
-                                ));
-                            }
+                        {getFilteredUsers().map((item, idx) => {
+                            const matchingUserImage = userImage.find(userImg => userImg.name === item.perID);
 
                             return (
-                                <CustomPeople
-                                    key={idx}
-                                    image={require('../assets/start-solo.png')}
-                                    name={userItem.name}
-                                    info={userItem.info}
-                                    navi={props}
-                                    params={{
-                                        num: num,
-                                        id: id,
-                                        pw: pw,
-                                        phone: phone,
-                                        name: name,
-                                        email: email,
-                                        image: image,
-                                        people: userItem.id,
-                                    }}
-                                />
+                                <View key={idx} style = {[styles.memberView, { borderColor: item.id === admin ? 'blue' : 'rgba(0, 0, 0, 0.05)' }]}>
+                                    {item.id == admin && (
+                                        <Icon name='checkmark-circle' color='blue' size={25} style={{ marginLeft: 10 }} />
+                                    )}
+                                    <Image
+                                        style={styles.userImage}
+                                        source={matchingUserImage ? { uri: matchingUserImage.url } : require('../assets/start-solo.png')}
+                                    />
+                                    <Text style={styles.userName}>
+                                        {item.name}{'\n'}
+                                        <Text style={styles.userInfo}>{item.info}</Text>
+                                    </Text>
+                                </View>
                             );
                         })}
                     </ScrollView>
                 </View>
-            </ScrollView>
+            </ScrollView >
 
             <TouchableOpacity
                 style={styles.chatBtn}
@@ -251,7 +260,7 @@ const StartUpInfo = (props) => {
             >
                 <Text style={styles.chatBtnText}>채팅하기</Text>
             </TouchableOpacity>
-        </View>
+        </View >
     )
 }
 
