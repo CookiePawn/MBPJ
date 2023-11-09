@@ -171,6 +171,14 @@ export const loadMember= async () => {
 
 
 
+
+
+
+
+
+
+
+
 //업데이트 문
 //업데이트 문
 //업데이트 문
@@ -257,6 +265,37 @@ export const updateUserImage = async (uri, id) => {
 
 
 
+//내 스타트업 페이지 수정
+export const updateStartUpProject = async (num, eInfo, eIntroduce, eStack) => {
+    try {
+        const docRef = doc(db, 'startupInfo', num);
+
+        await updateDoc(docRef, {
+            info: eInfo,
+            introduce: eIntroduce,
+            stack: eStack,
+        });
+        alert('정보가 수정되었습니다!')
+    } catch (error) {
+        console.error("Error fetching data:", error.message);
+    }
+}
+
+
+//내 스타트업 페이지 단계 수정
+export const updateStartUpStep = async (num, step) => {
+    try {
+        const docRef = doc(db, 'startupInfo', num);
+
+        await updateDoc(docRef, {
+            step: step,
+        });
+        alert('정보가 수정되었습니다!')
+    } catch (error) {
+        console.error("Error fetching data:", error.message);
+    }
+}
+
 
 
 
@@ -302,12 +341,11 @@ export const addUser = async (id, pw, name, email, phone) => {
 }
 
 
-export const addStartUp = async (name, step, title, introduce, stack, perID) => {
+export const addStartUp = async (name, title, introduce, stack, perID) => {
     try {
         // startupInfo 컬렉션에 문서 추가
         const docRef = await addDoc(collection(db, 'startupInfo'), {
             name: name,
-            step: step,
             info: title,
             introduce: introduce,
             stack: stack,

@@ -57,6 +57,7 @@ const StartUpInfo = (props) => {
 
     const [admin, setAdmin] = useState()
     const [foundImage, setFoundImage] = useState(null);
+    const [foundUser, setFoundUser] = useState(false)
 
     const isFocused = useIsFocused();
 
@@ -126,13 +127,22 @@ const StartUpInfo = (props) => {
 
     const getFilteredUsers = () => {
         if (!member || member.length === 0) {
-            return []; // 빈 배열을 반환하거나 이 경우를 적절히 처리하세요.
+            return [];
         }
 
         return user.filter((item) =>
             member.some(memberInfo => memberInfo.perID === item.id)
         );
     };
+
+    // 나중에 useEffect를 사용하여 num과 일치하는 사용자가 있는지 확인
+    useEffect(() => {
+        const filteredUsers = getFilteredUsers();
+        const foundUser = filteredUsers.some(item => item.id === num);
+        setFoundUser(foundUser);
+    }, [member, user, num]); // 의존성 배열에 member, user, num 포함
+
+
 
 
 
@@ -235,7 +245,7 @@ const StartUpInfo = (props) => {
                             const matchingUserImage = userImage.find(userImg => userImg.name === item.perID);
 
                             return (
-                                <View key={idx} style = {[styles.memberView, { borderColor: item.id === admin ? 'gold' : 'rgba(0, 0, 0, 0.05)' }]}>
+                                <View key={idx} style={[styles.memberView, { borderColor: item.id === admin ? 'gold' : 'rgba(0, 0, 0, 0.05)' }]}>
                                     {item.id == admin && (
                                         <Icon name='star' color='gold' size={25} style={{ marginLeft: 10 }} />
                                     )}
@@ -253,31 +263,52 @@ const StartUpInfo = (props) => {
                     </ScrollView>
                 </View>
             </ScrollView >
-            <View style={styles.btnView}>
-                <TouchableOpacity
-                    style={[styles.chatBtn, {left: 0}]}
-                >
-                    <Text style={styles.chatBtnText}>가입하기</Text>
-                </TouchableOpacity>    
-                <TouchableOpacity
-                    style={[styles.chatBtn, {right: 0}]}
-                    onPress={() => {
-                        props.navigation.navigate('LetterPage', {
-                            num: num,
-                            id: id,
-                            pw: pw,
-                            phone: phone,
-                            name: name,
-                            email: email,
-                            image: image,
-                        })
-                    }}
-                >
-                    <Text style={styles.chatBtnText}>쪽지하기</Text>
-                </TouchableOpacity>  
-            </View>
-
-            
+            {(num !== null && foundUser !== true) && (
+                <View style={styles.btnView}>
+                    <TouchableOpacity
+                        style={[styles.chatBtn, { left: 0 }]}
+                    >
+                        <Text style={styles.chatBtnText}>가입하기</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={[styles.chatBtn, { right: 0 }]}
+                        onPress={() => {
+                            props.navigation.navigate('LetterPage', {
+                                num: num,
+                                id: id,
+                                pw: pw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                image: image,
+                            })
+                        }}
+                    >
+                        <Text style={styles.chatBtnText}>쪽지하기</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
+            {admin == num && (
+                <View style={styles.btnView}>
+                    <TouchableOpacity
+                        style={[styles.chatBtn, { width: '100%' }]}
+                        onPress={() => {
+                            props.navigation.navigate('StartUpEdit', {
+                                num: num,
+                                id: id,
+                                pw: pw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                image: image,
+                                people: people,
+                            })
+                        }}
+                    >
+                        <Text style={styles.chatBtnText}>수정하기</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
         </View >
     )
 }
@@ -390,7 +421,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 10,
         borderWidth: 1,
-        borderColor: 'rgba(0, 0, 0, 0.05)'
+        borderColor: 'rgba(0, 0, 0, 0.05)',
+        marginBottom: 30,
     },
     userImage: {
         width: 60,

@@ -43,7 +43,6 @@ const PersonInfo = (props) => {
     //db
     const [imageUrl, setImageUrl] = useState([]);
     const [user, setUser] = useState([])
-    let tmp = false
 
     const isFocused = useIsFocused();
 
@@ -124,7 +123,6 @@ const PersonInfo = (props) => {
                 />
                 <View style={styles.profileInfoView}>
                     <Text style={styles.nameText}>{user.name}</Text>
-                    <Text style={styles.infoText}>소속 : {user.infoGroup}</Text>
                 </View>
             </View>
             <ScrollView style={styles.inforView}>

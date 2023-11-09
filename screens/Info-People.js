@@ -228,23 +228,24 @@ const PersonInfo = (props) => {
                     </ScrollView>
                 </View>
             </ScrollView>
-
-            <TouchableOpacity
-                style={styles.chatBtn}
-                onPress={() => {
-                    props.navigation.navigate('LetterPage', {
-                        num: num,
-                        id: id,
-                        pw: pw,
-                        phone: phone,
-                        name: name,
-                        email: email,
-                        image: image,
-                    })
-                }}
-            >
-                <Text style={styles.chatBtnText}>쪽지 보내기</Text>
-            </TouchableOpacity>
+            {num !== null && (
+                <TouchableOpacity
+                    style={styles.chatBtn}
+                    onPress={() => {
+                        props.navigation.navigate('LetterPage', {
+                            num: num,
+                            id: id,
+                            pw: pw,
+                            phone: phone,
+                            name: name,
+                            email: email,
+                            image: image,
+                        })
+                    }}
+                >
+                    <Text style={styles.chatBtnText}>쪽지 보내기</Text>
+                </TouchableOpacity>
+            )}
         </View>
     )
 }
@@ -371,7 +372,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 10,
         borderWidth: 1,
-        borderColor: 'rgba(0, 0, 0, 0.05)'
+        borderColor: 'rgba(0, 0, 0, 0.05)',
+        marginBottom: 30,
     },
     userImage: {
         width: 60,

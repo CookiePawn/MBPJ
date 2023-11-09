@@ -8,6 +8,8 @@ import {
     TouchableOpacity,
 } from 'react-native'
 
+import Icon from 'react-native-vector-icons/Ionicons'
+
 import { useState, useEffect } from 'react'
 
 
@@ -26,7 +28,6 @@ import {
 export const Stat0 = (props) => {
 
     const [name, setName] = useState('')
-    const [step, setStep] = useState(0)
     const [title, setTitle] = useState('')
     const [introduce, setIntroduce] = useState('')
     const [stack, setStack] = useState('')
@@ -47,10 +48,10 @@ export const Stat0 = (props) => {
             <Text style={styles.title}>스타트업 단계</Text>
             <TouchableOpacity
                 onPress={() => {
-                    props.navi.navigation.navigate('StartupServey', props.params)
+                    props.navi.navigation.navigate('StartupStep', props.params)
                 }}
             >
-                <Text style={[styles.textInput, { color: '#c9c9c9' }]}>측정하기 ▷</Text>
+                <Text style={[styles.textInput, { color: '#999' }]}>초기 단계는 준비입니다. {'\n'}이후 등급 재설정을 통해 등급을 정할 수 있습니다.{'\n'}{'\n'}자세한 내용은 클릭 후 확인 가능합니다.</Text>
             </TouchableOpacity>
             <Text style={styles.title}>주제</Text>
             <TextInput
@@ -66,7 +67,8 @@ export const Stat0 = (props) => {
                 placeholder='소개를 입력해주세요'
                 value={introduce}
                 onChangeText={(e) => setIntroduce(e)}
-                maxLength={20}
+                maxLength={1000}
+                multiline={true}
             />
             <Text style={styles.title}>기술 / 스택</Text>
             <TextInput
@@ -74,12 +76,13 @@ export const Stat0 = (props) => {
                 placeholder='기술 및 스택을 입력해주세요'
                 value={stack}
                 onChangeText={(e) => setStack(e)}
-                maxLength={20}
+                maxLength={1000}
+                multiline={true}
             />
             <TouchableOpacity
                 style={styles.saveBtn}
                 onPress={async () => {
-                    await addStartUp(name, step, title, introduce, stack, props.perID)
+                    await addStartUp(name, title, introduce, stack, props.perID)
                     props.navi.navigation.navigate('Category', props.params)
                 }}
             >
@@ -96,14 +99,6 @@ export const Stat0 = (props) => {
 
 
 
-//스타트업 수정
-export const Stat1 = (props) => {
-    return (
-        <View style={[styles.mainView, { backgroundColor: 'blue' }]}>
-            <Text>{props.name}</Text>
-        </View>
-    )
-}
 
 
 
@@ -111,13 +106,14 @@ export const Stat1 = (props) => {
 
 
 //소속 스타트업
-export const Stat2 = (props) => {
+export const Stat1 = (props) => {
 
     const [imageUrl, setImageUrl] = useState([])
     const [startup, setStartup] = useState([])
     const [member, setMember] = useState([])
 
-    const [foundImage, setFoundImage] = useState(null);
+    const [admin, setAdmin] = useState([]);
+
 
 
     useEffect(() => {
@@ -135,7 +131,7 @@ export const Stat2 = (props) => {
 
             members.forEach((item) => {
                 if (props.perID === item.perID) {
-                    newMembers.push(item.suID); // 조건에 맞는 suID만 임시 배열에 추가합니다.
+                    newMembers.push({ suID: item.suID, admin: item.admin }); // 조건에 맞는 suID만 임시 배열에 추가합니다.
                 }
             });
             setMember(newMembers); // 상태를 한 번만 업데이트합니다.
@@ -149,50 +145,74 @@ export const Stat2 = (props) => {
 
 
 
-    useEffect(() => {
-        if (startup.name && imageUrl.length > 0) {
-            const matchImage = imageUrl.find(item => item.name === startup.name);
-            setFoundImage(matchImage);
+
+    const getFilteredStartups = () => {
+        if (!member || member.length === 0) {
+            return []; // 빈 배열을 반환하거나 이 경우를 적절히 처리하세요.
         }
+
+        return startup.filter((item) =>
+            member.some(memberInfo => memberInfo.suID === item.id)
+        );
+    };
+
+
+
+
+
+    useEffect(() => {
+        const fetchAdmins = () => {
+            if (member && member.length > 0) {
+                const adminMembers = member.filter(memberInfo => memberInfo.admin === 1);
+                const adminIDs = adminMembers.map(adminMember => adminMember.suID);
+                setAdmin(adminIDs);
+            }
+        };
+
+        fetchAdmins();
     }, [member]);
 
 
 
 
-    // member 상태에 있는 suID와 일치하는 startup만 필터링하는 함수
-    const getFilteredStartUps = () => {
-        return startup.filter((su) => member.includes(su.id));
-    };
 
 
     return (
         <ScrollView style={styles.mainView}>
             <View style={{ flex: 1 }}>
-                {getFilteredStartUps().map((item, idx) => (
-                    <TouchableOpacity
-                        key={idx}
-                        onPress={() => {
-                            props.navi.navigation.navigate('StartUpInfo',
-                                {
-                                    ...props.params,
-                                    people: item.id
-                                }
-                            )
-                        }}
-                    >
+                {getFilteredStartups().map((item, idx) => {
+                    const matchingStartupImage = imageUrl.find(startupImg => startupImg.name === item.name);
+                    const isAdmin = admin.includes(item.id);
 
-                        <View style={styles.startupView}>
-                            <Image
-                                style={styles.profileImage}
-                                source={foundImage ? { uri: foundImage.url } : require('../../assets/start-solo.png')}
-                            />
-                            <Text style={styles.startupName}>
-                                {item.name}{'\n'}
-                                <Text style={styles.startupInfo}>{item.info}</Text>
-                            </Text>
-                        </View>
-                    </TouchableOpacity>
-                ))}
+                    return (
+                        <TouchableOpacity
+                            key={idx}
+                            onPress={() => {
+                                props.navi.navigation.navigate('StartUpInfo',
+                                    {
+                                        ...props.params,
+                                        people: item.id
+                                    }
+                                )
+                            }}
+                        >
+
+                            <View style={[styles.startupView, { borderColor: isAdmin ? 'gold' : 'rgba(0, 0, 0, 0.05)' }]}>
+                                {isAdmin && (
+                                    <Icon name='star' color='gold' size={25} style={{ marginLeft: 10 }} />
+                                )}
+                                <Image
+                                    style={styles.profileImage}
+                                    source={matchingStartupImage ? { uri: matchingStartupImage.url } : require('../../assets/start-solo.png')}
+                                />
+                                <Text style={styles.startupName}>
+                                    {item.name}{'\n'}
+                                    <Text style={styles.startupInfo}>{item.info}</Text>
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
+                    );
+                })}
             </View>
         </ScrollView>
     );

@@ -21,7 +21,7 @@
     "expo": "~48.0.18",
     "expo-firebase": "^0.0.0-alpha.0",
     "expo-image": "~1.0.2",
-    "expo-image-picker": "^14.5.0",
+    "expo-image-picker": "~14.1.1",
     "expo-location": "~15.1.1",
     "expo-status-bar": "~1.4.4",
     "firebase": "^10.3.1",

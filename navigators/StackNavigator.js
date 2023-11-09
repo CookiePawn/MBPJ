@@ -19,6 +19,7 @@ import EditPeopleInfo from '../screens/Info-People-edit'
 import StartupStep from '../screens/StartupStep';
 import StartUpList from '../screens/List-StartUp';
 import StartUpInfo from '../screens/Info-StartUp';
+import StartUpMore from '../screens/Info-StartUp-More';
 import StartUpEdit from '../screens/Info-StartUp-edit';
 import StartupServey from '../screens/StartupServey';
 import LetterPage from '../screens/LetterPage';
@@ -52,9 +53,10 @@ const StackNavigator = () => {
             <Stack.Screen name='StartupStep' component={StartupStep}/>
             <Stack.Screen name='StartUpList' component={StartUpList}/>
             <Stack.Screen name='StartUpInfo' component={StartUpInfo}/>
-            <Stack.Screen name='StartUpEdit' component={StartUpEdit}/>
+            <Stack.Screen name='StartUpMore' component={StartUpMore}/>
             <Stack.Screen name='StartupServey' component={StartupServey}/>
             <Stack.Screen name="LetterPage" component={LetterPage}/>
+            <Stack.Screen name='StartUpEdit' component={StartUpEdit}/>
         </Stack.Navigator>
     )
 }

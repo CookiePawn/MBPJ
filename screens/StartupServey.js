@@ -7,11 +7,10 @@ import {
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import React, { useState, useEffect } from 'react'
-import { useIsFocused } from '@react-navigation/native';
 
 
 //db 로드
-import { loadUserImages } from '../DB/LoadDB'
+import { updateStartUpStep } from '../DB/LoadDB'
 
 
 
@@ -25,35 +24,9 @@ const StartupServey = (props) => {
     const email = params ? params.email : null;
     const phone = params ? params.phone : null;
     const image = params ? params.image : null;
+    const people = params ? params.people : null;
 
-
-
-
-    //db
-    const [imageUrl, setImageUrl] = useState([]);
-
-
-    const isFocused = useIsFocused();
-
-    useEffect(() => {
-        const fetchImage = async () => {
-            const images = await loadUserImages();
-            setImageUrl(images);
-        };
     
-        fetchImage();
-    }, [isFocused]);
-
-
-    const [foundImage, setFoundImage] = useState(null);
-    
-    useEffect(() => {
-        if (imageUrl.length > 0) {
-            const matchImage = imageUrl.find(item => item.name === id);
-            setFoundImage(matchImage);
-        }
-    }, [imageUrl]);
-
 
     // 설문 (질문)
     const [isYesSelected1, setIsYesSelected1] = useState(false);
@@ -471,7 +444,35 @@ const StartupServey = (props) => {
                 </View> 
 
                 <View>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={async() => {
+                            if (isNoSelected1 == true) {
+                                await updateStartUpStep(people, '준비')
+                            } else if (isNoSelected2 == true) {
+                                await updateStartUpStep(people, '시드')
+                            } else if (isNoSelected3 == true) {
+                                await updateStartUpStep(people, '시리즈 A')
+                            } else if (isNoSelected4 == true) {
+                                await updateStartUpStep(people, '시리즈 B')
+                            } else if (isNoSelected5 == true) {
+                                await updateStartUpStep(people, '시리즈 C')
+                            } else if (isYesSelected1 == true && isYesSelected2 == true && isYesSelected3 == true && isYesSelected4 == true && isYesSelected5 == true) {
+                                await updateStartUpStep(people, '엑시트')
+                            } else {
+                                alert('입력이 잘못 되었습니다!')
+                            }
+                            props.navigation.navigate('StartUpInfo', {
+                                num: num,
+                                id: id,
+                                pw: pw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                image: image,
+                                people: people,
+                            })
+                        }}
+                    >
                         <Text style = {styles.stepGoText}>단계 선정하기</Text>
                     </TouchableOpacity>
                         

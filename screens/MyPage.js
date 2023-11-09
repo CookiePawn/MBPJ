@@ -133,7 +133,7 @@ const MyPage = (props) => {
                 <TouchableOpacity 
                     style={styles.btnListSubView}
                     onPress={() => {
-                        props.navigation.navigate('StartUpEdit', {
+                        props.navigation.navigate('StartUpMore', {
                             num: num,
                             id: id,
                             pw: pw,
