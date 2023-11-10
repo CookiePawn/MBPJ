@@ -8,7 +8,10 @@ import {
     TouchableOpacity,
 } from 'react-native'
 
+
 import Icon from 'react-native-vector-icons/Ionicons'
+
+import { useIsFocused } from '@react-navigation/native'
 
 import { useState, useEffect } from 'react'
 
@@ -114,6 +117,8 @@ export const Stat1 = (props) => {
 
     const [admin, setAdmin] = useState([]);
 
+    const isFocused = useIsFocused();
+
 
 
     useEffect(() => {
@@ -141,7 +146,7 @@ export const Stat1 = (props) => {
         fetchStartUpImage()
         fetchStartups()
         fetchMember()
-    }, [])
+    }, [isFocused])
 
 
 
@@ -273,6 +278,8 @@ const styles = StyleSheet.create({
         width: 70,
         height: 70,
         borderRadius: 100,
+        marginLeft: 10,
+        marginRight: 10,
     },
     startupName: {
         fontSize: 20,

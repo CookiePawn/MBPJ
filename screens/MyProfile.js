@@ -13,6 +13,8 @@ import { useIsFocused } from '@react-navigation/native';
 
 
 import * as ImagePicker from 'expo-image-picker';
+import { manipulateAsync } from 'expo-image-manipulator';
+
 
 
 //db 로드
@@ -53,7 +55,7 @@ const MyProfile = (props) => {
 
 
     const [foundImage, setFoundImage] = useState(null);
-    
+
     useEffect(() => {
         if (imageUrl.length > 0) {
             const matchImage = imageUrl.find(item => item.name === id);
@@ -75,6 +77,7 @@ const MyProfile = (props) => {
     };
 
 
+
     const pickImage = async () => {
         // 갤러리 접근 권한 요청
         const hasPermission = await requestGalleryPermission();
@@ -88,12 +91,21 @@ const MyProfile = (props) => {
             quality: 1,
         });
 
-        if (!result.cancelled) {
+        if (!result.canceled) {
+            // 이미지를 리사이징하고 원하는 크기로 압축
+            const resizedImage = await manipulateAsync(
+                result.assets[0].uri, // result.assets[0].uri 대신 result.uri 사용
+                [{ resize: { width: 500 } }], // 원하는 크기로 조정
+                { compress: 0.5 } // 이미지 압축률 조절 (0.5는 50% 압축)
+            );
+
             // 선택한 이미지를 Firebase Storage에 업로드하는 함수 호출
-            updateUserImage(result.assets[0].uri, id);
-            setProfileImg(result.assets[0].uri)
+            updateUserImage(resizedImage.uri, id);
+            setProfileImg(resizedImage.uri);
         }
     };
+
+
 
 
 

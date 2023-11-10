@@ -11,7 +11,6 @@ import { useState, useEffect } from 'react'
 
 //db 로드
 import { loadUsers, addUser } from '../DB/LoadDB'
-import { add } from 'react-native-reanimated';
 
 
 
