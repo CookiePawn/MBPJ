@@ -12,11 +12,15 @@ import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 
 
+import * as ImagePicker from 'expo-image-picker';
+import { manipulateAsync } from 'expo-image-manipulator';
+
 //db 로드
 import {
     loadStartUpImages,
     loadStartUpSelect,
     updateStartUpProject,
+    updateStartUpImage,
 } from '../DB/LoadDB'
 
 
@@ -39,6 +43,8 @@ const StartUpEdit = (props) => {
     const [eInfo, setEInfo] = useState('')
     const [eIntroduce, setEIntroduce] = useState('')
     const [eStack, setEStack] = useState('')
+
+    const [profileImg, setProfileImg] = useState(null)
 
 
     //db
@@ -75,11 +81,56 @@ const StartUpEdit = (props) => {
     const [foundImage, setFoundImage] = useState(null);
 
     useEffect(() => {
-        if (user.perID && imageUrl.length > 0) {
-            const matchImage = imageUrl.find(item => item.name === user.perID);
+        if (user.name && imageUrl.length > 0) {
+            const matchImage = imageUrl.find(item => item.name === user.name);
             setFoundImage(matchImage);
         }
     }, [user, imageUrl]);
+
+
+
+
+    const requestGalleryPermission = async () => {
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+        if (status !== 'granted') {
+            alert('갤러리 접근 권한이 필요합니다!');
+            return false;
+        }
+        return true;
+    };
+
+
+    const pickImage = async () => {
+        // 갤러리 접근 권한 요청
+        const hasPermission = await requestGalleryPermission();
+        if (!hasPermission) return;
+
+        // 이미지 선택기를 여는 부분
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        if (!result.canceled) {
+            // 이미지를 리사이징하고 원하는 크기로 압축
+            const resizedImage = await manipulateAsync(
+                result.assets[0].uri, // result.assets[0].uri 대신 result.uri 사용
+                [{ resize: { width: 500 } }], // 원하는 크기로 조정
+                { compress: 0.5 } // 이미지 압축률 조절 (0.5는 50% 압축)
+            );
+
+            // 선택한 이미지를 Firebase Storage에 업로드하는 함수 호출
+            updateStartUpImage(resizedImage.uri, user.name);
+            setProfileImg(resizedImage.uri);
+        }
+    };
+
+
+
+
+
 
 
 
@@ -118,13 +169,30 @@ const StartUpEdit = (props) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.profileView}>
-                <Image
-                    style={styles.profileImage}
-                    source={foundImage ? { uri: foundImage.url } : require('../assets/start-solo.png')}
-                />
+                {
+                    // profileImg가 null이 아니면 바로 profileImg를 사용하고,
+                    // 그렇지 않을 경우 기존의 imageUrl 배열을 순회합니다.
+                    profileImg ? (
+                        <Image
+                            style={styles.profileImage}
+                            source={{ uri: profileImg }}
+                        />
+                    ) : (
+                        <Image
+                            style={styles.profileImage}
+                            source={foundImage ? { uri: foundImage.url } : require('../assets/start-solo.png')}
+                        />
+                    )
+                }
                 <View style={styles.profileInfoView}>
                     <Text style={styles.nameText}>{user.name}</Text>
                 </View>
+                <TouchableOpacity
+                    style={styles.imageBtn}
+                    onPress={pickImage}
+                >
+                    <Text style={styles.imageBtnText}>사진 변경</Text>
+                </TouchableOpacity>
             </View>
             <ScrollView style={styles.inforView}>
                 <View style={{ flex: 1 }}>
@@ -258,6 +326,20 @@ const styles = StyleSheet.create({
     profileInfoView: {
         flex: 1,
         justifyContent: 'center',
+    },
+    imageBtn: {
+        width: 80,
+        height: 37,
+        backgroundColor: '#E2E2F9',
+        borderRadius: 30,
+        marginTop: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    imageBtnText: {
+        color: '#6866E7',
+        fontSize: 16,
+        fontWeight: 600,
     },
     nameText: {
         fontSize: 20,

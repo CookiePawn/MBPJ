@@ -6,12 +6,7 @@ import {
     StyleSheet,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
-import React, { useState, useEffect } from 'react'
-import { useIsFocused } from '@react-navigation/native';
 
-
-//db 로드
-import { loadUserImages } from '../DB/LoadDB'
 
 
 
@@ -25,34 +20,6 @@ const StartupStep = (props) => {
     const email = params ? params.email : null;
     const phone = params ? params.phone : null;
     const image = params ? params.image : null;
-
-
-
-
-    //db
-    const [imageUrl, setImageUrl] = useState([]);
-
-
-    const isFocused = useIsFocused();
-
-    useEffect(() => {
-        const fetchImage = async () => {
-            const images = await loadUserImages();
-            setImageUrl(images);
-        };
-    
-        fetchImage();
-    }, [isFocused]);
-
-
-    const [foundImage, setFoundImage] = useState(null);
-    
-    useEffect(() => {
-        if (imageUrl.length > 0) {
-            const matchImage = imageUrl.find(item => item.name === id);
-            setFoundImage(matchImage);
-        }
-    }, [imageUrl]);
 
 
 

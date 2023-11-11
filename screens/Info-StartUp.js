@@ -3,7 +3,6 @@ import {
     Text,
     Image,
     TouchableOpacity,
-    Linking,
     ScrollView,
     StyleSheet,
 } from 'react-native'
@@ -104,6 +103,7 @@ const StartUpInfo = (props) => {
             const matchImage = imageUrl.find(item => item.name === startup.name);
             setFoundImage(matchImage);
         }
+        
     }, [imageUrl]);
 
 
@@ -114,6 +114,7 @@ const StartUpInfo = (props) => {
                 const adminMember = member.find(memberInfo => memberInfo.admin === 1);
                 if (adminMember) {
                     setAdmin(adminMember.perID);
+                    
                 }
             }
         };
@@ -197,7 +198,7 @@ const StartUpInfo = (props) => {
                     <View style={styles.imageView}>
                         <Image
                             style={styles.profileImage}
-                            source={foundImage ? { uri: foundImage.url } : require('../assets/category-it.jpg')}
+                            source={foundImage ? { uri: foundImage.url } : require('../assets/start-solo.png')}
                         />
                     </View>
                     <TouchableOpacity
@@ -289,7 +290,7 @@ const StartUpInfo = (props) => {
                     </TouchableOpacity>
                 </View>
             )}
-            {admin == num && (
+            {(num !== null && admin == num) && (
                 <View style={styles.btnView}>
                     <TouchableOpacity
                         style={[styles.chatBtn, { width: '100%' }]}

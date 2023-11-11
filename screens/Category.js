@@ -239,7 +239,7 @@ const Category = (props) => {
                                     email: email,
                                     image: image,
                                 }}
-                                category="주변 개입/기업 보기"
+                                category="주변 개인/기업 보기"
                                 image={require('../assets/category-maps.jpg')}
                                 screen='Map'
                             />
