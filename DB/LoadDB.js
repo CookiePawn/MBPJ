@@ -371,3 +371,18 @@ export const addStartUp = async (name, title, introduce, stack, perID) => {
     }
 };
 
+
+
+//회원가입 추가
+export const addLetter = async (toID, fromID, content) => {
+    try {
+        await addDoc(collection(db, 'letter'), {
+            toID: toID,
+            fromID: fromID,
+            content: content,
+            DATE: new Date(),
+        });
+    } catch (error) {
+        console.log(error)
+    }
+}

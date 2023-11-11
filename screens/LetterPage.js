@@ -8,11 +8,10 @@ import {
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import React, { useState, useEffect } from 'react'
-import { useIsFocused } from '@react-navigation/native';
 
 
-//db 로드
-import { loadUserImages } from '../DB/LoadDB'
+//DB
+import { addLetter } from '../DB/LoadDB'
 
 
 
@@ -26,31 +25,13 @@ const LetterPage = (props) => {
     const email = params ? params.email : null;
     const phone = params ? params.phone : null;
     const image = params ? params.image : null;
-
-    //db
-    const [imageUrl, setImageUrl] = useState([]);
+    const people = params ? params.people : null;
 
 
-    const isFocused = useIsFocused();
-
-    useEffect(() => {
-        const fetchImage = async () => {
-            const images = await loadUserImages();
-            setImageUrl(images);
-        };
-    
-        fetchImage();
-    }, [isFocused]);
 
 
-    const [foundImage, setFoundImage] = useState(null);
-    
-    useEffect(() => {
-        if (imageUrl.length > 0) {
-            const matchImage = imageUrl.find(item => item.name === id);
-            setFoundImage(matchImage);
-        }
-    }, [imageUrl]);
+
+
 
     const [eInfo, setEInfo] = useState('')
 
@@ -87,20 +68,38 @@ const LetterPage = (props) => {
                     <Icon name='home-outline' size={25} color='black' />
                 </TouchableOpacity>
             </View>
-            
+
             <View style={styles.inputView}>
                 <TextInput
                     style={styles.smallText}
                     placeholder='내용을 입력하세요'
                     value={eInfo}
                     onChangeText={(e) => { setEInfo(e) }}
-                    maxLength={30}
+                    maxLength={1000}
+                    multiline={true}
                 />
             </View>
-                
-            
+
+
             <TouchableOpacity
                 style={styles.chatBtn}
+                onPress={async () => {
+                    if (eInfo !== '') {
+                        await addLetter(num, people, eInfo)
+                        alert('쪽지를 보냈습니다')
+                        props.navigation.navigate('Category', {
+                            num: num,
+                            id: id,
+                            pw: pw,
+                            phone: phone,
+                            name: name,
+                            email: email,
+                            image: image,
+                        })
+                    } else {
+                        alert('내용을 입력해주세요')
+                    }
+                }}
             >
                 <Text style={styles.chatBtnText}>쪽지 전송</Text>
             </TouchableOpacity>

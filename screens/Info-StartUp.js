@@ -281,6 +281,7 @@ const StartUpInfo = (props) => {
                                 name: name,
                                 email: email,
                                 image: image,
+                                people: admin,
                             })
                         }}
                     >

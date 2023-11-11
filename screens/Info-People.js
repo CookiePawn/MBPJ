@@ -240,6 +240,7 @@ const PersonInfo = (props) => {
                             name: name,
                             email: email,
                             image: image,
+                            people: people,
                         })
                     }}
                 >
