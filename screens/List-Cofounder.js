@@ -9,25 +9,18 @@ import {
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import React, { useEffect, useState } from 'react'
+import { useIsFocused } from '@react-navigation/native';
+
+
+//DB
+import {
+    loadCofounder,
+    loadUsers,
+    loadCofounderImages,
+} from '../DB/LoadDB'
 
 
 
-const CustomList = (props) => {
-    return (
-        <TouchableOpacity>
-            <View style={styles.listSubView}>
-                <Image
-                    style={styles.profileImage}
-                    source={props.image}
-                />
-                <View style={styles.listSubSubView}>
-                    <Text style={styles.nameText}>{props.info}</Text>
-                    <Text style={styles.infoText}>{props.name}</Text>
-                </View>
-            </View>
-        </TouchableOpacity>
-    )
-}
 
 
 
@@ -47,6 +40,47 @@ const Cofounder = (props) => {
 
     //검색
     const [search, setSearch] = useState('')
+
+
+    //DB
+    const [cofounder, setCofounder] = useState([])
+    const [imageUrls, setImageurl] = useState([])
+    const [user, setUser] = useState([])
+
+
+    const isFocused = useIsFocused();
+
+
+
+    useEffect(() => {
+        const fetchCofounder = async () => {
+            const cofounders = await loadCofounder();
+            setCofounder(cofounders);
+        };
+        const fetchImage = async () => {
+            const images = await loadCofounderImages()
+            setImageurl(images)
+        }
+
+        fetchCofounder()
+        fetchImage()
+    }, [isFocused])
+
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            const users = await loadUsers();
+            setUser(users);
+        };
+        fetchUser()
+    }, [cofounder])
+
+
+
+
+
+
+
 
     return (
         <View style={styles.mainView}>
@@ -90,81 +124,70 @@ const Cofounder = (props) => {
                     maxLength={20}
                 />
             </View>
+            <View style={styles.createView}>
+                {num !== null && (
+                    <TouchableOpacity
+                        onPress={() => {
+                            props.navigation.navigate('CofounderEdit', {
+                                num: num,
+                                id: id,
+                                pw: pw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                image: image,
+                            })
+                        }}
+                    >
+                        <Text style={{ textAlign: 'right' }}>글 작성하기</Text>
+                    </TouchableOpacity>
+                )}
+            </View>
             <View style={styles.listView}>
                 <ScrollView
                     showsHorizontalScrollIndicator={false}
                     showsVerticalScrollIndicator={false}
                 >
-                    <CustomList
-                        image={require('../assets/category-it.jpg')}
-                        name='김우희'
-                        info='모바일 어플리케이션 창업자 모집'
-                    />
-                    <CustomList
-                        image={require('../assets/start-solo.png')}
-                        name='김채원'
-                        info='Health care application'
-                    />
-                    <CustomList
-                        image={require('../assets/category-design.jpg')}
-                        name='권은비'
-                        info='UI/UX'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/whdbfl.jpg')}
-                        name='조유리'
-                        info='모트라스'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/cyeks.png')}
-                        name='쵸단'
-                        info='Backend Delveloper'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/sakura.jpg')}
-                        name='사쿠라'
-                        info='Backend Delveloper'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/tlstjdus.jpg')}
-                        name='신서연'
-                        info='Backend Delveloper'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/moohee.png')}
-                        name='김우희'
-                        info='Backend Developer'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/rlacodnjs.jpeg')}
-                        name='김채원'
-                        info='Frontend Delveloper'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/rnjsdmsql.jpg')}
-                        name='권은비'
-                        info='UI/UX Designer'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/whdbfl.jpg')}
-                        name='조유리'
-                        info='Backend Delveloper'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/cyeks.png')}
-                        name='쵸단'
-                        info='Backend Delveloper'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/sakura.jpg')}
-                        name='사쿠라'
-                        info='Backend Delveloper'
-                    />
-                    <CustomList
-                        image={require('../assets/peopleImage/tlstjdus.jpg')}
-                        name='신서연'
-                        info='Backend Delveloper'
-                    />
+                    {cofounder.map((cofounderItem, idx) => {
+                        // cofounderItem의 perID와 일치하는 user의 id를 찾음
+                        const matchingUser = user.find((userItem) => userItem.id === cofounderItem.perID);
+                        // matchingUser가 존재한다면, 해당 user의 name을 사용
+                        const cofounderName = matchingUser ? matchingUser.name : '사용자 없음';
+
+                        // imageUrls 배열에서 name이 cofounderItem의 id와 일치하는 이미지 URL을 찾음
+                        const matchingImageUrl = imageUrls.find((imageUrlItem) => imageUrlItem.name === cofounderItem.id);
+                        // matchingImageUrl이 존재한다면 해당 URL을 사용, 그렇지 않으면 'start-solo.png'를 사용
+                        const cofounderImage = matchingImageUrl ? { uri: matchingImageUrl.url } : require('../assets/start-solo.png');
+
+                        return (
+                            <TouchableOpacity
+                                key={idx}
+                                onPress={() => {
+                                    props.navigation.navigate('CofounderInfo', {
+                                        num: num,
+                                        id: id,
+                                        pw: pw,
+                                        phone: phone,
+                                        name: name,
+                                        email: email,
+                                        image: image,
+                                        people: cofounderItem.id,
+                                    })
+                                }}
+                            >
+                                <View style={styles.listSubView}>
+                                    <Image
+                                        style={styles.profileImage}
+                                        source={cofounderImage}
+                                    />
+                                    <View style={styles.listSubSubView}>
+                                        <Text style={styles.nameText}>{cofounderItem.title}</Text>
+                                        <Text style={styles.infoText}>{cofounderName}</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        );
+                    })}
                 </ScrollView>
             </View>
         </View>
@@ -223,6 +246,15 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         marginLeft: 5
     },
+
+
+
+
+    //글 작성하기 버튼
+    createView: {
+        width: '90%',
+    },
+
 
 
 

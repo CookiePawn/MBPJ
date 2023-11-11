@@ -211,7 +211,7 @@ const Category = (props) => {
                                 }}
                                 category="공동 참업자 모집"
                                 image={require('../assets/category-it.jpg')}
-                                screen='Cofounder'
+                                screen='CofounderList'
                             />
                             <CustomCategory
                                 navi={props}

@@ -79,6 +79,13 @@ const Map = (props) => {
             },
             title : "아웃백 펜타포트점"
         },
+        {
+            coordinate : {
+                latitude : 36.83006520000001,
+                longitude : 127.1889978,
+            },
+            title : "성불사길 41"
+        },
     ]
 
     const [state, setState] = useState(marker)
