@@ -84,24 +84,24 @@ const StartUpInfo = (props) => {
 
     useEffect(() => {
         const fetchUser = async () => {
-            const user = await loadUserSelect(cofounder.perID)
-            setUser(user)
-        }
+            if (cofounder.perID) {
+                const user = await loadUserSelect(cofounder.perID);
+                setUser(user);
+            }
+        };
         fetchUser()
-
-
     }, [cofounder])
 
 
 
     useEffect(() => {
         if (user.perID && userImg.length > 0) {
-            const matchImage = userImg.find(item => item.name === user.perID);
+            const matchImage = userImg.find(item => item && item.name === user.perID);
             setFoundUserImage(matchImage);
         }
-
+        
         if (cofounder.id && cofounderImg.length > 0) {
-            const matchImage = cofounderImg.find(item => item.name === cofounder.id);
+            const matchImage = cofounderImg.find(item => item && item.name === cofounder.id);
             setFoundCofounderImage(matchImage);
         }
     }, [user, userImg, cofounder, cofounderImg]);
