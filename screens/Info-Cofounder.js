@@ -172,23 +172,38 @@ const StartUpInfo = (props) => {
                     <Text style={styles.smallText}>{cofounder.benefit}</Text>
 
                     <Text style={styles.bigText}>공고자</Text>
-                    <View style={styles.memberView}>
-                        {foundUserImage ? (
-                            <Image
-                                style={styles.userImage}
-                                source={{ uri: foundUserImage.url }}
-                            />
-                        ) : (
-                            <Image
-                                style={styles.userImage}
-                                source={require('../assets/start-solo.png')}
-                            />
-                        )}
-                        <Text style={styles.userName}>
-                            {user.name}{'\n'}
-                            <Text style={styles.userInfo}>{user.info}</Text>
-                        </Text>
-                    </View>
+                    <TouchableOpacity
+                        onPress={() => {
+                            props.navigation.navigate('PeopleInfo', {
+                                num: num,
+                                id: id,
+                                pw: pw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                image: image,
+                                people: user.id,
+                            })
+                        }}
+                    >
+                        <View style={styles.memberView}>
+                            {foundUserImage ? (
+                                <Image
+                                    style={styles.userImage}
+                                    source={{ uri: foundUserImage.url }}
+                                />
+                            ) : (
+                                <Image
+                                    style={styles.userImage}
+                                    source={require('../assets/start-solo.png')}
+                                />
+                            )}
+                            <Text style={styles.userName}>
+                                {user.name}{'\n'}
+                                <Text style={styles.userInfo}>{user.info}</Text>
+                            </Text>
+                        </View>    
+                    </TouchableOpacity>
                 </View>
             </ScrollView >
             {num !== null && (

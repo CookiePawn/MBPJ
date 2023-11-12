@@ -210,19 +210,35 @@ const PersonInfo = (props) => {
                             const isAdmin = admin.includes(item.id);
 
                             return (
-                                <View key={idx} style={[styles.memberView, { borderColor: isAdmin ? 'gold' : 'rgba(0, 0, 0, 0.05)' }]}>
-                                    {isAdmin && (
-                                        <Icon name='star' color='gold' size={25} style={{ marginLeft: 10 }} />
-                                    )}
-                                    <Image
-                                        style={styles.userImage}
-                                        source={matchingStartupImage ? { uri: matchingStartupImage.url } : require('../assets/start-solo.png')}
-                                    />
-                                    <Text style={styles.userName}>
-                                        {item.name}{'\n'}
-                                        <Text style={styles.userInfo}>{item.info}</Text>
-                                    </Text>
-                                </View>
+                                <TouchableOpacity 
+                                    key={idx}
+                                    onPress={() => {
+                                        props.navigation.navigate('StartUpInfo', {
+                                            num: num,
+                                            id: id,
+                                            pw: pw,
+                                            phone: phone,
+                                            name: name,
+                                            email: email,
+                                            image: image,
+                                            people: item.id,
+                                        })
+                                    }}
+                                >
+                                    <View style={[styles.memberView, { borderColor: isAdmin ? 'gold' : 'rgba(0, 0, 0, 0.05)' }]}>
+                                        {isAdmin && (
+                                            <Icon name='star' color='gold' size={25} style={{ marginLeft: 10 }} />
+                                        )}
+                                        <Image
+                                            style={styles.userImage}
+                                            source={matchingStartupImage ? { uri: matchingStartupImage.url } : require('../assets/start-solo.png')}
+                                        />
+                                        <Text style={styles.userName}>
+                                            {item.name}{'\n'}
+                                            <Text style={styles.userInfo}>{item.info}</Text>
+                                        </Text>
+                                    </View>    
+                                </TouchableOpacity>
                             );
                         })}
                     </ScrollView>

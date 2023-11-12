@@ -246,19 +246,36 @@ const StartUpInfo = (props) => {
                             const matchingUserImage = userImage.find(userImg => userImg.name === item.perID);
 
                             return (
-                                <View key={idx} style={[styles.memberView, { borderColor: item.id === admin ? 'gold' : 'rgba(0, 0, 0, 0.05)' }]}>
-                                    {item.id == admin && (
-                                        <Icon name='star' color='gold' size={25} style={{ marginLeft: 10 }} />
-                                    )}
-                                    <Image
-                                        style={styles.userImage}
-                                        source={matchingUserImage ? { uri: matchingUserImage.url } : require('../assets/start-solo.png')}
-                                    />
-                                    <Text style={styles.userName}>
-                                        {item.name}{'\n'}
-                                        <Text style={styles.userInfo}>{item.info}</Text>
-                                    </Text>
-                                </View>
+                                <TouchableOpacity 
+                                    key={idx}
+                                    onPress={() => {
+                                        props.navigation.navigate('PeopleInfo', {
+                                            num: num,
+                                            id: id,
+                                            pw: pw,
+                                            phone: phone,
+                                            name: name,
+                                            email: email,
+                                            image: image,
+                                            people: item.id,
+                                        })
+                                    }}
+                                >
+                                    <View style={[styles.memberView, { borderColor: item.id === admin ? 'gold' : 'rgba(0, 0, 0, 0.05)' }]}>
+                                        {item.id == admin && (
+                                            <Icon name='star' color='gold' size={25} style={{ marginLeft: 10 }} />
+                                        )}
+                                        <Image
+                                            style={styles.userImage}
+                                            source={matchingUserImage ? { uri: matchingUserImage.url } : require('../assets/start-solo.png')}
+                                        />
+                                        <Text style={styles.userName}>
+                                            {item.name}{'\n'}
+                                            <Text style={styles.userInfo}>{item.info}</Text>
+                                        </Text>
+                                    </View>    
+                                </TouchableOpacity>
+                                
                             );
                         })}
                     </ScrollView>
