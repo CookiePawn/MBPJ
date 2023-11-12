@@ -186,9 +186,29 @@ const Category = (props) => {
                                     }
                                 }}
                             >
-                                <Icon name="person" size={25} color="black" style={[styles.icon, { marginLeft: 60 }]} />
+                                <Icon name="person" size={25} color="black" style={[styles.icon, { marginLeft: 30 }]} />
                             </TouchableOpacity>
-                            <Icon name="notifications-outline" size={30} color="black" style={styles.icon} />
+                            
+                            <TouchableOpacity
+                                onPress={() => {
+                                    if (num == null) {
+                                        props.navigation.navigate('PersonLogin')
+                                    } else if (num != null) {
+                                        props.navigation.navigate('AlertPage', {
+                                            num: num,
+                                            id: id,
+                                            pw: pw,
+                                            phone: phone,
+                                            name: name,
+                                            email: email,
+                                            image: image,
+                                        })
+                                    }
+                                }}
+                            >
+                                <Icon name="notifications-outline" size={30} color="black" style={[styles.icon, { marginLeft: 5 }]}/>
+                            </TouchableOpacity>
+                            
                         </View>
                     </View>
                     <View style={styles.categoryListView}>

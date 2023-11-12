@@ -25,6 +25,7 @@ import StartUpMore from '../screens/Info-StartUp-More';
 import StartUpEdit from '../screens/Info-StartUp-edit';
 import StartupServey from '../screens/StartupServey';
 import LetterPage from '../screens/LetterPage';
+import AlertPage from '../screens/AlertPage';
 
 
 const Stack = createStackNavigator();
@@ -63,7 +64,7 @@ const StackNavigator = () => {
             <Stack.Screen name='StartUpInfo' component={StartUpInfo}/>
             <Stack.Screen name='CofounderEdit' component={CofounderEdit}/>
             <Stack.Screen name='CofounderInfo' component={CofounderInfo}/>
-            
+            <Stack.Screen name='AlertPage' component={AlertPage}/>
             
             
         </Stack.Navigator>
