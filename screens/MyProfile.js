@@ -36,11 +36,8 @@ const MyProfile = (props) => {
 
     //개인정보 수정
     const [rePw, setRePw] = useState('')
-<<<<<<< HEAD
     const [profileImg, setProfileImg] = useState(null)
-=======
     const [location, setLocation] = useState('');
->>>>>>> Moo-Hee
 
 
     //db
