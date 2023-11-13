@@ -19,6 +19,7 @@
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/stack": "^6.3.17",
     "@truffle/hdwallet-provider": "^1.0.41-1",
+    "axios": "^1.6.1",
     "expo": "~48.0.18",
     "expo-firebase": "^0.0.0-alpha.0",
     "expo-image": "~1.0.2",
@@ -51,11 +52,8 @@
     "react-native-vector-icons": "^10.0.0",
     "react-native-voice": "^0.3.0",
     "react-native-web": "~0.18.11",
-<<<<<<< HEAD
-    "victory-native": "^36.6.12",
-=======
     "react-native-webview": "11.26.0",
->>>>>>> Moo-Hee
+    "victory-native": "^36.6.12",
     "yarn": "^1.22.19",
     "yet": "^0.1.0"
   },
