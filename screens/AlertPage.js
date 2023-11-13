@@ -18,6 +18,7 @@ import {
     loadLetter,
     loadJoin,
     loadStartUps,
+    deleteJoin,
 } from '../DB/LoadDB'
 
 
@@ -70,13 +71,23 @@ const CustomList1 = (props) => {
                 </View>
 
                 <View style={styles.choiceView}>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => {
+                            props.delete
+                            alert('승인되었습니다')
+                        }}
+                    >
                         <View style={styles.choiceBt}>
                             <Text style={styles.choiceYesText}>승인</Text>
                         </View>
                     </TouchableOpacity>
 
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() => {
+                            props.delete
+                            alert('거절되었습니다')
+                        }}
+                    >
                         <View style={styles.choiceBt}>
                             <Text style={styles.choiceNoText}>거절</Text>
                         </View>
@@ -261,6 +272,7 @@ const AlertPage = (props) => {
                                     image: image,
                                     people: matchingUser.id,
                                 }}
+                                delete={deleteJoin(item.id)}
                             />
                         );
                     })}
