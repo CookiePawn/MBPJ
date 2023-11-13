@@ -8,6 +8,7 @@ import {
     getDoc,
     updateDoc,
     addDoc,
+    deleteDoc,
 } from 'firebase/firestore';
 
 
@@ -554,3 +555,27 @@ export const addCofounder = async (num, title, idea, info, benefit, uri) => {
         console.log(error)
     }
 }
+
+
+
+
+
+
+
+
+
+//문서 삭제
+//문서 삭제
+//문서 삭제
+//문서 삭제
+
+
+
+//가입 DB 문서 삭제
+export const deleteJoin = async (num) => {
+    try {
+        await deleteDoc(doc(db, 'join', num));
+    } catch (error) {
+        console.error(`문서 삭제 중 오류가 발생했습니다: ${error}`);
+    }
+};
