@@ -90,6 +90,17 @@ const LetterPage = (props) => {
             <View style={styles.inputView}>
                 <Text style = {styles.smallText}>{letter.content}</Text>
             </View>
+
+            <View style={styles.btnView}>
+                    <TouchableOpacity
+                        style={[styles.chatBtn, { width: '100%' }]}
+                        onPress={() => {
+                            
+                        }}
+                    >
+                        <Text style={styles.chatBtnText}>삭제하기</Text>
+                    </TouchableOpacity>
+                </View>
         </View>
     )
 }
@@ -134,7 +145,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#f1f1f1',
         width: '90%',
         height: 600,
-        borderRadius: '30'
+        borderRadius: '30',
     },
 
     // 텍스트 안내
@@ -164,10 +175,33 @@ const styles = StyleSheet.create({
 
     smallText: {
         color: '#767676',
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: '400',
         marginBottom: 30,
         marginLeft: 20,
         marginTop: 20,
     },
+
+
+    btnView: {
+        flexDirection: 'row',
+        width: '90%',
+        height: 100,
+    },
+    chatBtn: {
+        backgroundColor: '#5552E2',
+        height: 60,
+        width: '47%',
+        marginTop: 10,
+        marginBottom: 20,
+        borderRadius: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+    },
+    chatBtnText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 600,
+    }
 })

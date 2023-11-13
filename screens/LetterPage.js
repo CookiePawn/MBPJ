@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
 
     smallText: {
         color: 'rgba(153, 153, 153, 0.60)',
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: '400',
         marginBottom: 30,
         marginLeft: 20,
