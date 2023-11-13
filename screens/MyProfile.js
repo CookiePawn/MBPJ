@@ -59,10 +59,11 @@ const MyProfile = (props) => {
         if (props.route.params?.address) {
             setLocation(props.route.params.address);
         }
+        
 
     }, [props.route.params.address]); // 의존성 배열에 route.params를 추가합니다.
 
-    console.log(props.route.params)
+    
 
     const [foundImage, setFoundImage] = useState(null);
 
@@ -213,7 +214,16 @@ const MyProfile = (props) => {
                 <View style={styles.changeProfileSubView}>
                     <TouchableOpacity
                         onPress = {() => {
-                            props.navigation.navigate("DaumPost")
+                            props.navigation.navigate("DaumPost", {
+                                num: num,
+                                id: id,
+                                pw: rePw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                image: image,
+                                screen: "MyProfile",
+                            })
                         }}>
                     <Text style = {styles.changeProfileTitle}> 주소추가 </Text>
                     </TouchableOpacity>
@@ -222,11 +232,10 @@ const MyProfile = (props) => {
 
                 <TouchableOpacity
                     style={styles.saveBtn}
-                    onPress={() => {
+                    onPress={async () => {
                         if (rePw != '') {
-                            async () => {
-                                await updateUserProfile(num, rePw)
-                            }
+                            await updateUserProfile(num, rePw, location)
+                            
                             alert('개인정보가 변경되었습니다!')
                             props.navigation.navigate('MyPage', {
                                 num: num,

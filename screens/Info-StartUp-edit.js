@@ -10,6 +10,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons'
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
+import DaumPost from './DaumPost';
 
 
 import * as ImagePicker from 'expo-image-picker';
@@ -43,6 +44,7 @@ const StartUpEdit = (props) => {
     const [eInfo, setEInfo] = useState('')
     const [eIntroduce, setEIntroduce] = useState('')
     const [eStack, setEStack] = useState('')
+    const [location, setLocation] = useState('주소추가하기')
 
     const [profileImg, setProfileImg] = useState(null)
 
@@ -86,6 +88,15 @@ const StartUpEdit = (props) => {
             setFoundImage(matchImage);
         }
     }, [user, imageUrl]);
+
+
+    useEffect(() => {
+        // route.params가 변경되면 상태를 업데이트합니다.
+        if (props.route.params?.address) {
+            setLocation(props.route.params.address);
+        }
+
+    }, [props.route.params.address]); // 의존성 배열에 route.params를 추가합니다.
 
 
 
@@ -253,6 +264,23 @@ const StartUpEdit = (props) => {
                         maxLength={200}
                         multiline={true}
                     />
+                    <Text style = {styles.bigText}>주소추가</Text>
+                    <TouchableOpacity
+                        onPress = {() => {
+                            props.navigation.navigate("DaumPost", {
+                                num: num,
+                                id: id,
+                                pw: pw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                image: image,
+                                screen: "StartUpEdit",
+                            })
+                        }}
+                        >
+                        <Text style = {styles.smallText}>{location}</Text>
+                    </TouchableOpacity>
                 </View>
             </ScrollView>
 
@@ -260,7 +288,7 @@ const StartUpEdit = (props) => {
                 style={styles.chatBtn}
                 onPress={
                     async () => {
-                        await updateStartUpProject(people, eInfo, eIntroduce, eStack);
+                        await updateStartUpProject(people, eInfo, eIntroduce, eStack, location);
                         props.navigation.navigate("StartUpInfo", {
                             num: num,
                             id: id,

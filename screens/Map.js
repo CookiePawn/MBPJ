@@ -16,6 +16,9 @@ import * as Location from 'expo-location';
 import * as Geolib from 'geolib';
 import Icon from 'react-native-vector-icons/Ionicons'
 //import { Polyline } from 'react-native-svg';
+import { loadUsers } from '../DB/LoadDB';
+import { useIsFocused } from '@react-navigation/native';
+import axios from 'axios';
 
 const SCREEN_WIDTH = Dimensions.get('window').width
 const CARD_WIDTH = Dimensions.get('window').width * 0.95
@@ -33,6 +36,10 @@ const Map = (props) => {
     const crn = params ? params.crn : null;
     const image = params ? params.image : null;
 
+    const isFocused = useIsFocused();
+
+    const [user, setUser] = useState([]);
+
     //위치 정보
     const [region, setRegion] = useState({
         latitude: 0,
@@ -42,53 +49,7 @@ const Map = (props) => {
     const [km, setKm] = useState(0)
     const [followsUser, setFollowUser] = useState(true)
 
-    //마커 위치 및 이름 데이터
-    const marker = [
-        {
-            coordinate: {
-                latitude: 36.800280020840844,
-                longitude: 127.07498548034647,
-            },
-            title: "선문대학교 아산캠퍼스"
-        },
-        {
-            coordinate: {
-                latitude: 36.77195296845993,
-                longitude: 127.06000439331741,
-            },
-            title: "백지환 집"
-        },
-        {
-            coordinate: {
-                latitude: 36.83040711295872,
-                longitude: 127.18970055646777,
-            },
-            title: "김우희 집"
-        },
-        {
-            coordinate: {
-                latitude: 36.78893051067183,
-                longitude: 127.01613316976758,
-            },
-            title: "안준철 집"
-        },
-        {
-            coordinate : {
-                latitude : 36.798153,
-                longitude : 127.102002,
-            },
-            title : "아웃백 펜타포트점"
-        },
-        {
-            coordinate : {
-                latitude : 36.83006520000001,
-                longitude : 127.1889978,
-            },
-            title : "성불사길 41"
-        },
-    ]
-
-    const [state, setState] = useState(marker)
+    const [state, setState] = useState([])
 
     const [selectMarker, setSelectMarker] = useState({
         latitude: region.latitude,
@@ -121,11 +82,93 @@ const Map = (props) => {
     }, []); // 빈 배열을 전달하여 componentDidMount와 같이 처음 한 번만 실행
 
 
+    useEffect(() => {
+        const fetchUser = async () => {
+            const users = await loadUsers();
+            setUser(users);
+        };
+
+        fetchUser();
+
+        console.log(user)
+
+    }, [isFocused]);
+
+    useEffect(() => {
+
+        const filteredUsers = user.filter(user => user.location);
+
+      getAddressCoordinates(filteredUsers.map(user => user.location)).then(coordinates => {
+        const markerUsers = filteredUsers.map((user, index) => ({
+            ...user,
+            coordinate : {
+                latitude : coordinates[index].lat,
+                longitude : coordinates[index].lng,
+            }
+        }))
+
+        const distance = (marker) => {
+            return Geolib.getDistance(
+                region,
+                {
+                    latitude: marker.coordinate.latitude,
+                    longitude: marker.coordinate.longitude,
+                }
+        )};
+
+        const sortData = () => {
+            markerUsers.sort((a,b) => {
+                const userA = distance(a)
+                const userB = distance(b)
+                return userA - userB
+            })
+        }
+
+        sortData()
+
+        console.log(markerUsers)
+
+        if (markerUsers.length > 0) {
+            setState(markerUsers)
+        }
+
+    }) 
+
+    }, [user])
+
+    
+    const getAddressCoordinates = async (address) => {
+        try {
+          const requests = address.map(address => 
+                axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyA3vnYV9dAnCW04ApXSFgJIow4XZtjXqOk`)
+          );
+
+            const responses = await Promise.all(requests)
+
+            const coordinates = responses.map((response, index) => {
+                if (response.data.status === 'OK' && response.data.results.length > 0) {
+
+                    const location = response.data.results[0].geometry.location;
+                    return { ...address[index], lat : location.lat, lng : location.lng };
+
+                  } else {
+                    return null;
+                  }}
+                );
+
+            return coordinates;
+
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+
+
     //스크롤 이벤트 발생 시 실행
     const handleOnScroll = event => {
         let index = parseInt(event.nativeEvent.contentOffset.x / Dimensions.get('window').width)
-        if (index >= marker.length) {
-            index = marker.length - 1
+        if (index >= state.length) {
+            index = state.length - 1
         }
         if (index <= 0) {
             index = 0
@@ -134,13 +177,13 @@ const Map = (props) => {
         const regionTimeout = setTimeout(() => {
             if (mapIndex != index || (mapIndex == 0 && index == 0)) {
                 mapIndex = index
-                const { coordinate } = marker[index]
-                setSelectMarker(marker[index].coordinate)
+                const { coordinate } = state[index]
+                setSelectMarker(state[index].coordinate)
                 _map.current.animateToRegion(
                     {
                         ...coordinate,
-                        region: marker[index].latitude,
-                        region: marker[index].longitude,
+                        region: state[index].coordinate.latitude,
+                        region: state[index].coordinate.longitude,
                     }, 350);
             }
         }, 10)
@@ -198,23 +241,24 @@ const Map = (props) => {
                 ref={_map}
             >
 
-                {
-                    state.map((marker, index) => {
+                { 
+                    state.map((markerUsers, index) => {
                         return (
                             <Marker
                                 key={index}
-                                coordinate={marker.coordinate}
-                                title={marker.title}
+                                coordinate={markerUsers.coordinate}
+                                title={markerUsers.name}
                                 onPress={() => {
                                     const distance = Geolib.getDistance(
                                         region,
                                         {
-                                            latitude: marker.coordinate.latitude,
-                                            longitude: marker.coordinate.longitude,
+                                            latitude: markerUsers.coordinate.latitude,
+                                            longitude: markerUsers.coordinate.longitude,
                                         }
                                     );
                                     setKm(distance)
-                                    setSelectMarker(marker.coordinate)
+                                    console.log(distance)
+                                    setSelectMarker(markerUsers.coordinate)
                                 }}
                             >
 
@@ -256,15 +300,20 @@ const Map = (props) => {
                 }}
             >
                 {
-                    state.map((marker, index) => {
+                    state.map((markerUsers, index) => {
                         return (
                             <TouchableOpacity key={index} style={[{ width: CARD_WIDTH }, styles.card]}>
                                 <Text
                                     numberOfLines={1}
                                     style={styles.cardTitle}
                                 >
-                                    {marker.title}
+                                    {markerUsers.name}
                                 </Text>
+                                <Text
+                                    numberOfLines={1}
+                                    style = {styles.cardTitle}>
+                                        {markerUsers.infoCareer}
+                                    </Text>
                             </TouchableOpacity>
                         )
                     })
@@ -343,7 +392,7 @@ const styles = StyleSheet.create({
         marginHorizontal: SCREEN_WIDTH * 0.025,
         overflow: 'hidden',
         marginTop: 10,
-        height: '100%',
+        height: '90%',
         borderRadius: 50,
         borderWidth: 1,
         borderColor: 'rgba(0, 0, 0, 0.1)',
