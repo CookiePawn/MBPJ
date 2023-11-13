@@ -241,6 +241,46 @@ export const loadLetter = async () => {
 
 
 
+//특정 쪽지 로드
+export const loadLetterSelect = async (num) => {
+    let userData = {};
+    try {
+        // 문서 ID인 num을 사용하여 문서 참조 생성
+        const docRef = doc(db, 'letter', num);
+
+        // 문서 데이터 가져오기
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            // 문서가 존재하는 경우
+            userData = { ...docSnap.data(), id: docSnap.id };
+        } else {
+            console.log('해당 문서가 존재하지 않습니다.');
+        }
+    } catch (error) {
+        console.error("Error fetching data:", error.message);
+    }
+    return userData
+};
+
+
+
+// 가입 로드
+export const loadJoin = async () => {
+    let tempArray = [];
+    try {
+        const data = await getDocs(collection(db, 'join'));
+
+        data.forEach((doc) => {
+            tempArray.push({ ...doc.data(), id: doc.id });
+        });
+    } catch (error) {
+        console.log("Error fetching data:", error.message);
+    }
+    return tempArray
+};
+
+
 
 
 

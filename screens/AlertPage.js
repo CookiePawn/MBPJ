@@ -15,7 +15,8 @@ import { useIsFocused } from '@react-navigation/native';
 import {
     loadUserImages,
     loadUsers,
-    loadLetter
+    loadLetter,
+    loadJoin,
 } from '../DB/LoadDB'
 
 
@@ -23,7 +24,9 @@ import {
 const CustomList = (props) => {
     return (
         <TouchableOpacity
-
+            onPress={() => {
+                props.navi.navigation.navigate(props.screen, props.params)
+            }}
         >
             <View style={styles.listSubView}>
                 <Image
@@ -61,6 +64,7 @@ const AlertPage = (props) => {
     const [imageUrl, setImageUrl] = useState([]);
     const [user, setUser] = useState([]);
     const [letter, setLetter] = useState([]);
+    const [join, setJoin] = useState([]);
 
     const isFocused = useIsFocused();
 
@@ -77,20 +81,19 @@ const AlertPage = (props) => {
             const letters = await loadLetter();
             setLetter(letters);
         }
+        const fetchJoin = async () => {
+            const joins = await loadJoin();
+            setJoin(joins);
+        }
 
         fetchImage();
         fetchUserInfo();
         fetchLetter();
+        fetchJoin();
     }, [isFocused]);
 
     const [selectedButton, setSelectedButton] = useState(0); // 0: 쪽지, 1: 기업
 
-    const letterStyle = state === 0 ? styles.activeButton : styles.inactiveButton;
-    const joinStyle = state === 1 ? styles.activeButton : styles.inactiveButton;
-
-    const letterTextStyle = state === 0 ? styles.activeButtonText : styles.inactiveButtonText;
-    const joinTextStyle = state === 1 ? styles.activeButtonText : styles.inactiveButtonText;
-    
     return (
         <View style={styles.mainView}>
             <View style={styles.titleView}>
@@ -160,6 +163,45 @@ const AlertPage = (props) => {
                                 name={userName}
                                 info={item.content}
                                 image={imageSource}
+                                navi={props}
+                                screen='LetterInfo'
+                                params={{
+                                    num: num,
+                                    id: id,
+                                    pw: pw,
+                                    phone: phone,
+                                    name: name,
+                                    email: email,
+                                    image: image,
+                                    people: item.id,
+                                }}
+                            />
+                        );
+                    })}
+                    {state == 1 && join.filter(item => item.adminID === num).map((item, idx) => {
+                        const matchingUser = user.find(u => u.id === item.perID);
+                        const userName = matchingUser ? matchingUser.name : "Unknown User";
+
+                        const userImage = imageUrl.find(img => img.name === matchingUser.perID);
+                        const imageSource = userImage ? { uri: userImage.url } : require('../assets/start-solo.png'); // Replace with your default image path
+
+                        return (
+                            <CustomList
+                                key={idx}
+                                name={userName}
+                                image={imageSource}
+                                navi = {props}
+                                screen = 'PeopleInfo'
+                                params = {{
+                                    num: num,
+                                    id: id,
+                                    pw: pw,
+                                    phone: phone,
+                                    name: name,
+                                    email: email,
+                                    image: image,
+                                    people: matchingUser.id,
+                                }}
                             />
                         );
                     })}
