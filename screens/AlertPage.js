@@ -17,10 +17,12 @@ import {
     loadUsers,
     loadLetter,
     loadJoin,
+    loadStartUps,
+    deleteJoin,
 } from '../DB/LoadDB'
 
 
-
+// 쪽지 용 CustomList
 const CustomList = (props) => {
     return (
         <TouchableOpacity
@@ -33,10 +35,65 @@ const CustomList = (props) => {
                     style={styles.profileImage}
                     source={props.image}
                 />
+
                 <View style={styles.listSubSubView}>
                     <Text style={styles.nameText}>{props.name}</Text>
-                    <Text style={styles.infoText}>{props.info}</Text>
+                    <Text style={styles.infoText}>{props.info.substring(0, 20)}</Text>
                 </View>
+                <TouchableOpacity>
+                    <Icon name='trash-outline' size={20} color='#767676' style={[styles.icon, { right: 10, bottom: 15, }]} />
+                </TouchableOpacity>
+            </View>
+        </TouchableOpacity>
+    )
+}
+
+
+//가입 확인용 CustomList
+const CustomList1 = (props) => {
+
+    const matchingStartup = props.startups.find(s => s.id === props.joinSuID);
+
+    return (
+        <TouchableOpacity
+            onPress={() => {
+                props.navi.navigation.navigate(props.screen, props.params)
+            }}
+        >
+            <View style={styles.listSubView}>
+                <Image
+                    style={styles.profileImage}
+                    source={props.image}
+                />
+                <View style={styles.listSubSubView1}>
+                    <Text style={styles.nameText1}>{props.name}</Text>
+                    {matchingStartup && <Text style={styles.infoText}>{matchingStartup.name}에 가입 신청</Text>}
+                </View>
+
+                <View style={styles.choiceView}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            props.delete
+                            alert('승인되었습니다')
+                        }}
+                    >
+                        <View style={styles.choiceBt}>
+                            <Text style={styles.choiceYesText}>승인</Text>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        onPress={() => {
+                            props.delete
+                            alert('거절되었습니다')
+                        }}
+                    >
+                        <View style={styles.choiceBt}>
+                            <Text style={styles.choiceNoText}>거절</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+
             </View>
         </TouchableOpacity>
     )
@@ -65,6 +122,7 @@ const AlertPage = (props) => {
     const [user, setUser] = useState([]);
     const [letter, setLetter] = useState([]);
     const [join, setJoin] = useState([]);
+    const [startup, setStartup] = useState([])
 
     const isFocused = useIsFocused();
 
@@ -85,12 +143,22 @@ const AlertPage = (props) => {
             const joins = await loadJoin();
             setJoin(joins);
         }
+        const fetchStartUp = async () => {
+            const startups = await loadStartUps()
+            setStartup(startups)
+        }
 
         fetchImage();
         fetchUserInfo();
         fetchLetter();
         fetchJoin();
+        fetchStartUp()
     }, [isFocused]);
+
+
+
+
+
 
     const [selectedButton, setSelectedButton] = useState(0); // 0: 쪽지, 1: 기업
 
@@ -129,14 +197,14 @@ const AlertPage = (props) => {
 
             <View style={styles.btView}>
                 <TouchableOpacity onPress={() => { setState(0) }}>
-                    <View style={styles.letterView}>
-                        <Text style={styles.letterText}>쪽지</Text>
+                    <View style={styles.letterView(state === 0)}>
+                        <Text style={styles.letterText(state === 0)}>쪽지</Text>
                     </View>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => { setState(1) }}>
-                    <View style={styles.joinView}>
-                        <Text style={styles.letterText}>가입</Text>
+                    <View style={styles.joinView(state === 1)}>
+                        <Text style={styles.joinText(state === 1)}>가입</Text>
                     </View>
                 </TouchableOpacity>
 
@@ -183,16 +251,18 @@ const AlertPage = (props) => {
                         const userName = matchingUser ? matchingUser.name : "Unknown User";
 
                         const userImage = imageUrl.find(img => img.name === matchingUser.perID);
-                        const imageSource = userImage ? { uri: userImage.url } : require('../assets/start-solo.png'); // Replace with your default image path
+                        const imageSource = userImage ? { uri: userImage.url } : require('../assets/start-solo.png'); 
 
                         return (
-                            <CustomList
+                            <CustomList1
                                 key={idx}
                                 name={userName}
                                 image={imageSource}
-                                navi = {props}
-                                screen = 'PeopleInfo'
-                                params = {{
+                                joinSuID={item.suID}  
+                                startups={startup} 
+                                navi={props}
+                                screen='PeopleInfo'
+                                params={{
                                     num: num,
                                     id: id,
                                     pw: pw,
@@ -202,6 +272,7 @@ const AlertPage = (props) => {
                                     image: image,
                                     people: matchingUser.id,
                                 }}
+                                delete={deleteJoin(item.id)}
                             />
                         );
                     })}
@@ -270,15 +341,28 @@ const styles = StyleSheet.create({
         borderColor: '#E8E8E8',
         justifyContent: 'center',
     },
+    listSubSubView1: {
+        borderBottomWidth: 1,
+        borderColor: '#E8E8E8',
+        justifyContent: 'center',
+        backgroundColor: 'white',
+        width: 140
+    },
     nameText: {
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 15
     },
+    nameText1: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 15,
+    },
     infoText: {
         fontSize: 12,
-        color: 'rgba(0, 0, 0, 0.60)'
+        color: 'rgba(0, 0, 0, 0.60)',
     },
+
 
     btView: {
         flexDirection: 'row',
@@ -286,24 +370,59 @@ const styles = StyleSheet.create({
         marginBottom: 5
     },
 
-    letterView: {
-        backgroundColor: '#f1f1f1',
+    letterView: (isActive) =>  ({
+        backgroundColor: isActive ? '#5552E2' : '#f1f1f1',
         width: 76,
         height: 34,
         borderRadius: 20,
-    },
-    letterText: {
-        fontWeight: 'light',
-        color: '#999999',
+    }),
+    letterText: (isActive) => ({
+        fontWeight:'light',
+        color: isActive ? 'white' : '#999999',
         textAlign: 'center',
-        marginTop: 10,
-    },
+        marginTop: 10
+    }),
 
-    joinView: {
-        backgroundColor: '#f1f1f1',
+    joinView: (isActive) => ({
+        backgroundColor: isActive ? '#5552E2' : '#f1f1f1',
         width: 76,
         height: 34,
         borderRadius: 20,
         marginLeft: 10,
-    }
+    }),
+    joinText: (isActive) => ({
+        fontWeight: 'light',
+        color: isActive ? 'white' : '#999999',
+        textAlign: 'center',
+        marginTop: 10
+    }),
+
+    choiceView: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        borderBottomWidth: 1,
+        borderColor: '#E8E8E8',
+    },
+
+    choiceBt: {
+        width: 60,
+        backgroundColor: 'white',
+    },
+
+    choiceYesText: {
+        fontSize: 16,
+        color: 'green',
+        textAlign:'right',
+        marginTop: 35,
+        fontWeight: 'bold',
+    },
+
+    choiceNoText: {
+        fontSize: 16,
+        color: 'red',
+        textAlign: 'right',
+        marginTop: 35,
+        fontWeight: 'bold',
+    },
+
 })

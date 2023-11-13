@@ -17,6 +17,7 @@ import {
     loadUsers,
     loadUserImages,
     loadMember,
+    addJoin,
 } from '../DB/LoadDB'
 
 
@@ -285,6 +286,18 @@ const StartUpInfo = (props) => {
                 <View style={styles.btnView}>
                     <TouchableOpacity
                         style={[styles.chatBtn, { left: 0 }]}
+                        onPress={async() => {
+                            await addJoin(admin, num, people)
+                            props.navigation.navigate('Category', {
+                                num: num,
+                                id: id,
+                                pw: pw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                image: image,
+                            })
+                        }}
                     >
                         <Text style={styles.chatBtnText}>가입하기</Text>
                     </TouchableOpacity>
