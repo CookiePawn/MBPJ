@@ -27,6 +27,7 @@ import StartupServey from '../screens/StartupServey';
 import LetterPage from '../screens/LetterPage';
 import LetterInfo from '../screens/Info-Letter'
 import AlertPage from '../screens/AlertPage';
+import DaumPost from '../screens/DaumPost';
 
 
 const Stack = createStackNavigator();
@@ -69,6 +70,7 @@ const StackNavigator = () => {
             <Stack.Screen name='LetterInfo' component={LetterInfo}/>
             
             
+            <Stack.Screen name="DaumPost" component={DaumPost}/>
         </Stack.Navigator>
     )
 }
