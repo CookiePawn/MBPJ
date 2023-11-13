@@ -246,7 +246,7 @@ const Category = (props) => {
                                 }}
                                 category="팀원 모집"
                                 image={require('../assets/category-design.jpg')}
-                                screen='Team'
+                                screen='TeamList'
                             />
                             <CustomCategory
                                 navi={props}

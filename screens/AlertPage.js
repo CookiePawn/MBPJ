@@ -19,6 +19,7 @@ import {
     loadJoin,
     loadStartUps,
     deleteJoin,
+    addMember,
 } from '../DB/LoadDB'
 
 
@@ -73,7 +74,8 @@ const CustomList1 = (props) => {
                 <View style={styles.choiceView}>
                     <TouchableOpacity
                         onPress={() => {
-                            props.delete
+                            props.add()
+                            props.delete()
                             alert('승인되었습니다')
                         }}
                     >
@@ -84,7 +86,7 @@ const CustomList1 = (props) => {
 
                     <TouchableOpacity
                         onPress={() => {
-                            props.delete
+                            props.delete()
                             alert('거절되었습니다')
                         }}
                     >
@@ -157,10 +159,24 @@ const AlertPage = (props) => {
 
 
 
+    // 문서 삭제 후 배열 다시 로드
+    const handleDeleteJoin = async (joinId) => {
+        try {
+            await deleteJoin(joinId);
+            // 삭제한 후에 배열을 다시 로드
+            const joins = await loadJoin();
+            setJoin(joins);
+        } catch (error) {
+            console.error(`문서 삭제 중 오류가 발생했습니다: ${error}`);
+        }
+    };
 
 
 
-    const [selectedButton, setSelectedButton] = useState(0); // 0: 쪽지, 1: 기업
+
+
+
+
 
     return (
         <View style={styles.mainView}>
@@ -251,15 +267,15 @@ const AlertPage = (props) => {
                         const userName = matchingUser ? matchingUser.name : "Unknown User";
 
                         const userImage = imageUrl.find(img => img.name === matchingUser.perID);
-                        const imageSource = userImage ? { uri: userImage.url } : require('../assets/start-solo.png'); 
+                        const imageSource = userImage ? { uri: userImage.url } : require('../assets/start-solo.png');
 
                         return (
                             <CustomList1
                                 key={idx}
                                 name={userName}
                                 image={imageSource}
-                                joinSuID={item.suID}  
-                                startups={startup} 
+                                joinSuID={item.suID}
+                                startups={startup}
                                 navi={props}
                                 screen='PeopleInfo'
                                 params={{
@@ -272,7 +288,8 @@ const AlertPage = (props) => {
                                     image: image,
                                     people: matchingUser.id,
                                 }}
-                                delete={deleteJoin(item.id)}
+                                add={async() => await addMember(item.perID, item.suID)}
+                                delete={() => handleDeleteJoin(item.id)}
                             />
                         );
                     })}
@@ -370,14 +387,14 @@ const styles = StyleSheet.create({
         marginBottom: 5
     },
 
-    letterView: (isActive) =>  ({
+    letterView: (isActive) => ({
         backgroundColor: isActive ? '#5552E2' : '#f1f1f1',
         width: 76,
         height: 34,
         borderRadius: 20,
     }),
     letterText: (isActive) => ({
-        fontWeight:'light',
+        fontWeight: 'light',
         color: isActive ? 'white' : '#999999',
         textAlign: 'center',
         marginTop: 10
@@ -412,7 +429,7 @@ const styles = StyleSheet.create({
     choiceYesText: {
         fontSize: 16,
         color: 'green',
-        textAlign:'right',
+        textAlign: 'right',
         marginTop: 35,
         fontWeight: 'bold',
     },

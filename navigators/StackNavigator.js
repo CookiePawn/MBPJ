@@ -15,7 +15,8 @@ import People from '../screens/List-People';
 import CofounderList from '../screens/List-Cofounder';
 import CofounderEdit from '../screens/Cofounder-edit';
 import CofounderInfo from '../screens/Info-Cofounder';
-import Team from '../screens/Team';
+import TeamList from '../screens/List-Team';
+import TeamEdit from '../screens/Team-edit'
 import PeopleInfo from '../screens/Info-People';
 import EditPeopleInfo from '../screens/Info-People-edit'
 import StartupStep from '../screens/StartupStep';
@@ -58,7 +59,8 @@ const StackNavigator = () => {
             <Stack.Screen name='PeopleInfo' component={PeopleInfo}/>
             <Stack.Screen name='EditPeopleInfo' component={EditPeopleInfo}/>
             <Stack.Screen name='CofounderList' component={CofounderList}/>
-            <Stack.Screen name='Team' component={Team}/>
+            <Stack.Screen name='TeamList' component={TeamList}/>
+            <Stack.Screen name='TeamEdit' component={TeamEdit}/>
             <Stack.Screen name='MyPage' component={MyPage}/>
             <Stack.Screen name='MyProfile' component={MyProfile}/>
             <Stack.Screen name='StartupStep' component={StartupStep}/>

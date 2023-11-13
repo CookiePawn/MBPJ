@@ -288,6 +288,7 @@ const StartUpInfo = (props) => {
                         style={[styles.chatBtn, { left: 0 }]}
                         onPress={async() => {
                             await addJoin(admin, num, people)
+                            console.log('가입 신청 완료되었습니다')
                             props.navigation.navigate('Category', {
                                 num: num,
                                 id: id,
