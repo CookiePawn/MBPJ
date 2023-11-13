@@ -3,6 +3,7 @@ import {
     Text,
     TouchableOpacity,
     Image,
+    ScrollView,
     StyleSheet,
     TextInput
 } from 'react-native'
@@ -86,21 +87,29 @@ const LetterPage = (props) => {
                     <Icon name='home-outline' size={25} color='black' />
                 </TouchableOpacity>
             </View>
-
             <View style={styles.inputView}>
-                <Text style = {styles.smallText}>{letter.content}</Text>
+                <ScrollView
+                    style={{ width: '90%' }}
+                    showsHorizontalScrollIndicator={false}
+                    showsVerticalScrollIndicator={false}
+                >
+                    <View style={styles.textView}>
+                        <Text style={styles.smallText}>{letter.content}</Text>
+                    </View>
+                </ScrollView>
             </View>
 
+
             <View style={styles.btnView}>
-                    <TouchableOpacity
-                        style={[styles.chatBtn, { width: '100%' }]}
-                        onPress={() => {
-                            
-                        }}
-                    >
-                        <Text style={styles.chatBtnText}>삭제하기</Text>
-                    </TouchableOpacity>
-                </View>
+                <TouchableOpacity
+                    style={[styles.chatBtn, { width: '100%' }]}
+                    onPress={() => {
+
+                    }}
+                >
+                    <Text style={styles.chatBtnText}>삭제하기</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }
@@ -140,12 +149,20 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 
-    // 텍스트 입력 뷰
     inputView: {
         backgroundColor: '#f1f1f1',
+        flex: 1,
         width: '90%',
-        height: 600,
-        borderRadius: '30',
+        borderRadius: '20',
+        alignItems: 'center',
+    },
+
+    textView: {
+        backgroundColor: '#f1f1f1',
+        borderRadius: '40',
+        width: '100%',
+        alignItems: 'center',
+        marginTop: 20,
     },
 
     // 텍스트 안내
@@ -177,9 +194,6 @@ const styles = StyleSheet.create({
         color: '#767676',
         fontSize: 16,
         fontWeight: '400',
-        marginBottom: 30,
-        marginLeft: 20,
-        marginTop: 20,
     },
 
 

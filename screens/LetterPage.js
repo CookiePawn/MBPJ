@@ -144,10 +144,10 @@ const styles = StyleSheet.create({
 
     // 텍스트 입력 뷰
     inputView: {
-        backgroundColor: '#f1f1f1',
+        backgroundColor: '#f7f7f7',
         width: '90%',
         height: 600,
-        borderRadius: '30'
+        borderRadius: '20'
     },
 
     // 텍스트 안내
@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     },
 
     smallText: {
-        color: 'rgba(153, 153, 153, 0.60)',
+        color: '#767676',
         fontSize: 16,
         fontWeight: '400',
         marginBottom: 30,

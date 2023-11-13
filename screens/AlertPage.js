@@ -37,7 +37,7 @@ const CustomList = (props) => {
 
                 <View style={styles.listSubSubView}>
                     <Text style={styles.nameText}>{props.name}</Text>
-                    <Text style={styles.infoText}>{props.info}</Text>
+                    <Text style={styles.infoText}>{props.info.substring(0, 20)}</Text>
                 </View>
                 <TouchableOpacity>
                     <Icon name='trash-outline' size={20} color='#767676' style={[styles.icon, { right: 10, bottom: 15, }]} />
@@ -66,7 +66,7 @@ const CustomList1 = (props) => {
                 />
                 <View style={styles.listSubSubView1}>
                     <Text style={styles.nameText1}>{props.name}</Text>
-                    {matchingStartup && <Text style={styles.infoText}>{matchingStartup.name}</Text>}
+                    {matchingStartup && <Text style={styles.infoText}>{matchingStartup.name}에 가입 신청</Text>}
                 </View>
 
                 <View style={styles.choiceView}>
