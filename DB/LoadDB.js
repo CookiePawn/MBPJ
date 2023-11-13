@@ -224,6 +224,23 @@ export const loadCofounderSelect = async (people) => {
 
 
 
+//쪽지 로드
+export const loadLetter = async () => {
+    let tempArray = [];
+    try {
+        const data = await getDocs(collection(db, 'letter'));
+
+        data.forEach((doc) => {
+            tempArray.push({ ...doc.data(), id: doc.id });
+        });
+    } catch (error) {
+        console.log("Error fetching data:", error.message);
+    }
+    return tempArray
+};
+
+
+
 
 
 

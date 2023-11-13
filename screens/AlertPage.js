@@ -12,14 +12,18 @@ import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 
 //db 로드
-import { loadUserImages, loadUsers } from '../DB/LoadDB'
+import {
+    loadUserImages,
+    loadUsers,
+    loadLetter
+} from '../DB/LoadDB'
 
 
 
 const CustomList = (props) => {
     return (
         <TouchableOpacity
-            
+
         >
             <View style={styles.listSubView}>
                 <Image
@@ -28,8 +32,7 @@ const CustomList = (props) => {
                 />
                 <View style={styles.listSubSubView}>
                     <Text style={styles.nameText}>{props.name}</Text>
-                    {/* styles.infoText 대신 쪽지 보낸거 나오게 하면 될 듯 */}
-                    <Text style={styles.infoText}>{props.info}</Text> 
+                    <Text style={styles.infoText}>{props.info}</Text>
                 </View>
             </View>
         </TouchableOpacity>
@@ -51,14 +54,13 @@ const AlertPage = (props) => {
     const phone = params ? params.phone : null;
     const image = params ? params.image : null;
 
-
-    //검색
-    const [search, setSearch] = useState('')
+    const [state, setState] = useState(0);
 
 
     //db
     const [imageUrl, setImageUrl] = useState([]);
-    const [user, setUser] = useState([])
+    const [user, setUser] = useState([]);
+    const [letter, setLetter] = useState([]);
 
     const isFocused = useIsFocused();
 
@@ -71,12 +73,24 @@ const AlertPage = (props) => {
             const users = await loadUsers();
             setUser(users);
         };
+        const fetchLetter = async () => {
+            const letters = await loadLetter();
+            setLetter(letters);
+        }
 
         fetchImage();
         fetchUserInfo();
+        fetchLetter();
     }, [isFocused]);
 
+    const [selectedButton, setSelectedButton] = useState(0); // 0: 쪽지, 1: 기업
 
+    const letterStyle = state === 0 ? styles.activeButton : styles.inactiveButton;
+    const joinStyle = state === 1 ? styles.activeButton : styles.inactiveButton;
+
+    const letterTextStyle = state === 0 ? styles.activeButtonText : styles.inactiveButtonText;
+    const joinTextStyle = state === 1 ? styles.activeButtonText : styles.inactiveButtonText;
+    
     return (
         <View style={styles.mainView}>
             <View style={styles.titleView}>
@@ -110,117 +124,44 @@ const AlertPage = (props) => {
                 </TouchableOpacity>
             </View>
 
-            <View style = {styles.btView}>
-                <TouchableOpacity>
-                    <View style = {styles.letterView}>
-                        <Text style = {styles.letterText}>쪽지</Text>
+            <View style={styles.btView}>
+                <TouchableOpacity onPress={() => { setState(0) }}>
+                    <View style={styles.letterView}>
+                        <Text style={styles.letterText}>쪽지</Text>
                     </View>
                 </TouchableOpacity>
-                
-                <TouchableOpacity>
-                    <View style = {styles.joinView}>
-                        <Text style = {styles.letterText}>가입</Text> 
+
+                <TouchableOpacity onPress={() => { setState(1) }}>
+                    <View style={styles.joinView}>
+                        <Text style={styles.letterText}>가입</Text>
                     </View>
                 </TouchableOpacity>
-                
-                
+
+
             </View>
-    
+
             <View style={styles.listView}>
                 <ScrollView
                     style={{ marginBottom: 150, }}
                     showsHorizontalScrollIndicator={false}
                     showsVerticalScrollIndicator={false}
                 >
-                    {user.map((userItem, idx) => {
-                        const userUrl = imageUrl.filter((item) => item.name === userItem.perID);
+                    {state == 0 && letter.filter(item => item.fromID === num).map((item, idx) => {
 
-                        if (search == '') {
-                            if (userUrl.length > 0) {
-                                return userUrl.map((urlItem, urlIdx) => (
-                                    <CustomList
-                                        key={idx}
-                                        image={{ uri: urlItem.url }}
-                                        name={userItem.name}
-                                        info={userItem.info}
-                                        navi={props}
-                                        params={{
-                                            num: num,
-                                            id: id,
-                                            pw: pw,
-                                            phone: phone,
-                                            name: name,
-                                            email: email,
-                                            image: image,
-                                            people: userItem.id,
-                                        }}
-                                    />
-                                ));
-                            }
+                        const matchingUser = user.find(u => u.id === item.toID);
+                        const userName = matchingUser ? matchingUser.name : "Unknown User";
 
-                            return (
-                                <CustomList
-                                    key={idx}
-                                    image={require('../assets/start-solo.png')}
-                                    name={userItem.name}
-                                    info={userItem.info}
-                                    navi={props}
-                                    params={{
-                                        num: num,
-                                        id: id,
-                                        pw: pw,
-                                        phone: phone,
-                                        name: name,
-                                        email: email,
-                                        image: image,
-                                        people: userItem.id,
-                                    }}
-                                />
-                            );
-                        } else if (userItem.name.includes(search)) {
-                            if (userUrl.length > 0) {
-                                return userUrl.map((urlItem, urlIdx) => (
-                                    <CustomList
-                                        key={idx}
-                                        image={{ uri: urlItem.url }}
-                                        name={userItem.name}
-                                        info={userItem.info}
-                                        navi={props}
-                                        params={{
-                                            num: num,
-                                            id: id,
-                                            pw: pw,
-                                            phone: phone,
-                                            name: name,
-                                            email: email,
-                                            image: image,
-                                            people: userItem.id,
-                                        }}
-                                    />
-                                ));
-                            }
+                        const userImage = imageUrl.find(img => img.name === matchingUser.perID);
+                        const imageSource = userImage ? { uri: userImage.url } : require('../assets/start-solo.png'); // Replace with your default image path
 
-                            return (
-                                <CustomList
-                                    key={idx}
-                                    image={require('../assets/start-solo.png')}
-                                    name={userItem.name}
-                                    info={userItem.info}
-                                    navi={props}
-                                    params={{
-                                        num: num,
-                                        id: id,
-                                        pw: pw,
-                                        phone: phone,
-                                        name: name,
-                                        email: email,
-                                        image: image,
-                                        people: userItem.id,
-                                    }}
-                                />
-                            );
-                        }
-
+                        return (
+                            <CustomList
+                                key={idx}
+                                name={userName}
+                                info={item.content}
+                                image={imageSource}
+                            />
+                        );
                     })}
                 </ScrollView>
             </View>
@@ -297,14 +238,14 @@ const styles = StyleSheet.create({
         color: 'rgba(0, 0, 0, 0.60)'
     },
 
-    btView:{
-        flexDirection:'row',
+    btView: {
+        flexDirection: 'row',
         width: '90%',
         marginBottom: 5
     },
 
     letterView: {
-        backgroundColor:'#f1f1f1',
+        backgroundColor: '#f1f1f1',
         width: 76,
         height: 34,
         borderRadius: 20,
@@ -312,12 +253,12 @@ const styles = StyleSheet.create({
     letterText: {
         fontWeight: 'light',
         color: '#999999',
-        textAlign:'center',
+        textAlign: 'center',
         marginTop: 10,
     },
 
     joinView: {
-        backgroundColor:'#f1f1f1',
+        backgroundColor: '#f1f1f1',
         width: 76,
         height: 34,
         borderRadius: 20,
