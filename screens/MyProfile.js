@@ -31,6 +31,7 @@ const MyProfile = (props) => {
 
     //개인정보 수정
     const [rePw, setRePw] = useState('')
+    const [location, setLocation] = useState('');
 
 
     //db
@@ -58,6 +59,15 @@ const MyProfile = (props) => {
         fetchImage();
     }, [isFocused]);
 
+    useEffect(() => {
+        // route.params가 변경되면 상태를 업데이트합니다.
+        if (props.route.params?.address) {
+            setLocation(props.route.params.address);
+        }
+
+    }, [props.route.params.address]); // 의존성 배열에 route.params를 추가합니다.
+
+    console.log(props.route.params)
 
 
     const infoChange = async () => {
@@ -173,6 +183,16 @@ const MyProfile = (props) => {
                         maxLength={20}
                     />
                 </View>
+                <View style={styles.changeProfileSubView}>
+                    <TouchableOpacity
+                        onPress = {() => {
+                            props.navigation.navigate("DaumPost")
+                        }}>
+                    <Text style = {styles.changeProfileTitle}> 주소추가 </Text>
+                    </TouchableOpacity>
+                    <Text> {location} </Text>
+                </View>
+
                 <TouchableOpacity
                     style={styles.saveBtn}
                     onPress={() => {

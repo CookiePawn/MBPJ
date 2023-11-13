@@ -17,6 +17,7 @@ import Team from '../screens/Team';
 import PeopleInfo from '../screens/Info-People';
 import EditPeopleInfo from '../screens/Info-People-edit'
 import Chatbot from '../screens/Chatbot';
+import DaumPost from '../screens/DaumPost';
 
 
 const Stack = createStackNavigator();
@@ -45,6 +46,7 @@ const StackNavigator = () => {
             <Stack.Screen name='MyPage' component={MyPage}/>
             <Stack.Screen name='MyProfile' component={MyProfile}/>
             <Stack.Screen name="Chatbot" component={Chatbot}/>
+            <Stack.Screen name="DaumPost" component={DaumPost}/>
         </Stack.Navigator>
     )
 }
