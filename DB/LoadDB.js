@@ -615,6 +615,32 @@ export const addCofounder = async (num, title, idea, info, benefit, uri) => {
 
 
 
+//가입하기 추가
+export const addJoin = async (adminID, perID, suID) => {
+    try {
+        await addDoc(collection(db, 'join'), {
+            adminID: adminID,
+            perID: perID,
+            suID: suID,
+            DATE: new Date(),
+        });
+
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
