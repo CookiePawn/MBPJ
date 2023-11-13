@@ -13,9 +13,10 @@ import { useIsFocused } from '@react-navigation/native';
 
 
 //db 로드
-import { 
-    loadStartUpImages, 
-    loadStartUps, 
+import {
+    loadStartUpImages,
+    loadStartUps,
+    loadTeam,
 } from '../DB/LoadDB'
 
 
@@ -44,6 +45,8 @@ const CustomList = (props) => {
 
 
 
+
+
 const Team = (props) => {
     //로그인 확인
     const { params } = props.route;
@@ -62,6 +65,7 @@ const Team = (props) => {
     //db
     const [startupImage, setStartupImage] = useState([]);
     const [startup, setStartup] = useState([])
+    const [team, setTeam] = useState([])
 
     const isFocused = useIsFocused();
 
@@ -73,9 +77,17 @@ const Team = (props) => {
         const fetchStartUps = async () => {
             const startups = await loadStartUps()
             setStartup(startups)
-        } 
+        }
+        const fetchTeams = async () => {
+            const teams = await loadTeam()
+            setTeam(teams)
+        }
+
+
         fetchStartUpImage()
         fetchStartUps()
+        fetchTeams()
+
     }, [isFocused]);
 
     return (
@@ -120,61 +132,69 @@ const Team = (props) => {
                     maxLength={20}
                 />
             </View>
+            <View style={styles.createView}>
+                {num !== null && (
+                    <TouchableOpacity
+                        onPress={() => {
+                            props.navigation.navigate('TeamEdit', {
+                                num: num,
+                                id: id,
+                                pw: pw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                image: image,
+                            })
+                        }}
+                    >
+                        <Text style={{ textAlign: 'right' }}>글 작성하기</Text>
+                    </TouchableOpacity>
+                )}
+            </View>
             <View style={styles.listView}>
                 <ScrollView
                     showsHorizontalScrollIndicator={false}
                     showsVerticalScrollIndicator={false}
                 >
                     {startup.map((startupItem, idx) => {
-                        if (idx >= 5) return null;
-
-                        const startupUrl = startupImage.filter((item) => item.name === startupItem.image);
-
-
-                        if (search == '') {
-                            if (startupUrl.length > 0) {
-                                return startupUrl.map((urlItem, urlIdx) => (
-                                    <CustomList
-                                        key={idx}
-                                        image={{ uri: urlItem.url }}
-                                        name={startupItem.name}
-                                        info={startupItem.info}
-                                    />
-                                ));
-                            }
-
+                        const matchingTeam = team.find((teamItem) => teamItem.suID === startupItem.id);
+                        if (matchingTeam) {
+                            const matchingImage = startupImage.find((imageItem) => imageItem.name === startupItem.name);
                             return (
-                                <CustomList
+                                <TouchableOpacity 
                                     key={idx}
-                                    image={require('../assets/start-solo.png')}
-                                    name={startupItem.name}
-                                    info={startupItem.info}
-                                />
-                            );
-                        } else if (startupItem.info.includes(search)) {
-                            if (startupUrl.length > 0) {
-                                return startupUrl.map((urlItem, urlIdx) => (
-                                    <CustomList
-                                        key={idx}
-                                        image={{ uri: urlItem.url }}
-                                        name={startupItem.name}
-                                        info={startupItem.info}
-                                    />
-                                ));
-                            }
-
-                            return (
-                                <CustomList
-                                    key={idx}
-                                    image={require('../assets/start-solo.png')}
-                                    name={startupItem.name}
-                                    info={startupItem.info}
-                                />
+                                    onPress={() => {
+                                        props.navigation.navigate('StartUpInfo', {
+                                            num: num,
+                                            id: id,
+                                            pw: pw,
+                                            phone: phone,
+                                            name: name,
+                                            email: email,
+                                            image: image,
+                                            people: startupItem.id,
+                                        })
+                                    }}
+                                >
+                                    <View style={styles.listSubView}>
+                                        <Image
+                                            style={styles.profileImage}
+                                            source={matchingImage ? { uri: matchingImage.url } : require('../assets/start-solo.png')}
+                                        />
+                                        <View style={styles.listSubSubView}>
+                                            <Text style={styles.nameText}>{startupItem.name}</Text>
+                                            <Text style={styles.infoText}>{startupItem.info}</Text>
+                                            <Icon name='heart-outline' size={20} color='red' style={[styles.icon, { right: 10, bottom: 10, }]} />
+                                        </View>
+                                    </View>
+                                </TouchableOpacity>
                             );
                         }
-
+                        return null; // team과 매치되지 않는 경우 아무것도 렌더링하지 않음
                     })}
                 </ScrollView>
+
+
             </View>
         </View>
     )
@@ -233,6 +253,16 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         marginLeft: 5
     },
+
+
+
+    //글 작성하기 버튼
+    createView: {
+        width: '90%',
+    },
+
+
+
 
 
 

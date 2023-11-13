@@ -9,6 +9,8 @@ import {
     updateDoc,
     addDoc,
     deleteDoc,
+    query,
+    where,
 } from 'firebase/firestore';
 
 
@@ -280,6 +282,31 @@ export const loadJoin = async () => {
     }
     return tempArray
 };
+
+
+
+// 팀원 모집 로드
+export const loadTeam = async () => {
+    let tempArray = [];
+    try {
+        const data = await getDocs(collection(db, 'team'));
+
+        data.forEach((doc) => {
+            tempArray.push({ ...doc.data(), id: doc.id });
+        });
+    } catch (error) {
+        console.log("Error fetching data:", error.message);
+    }
+    return tempArray
+};
+
+
+
+
+
+
+
+
 
 
 
@@ -635,6 +662,54 @@ export const addJoin = async (adminID, perID, suID) => {
 
 
 
+// 팀원 모집 추가
+export const addTeam = async (suID) => {
+    try {
+        // suID에 해당하는 팀 문서가 이미 존재하는지 확인합니다.
+        const querySnapshot = await getDocs(query(collection(db, 'team'), where('suID', '==', suID)));
+
+        if (!querySnapshot.empty) {
+            // 해당 suID에 대한 팀 문서가 이미 존재하는 경우, 문서 ID를 가져와서 업데이트합니다.
+            const docRef = querySnapshot.docs[0].ref;
+            await updateDoc(docRef, {
+                DATE: new Date(),
+            });
+            alert('공고가 업데이트되었습니다.');
+        } else {
+            // suID에 해당하는 팀 문서가 존재하지 않는 경우, 새로운 문서를 추가합니다.
+            await addDoc(collection(db, 'team'), {
+                suID: suID,
+                DATE: new Date(),
+            });
+            alert('공고가 추가되었습니다.');
+        }
+    } catch (error) {
+        console.error("Error adding/updating team document:", error.message);
+    }
+}
+
+
+
+
+
+
+
+//스타트업 멤버 추가
+export const addMember = async (perID, suID) => {
+    try {
+        await addDoc(collection(db, 'startupMember'), {
+            admin: 0,
+            perID: perID,
+            suID: suID,
+        });
+
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
 
 
 
@@ -657,7 +732,14 @@ export const addJoin = async (adminID, perID, suID) => {
 //가입 DB 문서 삭제
 export const deleteJoin = async (num) => {
     try {
-        await deleteDoc(doc(db, 'join', num));
+        const documentRef = doc(db, 'join', num);
+        const documentSnapshot = await getDoc(documentRef);
+
+        if (documentSnapshot.exists()) {
+            await deleteDoc(documentRef);
+        } else {
+            console.log(`문서(ID: ${num})가 존재하지 않습니다.`);
+        }
     } catch (error) {
         console.error(`문서 삭제 중 오류가 발생했습니다: ${error}`);
     }
