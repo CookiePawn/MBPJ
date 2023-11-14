@@ -25,6 +25,9 @@ import {
 } from '../../DB/LoadDB'
 
 
+import { openAI } from '../OpenAI'
+
+
 
 
 
@@ -89,7 +92,8 @@ export const Stat0 = (props) => {
             <TouchableOpacity
                 style={styles.saveBtn}
                 onPress={async () => {
-                    await addStartUp(name, title, introduce, stack, props.perID)
+                    openAI(name, title, introduce, stack)
+                    //await addStartUp(name, title, introduce, stack, props.perID)
                     //props.navi.navigation.navigate('Category', props.params)
                 }}
             >
