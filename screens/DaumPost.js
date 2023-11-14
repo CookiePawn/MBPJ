@@ -11,6 +11,7 @@ const DaumPost = (props, navigation) => {
     const phone = params ? params.phone : null;
     const image = params ? params.image : null;
     const screen = params ? params.screen : null;
+    const people = params ? params.people : null;
 
 
 
@@ -33,7 +34,7 @@ const DaumPost = (props, navigation) => {
             address = (data.address + " " + data.buildingName);
         }
 
-        props.navigation.navigate(props.screen, {
+        props.navigation.navigate(screen, {
             address,
             zonecode,
             num: num,
@@ -43,6 +44,7 @@ const DaumPost = (props, navigation) => {
             name: name,
             email: email,
             image: image,
+            people : people,
         })
     }
 
