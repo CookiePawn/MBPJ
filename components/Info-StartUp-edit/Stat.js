@@ -28,12 +28,16 @@ import {
 
 
 
+
+
 export const Stat0 = (props) => {
 
     const [name, setName] = useState('')
     const [title, setTitle] = useState('')
     const [introduce, setIntroduce] = useState('')
     const [stack, setStack] = useState('')
+
+
 
 
 
@@ -86,7 +90,7 @@ export const Stat0 = (props) => {
                 style={styles.saveBtn}
                 onPress={async () => {
                     await addStartUp(name, title, introduce, stack, props.perID)
-                    props.navi.navigation.navigate('Category', props.params)
+                    //props.navi.navigation.navigate('Category', props.params)
                 }}
             >
                 <Text style={styles.saveBtnText}>저장하기</Text>

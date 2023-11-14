@@ -14,6 +14,14 @@ import {
 } from 'firebase/firestore';
 
 
+//GPT
+import { generateText } from '../components/OpenAI';
+
+
+
+
+
+
 
 
 
@@ -558,6 +566,14 @@ export const addStartUp = async (name, title, introduce, stack, perID) => {
         } catch (error) {
             console.log("Error adding startupMember document:", error);
         }
+
+
+        const gpt = await generateText(name, title, introduce, stack)
+
+
+
+
+
 
     } catch (error) {
         console.log("Error adding startupInfo document:", error);
