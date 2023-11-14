@@ -90,8 +90,6 @@ const Map = (props) => {
 
         fetchUser();
 
-        console.log(user)
-
     }, [isFocused]);
 
     useEffect(() => {
@@ -125,8 +123,6 @@ const Map = (props) => {
         }
 
         sortData()
-
-        console.log(markerUsers)
 
         if (markerUsers.length > 0) {
             setState(markerUsers)

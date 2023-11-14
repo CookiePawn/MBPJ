@@ -69,7 +69,7 @@ const StartUpEdit = (props) => {
             setEInfo(users.info || '');
             setEIntroduce(users.introduce || '');
             setEStack(users.stack || '');
-
+            
         };
 
         fetchImage();
@@ -83,7 +83,7 @@ const StartUpEdit = (props) => {
     const [foundImage, setFoundImage] = useState(null);
 
     useEffect(() => {
-        if (user.name && imageUrl.length > 0) {
+        if (user.name && imageUrl && imageUrl.length > 0) {
             const matchImage = imageUrl.find(item => item.name === user.name);
             setFoundImage(matchImage);
         }
@@ -91,9 +91,9 @@ const StartUpEdit = (props) => {
 
 
     useEffect(() => {
-        // route.params가 변경되면 상태를 업데이트합니다.
-        if (props.route.params?.address) {
-            setLocation(props.route.params.address);
+
+        if(props.route.params?.address) {
+            setLocation(props.route.params.address)
         }
 
     }, [props.route.params.address]); // 의존성 배열에 route.params를 추가합니다.
@@ -275,6 +275,7 @@ const StartUpEdit = (props) => {
                                 name: name,
                                 email: email,
                                 image: image,
+                                people : people,
                                 screen: "StartUpEdit",
                             })
                         }}
