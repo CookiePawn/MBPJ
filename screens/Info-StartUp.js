@@ -206,7 +206,7 @@ const StartUpInfo = (props) => {
                 </View>
                 <View style={styles.likeView}>
                     <Icon name='heart' size={20} color='red' />
-                    <Text style={styles.likeText}>100</Text>
+                    <Text style={styles.likeText}>{startup.score}점</Text>
                 </View>
             </View>
             <ScrollView
@@ -255,6 +255,9 @@ const StartUpInfo = (props) => {
 
                     <Text style={styles.bigText}>기술 / 스택</Text>
                     <Text style={styles.smallText}>{startup.stack}</Text>
+
+                    <Text style={styles.bigText}>GPT 평가</Text>
+                    <Text style={styles.smallText}>{startup.evaluation}</Text>
 
                     <Text style={styles.bigText}>멤버</Text>
                     <ScrollView

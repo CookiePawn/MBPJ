@@ -15,7 +15,7 @@ import {
 
 
 //GPT
-import { generateText } from '../components/OpenAI';
+import { openAI, openAIStartup } from '../components/OpenAI';
 
 
 
@@ -424,19 +424,31 @@ export const updateUserImage = async (uri, id) => {
 
 //내 스타트업 페이지 수정
 export const updateStartUpProject = async (num, eInfo, eIntroduce, eStack, location) => {
-    try {
-        const docRef = doc(db, 'startupInfo', num);
 
-        await updateDoc(docRef, {
-            info: eInfo,
-            introduce: eIntroduce,
-            stack: eStack,
-            location : location
-        });
-        alert('정보가 수정되었습니다!')
-    } catch (error) {
-        console.error("Error fetching data:", error.message);
+
+    const gptResult = await openAIStartup(eInfo, eIntroduce, eStack)
+
+    if (gptResult) {
+        try {
+            const docRef = doc(db, 'startupInfo', num);
+
+            await updateDoc(docRef, {
+                info: eInfo,
+                introduce: eIntroduce,
+                stack: eStack,
+                location: location,
+                score: gptResult.score,
+                evaluation: gptResult.evaluation,
+            });
+            alert('정보가 수정되었습니다!')
+        } catch (error) {
+            console.error("Error fetching data:", error.message);
+        }
+
     }
+
+
+
 }
 
 
@@ -493,6 +505,23 @@ export const updateStartUpImage = async (uri, id) => {
             });
         }
     );
+}
+
+
+
+//내 스타트업 페이지 GPT 수정
+export const updateStartUpGPT = async (num, score, evaluation) => {
+    try {
+        const docRef = doc(db, 'startupInfo', num);
+
+        await updateDoc(docRef, {
+            score: score,
+            evaluation: evaluation,
+        });
+        alert('정보가 저장되었습니다!')
+    } catch (error) {
+        console.error("Error fetching data:", error.message);
+    }
 }
 
 
@@ -568,8 +597,15 @@ export const addStartUp = async (name, title, introduce, stack, perID) => {
         }
 
 
-        const gpt = await generateText(name, title, introduce, stack)
+        const gptResult = await openAIStartup(title, introduce, stack)
 
+        if (gptResult) {
+            try {
+                await updateStartUpGPT(suID, gptResult.score, gptResult.evaluation);
+            } catch (error) {
+                console.log("Error startupGPT:", error);
+            }
+        }
 
 
 
@@ -582,7 +618,7 @@ export const addStartUp = async (name, title, introduce, stack, perID) => {
 
 
 
-//회원가입 추가
+//쪽지 추가
 export const addLetter = async (toID, fromID, content) => {
     try {
         await addDoc(collection(db, 'letter'), {

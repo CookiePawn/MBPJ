@@ -31,7 +31,10 @@ const CustomList = (props) => {
                 <View style={styles.listSubSubView}>
                     <Text style={styles.nameText}>{props.name}</Text>
                     <Text style={styles.infoText}>{props.info}</Text>
-                    <Icon name='heart-outline' size={20} color='red' style={[styles.icon, { right: 10, bottom: 15, }]} />
+                    <View style={[styles.icon, { right: 10, bottom: 15, flexDirection: 'row'}]}>
+                        <Icon name='heart-outline' size={20} color='red'/>
+                        <Text>{props.score}점</Text>    
+                    </View>
                 </View>
             </View>
         </TouchableOpacity>
@@ -165,6 +168,7 @@ const StartUpList = (props) => {
                                         image={{ uri: urlItem.url }}
                                         name={startupItem.name}
                                         info={startupItem.info}
+                                        score={startupItem.score}
                                         navi={props}
                                         params={{
                                             num: num,
@@ -186,6 +190,7 @@ const StartUpList = (props) => {
                                     image={require('../assets/start-solo.png')}
                                     name={startupItem.name}
                                     info={startupItem.info}
+                                    score={startupItem.score}
                                     navi={props}
                                     params={{
                                         num: num,
@@ -207,6 +212,7 @@ const StartUpList = (props) => {
                                         image={{ uri: urlItem.url }}
                                         name={startupItem.name}
                                         info={startupItem.info}
+                                        score={startupItem.score}
                                         navi={props}
                                         params={{
                                             num: num,
@@ -228,6 +234,7 @@ const StartUpList = (props) => {
                                     image={require('../assets/start-solo.png')}
                                     name={startupItem.name}
                                     info={startupItem.info}
+                                    score={startupItem.score}
                                     navi={props}
                                     params={{
                                         num: num,
