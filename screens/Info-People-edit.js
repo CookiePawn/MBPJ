@@ -4,7 +4,7 @@ import {
     Image,
     TouchableOpacity,
     TextInput,
-    Linking,
+    ActivityIndicator,
     ScrollView,
     StyleSheet,
 } from 'react-native'
@@ -18,6 +18,8 @@ import {
     loadUserSelect,
     updateUserProject,
 } from '../DB/LoadDB'
+
+
 
 
 const PersonInfo = (props) => {
@@ -39,6 +41,7 @@ const PersonInfo = (props) => {
     const [eCareer, setECareer] = useState('')
     const [eProject, setEProject] = useState('')
 
+    const [isLoading, setIsLoading] = useState(false)
 
     //db
     const [imageUrl, setImageUrl] = useState([]);
@@ -191,6 +194,7 @@ const PersonInfo = (props) => {
                 style={styles.chatBtn}
                 onPress={
                     async () => {
+                        setIsLoading(true)
                         await updateUserProject(num, eInfo, eCareer, eIntroduce, eProject);
                         props.navigation.navigate("MyPage", {
                             num: num,
@@ -205,7 +209,11 @@ const PersonInfo = (props) => {
                     
                 }
             >
-                <Text style={styles.chatBtnText}>저장하기</Text>
+                {isLoading ? (
+                    <ActivityIndicator size="small" color="white" /> // 로딩 중에는 로딩 아이콘 표시
+                ) : (
+                    <Text style={styles.chatBtnText}>저장하기</Text>
+                )}
             </TouchableOpacity>
         </View>
     )

@@ -45,63 +45,67 @@ export const Stat0 = (props) => {
 
     return (
         <View style={styles.mainView}>
-            <Text style={[styles.title, { fontSize: 24 }]}>이름</Text>
-            <TextInput
-                style={styles.textInput}
-                placeholder='이름을 입력해주세요'
-                value={name}
-                onChangeText={(e) => setName(e)}
-                maxLength={20}
-            />
-            <Text style={styles.title}>스타트업 단계</Text>
-            <TouchableOpacity
-                onPress={() => {
-                    props.navi.navigation.navigate('StartupStep', props.params)
-                }}
-            >
-                <Text style={[styles.textInput, { color: '#999' }]}>초기 단계는 준비입니다. {'\n'}이후 등급 재설정을 통해 등급을 정할 수 있습니다.{'\n'}{'\n'}자세한 내용은 클릭 후 확인 가능합니다.</Text>
-            </TouchableOpacity>
-            <Text style={styles.title}>주제</Text>
-            <TextInput
-                style={styles.textInput}
-                placeholder='주제를 입력해주세요'
-                value={title}
-                onChangeText={(e) => setTitle(e)}
-                maxLength={30}
-            />
-            <Text style={styles.title}>소개</Text>
-            <TextInput
-                style={styles.textInput}
-                placeholder='소개를 입력해주세요'
-                value={introduce}
-                onChangeText={(e) => setIntroduce(e)}
-                maxLength={1000}
-                multiline={true}
-            />
-            <Text style={styles.title}>기술 / 스택</Text>
-            <TextInput
-                style={styles.textInput}
-                placeholder='기술 및 스택을 입력해주세요'
-                value={stack}
-                onChangeText={(e) => setStack(e)}
-                maxLength={1000}
-                multiline={true}
-            />
-            <TouchableOpacity
-                style={styles.saveBtn}
-                onPress={async () => {
-                    setIsLoading(true)
-                    await addStartUp(name, title, introduce, stack, props.perID)
-                    props.navi.navigation.navigate('Category', props.params)
-                }}
-            >
-                {isLoading ? (
-                    <ActivityIndicator size="small" color="white" /> // 로딩 중에는 로딩 아이콘 표시
-                ) : (
-                    <Text style={styles.saveBtnText}>저장하기</Text>
-                )}
-            </TouchableOpacity>
-        </View>
+            <ScrollView>
+                <Text style={[styles.title, { fontSize: 24 }]}>이름</Text>
+                <TextInput
+                    style={styles.textInput}
+                    placeholder='이름을 입력해주세요'
+                    value={name}
+                    onChangeText={(e) => setName(e)}
+                    maxLength={20}
+                />
+                <Text style={styles.title}>스타트업 단계</Text>
+                <TouchableOpacity
+                    onPress={() => {
+                        props.navi.navigation.navigate('StartupStep', props.params)
+                    }}
+                >
+                    <Text style={[styles.textInput, { color: '#999' }]}>초기 단계는 준비입니다. {'\n'}이후 등급 재설정을 통해 등급을 정할 수 있습니다.{'\n'}{'\n'}자세한 내용은 클릭 후 확인 가능합니다.</Text>
+                </TouchableOpacity>
+                <Text style={styles.title}>주제</Text>
+                <TextInput
+                    style={styles.textInput}
+                    placeholder='주제를 입력해주세요'
+                    value={title}
+                    onChangeText={(e) => setTitle(e)}
+                    maxLength={30}
+                />
+                <Text style={styles.title}>소개</Text>
+                <TextInput
+                    style={styles.textInput}
+                    placeholder='소개를 입력해주세요'
+                    value={introduce}
+                    onChangeText={(e) => setIntroduce(e)}
+                    maxLength={1000}
+                    multiline={true}
+                />
+                <Text style={styles.title}>기술 / 스택</Text>
+                <TextInput
+                    style={styles.textInput}
+                    placeholder='기술 및 스택을 입력해주세요'
+                    value={stack}
+                    onChangeText={(e) => setStack(e)}
+                    maxLength={1000}
+                    multiline={true}
+                />
+                <TouchableOpacity
+                    style={styles.saveBtn}
+                    onPress={async () => {
+                        setIsLoading(true)
+                        await addStartUp(name, title, introduce, stack, props.perID)
+                        props.navi.navigation.navigate('Category', props.params)
+                    }}
+                >
+                    {isLoading ? (
+                        <ActivityIndicator size="small" color="white" /> // 로딩 중에는 로딩 아이콘 표시
+                    ) : (
+                        <Text style={styles.saveBtnText}>저장하기</Text>
+                    )}
+                </TouchableOpacity>    
+            </ScrollView>
+            
+        </View>    
+        
     )
 }
 
@@ -261,12 +265,19 @@ const styles = StyleSheet.create({
 
 
     saveBtn: {
-        marginTop: 50,
+        backgroundColor: '#5552E2',
+        height: 60,
+        width: '100%',
+        marginTop: 30,
+        marginBottom: 20,
+        borderRadius: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     saveBtnText: {
+        color: 'white',
         fontSize: 16,
         fontWeight: 600,
-        textAlign: 'right',
     },
 
 

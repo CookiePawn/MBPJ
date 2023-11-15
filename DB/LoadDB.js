@@ -15,7 +15,7 @@ import {
 
 
 //GPT
-import { openAI, openAIStartup } from '../components/OpenAI';
+import { openAI, openAIStartup, openAIUser } from '../components/OpenAI';
 
 
 
@@ -347,19 +347,30 @@ export const loadTeam = async () => {
 
 //내 페이지 수정
 export const updateUserProject = async (num, eInfo, eCareer, eIntroduce, eProject) => {
-    try {
-        const docRef = doc(db, 'userInfo', num);
 
-        await updateDoc(docRef, {
-            info: eInfo,
-            infoCareer: eCareer,
-            infoIntroduce: eIntroduce,
-            infoProject: eProject,
-        });
-        alert('정보가 수정되었습니다!')
-    } catch (error) {
-        console.error("Error fetching data:", error.message);
+    const gptResult = await openAIUser(eInfo, eIntroduce, eCareer, eProject) 
+
+    if (gptResult) {
+        try {
+            const docRef = doc(db, 'userInfo', num);
+
+            await updateDoc(docRef, {
+                info: eInfo,
+                infoCareer: eCareer,
+                infoIntroduce: eIntroduce,
+                infoProject: eProject,
+                score: gptResult.score,
+                evaluation: gptResult.evaluation,
+            });
+            alert('정보가 수정되었습니다!')
+        } catch (error) {
+            console.error("Error fetching data:", error.message);
+        }
+
     }
+
+
+
 }
 
 

@@ -11,7 +11,7 @@ import { useIsFocused } from '@react-navigation/native';
 
 
 //db 로드
-import { loadUserImages } from '../DB/LoadDB'
+import { loadUserImages, loadUserSelect } from '../DB/LoadDB'
 
 
 
@@ -31,6 +31,7 @@ const MyPage = (props) => {
 
     //db
     const [imageUrl, setImageUrl] = useState([]);
+    const [user, setUser] = useState([])
 
 
     const isFocused = useIsFocused();
@@ -40,13 +41,18 @@ const MyPage = (props) => {
             const images = await loadUserImages();
             setImageUrl(images);
         };
-    
+        const fetchUser = async () => {
+            const users = await loadUserSelect(num)
+            setUser(users)
+        }
+
         fetchImage();
+        fetchUser()
     }, [isFocused]);
 
 
     const [foundImage, setFoundImage] = useState(null);
-    
+
     useEffect(() => {
         if (imageUrl.length > 0) {
             const matchImage = imageUrl.find(item => item.name === id);
@@ -112,7 +118,10 @@ const MyPage = (props) => {
                 />
                 <View style={styles.profileInfoView}>
                     <Text style={styles.nameText}>{name}</Text>
-                    <Text style={styles.infoText}>소속 : 없음</Text>
+                    <View style={{ flexDirection: 'row', marginTop: 15 }}>
+                        <Icon name='heart-outline' size={20} color='red' />
+                        <Text>{user.score}점</Text>
+                    </View>
                 </View>
             </View>
             <TouchableOpacity
@@ -149,7 +158,7 @@ const MyPage = (props) => {
                     <Icon name='create-outline' size={25} color='black' />
                     <Text style={styles.btnListText}>내 페이지 수정</Text>
                 </TouchableOpacity>
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={styles.btnListSubView}
                     onPress={() => {
                         props.navigation.navigate('StartUpMore', {

@@ -4,6 +4,7 @@ import {
     Image,
     TouchableOpacity,
     TextInput,
+    ActivityIndicator,
     ScrollView,
     StyleSheet,
 } from 'react-native'
@@ -39,6 +40,7 @@ const MyProfile = (props) => {
     const [profileImg, setProfileImg] = useState(null)
     const [location, setLocation] = useState('');
 
+    const [isLoading, setIsLoading] = useState(false);
 
     //db
     const [imageUrl, setImageUrl] = useState([]);
@@ -54,7 +56,7 @@ const MyProfile = (props) => {
         const fetchUser = async () => {
             const users = await loadUserSelect(num);
             setUser(users);
-            if(props.route.params?.address) {
+            if (props.route.params?.address) {
                 setLocation(props.route.params.address);
             } else {
                 setLocation(users.location)
@@ -259,31 +261,37 @@ const MyProfile = (props) => {
                         maxLength={20}
                     />
                 </View>
+                <View style={{alignItems:'center'}}>
+                    <TouchableOpacity
+                        style={styles.saveBtn}
+                        onPress={async () => {
+                            if (rePw != '') {
+                                setIsLoading(true)
+                                await updateUserProfile(num, rePw, location)
 
-                <TouchableOpacity
-                    style={styles.saveBtn}
-                    onPress={async () => {
-                        if (rePw != '') {
-                            await updateUserProfile(num, rePw, location)
+                                alert('개인정보가 변경되었습니다!')
+                                props.navigation.navigate('MyPage', {
+                                    num: num,
+                                    id: id,
+                                    pw: rePw,
+                                    phone: phone,
+                                    name: name,
+                                    email: email,
+                                    image: image,
+                                })
+                            } else {
+                                alert('비밀번호를 입력해주세요')
+                            }
 
-                            alert('개인정보가 변경되었습니다!')
-                            props.navigation.navigate('MyPage', {
-                                num: num,
-                                id: id,
-                                pw: rePw,
-                                phone: phone,
-                                name: name,
-                                email: email,
-                                image: image,
-                            })
-                        } else {
-                            alert('비밀번호를 입력해주세요')
-                        }
-
-                    }}
-                >
-                    <Text style={styles.saveBtnText}>저장하기</Text>
-                </TouchableOpacity>
+                        }}
+                    >
+                        {isLoading ? (
+                            <ActivityIndicator size="small" color="white" /> // 로딩 중에는 로딩 아이콘 표시
+                        ) : (
+                            <Text style={styles.saveBtnText}>저장하기</Text>
+                        )}
+                    </TouchableOpacity>    
+                </View>
             </View>
         </View>
     )
@@ -400,9 +408,14 @@ const styles = StyleSheet.create({
 
     //저장하기 버튼
     saveBtn: {
-        position: 'absolute',
-        right: 20,
-        bottom: -40,
+        backgroundColor: '#5552E2',
+        height: 60,
+        width: '90%',
+        marginTop: 10,
+        marginBottom: 20,
+        borderRadius: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     saveBtnText: {
         fontSize: 16,
