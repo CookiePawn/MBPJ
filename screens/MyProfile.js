@@ -18,7 +18,7 @@ import { manipulateAsync } from 'expo-image-manipulator';
 
 
 //db 로드
-import { loadUserImages, updateUserProfile, updateUserImage } from '../DB/LoadDB'
+import { loadUserImages, updateUserProfile, updateUserImage, loadUserSelect } from '../DB/LoadDB'
 
 
 
@@ -42,6 +42,7 @@ const MyProfile = (props) => {
 
     //db
     const [imageUrl, setImageUrl] = useState([]);
+    const [user, setUser] = useState([]);
 
     const isFocused = useIsFocused();
 
@@ -50,8 +51,14 @@ const MyProfile = (props) => {
             const images = await loadUserImages();
             setImageUrl(images);
         };
-
+        const fetchUser = async () => {
+            const users = await loadUserSelect(num);
+            setUser(users);
+            setLocation(users.location);
+        };
         fetchImage()
+        fetchUser();
+
     }, [isFocused]);
 
     useEffect(() => {
@@ -59,11 +66,11 @@ const MyProfile = (props) => {
         if (props.route.params?.address) {
             setLocation(props.route.params.address);
         }
-        
+
 
     }, [props.route.params.address]); // 의존성 배열에 route.params를 추가합니다.
 
-    
+
 
     const [foundImage, setFoundImage] = useState(null);
 
@@ -195,6 +202,24 @@ const MyProfile = (props) => {
                     <Text style={styles.changeProfileSubTitle}>이메일</Text>
                     <Text style={styles.changeProfileSubInfo}>{email}</Text>
                 </View>
+                <TouchableOpacity
+                    onPress={() => {
+                        props.navigation.navigate("DaumPost", {
+                            num: num,
+                            id: id,
+                            pw: rePw,
+                            phone: phone,
+                            name: name,
+                            email: email,
+                            image: image,
+                            screen: "MyProfile",
+                        })
+                    }}>
+                    <View style={styles.changeProfileSubView}>
+                        <Text style={styles.changeProfileSubTitle}> 주소 </Text>
+                        <Text style={styles.changeProfileSubInfo}> {location} </Text>
+                    </View>
+                </TouchableOpacity>
                 <Text style={styles.changeProfileTitle}>비밀번호 변경</Text>
                 <View style={styles.changeProfileSubView}>
                     <Text style={styles.changeProfileSubTitle}>아이디</Text>
@@ -211,31 +236,13 @@ const MyProfile = (props) => {
                         maxLength={20}
                     />
                 </View>
-                <View style={styles.changeProfileSubView}>
-                    <TouchableOpacity
-                        onPress = {() => {
-                            props.navigation.navigate("DaumPost", {
-                                num: num,
-                                id: id,
-                                pw: rePw,
-                                phone: phone,
-                                name: name,
-                                email: email,
-                                image: image,
-                                screen: "MyProfile",
-                            })
-                        }}>
-                    <Text style = {styles.changeProfileTitle}> 주소추가 </Text>
-                    </TouchableOpacity>
-                    <Text> {location} </Text>
-                </View>
 
                 <TouchableOpacity
                     style={styles.saveBtn}
                     onPress={async () => {
                         if (rePw != '') {
                             await updateUserProfile(num, rePw, location)
-                            
+
                             alert('개인정보가 변경되었습니다!')
                             props.navigation.navigate('MyPage', {
                                 num: num,
@@ -311,14 +318,14 @@ const styles = StyleSheet.create({
     imageBtn: {
         width: 114,
         height: 37,
-        backgroundColor: '#E2E2F9',
+        backgroundColor: '#E8E8E8',
         borderRadius: 30,
         marginTop: 30,
         alignItems: 'center',
         justifyContent: 'center',
     },
     imageBtnText: {
-        color: '#6866E7',
+        color: '#777777',
         fontSize: 16,
         fontWeight: 600,
     },
@@ -372,7 +379,7 @@ const styles = StyleSheet.create({
     saveBtn: {
         position: 'absolute',
         right: 20,
-        bottom: -50,
+        bottom: -40,
     },
     saveBtnText: {
         fontSize: 16,

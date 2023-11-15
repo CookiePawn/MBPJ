@@ -227,8 +227,8 @@ const styles = StyleSheet.create({
     //프로필 보기 버튼
     profileBtn: {
         width: '90%',
-        height: 60,
-        backgroundColor: '#E2E2F9',
+        height: 50,
+        backgroundColor: '#E8E8E8',
         borderRadius: 30,
         marginTop: 30,
         alignItems: 'center',
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     profileBtnText: {
         fontSize: 16,
         fontWeight: 600,
-        color: '#6866E7'
+        color: '#777777'
     },
 
 
