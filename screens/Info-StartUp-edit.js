@@ -280,7 +280,7 @@ const StartUpEdit = (props) => {
                             })
                         }}
                         >
-                        <Text style = {styles.smallText}>{location}</Text>
+                        <Text style = {styles.smallText1}>{location}</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
@@ -357,16 +357,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     imageBtn: {
-        width: 80,
+        width: 100,
         height: 37,
-        backgroundColor: '#E2E2F9',
+        backgroundColor: '#E8E8E8',
         borderRadius: 30,
         marginTop: 30,
         alignItems: 'center',
         justifyContent: 'center',
     },
     imageBtnText: {
-        color: '#6866E7',
+        color: '#777777',
         fontSize: 16,
         fontWeight: 600,
     },
@@ -398,6 +398,13 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '400',
         marginBottom: 30,
+    },
+    smallText1: {
+        color: 'rgba(153, 153, 153, 0.60)',
+        fontSize: 14,
+        fontWeight: '400',
+        marginBottom: 30,
+        marginTop: 10,
     },
     midText: {
         fontSize: 16,

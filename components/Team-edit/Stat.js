@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     //소속 스타트업 스타일
     startupView: {
         height: 100,
-        borderRadius: 10,
+        borderRadius: 30,
         borderColor: 'rgba(0, 0, 0, 0.10)',
         borderWidth: 1,
         marginTop: 30,
