@@ -163,7 +163,26 @@ const StartUpInfo = (props) => {
                 >
                     <Icon name='arrow-back-outline' size={25} color='black' />
                 </TouchableOpacity>
-                <Icon name='notifications-outline' size={25} color='black' style={[styles.icon, { right: 0, }]} />
+                <TouchableOpacity
+                    style={[styles.icon, { right: 0, }]}
+                    onPress={() => {
+                        if (num == null) {
+                            props.navigation.navigate('PersonLogin')
+                        } else if (num != null) {
+                            props.navigation.navigate('AlertPage', {
+                                num: num,
+                                id: id,
+                                pw: pw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                image: image,
+                            })
+                        }
+                    }}
+                >
+                    <Icon name='notifications-outline' size={25} color='black' />
+                </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.icon, { right: 40, }]}
                     onPress={() => {
@@ -264,7 +283,7 @@ const StartUpInfo = (props) => {
                                 >
                                     <View style={[styles.memberView, { borderColor: item.id === admin ? 'gold' : 'rgba(0, 0, 0, 0.05)' }]}>
                                         {item.id == admin && (
-                                            <Icon name='star' color='gold' size={25} style={{ marginLeft: 10 }} />
+                                            <Icon name='star' color='gold' size={25} style={{ marginLeft: 15 }} />
                                         )}
                                         <Image
                                             style={styles.userImage}
@@ -396,7 +415,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     nameText: {
-        fontSize: 20,
+        fontSize: 24,
         fontWeight: 'bold',
     },
     infoText: {
@@ -452,7 +471,7 @@ const styles = StyleSheet.create({
         marginRight: 20,
         flexDirection: 'row',
         alignItems: 'center',
-        borderRadius: 10,
+        borderRadius: 30,
         borderWidth: 1,
         borderColor: 'rgba(0, 0, 0, 0.05)',
         marginBottom: 30,
@@ -461,7 +480,7 @@ const styles = StyleSheet.create({
         width: 60,
         height: 60,
         borderRadius: 100,
-        marginLeft: 5,
+        marginLeft: 10,
     },
     userName: {
         marginLeft: 10,

@@ -178,7 +178,26 @@ const StartUpEdit = (props) => {
                 >
                     <Icon name='arrow-back-outline' size={25} color='black' />
                 </TouchableOpacity>
-                <Icon name='notifications-outline' size={25} color='black' style={[styles.icon, { right: 0, }]} />
+                <TouchableOpacity
+                    style={[styles.icon, { right: 0, }]}
+                    onPress={() => {
+                        if (num == null) {
+                            props.navigation.navigate('PersonLogin')
+                        } else if (num != null) {
+                            props.navigation.navigate('AlertPage', {
+                                num: num,
+                                id: id,
+                                pw: pw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                image: image,
+                            })
+                        }
+                    }}
+                >
+                    <Icon name='notifications-outline' size={25} color='black' />
+                </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.icon, { right: 40, }]}
                     onPress={() => {
@@ -311,7 +330,7 @@ const StartUpEdit = (props) => {
                             })
                         }}
                         >
-                        <Text style = {styles.smallText}>{location}</Text>
+                        <Text style = {styles.smallText1}>{location}</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
@@ -388,16 +407,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     imageBtn: {
-        width: 80,
+        width: 90,
         height: 37,
-        backgroundColor: '#E2E2F9',
+        backgroundColor: '#E8E8E8',
         borderRadius: 30,
         marginTop: 30,
         alignItems: 'center',
         justifyContent: 'center',
     },
     imageBtnText: {
-        color: '#6866E7',
+        color: '#777777',
         fontSize: 16,
         fontWeight: 600,
     },
@@ -429,6 +448,13 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '400',
         marginBottom: 30,
+    },
+    smallText1: {
+        color: 'rgba(153, 153, 153, 0.60)',
+        fontSize: 14,
+        fontWeight: '400',
+        marginBottom: 30,
+        marginTop: 10,
     },
     midText: {
         fontSize: 16,
