@@ -3,6 +3,7 @@ import {
     Text,
     Image,
     TouchableOpacity,
+    ActivityIndicator,
     Linking,
     ScrollView,
     StyleSheet,
@@ -196,10 +197,14 @@ const PersonInfo = (props) => {
                 </View>
                 <View style={styles.likeView}>
                     <Icon name='heart' size={20} color='red' />
-                    <Text style={styles.likeText}>{user.infoHeart}</Text>
+                    <Text style={styles.likeText}>{user.score}점</Text>
                 </View>
             </View>
-            <ScrollView style={styles.inforView}>
+            <ScrollView 
+                style={styles.inforView}
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+            >
                 <View style={{ flex: 1 }}>
                     <Text style={styles.bigText}>직종</Text>
                     <Text style={styles.smallText}>{user.info}</Text>
@@ -218,6 +223,10 @@ const PersonInfo = (props) => {
                     >
                         <Text style={[styles.smallText, { color: 'lightskyblue' }]}>{user.infoProject}</Text>
                     </TouchableOpacity>
+
+                    <Text style={styles.bigText}>GPT 평가</Text>
+                    <Text style={styles.smallText}>{user.evaluation}</Text>
+
                     <Text style={styles.bigText}>소속 스타트업</Text>
                     <ScrollView
                         style={styles.memberScrollView}

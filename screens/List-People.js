@@ -31,7 +31,10 @@ const CustomList = (props) => {
                 <View style={styles.listSubSubView}>
                     <Text style={styles.nameText}>{props.name}</Text>
                     <Text style={styles.infoText}>{props.info}</Text>
-                    <Icon name='heart-outline' size={20} color='red' style={[styles.icon, { right: 10, bottom: 15, }]} />
+                    <View style={[styles.icon, { right: 10, bottom: 15, flexDirection: 'row'}]}>
+                        <Icon name='heart-outline' size={20} color='red'/>
+                        <Text>{props.score}점</Text>    
+                    </View>
                 </View>
             </View>
         </TouchableOpacity>
@@ -166,6 +169,7 @@ const People = (props) => {
                                         image={{ uri: urlItem.url }}
                                         name={userItem.name}
                                         info={userItem.info}
+                                        score={userItem.score}
                                         navi={props}
                                         params={{
                                             num: num,
@@ -187,6 +191,7 @@ const People = (props) => {
                                     image={require('../assets/start-solo.png')}
                                     name={userItem.name}
                                     info={userItem.info}
+                                    score={userItem.score}
                                     navi={props}
                                     params={{
                                         num: num,
@@ -208,6 +213,7 @@ const People = (props) => {
                                         image={{ uri: urlItem.url }}
                                         name={userItem.name}
                                         info={userItem.info}
+                                        score={userItem.score}
                                         navi={props}
                                         params={{
                                             num: num,
@@ -229,6 +235,7 @@ const People = (props) => {
                                     image={require('../assets/start-solo.png')}
                                     name={userItem.name}
                                     info={userItem.info}
+                                    score={userItem.score}
                                     navi={props}
                                     params={{
                                         num: num,

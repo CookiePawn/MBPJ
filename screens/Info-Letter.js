@@ -2,10 +2,8 @@ import {
     View,
     Text,
     TouchableOpacity,
-    Image,
     ScrollView,
     StyleSheet,
-    TextInput
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import React, { useState, useEffect } from 'react'
@@ -14,7 +12,7 @@ import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 
 //DB
-import { loadLetterSelect } from '../DB/LoadDB'
+import { loadLetterSelect, deleteLetter } from '../DB/LoadDB'
 
 
 
@@ -122,8 +120,18 @@ const LetterPage = (props) => {
             <View style={styles.btnView}>
                 <TouchableOpacity
                     style={[styles.chatBtn, { width: '100%' }]}
-                    onPress={() => {
-
+                    onPress={async() => {
+                        alert('쪽지가 삭제되었습니다')
+                        await deleteLetter(letter.id)
+                        props.navigation.navigate('AlertPage', {
+                            num: num,
+                            id: id,
+                            pw: pw,
+                            phone: phone,
+                            name: name,
+                            email: email,
+                            image: image,
+                        })
                     }}
                 >
                     <Text style={styles.chatBtnText}>삭제하기</Text>

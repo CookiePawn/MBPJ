@@ -21,7 +21,7 @@ const CustomTextInput = (props) => {
             <TextInput
                 style={styles.textInput}
                 placeholder={`${props.name}${props.named} 입력해주세요`}
-                maxLength={20}
+                maxLength={30}
                 onChangeText={props.onChangeText}
             />
         </View>

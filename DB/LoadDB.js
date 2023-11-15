@@ -15,7 +15,7 @@ import {
 
 
 //GPT
-import { generateText } from '../components/OpenAI';
+import { openAI, openAIStartup, openAIUser } from '../components/OpenAI';
 
 
 
@@ -347,20 +347,31 @@ export const loadTeam = async () => {
 
 //내 페이지 수정
 export const updateUserProject = async (num, eField, eInfo, eCareer, eIntroduce, eProject) => {
-    try {
-        const docRef = doc(db, 'userInfo', num);
 
-        await updateDoc(docRef, {
-            info: eInfo,
-            field: eField,
-            infoCareer: eCareer,
-            infoIntroduce: eIntroduce,
-            infoProject: eProject,
-        });
-        alert('정보가 수정되었습니다!')
-    } catch (error) {
-        console.error("Error fetching data:", error.message);
+    const gptResult = await openAIUser(eInfo, eIntroduce, eCareer, eProject) 
+
+    if (gptResult) {
+        try {
+            const docRef = doc(db, 'userInfo', num);
+
+            await updateDoc(docRef, {
+                info: eInfo,
+                field: eField,
+                infoCareer: eCareer,
+                infoIntroduce: eIntroduce,
+                infoProject: eProject,
+                score: gptResult.score,
+                evaluation: gptResult.evaluation,
+            });
+            alert('정보가 수정되었습니다!')
+        } catch (error) {
+            console.error("Error fetching data:", error.message);
+        }
+
     }
+
+
+
 }
 
 
@@ -425,20 +436,32 @@ export const updateUserImage = async (uri, id) => {
 
 //내 스타트업 페이지 수정
 export const updateStartUpProject = async (num, eField, eInfo, eIntroduce, eStack, location) => {
-    try {
-        const docRef = doc(db, 'startupInfo', num);
 
-        await updateDoc(docRef, {
-            field: eField,
-            info: eInfo,
-            introduce: eIntroduce,
-            stack: eStack,
-            location : location
-        });
-        alert('정보가 수정되었습니다!')
-    } catch (error) {
-        console.error("Error fetching data:", error.message);
+
+    const gptResult = await openAIStartup(eInfo, eIntroduce, eStack)
+
+    if (gptResult) {
+        try {
+            const docRef = doc(db, 'startupInfo', num);
+
+            await updateDoc(docRef, {
+                info: eInfo,
+                field: eField,
+                introduce: eIntroduce,
+                stack: eStack,
+                location: location,
+                score: gptResult.score,
+                evaluation: gptResult.evaluation,
+            });
+            alert('정보가 수정되었습니다!')
+        } catch (error) {
+            console.error("Error fetching data:", error.message);
+        }
+
     }
+
+
+
 }
 
 
@@ -495,6 +518,23 @@ export const updateStartUpImage = async (uri, id) => {
             });
         }
     );
+}
+
+
+
+//내 스타트업 페이지 GPT 수정
+export const updateStartUpGPT = async (num, score, evaluation) => {
+    try {
+        const docRef = doc(db, 'startupInfo', num);
+
+        await updateDoc(docRef, {
+            score: score,
+            evaluation: evaluation,
+        });
+        alert('정보가 저장되었습니다!')
+    } catch (error) {
+        console.error("Error fetching data:", error.message);
+    }
 }
 
 
@@ -570,8 +610,15 @@ export const addStartUp = async (name, title, introduce, stack, perID) => {
         }
 
 
-        const gpt = await generateText(name, title, introduce, stack)
+        const gptResult = await openAIStartup(title, introduce, stack)
 
+        if (gptResult) {
+            try {
+                await updateStartUpGPT(suID, gptResult.score, gptResult.evaluation);
+            } catch (error) {
+                console.log("Error startupGPT:", error);
+            }
+        }
 
 
 
@@ -584,7 +631,7 @@ export const addStartUp = async (name, title, introduce, stack, perID) => {
 
 
 
-//회원가입 추가
+//쪽지 추가
 export const addLetter = async (toID, fromID, content) => {
     try {
         await addDoc(collection(db, 'letter'), {
@@ -753,6 +800,24 @@ export const addMember = async (perID, suID) => {
 export const deleteJoin = async (num) => {
     try {
         const documentRef = doc(db, 'join', num);
+        const documentSnapshot = await getDoc(documentRef);
+
+        if (documentSnapshot.exists()) {
+            await deleteDoc(documentRef);
+        } else {
+            console.log(`문서(ID: ${num})가 존재하지 않습니다.`);
+        }
+    } catch (error) {
+        console.error(`문서 삭제 중 오류가 발생했습니다: ${error}`);
+    }
+};
+
+
+
+//쪽지 DB 문서 삭제
+export const deleteLetter = async (num) => {
+    try {
+        const documentRef = doc(db, 'letter', num);
         const documentSnapshot = await getDoc(documentRef);
 
         if (documentSnapshot.exists()) {

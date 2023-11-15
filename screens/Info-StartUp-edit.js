@@ -3,6 +3,7 @@ import {
     Text,
     Image,
     TouchableOpacity,
+    ActivityIndicator,
     TextInput,
     ScrollView,
     StyleSheet,
@@ -48,6 +49,8 @@ const StartUpEdit = (props) => {
 
     const [profileImg, setProfileImg] = useState(null)
 
+
+    const [isLoading, setIsLoading] = useState(false);
 
     //db
     const [imageUrl, setImageUrl] = useState([]);
@@ -271,7 +274,7 @@ const StartUpEdit = (props) => {
                                     top: 20,
                                     right: 0,
                                 }
-                            ]}>단계 재설정 ▷</Text>
+                            ]}>단계 재설정</Text>
                     </TouchableOpacity>
                     <Text style={styles.bigText}>단계</Text>
                     <Text style={styles.smallText}>{eStep} 단계</Text>
@@ -288,10 +291,11 @@ const StartUpEdit = (props) => {
                         placeholder= {savedField}
                         theme = 'LIGHT'
                         listMode='MODAL'
-                        style = {{bottom : 5}}
+                        style = {{bottom : 5, top: 5, borderColor:'#d9d9d9', borderRadius: 15}}
                     />
 
-                    <Text style={styles.bigText}>주제</Text>
+
+                    <Text style={styles.bigText1}>주제</Text>
                     <TextInput
                         style={styles.smallText}
                         placeholder='주제를 입력해주세요'
@@ -320,7 +324,7 @@ const StartUpEdit = (props) => {
                         maxLength={200}
                         multiline={true}
                     />
-                    <Text style = {styles.bigText}>주소추가</Text>
+                    <Text style = {styles.bigText}>주소 추가</Text>
                     <TouchableOpacity
                         onPress = {() => {
                             props.navigation.navigate("DaumPost", {
@@ -345,6 +349,7 @@ const StartUpEdit = (props) => {
                 style={styles.chatBtn}
                 onPress={
                     async () => {
+                        setIsLoading(true)
                         await updateStartUpProject(people, fieldValue, eInfo, eIntroduce, eStack, location);
                         props.navigation.navigate("StartUpInfo", {
                             num: num,
@@ -360,7 +365,11 @@ const StartUpEdit = (props) => {
 
                 }
             >
-                <Text style={styles.chatBtnText}>저장하기</Text>
+                {isLoading ? (
+                    <ActivityIndicator size="small" color="white" /> // 로딩 중에는 로딩 아이콘 표시
+                ) : (
+                    <Text style={styles.chatBtnText}>저장하기</Text>
+                )}
             </TouchableOpacity>
         </View>
     )
@@ -448,6 +457,13 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '500',
         marginBottom: 10,
+    },
+    bigText1: {
+        color: '#111',
+        fontSize: 20,
+        fontWeight: '500',
+        marginBottom: 10,
+        marginTop: 30,
     },
     smallText: {
         color: 'rgba(153, 153, 153, 0.60)',
