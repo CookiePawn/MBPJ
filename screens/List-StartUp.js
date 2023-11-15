@@ -103,7 +103,26 @@ const StartUpList = (props) => {
                 <Text style={styles.titleText}>
                     이런 스타트업은 어때요?
                 </Text>
-                <Icon name='notifications-outline' size={25} color='black' style={[styles.icon, { right: 0, }]} />
+                <TouchableOpacity
+                    style={[styles.icon, { right: 0, }]}
+                    onPress={() => {
+                        if (num == null) {
+                            props.navigation.navigate('PersonLogin')
+                        } else if (num != null) {
+                            props.navigation.navigate('AlertPage', {
+                                num: num,
+                                id: id,
+                                pw: pw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                image: image,
+                            })
+                        }
+                    }}
+                >
+                    <Icon name='notifications-outline' size={25} color='black' />
+                </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.icon, { right: 40, }]}
                     onPress={() => {
@@ -322,7 +341,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     nameText: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 15
     },

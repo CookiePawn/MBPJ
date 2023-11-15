@@ -103,7 +103,26 @@ const StartUpEdit = (props) => {
                 >
                     <Icon name='arrow-back-outline' size={25} color='black' />
                 </TouchableOpacity>
-                <Icon name='notifications-outline' size={25} color='black' style={[styles.icon, { right: 0, }]} />
+                <TouchableOpacity
+                    style={[styles.icon, { right: 0, }]}
+                    onPress={() => {
+                        if (num == null) {
+                            props.navigation.navigate('PersonLogin')
+                        } else if (num != null) {
+                            props.navigation.navigate('AlertPage', {
+                                num: num,
+                                id: id,
+                                pw: pw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                image: image,
+                            })
+                        }
+                    }}
+                >
+                    <Icon name='notifications-outline' size={25} color='black' />
+                </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.icon, { right: 40, }]}
                     onPress={() => {
@@ -142,7 +161,7 @@ const StartUpEdit = (props) => {
                     style={styles.imageBtn}
                     onPress={pickImage}
                 >
-                    <Text style={styles.imageBtnText}>사진 변경</Text>
+                    <Text style={styles.imageBtnText}>사진 추가</Text>
                 </TouchableOpacity>
             </View>
             <ScrollView style={styles.inforView}>
@@ -246,11 +265,12 @@ const styles = StyleSheet.create({
         height: 100,
         marginTop: 30,
         flexDirection: 'row',
+        flex: 1,
     },
     profileImage: {
         width: 80,
         height: 80,
-        borderRadius: 100,
+        borderRadius: 10,
         margin: 10,
         marginLeft: 0,
         marginRight: 20,
@@ -260,16 +280,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     imageBtn: {
-        width: 80,
+        width: 90,
         height: 37,
-        backgroundColor: '#E2E2F9',
+        backgroundColor: '#E8E8E8',
         borderRadius: 30,
         marginTop: 30,
         alignItems: 'center',
         justifyContent: 'center',
     },
     imageBtnText: {
-        color: '#6866E7',
+        color: '#777777',
         fontSize: 16,
         fontWeight: 600,
     },
@@ -288,7 +308,7 @@ const styles = StyleSheet.create({
     inforView: {
         width: '90%',
         height: 500,
-        marginTop: 30,
+        marginTop: 100,
     },
     bigText: {
         color: '#111',
@@ -301,6 +321,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '400',
         marginBottom: 30,
+        marginTop: 10,
     },
     midText: {
         fontSize: 16,

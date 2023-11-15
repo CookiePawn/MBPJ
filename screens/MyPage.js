@@ -68,7 +68,26 @@ const MyPage = (props) => {
                 >
                     <Icon name='arrow-back-outline' size={25} color='black' />
                 </TouchableOpacity>
-                <Icon name='notifications-outline' size={25} color='black' style={[styles.icon, { right: 0, }]} />
+                <TouchableOpacity
+                    style={[styles.icon, { right: 0, }]}
+                    onPress={() => {
+                        if (num == null) {
+                            props.navigation.navigate('PersonLogin')
+                        } else if (num != null) {
+                            props.navigation.navigate('AlertPage', {
+                                num: num,
+                                id: id,
+                                pw: pw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                image: image,
+                            })
+                        }
+                    }}
+                >
+                    <Icon name='notifications-outline' size={25} color='black' />
+                </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.icon, { right: 40, }]}
                     onPress={() => {
@@ -227,8 +246,8 @@ const styles = StyleSheet.create({
     //프로필 보기 버튼
     profileBtn: {
         width: '90%',
-        height: 60,
-        backgroundColor: '#E2E2F9',
+        height: 50,
+        backgroundColor: '#E8E8E8',
         borderRadius: 30,
         marginTop: 30,
         alignItems: 'center',
@@ -237,7 +256,7 @@ const styles = StyleSheet.create({
     profileBtnText: {
         fontSize: 16,
         fontWeight: 600,
-        color: '#6866E7'
+        color: '#777777'
     },
 
 

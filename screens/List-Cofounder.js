@@ -96,7 +96,27 @@ const Cofounder = (props) => {
                 <Text style={styles.titleText}>
                     공동 창업자 모집
                 </Text>
-                <Icon name='notifications-outline' size={25} color='black' style={[styles.icon, { right: 0, }]} />
+                <TouchableOpacity
+                    style={[styles.icon, { right: 0, }]}
+                    onPress={() => {
+                        if (num == null) {
+                            props.navigation.navigate('PersonLogin')
+                        } else if (num != null) {
+                            props.navigation.navigate('AlertPage', {
+                                num: num,
+                                id: id,
+                                pw: pw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                image: image,
+                            })
+                        }
+                    }}
+                >
+                    <Icon name='notifications-outline' size={25} color='black' />
+                </TouchableOpacity>
+
                 <TouchableOpacity
                     style={[styles.icon, { right: 40, }]}
                     onPress={() => {
@@ -139,7 +159,7 @@ const Cofounder = (props) => {
                             })
                         }}
                     >
-                        <Text style={{ textAlign: 'right' }}>글 작성하기</Text>
+                        <Text style={{ textAlign: 'right', fontWeight: 'bold', color: '#767676' }}>글 작성하기</Text>
                     </TouchableOpacity>
                 )}
             </View>
@@ -253,6 +273,7 @@ const styles = StyleSheet.create({
     //글 작성하기 버튼
     createView: {
         width: '90%',
+        marginBottom: 10
     },
 
 
@@ -280,7 +301,7 @@ const styles = StyleSheet.create({
         borderColor: '#E8E8E8',
     },
     nameText: {
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: 'bold',
         lineHeight: 40,
 
