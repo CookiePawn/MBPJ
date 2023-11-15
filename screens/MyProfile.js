@@ -210,7 +210,7 @@ const MyProfile = (props) => {
                         onChangeText={(e) => { setRePw(e) }}
                         maxLength={20}
                     />
-                </View>
+                </View> 
                 <View style={styles.changeProfileSubView}>
                     <TouchableOpacity
                         onPress = {() => {

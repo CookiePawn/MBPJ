@@ -5,6 +5,7 @@ import {
     Image,
     ScrollView,
     StyleSheet,
+    ActivityIndicator,
     TouchableOpacity,
 } from 'react-native'
 
@@ -25,11 +26,6 @@ import {
 } from '../../DB/LoadDB'
 
 
-import { openAI } from '../OpenAI'
-
-
-
-
 
 
 
@@ -39,6 +35,8 @@ export const Stat0 = (props) => {
     const [title, setTitle] = useState('')
     const [introduce, setIntroduce] = useState('')
     const [stack, setStack] = useState('')
+
+    const [isLoading, setIsLoading] = useState(false);
 
 
 
@@ -69,7 +67,7 @@ export const Stat0 = (props) => {
                 placeholder='주제를 입력해주세요'
                 value={title}
                 onChangeText={(e) => setTitle(e)}
-                maxLength={20}
+                maxLength={30}
             />
             <Text style={styles.title}>소개</Text>
             <TextInput
@@ -92,12 +90,16 @@ export const Stat0 = (props) => {
             <TouchableOpacity
                 style={styles.saveBtn}
                 onPress={async () => {
-                    openAI(name, title, introduce, stack)
-                    //await addStartUp(name, title, introduce, stack, props.perID)
-                    //props.navi.navigation.navigate('Category', props.params)
+                    setIsLoading(true)
+                    await addStartUp(name, title, introduce, stack, props.perID)
+                    props.navi.navigation.navigate('Category', props.params)
                 }}
             >
-                <Text style={styles.saveBtnText}>저장하기</Text>
+                {isLoading ? (
+                    <ActivityIndicator size="small" color="white" /> // 로딩 중에는 로딩 아이콘 표시
+                ) : (
+                    <Text style={styles.saveBtnText}>저장하기</Text>
+                )}
             </TouchableOpacity>
         </View>
     )

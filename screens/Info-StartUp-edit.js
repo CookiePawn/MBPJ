@@ -3,6 +3,7 @@ import {
     Text,
     Image,
     TouchableOpacity,
+    ActivityIndicator,
     TextInput,
     ScrollView,
     StyleSheet,
@@ -48,6 +49,8 @@ const StartUpEdit = (props) => {
 
     const [profileImg, setProfileImg] = useState(null)
 
+
+    const [isLoading, setIsLoading] = useState(false);
 
     //db
     const [imageUrl, setImageUrl] = useState([]);
@@ -289,6 +292,7 @@ const StartUpEdit = (props) => {
                 style={styles.chatBtn}
                 onPress={
                     async () => {
+                        setIsLoading(true)
                         await updateStartUpProject(people, eInfo, eIntroduce, eStack, location);
                         props.navigation.navigate("StartUpInfo", {
                             num: num,
@@ -304,7 +308,11 @@ const StartUpEdit = (props) => {
 
                 }
             >
-                <Text style={styles.chatBtnText}>저장하기</Text>
+                {isLoading ? (
+                    <ActivityIndicator size="small" color="white" /> // 로딩 중에는 로딩 아이콘 표시
+                ) : (
+                    <Text style={styles.chatBtnText}>저장하기</Text>
+                )}
             </TouchableOpacity>
         </View>
     )
