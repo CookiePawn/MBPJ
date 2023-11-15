@@ -808,3 +808,21 @@ export const deleteJoin = async (num) => {
         console.error(`문서 삭제 중 오류가 발생했습니다: ${error}`);
     }
 };
+
+
+
+//쪽지 DB 문서 삭제
+export const deleteLetter = async (num) => {
+    try {
+        const documentRef = doc(db, 'letter', num);
+        const documentSnapshot = await getDoc(documentRef);
+
+        if (documentSnapshot.exists()) {
+            await deleteDoc(documentRef);
+        } else {
+            console.log(`문서(ID: ${num})가 존재하지 않습니다.`);
+        }
+    } catch (error) {
+        console.error(`문서 삭제 중 오류가 발생했습니다: ${error}`);
+    }
+};

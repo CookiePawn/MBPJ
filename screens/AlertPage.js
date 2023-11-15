@@ -20,6 +20,7 @@ import {
     loadStartUps,
     deleteJoin,
     addMember,
+    deleteLetter,
 } from '../DB/LoadDB'
 
 
@@ -41,7 +42,11 @@ const CustomList = (props) => {
                     <Text style={styles.nameText}>{props.name}</Text>
                     <Text style={styles.infoText}>{props.info.substring(0, 20)}</Text>
                 </View>
-                <TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => {
+                        props.delete()
+                    }}
+                >
                     <Icon name='trash-outline' size={20} color='#767676' style={[styles.icon, { right: 10, bottom: 15, }]} />
                 </TouchableOpacity>
             </View>
@@ -159,13 +164,27 @@ const AlertPage = (props) => {
 
 
 
-    // 문서 삭제 후 배열 다시 로드
+    // 가입 문서 삭제 후 배열 다시 로드
     const handleDeleteJoin = async (joinId) => {
         try {
             await deleteJoin(joinId);
             // 삭제한 후에 배열을 다시 로드
             const joins = await loadJoin();
             setJoin(joins);
+        } catch (error) {
+            console.error(`문서 삭제 중 오류가 발생했습니다: ${error}`);
+        }
+    };
+
+
+    // 쪽지 문서 삭제 후 배열 다시 로드
+    const handleDeleteLetter = async (letterId) => {
+        try {
+            alert('쪽지가 삭제되었습니다')
+            await deleteLetter(letterId);
+            // 삭제한 후에 배열을 다시 로드
+            const letters = await loadLetter();
+            setLetter(letters);
         } catch (error) {
             console.error(`문서 삭제 중 오류가 발생했습니다: ${error}`);
         }
@@ -278,6 +297,7 @@ const AlertPage = (props) => {
                                     image: image,
                                     people: item.id,
                                 }}
+                                delete={() => handleDeleteLetter(item.id)}
                             />
                         );
                     })}

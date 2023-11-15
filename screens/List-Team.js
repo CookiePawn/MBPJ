@@ -34,7 +34,10 @@ const CustomList = (props) => {
                 <View style={styles.listSubSubView}>
                     <Text style={styles.nameText}>{props.info}</Text>
                     <Text style={styles.infoText}>{props.name}</Text>
-                    <Icon name='heart-outline' size={20} color='red' style={[styles.icon, { right: 10, bottom: 10, }]} />
+                    <View style={[styles.icon, { right: 10, bottom: 15, flexDirection: 'row' }]}>
+                        <Icon name='heart-outline' size={20} color='red' />
+                        <Text>{props.score}점</Text>
+                    </View>
                 </View>
             </View>
         </TouchableOpacity>
@@ -180,7 +183,7 @@ const Team = (props) => {
                         if (matchingTeam) {
                             const matchingImage = startupImage.find((imageItem) => imageItem.name === startupItem.name);
                             return (
-                                <TouchableOpacity 
+                                <TouchableOpacity
                                     key={idx}
                                     onPress={() => {
                                         props.navigation.navigate('StartUpInfo', {
@@ -203,7 +206,10 @@ const Team = (props) => {
                                         <View style={styles.listSubSubView}>
                                             <Text style={styles.nameText}>{startupItem.name}</Text>
                                             <Text style={styles.infoText}>{startupItem.info}</Text>
-                                            <Icon name='heart-outline' size={20} color='red' style={[styles.icon, { right: 10, bottom: 10, }]} />
+                                            <View style={[styles.icon, { right: 10, bottom: 15, flexDirection: 'row' }]}>
+                                                <Icon name='heart-outline' size={20} color='red' />
+                                                <Text>{startupItem.score}점</Text>
+                                            </View>
                                         </View>
                                     </View>
                                 </TouchableOpacity>
