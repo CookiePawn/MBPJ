@@ -206,6 +206,10 @@ const PersonInfo = (props) => {
                 showsVerticalScrollIndicator={false}
             >
                 <View style={{ flex: 1 }}>
+
+                    <Text style={styles.bigText}>분야</Text>
+                    <Text style={styles.smallText}>{user.field}</Text>
+
                     <Text style={styles.bigText}>직종</Text>
                     <Text style={styles.smallText}>{user.info}</Text>
 
