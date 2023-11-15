@@ -57,14 +57,15 @@ const StartUpEdit = (props) => {
 
 
     //DropDownPicker 관련
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState(null);
-    const [items, setItems] = useState([
+    const [pickerOpen, setPickerOpen] = useState(false);
+    const [fieldValue, setFieldValue] = useState(null);
+    const [fieldItems, setFieldItems] = useState([
         {label : 'IT', value : 'IT'},
         {label : 'Education', value : 'Education'},
         {label : 'F&B', value : 'F&B'},
         {label : 'Creative', value : 'Creative'},
     ])
+    const [savedField, setSavedField] = useState('Choose Your Field');
 
     useEffect(() => {
 
@@ -80,6 +81,11 @@ const StartUpEdit = (props) => {
             setEInfo(users.info || '');
             setEIntroduce(users.introduce || '');
             setEStack(users.stack || '');
+
+            if(users.field != null) {
+                setSavedField(users.field || '');
+                setFieldValue(users.field || '')
+            }
             
             if (props.route.params?.address) {
                 setLocation(props.route.params.address)
@@ -273,17 +279,17 @@ const StartUpEdit = (props) => {
 
                     <Text style={styles.bigText}>분야</Text>
                     <DropDownPicker
-                        open = {open}
-                        value = {value}
-                        items = {items}
-                        setOpen = {setOpen}
-                        setValue = {setValue}
-                        setItems = {setItems}
+                        open = {pickerOpen}
+                        value = {fieldValue}
+                        items = {fieldItems}
+                        setOpen = {setPickerOpen}
+                        setValue = {setFieldValue}
+                        setItems = {setFieldItems}
+                        placeholder= {savedField}
                         theme = 'LIGHT'
                         listMode='MODAL'
                         style = {{bottom : 5}}
                     />
-
 
                     <Text style={styles.bigText}>주제</Text>
                     <TextInput
@@ -339,7 +345,7 @@ const StartUpEdit = (props) => {
                 style={styles.chatBtn}
                 onPress={
                     async () => {
-                        await updateStartUpProject(people, eInfo, eIntroduce, eStack, location);
+                        await updateStartUpProject(people, fieldValue, eInfo, eIntroduce, eStack, location);
                         props.navigation.navigate("StartUpInfo", {
                             num: num,
                             id: id,

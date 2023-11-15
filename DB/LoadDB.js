@@ -346,12 +346,13 @@ export const loadTeam = async () => {
 
 
 //내 페이지 수정
-export const updateUserProject = async (num, eInfo, eCareer, eIntroduce, eProject) => {
+export const updateUserProject = async (num, eField, eInfo, eCareer, eIntroduce, eProject) => {
     try {
         const docRef = doc(db, 'userInfo', num);
 
         await updateDoc(docRef, {
             info: eInfo,
+            field: eField,
             infoCareer: eCareer,
             infoIntroduce: eIntroduce,
             infoProject: eProject,
@@ -423,11 +424,12 @@ export const updateUserImage = async (uri, id) => {
 
 
 //내 스타트업 페이지 수정
-export const updateStartUpProject = async (num, eInfo, eIntroduce, eStack, location) => {
+export const updateStartUpProject = async (num, eField, eInfo, eIntroduce, eStack, location) => {
     try {
         const docRef = doc(db, 'startupInfo', num);
 
         await updateDoc(docRef, {
+            field: eField,
             info: eInfo,
             introduce: eIntroduce,
             stack: eStack,
@@ -601,11 +603,12 @@ export const addLetter = async (toID, fromID, content) => {
 
 
 //공동 창업자 모집글 추가
-export const addCofounder = async (num, title, idea, info, benefit, uri) => {
+export const addCofounder = async (num, title, field, idea, info, benefit, uri) => {
     try {
         const docRef = await addDoc(collection(db, 'cofounder'), {
             perID: num,
             title: title,
+            field: field,
             idea: idea,
             info: info,
             benefit: benefit,

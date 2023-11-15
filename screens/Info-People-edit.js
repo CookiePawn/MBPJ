@@ -11,6 +11,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons'
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
+import DropDownPicker from 'react-native-dropdown-picker'
 
 //db 로드
 import { 
@@ -46,6 +47,20 @@ const PersonInfo = (props) => {
 
     const isFocused = useIsFocused();
 
+
+    //DropDownPicker 관련
+    const [pickerOpen, setPickerOpen] = useState(false);
+    const [fieldValue, setFieldValue] = useState(null);
+    const [fieldItems, setFieldItems] = useState([
+        {label : 'IT', value : 'IT'},
+        {label : 'Education', value : 'Education'},
+        {label : 'F&B', value : 'F&B'},
+        {label : 'Creative', value : 'Creative'},
+    ])
+    const [savedField, setSavedField] = useState('Choose Your Field');
+
+
+
     useEffect(() => {
 
         const fetchImage = async () => {
@@ -60,6 +75,11 @@ const PersonInfo = (props) => {
             setECareer(users.infoCareer || '');
             setEIntroduce(users.infoIntroduce || '');
             setEProject(users.infoProject || '');
+
+            if(users.field != null) {
+                setSavedField(users.field || '');
+                setFieldValue(users.field || '')
+            }
 
         };
 
@@ -155,6 +175,20 @@ const PersonInfo = (props) => {
                         maxLength={30}
                     />
 
+                <Text style={styles.bigText}>분야</Text>
+                    <DropDownPicker
+                        open = {pickerOpen}
+                        value = {fieldValue}
+                        items = {fieldItems}
+                        setOpen = {setPickerOpen}
+                        setValue = {setFieldValue}
+                        setItems = {setFieldItems}
+                        placeholder= {savedField}
+                        theme = 'LIGHT'
+                        listMode='MODAL'
+                        style = {{bottom : 5}}
+                    />
+
                     <Text style={styles.bigText}>설명</Text>
                     <TextInput
                         style={styles.smallText}
@@ -191,7 +225,7 @@ const PersonInfo = (props) => {
                 style={styles.chatBtn}
                 onPress={
                     async () => {
-                        await updateUserProject(num, eInfo, eCareer, eIntroduce, eProject);
+                        await updateUserProject(num, fieldValue, eInfo, eCareer, eIntroduce, eProject);
                         props.navigation.navigate("MyPage", {
                             num: num,
                             id: id,

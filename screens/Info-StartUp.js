@@ -247,6 +247,9 @@ const StartUpInfo = (props) => {
                     <Text style={styles.bigText}>단계</Text>
                     <Text style={styles.smallText}>{startup.step} 단계</Text>
 
+                    <Text style={styles.bigText}>분야</Text>
+                    <Text style={styles.smallText}>{startup.field}</Text>
+
                     <Text style={styles.bigText}>주제</Text>
                     <Text style={styles.smallText}>{startup.info}</Text>
 

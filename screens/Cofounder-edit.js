@@ -19,6 +19,8 @@ import {
     addCofounder
 } from '../DB/LoadDB'
 
+import DropDownPicker from 'react-native-dropdown-picker'
+
 
 const StartUpEdit = (props) => {
     //로그인 확인
@@ -41,6 +43,17 @@ const StartUpEdit = (props) => {
 
     const [profileImg, setProfileImg] = useState(null)
 
+
+    //DropDownPicker 관련
+    const [pickerOpen, setPickerOpen] = useState(false);
+    const [fieldValue, setFieldValue] = useState(null);
+    const [fieldItems, setFieldItems] = useState([
+        {label : 'IT', value : 'IT'},
+        {label : 'Education', value : 'Education'},
+        {label : 'F&B', value : 'F&B'},
+        {label : 'Creative', value : 'Creative'},
+    ])
+    const [savedField, setSavedField] = useState('Choose Your Field');
 
 
 
@@ -175,6 +188,20 @@ const StartUpEdit = (props) => {
                         maxLength={500}
                     />
 
+                    <Text style={styles.bigText}>분야</Text>
+                    <DropDownPicker
+                        open = {pickerOpen}
+                        value = {fieldValue}
+                        items = {fieldItems}
+                        setOpen = {setPickerOpen}
+                        setValue = {setFieldValue}
+                        setItems = {setFieldItems}
+                        placeholder= {savedField}
+                        theme = 'LIGHT'
+                        listMode='MODAL'
+                        style = {{bottom : 5}}/>
+
+
 
                     <Text style={styles.bigText}>아이디어</Text>
                     <TextInput
@@ -212,7 +239,7 @@ const StartUpEdit = (props) => {
                 style={styles.chatBtn}
                 onPress={
                     async () => {
-                        await addCofounder(num, title, idea, info, benefit, profileImg);
+                        await addCofounder(num, title, fieldValue, idea, info, benefit, profileImg);
                         props.navigation.navigate("CofounderList", {
                             num: num,
                             id: id,

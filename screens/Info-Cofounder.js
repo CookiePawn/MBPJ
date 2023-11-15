@@ -181,6 +181,9 @@ const StartUpInfo = (props) => {
                     </View>
                     <Text style={[styles.TitleText, { marginBottom: 40 }]}>{cofounder.title}</Text>
 
+                    <Text style = {styles.bigText}>분야</Text>
+                    <Text style = {styles.smallText}>{cofounder.field}</Text>
+
                     <Text style={styles.bigText}>아이디어</Text>
                     <Text style={styles.smallText}>{cofounder.idea}</Text>
 
