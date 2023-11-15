@@ -10,7 +10,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons'
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
-import DaumPost from './DaumPost';
+import DropDownPicker from 'react-native-dropdown-picker'
 
 
 import * as ImagePicker from 'expo-image-picker';
@@ -44,7 +44,7 @@ const StartUpEdit = (props) => {
     const [eInfo, setEInfo] = useState('')
     const [eIntroduce, setEIntroduce] = useState('')
     const [eStack, setEStack] = useState('')
-    const [location, setLocation] = useState('주소추가하기')
+    const [location, setLocation] = useState('')
 
     const [profileImg, setProfileImg] = useState(null)
 
@@ -54,6 +54,17 @@ const StartUpEdit = (props) => {
     const [user, setUser] = useState([])
 
     const isFocused = useIsFocused();
+
+
+    //DropDownPicker 관련
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([
+        {label : 'IT', value : 'IT'},
+        {label : 'Education', value : 'Education'},
+        {label : 'F&B', value : 'F&B'},
+        {label : 'Creative', value : 'Creative'},
+    ])
 
     useEffect(() => {
 
@@ -69,6 +80,12 @@ const StartUpEdit = (props) => {
             setEInfo(users.info || '');
             setEIntroduce(users.introduce || '');
             setEStack(users.stack || '');
+            
+            if (props.route.params?.address) {
+                setLocation(props.route.params.address)
+            } else {
+                setLocation(users.location)
+            }
             
         };
 
@@ -233,6 +250,20 @@ const StartUpEdit = (props) => {
                     </TouchableOpacity>
                     <Text style={styles.bigText}>단계</Text>
                     <Text style={styles.smallText}>{eStep} 단계</Text>
+
+
+                    <Text style={styles.bigText}>분야</Text>
+                    <DropDownPicker
+                        open = {open}
+                        value = {value}
+                        items = {items}
+                        setOpen = {setOpen}
+                        setValue = {setValue}
+                        setItems = {setItems}
+                        theme = 'LIGHT'
+                        listMode='MODAL'
+                        style = {{bottom : 5}}
+                    />
 
 
                     <Text style={styles.bigText}>주제</Text>

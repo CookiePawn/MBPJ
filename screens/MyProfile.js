@@ -54,7 +54,11 @@ const MyProfile = (props) => {
         const fetchUser = async () => {
             const users = await loadUserSelect(num);
             setUser(users);
-            setLocation(users.location);
+            if(props.route.params?.address) {
+                setLocation(props.route.params.address);
+            } else {
+                setLocation(users.location)
+            }
         };
         fetchImage()
         fetchUser();
@@ -63,10 +67,10 @@ const MyProfile = (props) => {
 
     useEffect(() => {
         // route.params가 변경되면 상태를 업데이트합니다.
+
         if (props.route.params?.address) {
             setLocation(props.route.params.address);
         }
-
 
     }, [props.route.params.address]); // 의존성 배열에 route.params를 추가합니다.
 
