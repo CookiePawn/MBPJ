@@ -104,6 +104,7 @@ const StartUpEdit = (props) => {
                     <Icon name='arrow-back-outline' size={25} color='black' />
                 </TouchableOpacity>
                 <TouchableOpacity
+                    style={[styles.icon, { right: 0, }]}
                     onPress={() => {
                         if (num == null) {
                             props.navigation.navigate('PersonLogin')
@@ -120,9 +121,8 @@ const StartUpEdit = (props) => {
                         }
                     }}
                 >
-                    <Icon name='notifications-outline' size={25} color='black' style={[styles.icon, { right: 0, }]} />
+                    <Icon name='notifications-outline' size={25} color='black' />
                 </TouchableOpacity>
-                
                 <TouchableOpacity
                     style={[styles.icon, { right: 40, }]}
                     onPress={() => {
