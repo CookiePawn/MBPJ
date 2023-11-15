@@ -212,7 +212,7 @@ export const Stat1 = (props) => {
 
                             <View style={[styles.startupView, { borderColor: isAdmin ? 'gold' : 'rgba(0, 0, 0, 0.05)' }]}>
                                 {isAdmin && (
-                                    <Icon name='star' color='gold' size={25} style={{ marginLeft: 10 }} />
+                                    <Icon name='star' color='gold' size={25} style={{ marginLeft: 15 }} />
                                 )}
                                 <Image
                                     style={styles.profileImage}

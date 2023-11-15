@@ -123,7 +123,26 @@ const StartUpInfo = (props) => {
                 >
                     <Icon name='arrow-back-outline' size={25} color='black' />
                 </TouchableOpacity>
-                <Icon name='notifications-outline' size={25} color='black' style={[styles.icon, { right: 0, }]} />
+                <TouchableOpacity
+                    style={[styles.icon, { right: 0, }]}
+                    onPress={() => {
+                        if (num == null) {
+                            props.navigation.navigate('PersonLogin')
+                        } else if (num != null) {
+                            props.navigation.navigate('AlertPage', {
+                                num: num,
+                                id: id,
+                                pw: pw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                image: image,
+                            })
+                        }
+                    }}
+                >
+                    <Icon name='notifications-outline' size={25} color='black' />
+                </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.icon, { right: 40, }]}
                     onPress={() => {
@@ -160,7 +179,7 @@ const StartUpInfo = (props) => {
                             />
                         )}
                     </View>
-                    <Text style={[styles.bigText, { marginBottom: 80 }]}>{cofounder.title}</Text>
+                    <Text style={[styles.TitleText, { marginBottom: 40 }]}>{cofounder.title}</Text>
 
                     <Text style={styles.bigText}>아이디어</Text>
                     <Text style={styles.smallText}>{cofounder.idea}</Text>
@@ -337,7 +356,7 @@ const styles = StyleSheet.create({
         marginRight: 20,
         flexDirection: 'row',
         alignItems: 'center',
-        borderRadius: 10,
+        borderRadius: 30,
         borderWidth: 1,
         borderColor: 'rgba(0, 0, 0, 0.05)',
         marginBottom: 30,
@@ -346,10 +365,11 @@ const styles = StyleSheet.create({
         width: 60,
         height: 60,
         borderRadius: 100,
-        marginLeft: 5,
+        marginLeft: 10,
+        
     },
     userName: {
-        marginLeft: 10,
+        marginLeft: 15,
         marginRight: 15,
         fontWeight: 500,
         fontSize: 20,
@@ -388,5 +408,12 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 16,
         fontWeight: 600,
+    },
+    TitleText: {
+        color: '#111',
+        fontSize: 24,
+        fontWeight: '500',
+        marginBottom: 15,
+        fontWeight: 'bold'
     }
 })

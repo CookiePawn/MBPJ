@@ -149,7 +149,26 @@ const PersonInfo = (props) => {
                 >
                     <Icon name='arrow-back-outline' size={25} color='black' />
                 </TouchableOpacity>
-                <Icon name='notifications-outline' size={25} color='black' style={[styles.icon, { right: 0, }]} />
+                <TouchableOpacity
+                    style={[styles.icon, { right: 0, }]}
+                    onPress={() => {
+                        if (num == null) {
+                            props.navigation.navigate('PersonLogin')
+                        } else if (num != null) {
+                            props.navigation.navigate('AlertPage', {
+                                num: num,
+                                id: id,
+                                pw: pw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                image: image,
+                            })
+                        }
+                    }}
+                >
+                    <Icon name='notifications-outline' size={25} color='black' />
+                </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.icon, { right: 40, }]}
                     onPress={() => {
@@ -227,7 +246,7 @@ const PersonInfo = (props) => {
                                 >
                                     <View style={[styles.memberView, { borderColor: isAdmin ? 'gold' : 'rgba(0, 0, 0, 0.05)' }]}>
                                         {isAdmin && (
-                                            <Icon name='star' color='gold' size={25} style={{ marginLeft: 10 }} />
+                                            <Icon name='star' color='gold' size={25} style={{ marginLeft: 15 }} />
                                         )}
                                         <Image
                                             style={styles.userImage}
@@ -316,6 +335,7 @@ const styles = StyleSheet.create({
     nameText: {
         fontSize: 20,
         fontWeight: 'bold',
+        marginBottom: 40,
     },
     infoText: {
         fontSize: 14,
