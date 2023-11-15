@@ -38,7 +38,7 @@ const StartPage = (props) => {
                     <View
                         style={styles.slide}
                     >
-                        <Image style={styles.image} source={require('../assets/start-thinking.png')} />
+                        <Image style={styles.image} source={require('../assets/start-enter.png')} />
                         <Text style={styles.text}>내 전문 분야를</Text>
                         <Text style={styles.text}>등록하세요!</Text>
                         <Text style={styles.subText}>한 눈에 내 능력을 뽐내세요!</Text>
@@ -46,7 +46,7 @@ const StartPage = (props) => {
                     <View
                         style={styles.slide}
                     >
-                        <Image style={styles.image} source={require('../assets/start-thinking.png')} />
+                        <Image style={styles.image} source={require('../assets/start-popular.png')} />
                         <Text style={styles.text}>인기있는 기업을</Text>
                         <Text style={styles.text}>추천해드립니다!</Text>
                         <Text style={styles.subText}>더 다양한 기업을 보세요!</Text>
