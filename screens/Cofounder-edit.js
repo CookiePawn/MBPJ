@@ -190,20 +190,21 @@ const StartUpEdit = (props) => {
 
                     <Text style={styles.bigText}>분야</Text>
                     <DropDownPicker
-                        open = {pickerOpen}
-                        value = {fieldValue}
-                        items = {fieldItems}
-                        setOpen = {setPickerOpen}
-                        setValue = {setFieldValue}
-                        setItems = {setFieldItems}
-                        placeholder= {savedField}
-                        theme = 'LIGHT'
+                        open={pickerOpen}
+                        value={fieldValue}
+                        items={fieldItems}
+                        setOpen={setPickerOpen}
+                        setValue={setFieldValue}
+                        setItems={setFieldItems}
+                        placeholder={savedField}
+                        theme='LIGHT'
                         listMode='MODAL'
-                        style = {{bottom : 5}}/>
+                        style={{ bottom: 5, top: 5, borderColor: '#d9d9d9', borderRadius: 15 }}
+                    />
 
 
 
-                    <Text style={styles.bigText}>아이디어</Text>
+                    <Text style={styles.bigText1}>아이디어</Text>
                     <TextInput
                         style={styles.smallText}
                         placeholder='아이디어를 입력해주세요'
@@ -342,6 +343,13 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '500',
         marginBottom: 10,
+    },
+    bigText1: {
+        color: '#111',
+        fontSize: 20,
+        fontWeight: '500',
+        marginBottom: 10,
+        marginTop: 30,
     },
     smallText: {
         color: 'rgba(153, 153, 153, 0.60)',

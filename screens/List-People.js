@@ -31,9 +31,10 @@ const CustomList = (props) => {
                 <View style={styles.listSubSubView}>
                     <Text style={styles.nameText}>{props.name}</Text>
                     <Text style={styles.infoText}>{props.info}</Text>
-                    <View style={[styles.icon, { right: 10, bottom: 15, flexDirection: 'row'}]}>
-                        <Icon name='heart-outline' size={20} color='red'/>
-                        <Text>{props.score}점</Text>    
+                    
+                    <View style={[styles.icon, { right: 0, bottom: 15, flexDirection: 'row', alignContent: 'flex-end' }]}>
+                        <Icon name='heart' size={20} color='red' />
+                        <Text style={styles.scoreText}>{props.score}점</Text>
                     </View>
                 </View>
             </View>
@@ -344,10 +345,15 @@ const styles = StyleSheet.create({
     nameText: {
         fontSize: 18,
         fontWeight: 'bold',
-        marginBottom: 15
+        marginBottom: 15,
     },
     infoText: {
         fontSize: 12,
         color: 'rgba(0, 0, 0, 0.60)'
     },
+
+    scoreText: {
+        marginTop: 2,
+        marginLeft: 5
+    }
 })

@@ -236,13 +236,13 @@ const StartUpInfo = (props) => {
                     >
                         <Text
                             style={[
-                                styles.smallText,
+                                styles.smallText1,
                                 {
                                     position: 'absolute',
                                     top: 30,
                                     right: 0,
                                 }
-                            ]}>자세히 보기 ▷</Text>
+                            ]}>자세히 보기</Text>
                     </TouchableOpacity>
                     <Text style={styles.bigText}>단계</Text>
                     <Text style={styles.smallText}>{startup.step} 단계</Text>
@@ -459,6 +459,13 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '400',
         marginBottom: 35,
+    },
+    smallText1: {
+        color: 'rgba(153, 153, 153, 0.60)',
+        fontSize: 14,
+        fontWeight: '400',
+        marginBottom: 35,
+        marginTop: 5
     },
     midText: {
         fontSize: 16,

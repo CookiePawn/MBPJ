@@ -304,13 +304,13 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         lineHeight: 40,
-
+        marginTop:5
     },
     infoText: {
         fontSize: 12,
         color: 'rgba(0, 0, 0, 0.60)',
         position: 'absolute',
         bottom: 10,
-        marginBottom: 5
+        marginBottom: 10
     },
 })

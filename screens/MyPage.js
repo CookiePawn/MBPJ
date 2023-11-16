@@ -119,8 +119,8 @@ const MyPage = (props) => {
                 <View style={styles.profileInfoView}>
                     <Text style={styles.nameText}>{name}</Text>
                     <View style={{ flexDirection: 'row', marginTop: 15 }}>
-                        <Icon name='heart-outline' size={20} color='red' />
-                        <Text>{user.score}점</Text>
+                        <Icon name='heart' size={20} color='red' />
+                        <Text style={styles.scoreText}>{user.score}점</Text>
                     </View>
                 </View>
             </View>
@@ -299,4 +299,10 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: 600,
     },
+
+
+    scoreText:{
+        marginLeft: 5,
+        marginTop: 3
+    }
 })

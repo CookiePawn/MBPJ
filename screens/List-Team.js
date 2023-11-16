@@ -206,9 +206,9 @@ const Team = (props) => {
                                         <View style={styles.listSubSubView}>
                                             <Text style={styles.nameText}>{startupItem.name}</Text>
                                             <Text style={styles.infoText}>{startupItem.info}</Text>
-                                            <View style={[styles.icon, { right: 10, bottom: 15, flexDirection: 'row' }]}>
-                                                <Icon name='heart-outline' size={20} color='red' />
-                                                <Text>{startupItem.score}점</Text>
+                                            <View style={[styles.icon, { right: 0, bottom: 15, flexDirection: 'row', alignContent:'flex-end' }]}>
+                                                <Icon name='heart' size={20} color='red' />
+                                                <Text style={styles.scoreText}>{startupItem.score}점</Text>
                                             </View>
                                         </View>
                                     </View>
@@ -316,12 +316,18 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         lineHeight: 40,
-
+        marginTop: 5
     },
     infoText: {
         fontSize: 12,
         color: 'rgba(0, 0, 0, 0.60)',
         position: 'absolute',
         bottom: 10,
+        marginBottom: 10
     },
+
+    scoreText: {
+        marginTop: 2,
+        marginLeft: 5
+    }
 })

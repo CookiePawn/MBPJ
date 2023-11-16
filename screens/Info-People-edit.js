@@ -14,8 +14,8 @@ import { useIsFocused } from '@react-navigation/native';
 import DropDownPicker from 'react-native-dropdown-picker'
 
 //db 로드
-import { 
-    loadUserImages, 
+import {
+    loadUserImages,
     loadUserSelect,
     updateUserProject,
 } from '../DB/LoadDB'
@@ -55,10 +55,10 @@ const PersonInfo = (props) => {
     const [pickerOpen, setPickerOpen] = useState(false);
     const [fieldValue, setFieldValue] = useState(null);
     const [fieldItems, setFieldItems] = useState([
-        {label : 'IT', value : 'IT'},
-        {label : 'Education', value : 'Education'},
-        {label : 'F&B', value : 'F&B'},
-        {label : 'Creative', value : 'Creative'},
+        { label: 'IT', value: 'IT' },
+        { label: 'Education', value: 'Education' },
+        { label: 'F&B', value: 'F&B' },
+        { label: 'Creative', value: 'Creative' },
     ])
     const [savedField, setSavedField] = useState('Choose Your Field');
 
@@ -79,7 +79,7 @@ const PersonInfo = (props) => {
             setEIntroduce(users.infoIntroduce || '');
             setEProject(users.infoProject || '');
 
-            if(users.field != null) {
+            if (users.field != null) {
                 setSavedField(users.field || '');
                 setFieldValue(users.field || '')
             }
@@ -178,21 +178,21 @@ const PersonInfo = (props) => {
                         maxLength={30}
                     />
 
-                <Text style={styles.bigText}>분야</Text>
+                    <Text style={styles.bigText}>분야</Text>
                     <DropDownPicker
-                        open = {pickerOpen}
-                        value = {fieldValue}
-                        items = {fieldItems}
-                        setOpen = {setPickerOpen}
-                        setValue = {setFieldValue}
-                        setItems = {setFieldItems}
-                        placeholder= {savedField}
-                        theme = 'LIGHT'
+                        open={pickerOpen}
+                        value={fieldValue}
+                        items={fieldItems}
+                        setOpen={setPickerOpen}
+                        setValue={setFieldValue}
+                        setItems={setFieldItems}
+                        placeholder={savedField}
+                        theme='LIGHT'
                         listMode='MODAL'
-                        style = {{bottom : 5}}
+                        style={{ bottom: 5, top: 5, borderColor: '#d9d9d9', borderRadius: 15 }}
                     />
 
-                    <Text style={styles.bigText}>설명</Text>
+                    <Text style={styles.bigText1}>설명</Text>
                     <TextInput
                         style={styles.smallText}
                         placeholder='설명을 입력해주세요'
@@ -238,9 +238,9 @@ const PersonInfo = (props) => {
                             name: name,
                             email: email,
                             image: image,
-                        })    
+                        })
                     }
-                    
+
                 }
             >
                 {isLoading ? (
@@ -322,6 +322,13 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '500',
         marginBottom: 10,
+    },
+    bigText1: {
+        color: '#111',
+        fontSize: 20,
+        fontWeight: '500',
+        marginBottom: 10,
+        marginTop: 30,
     },
     smallText: {
         color: 'rgba(153, 153, 153, 0.60)',

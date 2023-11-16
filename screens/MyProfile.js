@@ -420,5 +420,6 @@ const styles = StyleSheet.create({
     saveBtnText: {
         fontSize: 16,
         fontWeight: 600,
+        color:'white',
     },
 })
