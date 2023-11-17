@@ -365,6 +365,7 @@ const styles = StyleSheet.create({
         lineHeight: 20,
         paddingLeft: 5,
         color: 'rgba(153, 153, 153, 0.60)',
+        marginTop: 1
     },
 
 

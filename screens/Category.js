@@ -549,7 +549,8 @@ const styles = StyleSheet.create({
         color: '#999',
         fontSize: 12,
         position: 'absolute',
-        marginTop: 20
+        marginTop: 20,
+        marginLeft: 15
     },
     peopleListScrollView: {
         marginTop: 20,
