@@ -152,7 +152,6 @@ const StartUpList = (props) => {
             </View>
             <View style={styles.listView}>
                 <ScrollView
-                    style={{ marginBottom: 150, }}
                     showsHorizontalScrollIndicator={false}
                     showsVerticalScrollIndicator={false}
                 >
@@ -319,6 +318,7 @@ const styles = StyleSheet.create({
 
     //사람 목록
     listView: {
+        flex: 1,
         width: '90%',
     },
     listSubView: {

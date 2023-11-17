@@ -293,6 +293,7 @@ const styles = StyleSheet.create({
 
     //스타트업 리스트
     listView: {
+        flex: 1,
         width: '90%',
     },
     listSubView: {

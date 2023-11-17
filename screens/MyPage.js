@@ -144,6 +144,24 @@ const MyPage = (props) => {
                 <TouchableOpacity
                     style={styles.btnListSubView}
                     onPress={() => {
+                        props.navigation.navigate('PeopleInfo', {
+                            num: num,
+                            id: id,
+                            pw: pw,
+                            phone: phone,
+                            name: name,
+                            email: email,
+                            image: image,
+                            people: num,
+                        })
+                    }}
+                >
+                    <Icon name='person-outline' size={25} color='black' />
+                    <Text style={styles.btnListText}>내 페이지 보기</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.btnListSubView}
+                    onPress={() => {
                         props.navigation.navigate('EditPeopleInfo', {
                             num: num,
                             id: id,
@@ -272,7 +290,6 @@ const styles = StyleSheet.create({
     //버튼 리스트 뷰
     btnListView: {
         width: '90%',
-        height: 160,
         marginTop: 30,
         borderColor: '#DDD',
         borderBottomWidth: 1
@@ -301,7 +318,7 @@ const styles = StyleSheet.create({
     },
 
 
-    scoreText:{
+    scoreText: {
         marginLeft: 5,
         marginTop: 3
     }

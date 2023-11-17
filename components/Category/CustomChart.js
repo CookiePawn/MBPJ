@@ -1,13 +1,16 @@
+import { useEffect, useState } from 'react';
 import {
     View,
     Text,
 } from 'react-native'
 
 
+
 //그래프 import
 import { PieChart } from "react-native-gifted-charts";
 
 
+import { loadConnect } from '../../DB/LoadDB';
 
 
 
@@ -15,6 +18,16 @@ import { PieChart } from "react-native-gifted-charts";
 
 
 const CustomChart = () => {
+
+    const [connect, setConnect] = useState([])
+
+    useEffect(() => {
+        const fetchConnect = async () => {
+            const connects = await loadConnect()
+            setConnect(connects)
+        }
+        fetchConnect()
+    }, [])
 
     //차트 데이터
     const pieData = [

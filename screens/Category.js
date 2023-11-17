@@ -143,8 +143,6 @@ const Category = (props) => {
         fetchStartUpImage()
         fetchStartUps()
 
-
-
     }, [isFocused]);
 
 

@@ -165,9 +165,9 @@ const AlertPage = (props) => {
 
 
     // 가입 문서 삭제 후 배열 다시 로드
-    const handleDeleteJoin = async (joinId) => {
+    const handleDeleteJoin = async (joinId, perID, suID) => {
         try {
-            await deleteJoin(joinId);
+            await deleteJoin(joinId, perID, suID);
             // 삭제한 후에 배열을 다시 로드
             const joins = await loadJoin();
             setJoin(joins);
@@ -328,7 +328,7 @@ const AlertPage = (props) => {
                                     people: matchingUser.id,
                                 }}
                                 add={async() => await addMember(item.perID, item.suID)}
-                                delete={() => handleDeleteJoin(item.id)}
+                                delete={() => handleDeleteJoin(item.id, item.perID, item.suID)}
                             />
                         );
                     })}

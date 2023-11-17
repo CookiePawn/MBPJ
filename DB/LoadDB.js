@@ -310,6 +310,23 @@ export const loadTeam = async () => {
 
 
 
+//연결 결과 정보 로드 
+export const loadConnect = async () => {
+    let tempArray = [];
+    try {
+        const data = await getDocs(collection(db, 'connect'));
+
+        data.forEach((doc) => {
+            tempArray.push({ ...doc.data(), id: doc.id });
+        });
+    } catch (error) {
+        console.log("Error fetching data:", error.message);
+    }
+    return tempArray
+};
+
+
+
 
 
 
@@ -779,6 +796,32 @@ export const addMember = async (perID, suID) => {
 
 
 
+//연결 결과 추가
+export const addConnect = async (perField, suField) => {
+    try {
+        await addDoc(collection(db, 'connect'), {
+            DATE: new Date(),
+            perField: perField,
+            suField: suField,
+        });
+
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -797,16 +840,24 @@ export const addMember = async (perID, suID) => {
 
 
 //가입 DB 문서 삭제
-export const deleteJoin = async (num) => {
+export const deleteJoin = async (num, perID, suID) => {
     try {
         const documentRef = doc(db, 'join', num);
         const documentSnapshot = await getDoc(documentRef);
 
         if (documentSnapshot.exists()) {
             await deleteDoc(documentRef);
+
+
+            const user = await loadUserSelect(perID);
+            const startup = await loadStartUpSelect(suID);
+
+            await addConnect(user.field, startup.field)
         } else {
             console.log(`문서(ID: ${num})가 존재하지 않습니다.`);
         }
+
+        
     } catch (error) {
         console.error(`문서 삭제 중 오류가 발생했습니다: ${error}`);
     }
