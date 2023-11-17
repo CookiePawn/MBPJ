@@ -351,7 +351,7 @@ const styles = StyleSheet.create({
     },
 
     scoreText: {
-        marginTop: 2,
+        marginTop: 3,
         marginLeft: 5
     }
 })

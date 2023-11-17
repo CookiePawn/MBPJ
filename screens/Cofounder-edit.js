@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '400',
         marginBottom: 30,
-        marginTop: 10,
+        marginTop: 3,
     },
     midText: {
         fontSize: 16,
