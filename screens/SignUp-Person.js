@@ -151,19 +151,21 @@ const styles = StyleSheet.create({
 
     //회원가입 페이지
     titleView: {
-        flex: 0.2,
+        width: '90%',
+        height: 100,
         alignItems: 'center',
-        justifyContent: 'center',
+        marginBottom: 30,
     },
     titleText: {
-        color: 'black',
-        fontWeight: 'bold',
+        position: 'absolute',
+        bottom: 0,
         fontSize: 23,
+        fontWeight: 'bold',
     },
 
     textInputView: {
-        flex: 0.6,
         width: '90%',
+        height: 530,
     },
     textInputTitleText: {
         color: '#9EA3B2',
@@ -175,7 +177,6 @@ const styles = StyleSheet.create({
         borderWidth: 0,
         marginTop: 8,
         marginBottom: 20,
-
         color: '#9EA3B2',
         paddingLeft: 14,
         fontSize: 14,
@@ -184,14 +185,13 @@ const styles = StyleSheet.create({
 
 
     buttonView: {
-        flex: 0.2,
         width: '90%',
+        height: 150,
     },
     signButton: {
         height: 60,
         borderRadius: 16,
         backgroundColor: '#5552E2',
-        marginTop: 32,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -202,7 +202,6 @@ const styles = StyleSheet.create({
     loginButtonText: {
         color: '#9EA3B2',
         fontSize: 14,
-        marginTop: 20,
     },
     loginButtonSubText: {
         color: 'black',
@@ -211,6 +210,8 @@ const styles = StyleSheet.create({
     },
     buttonSubView: {
         width: '100%',
+        height: 100,
         alignItems: 'center',
+        marginTop: 65
     },
 })
