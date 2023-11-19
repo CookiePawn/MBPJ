@@ -89,7 +89,7 @@ const Login = (props) => {
         <View style={styles.mainView}>
             <View style={styles.titleView}>
                 <TouchableOpacity
-                    style={styles.backButton}
+                    style={[styles.backButton, , { right: 0, }]}
                     onPress={() => { props.navigation.navigate('Category') }}>
                     <Icon style={styles.backButtonIcon} name="home-outline"></Icon>
                 </TouchableOpacity>
@@ -143,22 +143,23 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: 'white',
         alignItems: 'center',
-        justifyContent: 'center'
+
     },
     titleView: {
-        flex: 0.15,
         width: '90%',
+        height: 100,
         alignItems: 'center',
-        justifyContent: 'center',
+        marginBottom: 30,
     },
     titleText: {
-        color: 'black',
-        fontSize: 20,
+        position: 'absolute',
+        bottom: 0,
+        fontSize: 23,
         fontWeight: 'bold',
     },
     backButton: {
         position: 'absolute',
-        left: 0,
+        bottom: 0,
     },
     backButtonIcon: {
         fontSize: 25,
@@ -190,16 +191,16 @@ const styles = StyleSheet.create({
 
 
     buttonView: {
-        flex: 0.4,
+        flex: 0.45,
         width: '90%',
     },
     signButton: {
         height: 60,
         borderRadius: 16,
         backgroundColor: '#5552E2',
-        marginTop: 32,
         alignItems: 'center',
         justifyContent: 'center',
+        marginTop: 30
     },
     signButtonText: {
         color: 'white',
@@ -208,7 +209,6 @@ const styles = StyleSheet.create({
     loginButtonText: {
         color: '#9EA3B2',
         fontSize: 14,
-        marginTop: 20,
     },
     loginButtonSubText: {
         color: 'black',
@@ -217,7 +217,9 @@ const styles = StyleSheet.create({
     },
     buttonSubView: {
         width: '100%',
+        height: 100,
         alignItems: 'center',
+        marginTop: 350,
     },
 
 })

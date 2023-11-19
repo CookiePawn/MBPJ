@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     titleText: {
         color: 'black',
         fontWeight: 'bold',
-        fontSize: 20,
+        fontSize: 23,
     },
 
     textInputView: {
