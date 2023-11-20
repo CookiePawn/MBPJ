@@ -193,7 +193,20 @@ const MyPage = (props) => {
                     <Icon name='business-outline' size={25} color='black' />
                     <Text style={styles.btnListText}>내 스타트업</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnListSubView}>
+                <TouchableOpacity
+                    style={styles.btnListSubView}
+                    onPress={() => {
+                        props.navigation.navigate('Help', {
+                            num: num,
+                            id: id,
+                            pw: pw,
+                            phone: phone,
+                            name: name,
+                            email: email,
+                            image: image,
+                        })
+                    }}
+                >
                     <Icon name='bulb-outline' size={25} color='black' />
                     <Text style={styles.btnListText}>도움말</Text>
                 </TouchableOpacity>

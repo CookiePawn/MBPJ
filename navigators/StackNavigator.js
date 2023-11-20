@@ -30,6 +30,7 @@ import LetterInfo from '../screens/Info-Letter'
 import AlertPage from '../screens/AlertPage';
 import DaumPost from '../screens/DaumPost';
 import SeeMyPage from '../screens/See-MyPage';
+import Help from '../screens/Help';
 
 
 const Stack = createStackNavigator();
@@ -72,7 +73,7 @@ const StackNavigator = () => {
             <Stack.Screen name='AlertPage' component={AlertPage}/>
             <Stack.Screen name='LetterInfo' component={LetterInfo}/>
             <Stack.Screen name='SeeMyPage' component={SeeMyPage}/>
-            
+            <Stack.Screen name='Help' component={Help}/>
             
             <Stack.Screen name="DaumPost" component={DaumPost}/>
         </Stack.Navigator>
