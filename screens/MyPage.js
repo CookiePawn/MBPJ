@@ -144,7 +144,7 @@ const MyPage = (props) => {
                 <TouchableOpacity
                     style={styles.btnListSubView}
                     onPress={() => {
-                        props.navigation.navigate('PeopleInfo', {
+                        props.navigation.navigate('SeeMyPage', {
                             num: num,
                             id: id,
                             pw: pw,
