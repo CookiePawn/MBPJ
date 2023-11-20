@@ -58,9 +58,6 @@ const StartUpInfo = (props) => {
 
     const isFocused = useIsFocused();
 
-    const handlePress = () => {
-        Keyboard.dismiss();
-    };
 
     useEffect(() => {
         const fetchCofounder = async () => {

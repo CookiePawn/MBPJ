@@ -271,7 +271,7 @@ const StartUpEdit = (props) => {
                                 styles.smallText,
                                 {
                                     position: 'absolute',
-                                    top: 20,
+                                    top: 26,
                                     right: 0,
                                 }
                             ]}>단계 재설정</Text>
@@ -405,33 +405,32 @@ const styles = StyleSheet.create({
     //프로필 세션
     profileView: {
         width: '90%',
-        height: 100,
+        height: 200,
         marginTop: 30,
-        flexDirection: 'row',
+        alignItems: 'center',
     },
     profileImage: {
-        width: 80,
-        height: 80,
-        borderRadius: 100,
+        width: 100,
+        height: 100,
+        borderRadius: 30,
         margin: 10,
-        marginLeft: 0,
-        marginRight: 20,
     },
     profileInfoView: {
-        flex: 1,
         justifyContent: 'center',
     },
     imageBtn: {
         width: 90,
         height: 37,
-        backgroundColor: '#E8E8E8',
+        backgroundColor: 'white',
         borderRadius: 30,
-        marginTop: 30,
+        marginTop: 20,
         alignItems: 'center',
         justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: '#111111'
     },
     imageBtnText: {
-        color: '#777777',
+        color: '#111111',
         fontSize: 16,
         fontWeight: 600,
     },

@@ -274,7 +274,7 @@ const styles = StyleSheet.create({
     profileBtn: {
         width: '90%',
         height: 50,
-        backgroundColor: '#E8E8E8',
+        backgroundColor: '#5552E2',
         borderRadius: 30,
         marginTop: 20,
         alignItems: 'center',
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
     profileBtnText: {
         fontSize: 16,
         fontWeight: 600,
-        color: '#777777'
+        color: 'white'
     },
 
 
