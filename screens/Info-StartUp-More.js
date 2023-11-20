@@ -4,7 +4,7 @@ import {
     TouchableOpacity,
     StyleSheet,
 } from 'react-native'
-import { useState, } from 'react'
+import { useState, useEffect} from 'react'
 
 
 //헤더
@@ -37,6 +37,16 @@ const StartUpEdit = (props) => {
 
     const [stat, setStat] = useState(1)
 
+    const [location, setLocation] = useState('')
+
+    useEffect(() => {
+
+        if(props.route.params?.address) {
+            setLocation(props.route.params.address)
+        }
+
+    }, [props.route.params.address]); // 의존성 배열에 route.params를 추가합니다.
+
 
 
 
@@ -52,6 +62,7 @@ const StartUpEdit = (props) => {
                     name: name,
                     email: email,
                     image: image,
+                    location : location
                 }}
                 iconNameL1='arrow-back-outline'
                 iconNameR1='notifications-outline'
@@ -87,6 +98,7 @@ const StartUpEdit = (props) => {
                     name: name,
                     email: email,
                     image: image,
+                    location : location
                 }}/> : <Stat1 perID ={num} navi = {props} params = {{
                     num: num,
                     id: id,

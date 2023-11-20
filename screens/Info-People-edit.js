@@ -201,17 +201,22 @@ const PersonInfo = (props) => {
                 style={styles.chatBtn}
                 onPress={
                     async () => {
-                        setIsLoading(true)
-                        await updateUserProject(num, fieldValue, eInfo, eCareer, eIntroduce, eProject);
-                        props.navigation.navigate("MyPage", {
-                            num: num,
-                            id: id,
-                            pw: pw,
-                            phone: phone,
-                            name: name,
-                            email: email,
-                            image: image,
+                        if(num != '' && fieldValue != null && eInfo != '' && eCareer != '' && eIntroduce != '' && eProject != '') {
+                            setIsLoading(true)
+                            await updateUserProject(num, fieldValue, eInfo, eCareer, eIntroduce, eProject);
+                            props.navigation.navigate("MyPage", {
+                                num: num,
+                                id: id,
+                                pw: pw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                image: image,
                         })
+                        } else {
+                            alert("모든 정보를 입력했는지 확인해주세요")
+                        }
+                        
                     }
 
                 }
