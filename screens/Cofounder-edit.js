@@ -213,16 +213,21 @@ const StartUpEdit = (props) => {
                 style={styles.chatBtn}
                 onPress={
                     async () => {
-                        await addCofounder(num, title, fieldValue, idea, info, benefit, profileImg);
-                        props.navigation.navigate("CofounderList", {
-                            num: num,
-                            id: id,
-                            pw: pw,
-                            phone: phone,
-                            name: name,
-                            email: email,
-                            image: image,
+                        if(num != '' && title != '' && fieldValue != null && idea != '' && info != '' && benefit != '' && profileImg != null) {
+                            await addCofounder(num, title, fieldValue, idea, info, benefit, profileImg);
+                            props.navigation.navigate("CofounderList", {
+                                num: num,
+                                id: id,
+                                pw: pw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                image: image,
                         })
+                        } else {
+                            alert("모든 정보를 입력했는지 확인해주세요")
+                        }
+                        
                     }
 
                 }

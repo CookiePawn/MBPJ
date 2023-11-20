@@ -7,6 +7,7 @@ import {
     StyleSheet,
     ActivityIndicator,
     TouchableOpacity,
+    TouchableNativeFeedback,
 } from 'react-native'
 
 
@@ -14,7 +15,7 @@ import Icon from 'react-native-vector-icons/Ionicons'
 
 import { useIsFocused } from '@react-navigation/native'
 
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 
 
 //DB
@@ -25,35 +26,82 @@ import {
     loadMember,
 } from '../../DB/LoadDB'
 
+import DropDownPicker from 'react-native-dropdown-picker'
+
 
 
 
 
 export const Stat0 = (props) => {
 
-    const [name, setName] = useState('')
+    const params = props.params
+    const num = params ? params.num : null;
+    const id = params ? params.id : null;
+    const pw = params ? params.pw : null;
+    const name = params ? params.name : null;
+    const email = params ? params.email : null;
+    const phone = params ? params.phone : null;
+    const image = params ? params.image : null;
+
+    const [suName, setSuName] = useState('')
     const [title, setTitle] = useState('')
     const [introduce, setIntroduce] = useState('')
     const [stack, setStack] = useState('')
+    const [location, setLocation] = useState('주소를 입력해주세요')
 
     const [isLoading, setIsLoading] = useState(false);
 
+    const isFocused = useIsFocused();
 
+    useEffect(() => {
+        const address = props.params.location
 
+        if(address != null && address != '') {
+            setLocation(address)
+        } else {
+            setLocation('주소를 입력해주세요')
+        }
+
+    },[isFocused, props.params.location]);
+
+    //DropDownPicker 관련
+    const [pickerOpen, setPickerOpen] = useState(false);
+    const [fieldValue, setFieldValue] = useState(null);
+    const [fieldItems, setFieldItems] = useState([
+        {label : 'IT', value : 'IT'},
+        {label : 'Education', value : 'Education'},
+        {label : 'F&B', value : 'F&B'},
+        {label : 'Creative', value : 'Creative'},
+    ])
 
 
 
     return (
         <View style={styles.mainView}>
-            <ScrollView>
+            <ScrollView style = {{height : '100%'}}>
                 <Text style={[styles.title, { fontSize: 24 }]}>이름</Text>
                 <TextInput
                     style={styles.textInput}
                     placeholder='이름을 입력해주세요'
-                    value={name}
-                    onChangeText={(e) => setName(e)}
+                    value={suName}
+                    onChangeText={(e) => setSuName(e)}
                     maxLength={20}
                 />
+
+                <Text style = {styles.title}>분야</Text>
+                <DropDownPicker
+                    open = {pickerOpen}
+                    value = {fieldValue}
+                    items = {fieldItems}
+                    setOpen = {setPickerOpen}
+                    setValue = {setFieldValue}
+                    setItems = {setFieldItems}
+                    placeholder = '분야를 선택해주세요'
+                    theme = 'LIGHT'
+                    listMode='MODAL'
+                    style = {{bottom : 5, top: 5, borderColor:'#d9d9d9', borderRadius: 15}}
+                    />
+
                 <Text style={styles.title}>스타트업 단계</Text>
                 <TouchableOpacity
                     onPress={() => {
@@ -88,12 +136,35 @@ export const Stat0 = (props) => {
                     maxLength={1000}
                     multiline={true}
                 />
+
+                <Text style = {styles.title}>주소</Text>
+                <TouchableOpacity
+                    onPress = {() => {
+                        props.navi.navigation.navigate("DaumPost" ,{
+                            num: num,
+                            id: id,
+                            pw: pw,
+                            phone: phone,
+                            name: name,
+                            email: email,
+                            image: image,
+                            screen : "StartUpMore"
+                        })
+                    }}>
+                    <Text style = {styles.smallText}>{location}</Text>
+                </TouchableOpacity> 
                 <TouchableOpacity
                     style={styles.saveBtn}
                     onPress={async () => {
-                        setIsLoading(true)
-                        await addStartUp(name, title, introduce, stack, props.perID)
-                        props.navi.navigation.navigate('Category', props.params)
+                        if(suName != '' && title != '' && introduce != '' && stack != '' && location != '주소를 입력해주세요' && fieldValue != null && props.perID != null) {
+                            setIsLoading(true)
+                            await addStartUp(suName, fieldValue, title, introduce, stack, location, props.perID)
+                            props.navi.navigation.navigate('Category', props.params)
+                        } else {
+                            alert("모든 정보를 입력했는지 확인해주세요")
+                            console.log(suName, title, introduce, stack, location, fieldValue, props.perID)
+                            
+                        }
                     }}
                 >
                     {isLoading ? (
@@ -247,6 +318,7 @@ export const Stat1 = (props) => {
 const styles = StyleSheet.create({
     mainView: {
         width: '90%',
+        height : '80%',
     },
 
 
@@ -260,6 +332,12 @@ const styles = StyleSheet.create({
     textInput: {
         fontSize: 16,
         marginTop: 5,
+    },
+    smallText: {
+        color: 'rgba(153, 153, 153, 0.60)',
+        fontSize: 16,
+        fontWeight: '400',
+        marginBottom: 30,
     },
 
 

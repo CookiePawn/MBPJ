@@ -322,9 +322,9 @@ const StartUpEdit = (props) => {
             <TouchableOpacity
                 style={styles.chatBtn}
                 onPress={
-                    async () => { 
-                        setIsLoading(true)
-                        if(fieldValue != null && location != null) {
+                    async () => {
+                        if(people != '' && fieldValue != null && eInfo != '' && eIntroduce && eStack != '' && location != '') {
+                            setIsLoading(true)
                             await updateStartUpProject(people, fieldValue, eInfo, eIntroduce, eStack, location);
                             props.navigation.navigate("StartUpInfo", {
                                 num: num,

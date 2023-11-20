@@ -600,14 +600,17 @@ export const addUser = async (id, pw, name, email, phone) => {
 
 
 //스타트업 추가
-export const addStartUp = async (name, title, introduce, stack, perID) => {
+export const addStartUp = async (name, field, title, introduce, stack, location, perID) => {
     try {
+        console.log(perID)
         // startupInfo 컬렉션에 문서 추가
         const docRef = await addDoc(collection(db, 'startupInfo'), {
             name: name,
+            field: field,
             info: title,
             introduce: introduce,
             stack: stack,
+            location: location,
             step: '준비',
         });
 
