@@ -322,22 +322,25 @@ const StartUpEdit = (props) => {
             <TouchableOpacity
                 style={styles.chatBtn}
                 onPress={
-                    async () => {
+                    async () => { 
                         setIsLoading(true)
-                        await updateStartUpProject(people, fieldValue, eInfo, eIntroduce, eStack, location);
-                        props.navigation.navigate("StartUpInfo", {
-                            num: num,
-                            id: id,
-                            pw: pw,
-                            phone: phone,
-                            name: name,
-                            email: email,
-                            image: image,
-                            people: people,
-                        })
-                    }
-
-                }
+                        if(fieldValue != null && location != null) {
+                            await updateStartUpProject(people, fieldValue, eInfo, eIntroduce, eStack, location);
+                            props.navigation.navigate("StartUpInfo", {
+                                num: num,
+                                id: id,
+                                pw: pw,
+                                phone: phone,
+                                name: name,
+                                email: email,
+                                image: image,
+                                people: people,
+                            })
+                        } else {
+                            alert("입력하지 않은 것이 있는지 확인해주세요")
+                        }
+                    } 
+            }
             >
                 {isLoading ? (
                     <ActivityIndicator size="small" color="white" /> // 로딩 중에는 로딩 아이콘 표시
