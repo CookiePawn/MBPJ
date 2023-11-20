@@ -9,6 +9,8 @@ import { useState, useEffect } from 'react'
 
 import Icon from 'react-native-vector-icons/Ionicons'
 
+//헤더
+import Header from '../components/Header'
 
 //선택 된 페이지 불러오기
 import {
@@ -33,62 +35,29 @@ const StartUpEdit = (props) => {
     const image = params ? params.image : null;
 
 
-    const [stat, setStat] = useState(1)
-
 
 
 
     return (
-        <SafeAreaView style={styles.mainView}>
-            <View style={styles.iconView}>
-                <TouchableOpacity
-                    style={[styles.icon, { left: 0, }]}
-                    onPress={() => {
-                        props.navigation.goBack()
-                    }}
-                >
-                    <Icon name='arrow-back-outline' size={25} color='black' />
-                </TouchableOpacity>
-                <Text style={styles.titleText}>
-                    스타트업 선택
-                </Text>
-                <TouchableOpacity
-                    style={[styles.icon, { right: 0, }]}
-                    onPress={() => {
-                        if (num == null) {
-                            props.navigation.navigate('PersonLogin')
-                        } else if (num != null) {
-                            props.navigation.navigate('AlertPage', {
-                                num: num,
-                                id: id,
-                                pw: pw,
-                                phone: phone,
-                                name: name,
-                                email: email,
-                                image: image,
-                            })
-                        }
-                    }}
-                >
-                    <Icon name='notifications-outline' size={25} color='black' />
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[styles.icon, { right: 40, }]}
-                    onPress={() => {
-                        props.navigation.navigate('Category', {
-                            num: num,
-                            id: id,
-                            pw: pw,
-                            phone: phone,
-                            name: name,
-                            email: email,
-                            image: image,
-                        })
-                    }}
-                >
-                    <Icon name='home-outline' size={25} color='black' />
-                </TouchableOpacity>
-            </View>
+        <View style={styles.mainView}>
+            <Header
+                navi = {props}
+                params = {{
+                    num: num,
+                    id: id,
+                    pw: pw,
+                    phone: phone,
+                    name: name,
+                    email: email,
+                    image: image,
+                }}
+                iconNameL1='arrow-back-outline'
+                iconNameR1='notifications-outline'
+                iconNameR2='home-outline'
+                login = {num}
+                titleName='스타트업 선택'
+            />
+            
             <Stat1 perID={num} navi={props} params={{
                 num: num,
                 id: id,
@@ -100,7 +69,7 @@ const StartUpEdit = (props) => {
             }} />
 
 
-        </SafeAreaView>
+        </View>
     )
 }
 
@@ -121,23 +90,7 @@ const styles = StyleSheet.create({
     },
 
 
-    //아이콘 뷰
-    iconView: {
-        width: '90%',
-        alignItems: 'center',
-        marginTop: 40,
-        marginBottom: 30,
-    },
-    icon: {
-        position: 'absolute',
-        bottom: 0,
-    },
-    titleText: {
-        position: 'absolute',
-        bottom: 0,
-        fontSize: 23,
-        fontWeight: 'bold',
-    },
+   
 
 
 

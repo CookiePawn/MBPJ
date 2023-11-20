@@ -6,8 +6,11 @@ import {
     StyleSheet,
 } from 'react-native'
 import { useIsFocused } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons'
 import { useState, useEffect } from 'react'
+
+
+//헤더
+import Header from '../components/Header';
 
 
 //db 로드
@@ -87,14 +90,12 @@ const Login = (props) => {
 
     return (
         <View style={styles.mainView}>
-            <View style={styles.titleView}>
-                <TouchableOpacity
-                    style={[styles.backButton, , { right: 0, }]}
-                    onPress={() => { props.navigation.navigate('Category') }}>
-                    <Icon style={styles.backButtonIcon} name="home-outline"></Icon>
-                </TouchableOpacity>
-                <Text style={styles.titleText}>로그인</Text>
-            </View>
+            <Header
+                navi = {props}
+                iconNameR2='home-outline'
+                titleName='로그인'
+            />
+            
             <View style={styles.textInputView}>
                 <CustomTextInput
                     name='아이디'
@@ -146,26 +147,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
 
     },
-    titleView: {
-        width: '90%',
-        height: 100,
-        alignItems: 'center',
-        marginBottom: 30,
-    },
-    titleText: {
-        position: 'absolute',
-        bottom: 0,
-        fontSize: 23,
-        fontWeight: 'bold',
-    },
-    backButton: {
-        position: 'absolute',
-        bottom: 0,
-    },
-    backButtonIcon: {
-        fontSize: 25,
-    },
-
 
 
     textInputView: {

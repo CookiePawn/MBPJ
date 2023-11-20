@@ -5,11 +5,13 @@ import {
     ScrollView,
     StyleSheet,
 } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
 import React, { useState, useEffect } from 'react'
 
 
 import { useIsFocused } from '@react-navigation/native';
+
+//헤더
+import Header from '../components/Header';
 
 //DB
 import { loadLetterSelect, deleteLetter } from '../DB/LoadDB'
@@ -55,55 +57,23 @@ const LetterPage = (props) => {
 
     return (
         <View style={styles.mainView}>
-            <View style={styles.titleView}>
-                <TouchableOpacity
-                    style={[styles.icon, { left: 0, }]}
-                    onPress={() => {
-                        props.navigation.goBack()
-                    }}
-                >
-                    <Icon name='arrow-back-outline' size={25} color='black' />
-                </TouchableOpacity>
-                <Text style={styles.titleText}>
-                    쪽지
-                </Text>
-                <TouchableOpacity
-                    style={[styles.icon, { right: 0, }]}
-                    onPress={() => {
-                        if (num == null) {
-                            props.navigation.navigate('PersonLogin')
-                        } else if (num != null) {
-                            props.navigation.navigate('AlertPage', {
-                                num: num,
-                                id: id,
-                                pw: pw,
-                                phone: phone,
-                                name: name,
-                                email: email,
-                                image: image,
-                            })
-                        }
-                    }}
-                >
-                    <Icon name='notifications-outline' size={25} color='black' />
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[styles.icon, { right: 40, }]}
-                    onPress={() => {
-                        props.navigation.navigate('Category', {
-                            num: num,
-                            id: id,
-                            pw: pw,
-                            phone: phone,
-                            name: name,
-                            email: email,
-                            image: image,
-                        })
-                    }}
-                >
-                    <Icon name='home-outline' size={25} color='black' />
-                </TouchableOpacity>
-            </View>
+            <Header
+                navi = {props}
+                params = {{
+                    num: num,
+                    id: id,
+                    pw: pw,
+                    phone: phone,
+                    name: name,
+                    email: email,
+                    image: image,
+                }}
+                iconNameL1='arrow-back-outline'
+                iconNameR1='notifications-outline'
+                iconNameR2='home-outline'
+                login = {num}
+                titleName='쪽지'
+            />
             <View style={styles.inputView}>
                 <ScrollView
                     style={{ width: '90%' }}
@@ -158,23 +128,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-    //아이콘 뷰
-    titleView: {
-        width: '90%',
-        height: 100,
-        alignItems: 'center',
-        marginBottom: 30,
-    },
-    icon: {
-        position: 'absolute',
-        bottom: 0,
-    },
-    titleText: {
-        position: 'absolute',
-        bottom: 0,
-        fontSize: 23,
-        fontWeight: 'bold',
-    },
+    
 
     inputView: {
         backgroundColor: '#f1f1f1',

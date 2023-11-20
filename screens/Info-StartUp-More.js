@@ -2,12 +2,13 @@ import {
     View,
     Text,
     TouchableOpacity,
-    SafeAreaView,
     StyleSheet,
 } from 'react-native'
-import { useState, useEffect } from 'react'
+import { useState, } from 'react'
 
-import Icon from 'react-native-vector-icons/Ionicons'
+
+//헤더
+import Header from '../components/Header'
 
 
 //선택 된 페이지 불러오기
@@ -40,56 +41,25 @@ const StartUpEdit = (props) => {
 
 
     return (
-        <SafeAreaView style={styles.mainView}>
-            <View style={styles.iconView}>
-                <TouchableOpacity
-                    style={[styles.icon, { left: 0, }]}
-                    onPress={() => {
-                        props.navigation.goBack()
-                    }}
-                >
-                    <Icon name='arrow-back-outline' size={25} color='black' />
-                </TouchableOpacity>
-                <Text style={styles.titleText}>
-                    내 스타트업
-                </Text>
-                <TouchableOpacity
-                    style={[styles.icon, { right: 0, }]}
-                    onPress={() => {
-                        if (num == null) {
-                            props.navigation.navigate('PersonLogin')
-                        } else if (num != null) {
-                            props.navigation.navigate('AlertPage', {
-                                num: num,
-                                id: id,
-                                pw: pw,
-                                phone: phone,
-                                name: name,
-                                email: email,
-                                image: image,
-                            })
-                        }
-                    }}
-                >
-                    <Icon name='notifications-outline' size={25} color='black' />
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[styles.icon, { right: 40, }]}
-                    onPress={() => {
-                        props.navigation.navigate('Category', {
-                            num: num,
-                            id: id,
-                            pw: pw,
-                            phone: phone,
-                            name: name,
-                            email: email,
-                            image: image,
-                        })
-                    }}
-                >
-                    <Icon name='home-outline' size={25} color='black' />
-                </TouchableOpacity>
-            </View>
+        <View style={styles.mainView}>
+            <Header
+                navi = {props}
+                params = {{
+                    num: num,
+                    id: id,
+                    pw: pw,
+                    phone: phone,
+                    name: name,
+                    email: email,
+                    image: image,
+                }}
+                iconNameL1='arrow-back-outline'
+                iconNameR1='notifications-outline'
+                iconNameR2='home-outline'
+                login = {num}
+                titleName='내 스타트업'
+            />
+            
             <View style={styles.choiceView}>
                 <TouchableOpacity
                     style={[styles.choiceBtn, { right: 0 }]}
@@ -129,7 +99,7 @@ const StartUpEdit = (props) => {
                 
             }
 
-        </SafeAreaView>
+        </View>
     )
 }
 
@@ -149,24 +119,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-
-    //아이콘 뷰
-    iconView: {
-        width: '90%',
-        alignItems: 'center',
-        marginTop: 40,
-        marginBottom: 30,
-    },
-    icon: {
-        position: 'absolute',
-        bottom: 0,
-    },
-    titleText: {
-        position: 'absolute',
-        bottom: 0,
-        fontSize: 23,
-        fontWeight: 'bold',
-    },
 
 
 

@@ -16,6 +16,10 @@ import * as Location from 'expo-location';
 import * as Geolib from 'geolib';
 import Icon from 'react-native-vector-icons/Ionicons'
 //import { Polyline } from 'react-native-svg';
+
+
+
+//db 로드
 import { loadUsers } from '../DB/LoadDB';
 import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
@@ -186,7 +190,7 @@ const Map = (props) => {
     }
 
     return (
-        <View style={{ flex: 1, backgroundColor: 'white' }}>
+        <View style={{ flex: 1, backgroundColor: 'white', }}>
             <View style={styles.titleView}>
                 <TouchableOpacity
                     style={[styles.icon, { left: 0, }]}

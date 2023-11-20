@@ -7,9 +7,13 @@ import {
     ScrollView,
     StyleSheet,
 } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
 import React, { useEffect, useState } from 'react'
 import { useIsFocused } from '@react-navigation/native';
+
+
+
+//헤더
+import Header from '../components/Header';
 
 
 //DB
@@ -84,56 +88,23 @@ const Cofounder = (props) => {
 
     return (
         <View style={styles.mainView}>
-            <View style={styles.titleView}>
-                <TouchableOpacity
-                    style={[styles.icon, { left: 0, }]}
-                    onPress={() => {
-                        props.navigation.goBack()
-                    }}
-                >
-                    <Icon name='arrow-back-outline' size={25} color='black' />
-                </TouchableOpacity>
-                <Text style={styles.titleText}>
-                    공동 창업자 모집
-                </Text>
-                <TouchableOpacity
-                    style={[styles.icon, { right: 0, }]}
-                    onPress={() => {
-                        if (num == null) {
-                            props.navigation.navigate('PersonLogin')
-                        } else if (num != null) {
-                            props.navigation.navigate('AlertPage', {
-                                num: num,
-                                id: id,
-                                pw: pw,
-                                phone: phone,
-                                name: name,
-                                email: email,
-                                image: image,
-                            })
-                        }
-                    }}
-                >
-                    <Icon name='notifications-outline' size={25} color='black' />
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={[styles.icon, { right: 40, }]}
-                    onPress={() => {
-                        props.navigation.navigate('Category', {
-                            num: num,
-                            id: id,
-                            pw: pw,
-                            phone: phone,
-                            name: name,
-                            email: email,
-                            image: image,
-                        })
-                    }}
-                >
-                    <Icon name='home-outline' size={25} color='black' />
-                </TouchableOpacity>
-            </View>
+            <Header
+                navi = {props}
+                params = {{
+                    num: num,
+                    id: id,
+                    pw: pw,
+                    phone: phone,
+                    name: name,
+                    email: email,
+                    image: image,
+                }}
+                iconNameL1='arrow-back-outline'
+                iconNameR1='notifications-outline'
+                iconNameR2='home-outline'
+                login = {num}
+                titleName='공동 창업자 모집'
+            />
             <View style={styles.searchView}>
                 <TextInput
                     style={styles.searchTextinput}
@@ -231,23 +202,7 @@ const styles = StyleSheet.create({
     },
 
 
-    //content
-    titleView: {
-        width: '90%',
-        height: 100,
-        alignItems: 'center',
-        marginBottom: 30,
-    },
-    icon: {
-        position: 'absolute',
-        bottom: 0,
-    },
-    titleText: {
-        position: 'absolute',
-        bottom: 0,
-        fontSize: 23,
-        fontWeight: 'bold',
-    },
+    
 
 
     //검색창

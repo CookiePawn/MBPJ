@@ -9,6 +9,9 @@ import { useIsFocused } from '@react-navigation/native';
 import { useState, useEffect } from 'react'
 
 
+//헤더
+import Header from '../components/Header';
+
 //db 로드
 import { loadUsers, addUser } from '../DB/LoadDB'
 
@@ -85,9 +88,9 @@ const SignUp = (props) => {
 
     return (
         <View style={styles.mainView}>
-            <View style={styles.titleView}>
-                <Text style={styles.titleText}>가입하기</Text>
-            </View>
+            <Header
+                titleName='가입하기'
+            />
             <View style={styles.textInputView}>
                 <CustomTextInput
                     name='이름'
@@ -149,19 +152,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-    //회원가입 페이지
-    titleView: {
-        width: '90%',
-        height: 100,
-        alignItems: 'center',
-        marginBottom: 30,
-    },
-    titleText: {
-        position: 'absolute',
-        bottom: 0,
-        fontSize: 23,
-        fontWeight: 'bold',
-    },
+
+    
 
     textInputView: {
         width: '90%',
