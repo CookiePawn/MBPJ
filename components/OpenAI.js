@@ -6,6 +6,8 @@ const apiKey = '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'
 
 
 
+
+//스타트업 정보 gpt 평가
 export const openAIStartup = async (title, introduce, stack) => {
     try {
         const response = await axios.post(
@@ -20,7 +22,7 @@ export const openAIStartup = async (title, introduce, stack) => {
                     
                     
                     * 응답 형식: 챗봇은 JSON 형식으로 응답합니다. {"score": "", "evaluation": ""}
-                    * 점수 계산: score는 1의 자리수까지 계산되며, 100점 만점입니다.
+                    * 점수 계산: score는 1의 자리수까지 계산되며, 소수점은 없고, 100점 만점입니다.
                     * 평가 기준: evaluation은 간단하고 일관성 있어야 하며, 몇 문장으로 요약됩니다.
                     * 엄격한 점수 기준: 스타트업 이름, 주요 사업 영역, 소개, 기술 및 스택, 시장 적합성 및  경쟁력, 팀 및 경험이 없다면 score가 20점 아래로 있다면 score가 20점 이상`},
 
@@ -71,7 +73,7 @@ export const openAIStartup = async (title, introduce, stack) => {
 
 
 
-
+//사용자 정보 gpt 평가
 export const openAIUser = async (info, introduce, career, project) => {
     try {
         const response = await axios.post(
@@ -86,7 +88,7 @@ export const openAIUser = async (info, introduce, career, project) => {
                     
                     
                     * 응답 형식: 챗봇은 JSON 형식으로 응답합니다. {"score": "", "evaluation": ""}
-                    * 점수 계산: score는 1의 자리수까지 계산되며, 100점 만점입니다.
+                    * 점수 계산: score는 1의 자리수까지 계산되며, 소수점은 없고, 100점 만점입니다.
                     * 평가 기준: evaluation은 간단하고 일관성 있어야 하며, 몇 문장으로 요약됩니다.
                     * 엄격한 점수 기준: 직조 설명 경력 및 프로젝트 개수등 정보가 없다면 score가 20점, 정보가 많으면 score가 20점 이상`},
 
@@ -129,3 +131,38 @@ export const openAIUser = async (info, introduce, career, project) => {
         console.error('Error text: ', error.response.data.error.message)
     }
 }
+
+
+
+
+
+
+//스타트업에 대한 이미지 생성
+export const startupDALLE = async (name, title, introduce) => {
+    try {
+        const response = await axios.post(
+            'https://api.openai.com/v1/images/generations',
+            {
+                prompt: `이 기업에 대한 이미지를 만들어줘. 이름은 ${name}이고 ${title}에 관한 기업이다. 소개글은 ${introduce}이다.`,
+                n: 1, // 생성할 이미지의 수
+                size: "256x256" // 이미지의 크기
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`
+                }
+            }
+        );
+
+        // API로부터 반환된 이미지 URL 추출
+        const imageUrl = response.data.data[0].url;
+
+        return imageUrl;
+    } catch (error) {
+        console.error('Error in DALL-E Image Generation:', error.response.data.error.message);
+        return null;
+    }
+};
+
+

@@ -7,7 +7,7 @@ import {
     StyleSheet,
     ActivityIndicator,
     TouchableOpacity,
-    TouchableNativeFeedback,
+    Modal,
 } from 'react-native'
 
 
@@ -56,29 +56,56 @@ export const Stat0 = (props) => {
     useEffect(() => {
         const address = props.params.location
 
-        if(address != null && address != '') {
+        if (address != null && address != '') {
             setLocation(address)
         } else {
             setLocation('주소를 입력해주세요')
         }
 
-    },[isFocused, props.params.location]);
+    }, [isFocused, props.params.location]);
 
     //DropDownPicker 관련
     const [pickerOpen, setPickerOpen] = useState(false);
     const [fieldValue, setFieldValue] = useState(null);
     const [fieldItems, setFieldItems] = useState([
-        {label : 'IT', value : 'IT'},
-        {label : 'Education', value : 'Education'},
-        {label : 'F&B', value : 'F&B'},
-        {label : 'Creative', value : 'Creative'},
+        { label: 'IT', value: 'IT' },
+        { label: 'Education', value: 'Education' },
+        { label: 'F&B', value: 'F&B' },
+        { label: 'Creative', value: 'Creative' },
     ])
+
+
+    // 로딩 컴포넌트를 화면 전체에 표시하는 함수
+    const renderFullScreenLoading = () => {
+        return (
+            <Modal
+                visible={isLoading}
+                transparent={true}
+                animationType="none"
+            >
+                <View style={styles.fullScreenLoadingContainer}>
+                    <Image
+                        source={require('../../assets/loading/loading-robot.gif')}
+                        style={styles.fullScreenLoadingImage}
+                    />
+                </View>
+            </Modal>
+        );
+    };
+
+
+
 
 
 
     return (
         <View style={styles.mainView}>
-            <ScrollView style = {{height : '100%'}}>
+            {renderFullScreenLoading()}
+            <ScrollView
+                style={{ height: '100%' }}
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+            >
                 <Text style={[styles.title, { fontSize: 24 }]}>이름</Text>
                 <TextInput
                     style={styles.textInput}
@@ -88,19 +115,19 @@ export const Stat0 = (props) => {
                     maxLength={20}
                 />
 
-                <Text style = {styles.title}>분야</Text>
+                <Text style={styles.title}>분야</Text>
                 <DropDownPicker
-                    open = {pickerOpen}
-                    value = {fieldValue}
-                    items = {fieldItems}
-                    setOpen = {setPickerOpen}
-                    setValue = {setFieldValue}
-                    setItems = {setFieldItems}
-                    placeholder = '분야를 선택해주세요'
-                    theme = 'LIGHT'
+                    open={pickerOpen}
+                    value={fieldValue}
+                    items={fieldItems}
+                    setOpen={setPickerOpen}
+                    setValue={setFieldValue}
+                    setItems={setFieldItems}
+                    placeholder='분야를 선택해주세요'
+                    theme='LIGHT'
                     listMode='MODAL'
-                    style = {{bottom : 5, top: 5, borderColor:'#d9d9d9', borderRadius: 15}}
-                    />
+                    style={{ bottom: 5, top: 5, borderColor: '#d9d9d9', borderRadius: 15 }}
+                />
 
                 <Text style={styles.title}>스타트업 단계</Text>
                 <TouchableOpacity
@@ -137,10 +164,10 @@ export const Stat0 = (props) => {
                     multiline={true}
                 />
 
-                <Text style = {styles.title}>주소</Text>
+                <Text style={styles.title}>주소</Text>
                 <TouchableOpacity
-                    onPress = {() => {
-                        props.navi.navigation.navigate("DaumPost" ,{
+                    onPress={() => {
+                        props.navi.navigation.navigate("DaumPost", {
                             num: num,
                             id: id,
                             pw: pw,
@@ -148,22 +175,22 @@ export const Stat0 = (props) => {
                             name: name,
                             email: email,
                             image: image,
-                            screen : "StartUpMore"
+                            screen: "StartUpMore"
                         })
                     }}>
-                    <Text style = {styles.smallText}>{location}</Text>
-                </TouchableOpacity> 
+                    <Text style={styles.smallText}>{location}</Text>
+                </TouchableOpacity>
                 <TouchableOpacity
                     style={styles.saveBtn}
                     onPress={async () => {
-                        if(suName != '' && title != '' && introduce != '' && stack != '' && location != '주소를 입력해주세요' && fieldValue != null && props.perID != null) {
+                        if (suName != '' && title != '' && introduce != '' && stack != '' && location != '주소를 입력해주세요' && fieldValue != null && props.perID != null) {
                             setIsLoading(true)
                             await addStartUp(suName, fieldValue, title, introduce, stack, location, props.perID)
                             props.navi.navigation.navigate('Category', props.params)
                         } else {
                             alert("모든 정보를 입력했는지 확인해주세요")
                             console.log(suName, title, introduce, stack, location, fieldValue, props.perID)
-                            
+
                         }
                     }}
                 >
@@ -172,11 +199,11 @@ export const Stat0 = (props) => {
                     ) : (
                         <Text style={styles.saveBtnText}>저장하기</Text>
                     )}
-                </TouchableOpacity>    
+                </TouchableOpacity>
             </ScrollView>
-            
-        </View>    
-        
+
+        </View>
+
     )
 }
 
@@ -318,7 +345,7 @@ export const Stat1 = (props) => {
 const styles = StyleSheet.create({
     mainView: {
         width: '90%',
-        height : '80%',
+        height: '80%',
     },
 
 
@@ -357,6 +384,18 @@ const styles = StyleSheet.create({
         fontWeight: 600,
     },
 
+
+    //로딩이벤트
+    fullScreenLoadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // 반투명 배경
+    },
+    fullScreenLoadingImage: {
+        width: 200,
+        height: 200
+    },
 
 
 

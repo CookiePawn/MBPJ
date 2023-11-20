@@ -7,6 +7,7 @@ import {
     TextInput,
     ScrollView,
     StyleSheet,
+    Modal,
 } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
@@ -169,6 +170,25 @@ const StartUpEdit = (props) => {
     };
 
 
+    // 로딩 컴포넌트를 화면 전체에 표시하는 함수
+    const renderFullScreenLoading = () => {
+        return (
+            <Modal
+                visible={isLoading}
+                transparent={true}
+                animationType="none"
+            >
+                <View style={styles.fullScreenLoadingContainer}>
+                    <Image
+                        source={require('../assets/loading/loading-robot.gif')}
+                        style={styles.fullScreenLoadingImage}
+                    />
+                </View>
+            </Modal>
+        );
+    };
+
+
 
 
 
@@ -182,6 +202,7 @@ const StartUpEdit = (props) => {
 
     return (
         <View style={styles.mainView}>
+            {renderFullScreenLoading()}
             <Header
                 navi = {props}
                 params = {{
@@ -463,5 +484,21 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 16,
         fontWeight: 600,
-    }
+    },
+
+
+
+
+
+    //로딩이벤트
+    fullScreenLoadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', // 반투명 배경
+    },
+    fullScreenLoadingImage: {
+        width: 200,
+        height: 200
+    },
 })

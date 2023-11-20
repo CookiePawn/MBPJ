@@ -15,7 +15,7 @@ import {
 
 
 //GPT
-import { openAI, openAIStartup, openAIUser } from '../components/OpenAI';
+import { openAI, openAIStartup, openAIUser, startupDALLE } from '../components/OpenAI';
 
 
 
@@ -365,7 +365,7 @@ export const loadConnect = async () => {
 //내 페이지 수정
 export const updateUserProject = async (num, eField, eInfo, eCareer, eIntroduce, eProject) => {
 
-    const gptResult = await openAIUser(eInfo, eIntroduce, eCareer, eProject) 
+    const gptResult = await openAIUser(eInfo, eIntroduce, eCareer, eProject)
 
     if (gptResult) {
         try {
@@ -438,7 +438,6 @@ export const updateUserImage = async (uri, id) => {
         () => {
             // 성공적으로 업로드된 경우 다운로드 URL을 가져옵니다.
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                console.log('다운로드 URL:', downloadURL);
                 // 다운로드 URL을 이용한 후속 작업...
             }).catch((error) => {
                 // 에러 처리
@@ -527,7 +526,6 @@ export const updateStartUpImage = async (uri, id) => {
         () => {
             // 성공적으로 업로드된 경우 다운로드 URL을 가져옵니다.
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                console.log('다운로드 URL:', downloadURL);
                 // 다운로드 URL을 이용한 후속 작업...
             }).catch((error) => {
                 // 에러 처리
@@ -548,7 +546,6 @@ export const updateStartUpGPT = async (num, score, evaluation) => {
             score: score,
             evaluation: evaluation,
         });
-        alert('정보가 저장되었습니다!')
     } catch (error) {
         console.error("Error fetching data:", error.message);
     }
@@ -602,7 +599,6 @@ export const addUser = async (id, pw, name, email, phone) => {
 //스타트업 추가
 export const addStartUp = async (name, field, title, introduce, stack, location, perID) => {
     try {
-        console.log(perID)
         // startupInfo 컬렉션에 문서 추가
         const docRef = await addDoc(collection(db, 'startupInfo'), {
             name: name,
@@ -639,6 +635,21 @@ export const addStartUp = async (name, field, title, introduce, stack, location,
                 console.log("Error startupGPT:", error);
             }
         }
+
+
+        const imageUrl = await startupDALLE(name, title, introduce);
+        if (imageUrl) {
+            try {
+                await updateStartUpImage(imageUrl, name)
+                console.log('스타트업이 생성되었습니다')
+            } catch (error) {
+                console.error(error)
+            }
+        } else {
+            console.log("이미지 생성 실패");
+        }
+
+
 
 
 
@@ -860,7 +871,7 @@ export const deleteJoin = async (num, perID, suID) => {
             console.log(`문서(ID: ${num})가 존재하지 않습니다.`);
         }
 
-        
+
     } catch (error) {
         console.error(`문서 삭제 중 오류가 발생했습니다: ${error}`);
     }
