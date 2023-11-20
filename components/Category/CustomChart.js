@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Dimensions, } from 'react-native';
+import { View, Text, Dimensions,StyleSheet } from 'react-native';
 import { PieChart } from 'react-native-gifted-charts';
 import { loadConnect } from '../../DB/LoadDB';
 import Swiper from 'react-native-swiper/src'
@@ -170,8 +170,8 @@ const CustomChart = () => {
                 dotStyle={{ backgroundColor: '#D9D9D9' }}
                 activeDotStyle={{ width: 30, backgroundColor: '#5552E2' }}
             >
-                <View>
-                    <Text>개인 트렌드</Text>
+                <View style = {styles.chartView}>
+                    <Text style = {styles.chartText}>개인 트렌드</Text>
                     <View style={{ padding: 20, alignItems: 'center' }}>
                         <PieChart
                             data={convertToPieData(calculatePerFieldCounts())}
@@ -192,8 +192,8 @@ const CustomChart = () => {
                     {renderLegendComponent(calculatePerFieldCounts(), 'perField')}
                 </View>
 
-                <View>
-                    <Text>스타트업 트렌드</Text>
+                <View style = {styles.chartView}>
+                    <Text style = {styles.chartText}>스타트업 트렌드</Text>
                     <View style={{ padding: 20, alignItems: 'center' }}>
                         <PieChart
                             data={convertToPieData(calculateSuFieldCounts())}
@@ -219,3 +219,15 @@ const CustomChart = () => {
 };
 
 export default CustomChart;
+
+const styles = StyleSheet.create({
+    chartView: {
+        marginTop: 20
+    },
+    chartText: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: '#767676',
+        textAlign: 'center'
+    }
+})

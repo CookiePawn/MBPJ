@@ -246,7 +246,9 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         alignItems: 'center',
     },
-
+    icon: {
+        justifyContent:'flex-end'
+    },
 
 
 
@@ -296,6 +298,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderColor: '#E8E8E8',
         justifyContent: 'center',
+        marginTop: 20,
     },
     nameText: {
         fontSize: 18,
