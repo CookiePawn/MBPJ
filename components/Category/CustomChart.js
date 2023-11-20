@@ -30,6 +30,16 @@ const CustomChart = () => {
         setPerField({ maxKey: perFieldMax.maxKey, maxValue: perFieldMax.maxValue.toFixed(2) });
         setSuField({ maxKey: suFieldMax.maxKey, maxValue: suFieldMax.maxValue.toFixed(2) });
     }, [connect]);
+    
+    
+    const handlePieChartPress = (data, name) => {
+        // 포커스된 데이터의 value 값을 출력
+        if (name == 'perField') {
+            setPerField({maxKey: data.label, maxValue: data.value.toFixed(2)})
+        } else if (name == 'suField') {
+            setSuField({maxKey: data.label, maxValue: data.value.toFixed(2)})
+        }
+    };
 
 
     const calculatePerFieldCounts = () => {
@@ -83,13 +93,14 @@ const CustomChart = () => {
     };
 
     const getColor = (index) => {
-        const colors = ['#009FFF', '#93FCF8', '#BDB2FA', '#FFA5BA'];
+        const colors = ['#009FFF', '#93FCF8', '#BDB2FA', '#FFA5BA', 'yellow', 'lightgreen'];
         return colors[index % colors.length];
     };
 
     const renderLegendComponent = (fieldCounts, fieldName) => {
         const pieData1 = convertToPieData(fieldCounts).slice(0, 2);
         const pieData2 = convertToPieData(fieldCounts).slice(2, 4);
+        const pieData3 = convertToPieData(fieldCounts).slice(4, 6);
 
         let maxKey, maxValue;
         if (fieldName === 'perField') {
@@ -118,8 +129,21 @@ const CustomChart = () => {
                         </View>
                     ))}
                 </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    marginBottom: 10,
+                    marginLeft: 50,
+                }}>
                     {pieData2.map((data, index) => (
+                        <View key={index} style={{ flexDirection: 'row', alignItems: 'center', marginRight: 30 }}>
+                            {renderDot(data.color)}
+                            <Text style={{ color: 'black' }}>{`${data.label}: ${data.percentageValue}`}</Text>
+                        </View>
+                    ))}
+                </View>
+                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                    {pieData3.map((data, index) => (
                         <View key={index} style={{ flexDirection: 'row', alignItems: 'center', marginRight: 30 }}>
                             {renderDot(data.color)}
                             <Text style={{ color: 'black' }}>{`${data.label}: ${data.percentageValue}`}</Text>
@@ -165,7 +189,7 @@ const CustomChart = () => {
     return (
         <View style={{ marginBottom: 50 }}>
             <Swiper
-                style={{height: 400}}
+                style={{ height: 450 }}
                 loop={false}
                 dotStyle={{ backgroundColor: '#D9D9D9' }}
                 activeDotStyle={{ width: 30, backgroundColor: '#5552E2' }}
@@ -181,6 +205,7 @@ const CustomChart = () => {
                             radius={90}
                             innerRadius={60}
                             focusOnPress
+                            onPress={(data) => handlePieChartPress(data, 'perField')}
                             centerLabelComponent={() => (
                                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                                     <Text style={{ fontSize: 22, color: 'black', fontWeight: 'bold' }}>{perField.maxValue}%</Text>
@@ -203,6 +228,7 @@ const CustomChart = () => {
                             radius={90}
                             innerRadius={60}
                             focusOnPress
+                            onPress={(data) => handlePieChartPress(data, 'suField')}
                             centerLabelComponent={() => (
                                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                                     <Text style={{ fontSize: 22, color: 'black', fontWeight: 'bold' }}>{suField.maxValue}%</Text>
