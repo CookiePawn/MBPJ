@@ -243,7 +243,7 @@ const Category = (props) => {
                                     image: image,
                                 }}
                                 category="팀원 모집"
-                                image={require('../assets/category-design.jpg')}
+                                image={require('../assets/category-team.jpg')}
                                 screen='TeamList'
                             />
                             <CustomCategory

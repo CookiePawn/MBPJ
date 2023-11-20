@@ -342,7 +342,7 @@ const StartUpInfo = (props) => {
                             })
                         }}
                     >
-                        <Text style={styles.chatBtnText}>쪽지하기</Text>
+                        <Text style={styles.chatBtnText}>쪽지 보내기</Text>
                     </TouchableOpacity>
                 </View>
             )}

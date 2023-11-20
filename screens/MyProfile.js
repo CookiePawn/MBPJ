@@ -367,7 +367,7 @@ const styles = StyleSheet.create({
     //개인정보 변경 뷰
     changeProfileView: {
         width: '100%',
-        marginTop: 30,
+        marginTop: 20,
     },
     changeProfileTitle: {
         width: '100%',

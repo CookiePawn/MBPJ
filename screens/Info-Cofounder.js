@@ -42,6 +42,7 @@ const StartUpInfo = (props) => {
     const phone = params ? params.phone : null;
     const image = params ? params.image : null;
     const people = params ? params.people : null;
+    const perID = params ? params.perID : null;
 
 
 
@@ -57,7 +58,9 @@ const StartUpInfo = (props) => {
 
     const isFocused = useIsFocused();
 
-
+    const handlePress = () => {
+        Keyboard.dismiss();
+    };
 
     useEffect(() => {
         const fetchCofounder = async () => {
@@ -245,7 +248,7 @@ const StartUpInfo = (props) => {
                             })
                         }}
                     >
-                        <Text style={styles.chatBtnText}>쪽지하기</Text>
+                        <Text style={styles.chatBtnText}>쪽지 보내기</Text>
                     </TouchableOpacity>
                 </View>
             )}
@@ -292,6 +295,7 @@ const styles = StyleSheet.create({
         width: '100%',
         alignItems: 'center',
         marginBottom: 30,
+        marginTop: 10,
     },
     profileImage: {
         width: '100%',

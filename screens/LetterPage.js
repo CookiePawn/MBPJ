@@ -4,7 +4,8 @@ import {
     TouchableOpacity,
     Image,
     StyleSheet,
-    TextInput
+    TextInput,
+    Keyboard
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import React, { useState, useEffect } from 'react'
@@ -28,8 +29,10 @@ const LetterPage = (props) => {
     const people = params ? params.people : null;
 
 
-
-
+    const handleContainerPress = () => {
+        // TextInput 이외의 부분을 터치했을 때 키보드를 내립니다.
+        Keyboard.dismiss();
+    };
 
 
 
@@ -88,16 +91,20 @@ const LetterPage = (props) => {
                 </TouchableOpacity>
             </View>
 
-            <View style={styles.inputView}>
-                <TextInput
-                    style={styles.smallText}
-                    placeholder='내용을 입력하세요'
-                    value={eInfo}
-                    onChangeText={(e) => { setEInfo(e) }}
-                    maxLength={1000}
-                    multiline={true}
-                />
-            </View>
+            <TouchableOpacity style={styles.inputView} onPress={handleContainerPress}>
+                <View>
+                    <TextInput
+                        style={styles.smallText}
+                        placeholder='내용을 입력하세요'
+                        value={eInfo}
+                        onChangeText={(e) => { setEInfo(e) }}
+                        maxLength={1000}
+                        multiline={true}
+                    />
+
+                </View>
+            </TouchableOpacity>
+
 
 
             <TouchableOpacity
