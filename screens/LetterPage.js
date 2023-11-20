@@ -15,7 +15,7 @@ import Header from '../components/Header'
 
 
 //DB
-import { addLetter } from '../DB/LoadDB'
+import { addLetter, loadUserSelect } from '../DB/LoadDB'
 
 
 
@@ -31,13 +31,20 @@ const LetterPage = (props) => {
     const image = params ? params.image : null;
     const people = params ? params.people : null;
 
+    const [user, setUser] = useState([])
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            const users = await loadUserSelect(people)
+            setUser(users)
+        }
+        fetchUser();
+    }, [])
 
     const handleContainerPress = () => {
         // TextInput 이외의 부분을 터치했을 때 키보드를 내립니다.
         Keyboard.dismiss();
     };
-
-
 
     const [eInfo, setEInfo] = useState('')
 
@@ -45,8 +52,8 @@ const LetterPage = (props) => {
     return (
         <View style={styles.mainView}>
             <Header
-                navi = {props}
-                params = {{
+                navi={props}
+                params={{
                     num: num,
                     id: id,
                     pw: pw,
@@ -58,10 +65,10 @@ const LetterPage = (props) => {
                 iconNameL1='arrow-back-outline'
                 iconNameR1='notifications-outline'
                 iconNameR2='home-outline'
-                login = {num}
+                login={num}
                 titleName='쪽지 쓰기'
             />
-
+            <Text style={styles.peopleText}>받는 사람: {user.name}</Text>
             <TouchableOpacity style={styles.inputView} onPress={handleContainerPress}>
                 <View>
                     <TextInput
@@ -121,13 +128,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-    
+
 
     // 텍스트 입력 뷰
     inputView: {
         backgroundColor: '#f7f7f7',
         width: '90%',
-        height: 600,
+        height: 580,
         borderRadius: '20'
     },
 
@@ -144,8 +151,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#5552E2',
         height: 60,
         width: '90%',
-        marginTop: 10,
         marginBottom: 20,
+        marginTop: 10,
         borderRadius: 30,
         alignItems: 'center',
         justifyContent: 'center',
@@ -164,4 +171,10 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         marginTop: 20,
     },
+    peopleText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        color:'#767676',
+    }
 })

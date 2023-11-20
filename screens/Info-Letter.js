@@ -14,7 +14,7 @@ import { useIsFocused } from '@react-navigation/native';
 import Header from '../components/Header';
 
 //DB
-import { loadLetterSelect, deleteLetter } from '../DB/LoadDB'
+import { loadLetterSelect, deleteLetter, loadUserSelect } from '../DB/LoadDB'
 
 
 
@@ -29,7 +29,6 @@ const LetterPage = (props) => {
     const phone = params ? params.phone : null;
     const image = params ? params.image : null;
     const people = params ? params.people : null;
-
 
 
 
@@ -86,10 +85,27 @@ const LetterPage = (props) => {
                 </ScrollView>
             </View>
 
-
+ 
             <View style={styles.btnView}>
+                <TouchableOpacity 
+                    style={styles.chatBtn1}
+                    onPress={async() => {
+                        props.navigation.navigate('LetterPage', {
+                            num: num,
+                            id: id,
+                            pw: pw,
+                            phone: phone,
+                            name: name,
+                            email: email,
+                            image: image,
+                            people: letter.toID,
+                        })
+                    }}
+                >
+                    <Text style = {styles.chatBtnText}>답장하기</Text>
+                </TouchableOpacity>
                 <TouchableOpacity
-                    style={[styles.chatBtn, { width: '100%' }]}
+                    style={styles.chatBtn}
                     onPress={async() => {
                         alert('쪽지가 삭제되었습니다')
                         await deleteLetter(letter.id)
@@ -157,12 +173,24 @@ const styles = StyleSheet.create({
     chatBtn: {
         backgroundColor: '#5552E2',
         height: 60,
-        width: '90%',
+        width: '47%',
         marginTop: 10,
         marginBottom: 20,
-        borderRadius: 30,
+        borderRadius: 100,
         alignItems: 'center',
         justifyContent: 'center',
+        marginLeft: 'auto'
+    },
+    chatBtn1: {
+        backgroundColor: '#5552E2',
+        height: 60,
+        width: '47%',
+        marginTop: 10,
+        marginBottom: 20,
+        borderRadius: 100,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: 'auto'
     },
     chatBtnText: {
         color: 'white',
@@ -182,20 +210,4 @@ const styles = StyleSheet.create({
         width: '90%',
         height: 100,
     },
-    chatBtn: {
-        backgroundColor: '#5552E2',
-        height: 60,
-        width: '47%',
-        marginTop: 10,
-        marginBottom: 20,
-        borderRadius: 30,
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'absolute',
-    },
-    chatBtnText: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 600,
-    }
 })
