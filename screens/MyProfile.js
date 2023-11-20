@@ -303,16 +303,18 @@ const styles = StyleSheet.create({
         borderRadius: 100,
     },
     imageBtn: {
-        width: 114,
+        width: 90,
         height: 37,
-        backgroundColor: '#E8E8E8',
+        backgroundColor: 'white',
         borderRadius: 30,
-        marginTop: 30,
+        marginTop: 20,
         alignItems: 'center',
         justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: '#111111'
     },
     imageBtnText: {
-        color: '#777777',
+        color: '#111111',
         fontSize: 16,
         fontWeight: 600,
     },

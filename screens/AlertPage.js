@@ -363,7 +363,7 @@ const styles = StyleSheet.create({
     nameText: {
         fontSize: 20,
         fontWeight: 'bold',
-        marginBottom: 15
+        marginBottom: 15,
     },
     nameText1: {
         fontSize: 20,

@@ -250,34 +250,32 @@ const styles = StyleSheet.create({
     //프로필 세션
     profileView: {
         width: '90%',
-        height: 100,
+        height: 180,
         marginTop: 30,
-        flexDirection: 'row',
-        flex: 1,
+        alignItems: 'center',
     },
     profileImage: {
-        width: 80,
-        height: 80,
-        borderRadius: 10,
+        width: 100,
+        height: 100,
+        borderRadius: 30,
         margin: 10,
-        marginLeft: 0,
-        marginRight: 20,
     },
     profileInfoView: {
-        flex: 1,
         justifyContent: 'center',
     },
     imageBtn: {
         width: 90,
         height: 37,
-        backgroundColor: '#E8E8E8',
+        backgroundColor: 'white',
         borderRadius: 30,
-        marginTop: 30,
+        marginTop: 20,
         alignItems: 'center',
         justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: '#111111'
     },
     imageBtnText: {
-        color: '#777777',
+        color: '#111111',
         fontSize: 16,
         fontWeight: 600,
     },
@@ -296,7 +294,7 @@ const styles = StyleSheet.create({
     inforView: {
         width: '90%',
         height: 500,
-        marginTop: 100,
+        marginTop: 30,
     },
     bigText: {
         color: '#111',

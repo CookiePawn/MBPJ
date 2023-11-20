@@ -168,7 +168,20 @@ const MyPage = (props) => {
                     <Icon name='business-outline' size={25} color='black' />
                     <Text style={styles.btnListText}>내 스타트업</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnListSubView}>
+                <TouchableOpacity
+                    style={styles.btnListSubView}
+                    onPress={() => {
+                        props.navigation.navigate('Help', {
+                            num: num,
+                            id: id,
+                            pw: pw,
+                            phone: phone,
+                            name: name,
+                            email: email,
+                            image: image,
+                        })
+                    }}
+                >
                     <Icon name='bulb-outline' size={25} color='black' />
                     <Text style={styles.btnListText}>도움말</Text>
                 </TouchableOpacity>
@@ -238,7 +251,7 @@ const styles = StyleSheet.create({
     profileBtn: {
         width: '90%',
         height: 50,
-        backgroundColor: '#E8E8E8',
+        backgroundColor: '#5552E2',
         borderRadius: 30,
         marginTop: 20,
         alignItems: 'center',
@@ -247,7 +260,7 @@ const styles = StyleSheet.create({
     profileBtnText: {
         fontSize: 16,
         fontWeight: 600,
-        color: '#777777'
+        color: 'white'
     },
 
 
