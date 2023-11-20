@@ -214,6 +214,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
+    icon: {
+        justifyContent:'flex-end',
+        marginTop: 45
+    },
+
 
 
 

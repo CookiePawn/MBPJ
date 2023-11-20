@@ -52,7 +52,7 @@ const CustomList = (props) => {
                         props.delete()
                     }}
                 >
-                    <Icon name='trash-outline' size={20} color='#767676' style={[styles.icon, { right: 10, bottom: 15, }]} />
+                    <Icon name='trash-outline' size={20} color='#767676' style={[styles.icon, { right: 10, top: 50, }]} />
                 </TouchableOpacity>
             </View>
         </TouchableOpacity>
@@ -371,7 +371,7 @@ const styles = StyleSheet.create({
         marginBottom: 15,
     },
     infoText: {
-        fontSize: 12,
+        fontSize: 14,
         color: 'rgba(0, 0, 0, 0.60)',
     },
 
