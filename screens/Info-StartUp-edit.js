@@ -414,6 +414,7 @@ const styles = StyleSheet.create({
         width: '90%',
         height: 500,
         marginTop: 30,
+        
     },
     bigText: {
         color: '#111',

@@ -129,6 +129,7 @@ const styles = StyleSheet.create({
     mainView: {
         flex: 1,
         alignItems: 'center',
+        backgroundColor: 'white'
     },
 
 
