@@ -7,7 +7,7 @@ import {
     ScrollView,
     StyleSheet,
 } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
+import Icon from 'react-native-vector-icons/FontAwesome5'
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 
@@ -39,7 +39,13 @@ const CustomList = (props) => {
                     <Text style={styles.nameText}>{props.info}</Text>
                     <Text style={styles.infoText}>{props.name}</Text>
                     <View style={[styles.icon, { right: 10, bottom: 15, flexDirection: 'row' }]}>
-                        <Icon name='heart-outline' size={20} color='red' />
+                        {props.score >= 80 ? (
+                            <Icon name='grin-alt' size={20} color='green' />
+                        ) : props.score >= 50 ? (
+                            <Icon name='meh' size={20} color='orange' />
+                        ) : (
+                            <Icon name='frown' size={20} color='red' />
+                        )}
                         <Text>{props.score}점</Text>
                     </View>
                 </View>
@@ -100,8 +106,8 @@ const Team = (props) => {
     return (
         <View style={styles.mainView}>
             <Header
-                navi = {props}
-                params = {{
+                navi={props}
+                params={{
                     num: num,
                     id: id,
                     pw: pw,
@@ -111,12 +117,12 @@ const Team = (props) => {
                     image: image,
                 }}
                 iconNameL1='arrow-back-outline'
-                iconNameR1='notifications-outline'
-                iconNameR2='home-outline'
-                login = {num}
+                iconNameR1='notifications'
+                iconNameR2='home'
+                login={num}
                 titleName='팀원 모집'
             />
-            
+
             <View style={styles.searchView}>
                 <TextInput
                     style={styles.searchTextinput}
@@ -179,8 +185,14 @@ const Team = (props) => {
                                         <View style={styles.listSubSubView}>
                                             <Text style={styles.nameText}>{startupItem.name}</Text>
                                             <Text style={styles.infoText}>{startupItem.info}</Text>
-                                            <View style={[styles.icon, { right: 0, bottom: 15, flexDirection: 'row', alignContent:'flex-end' }]}>
-                                                <Icon name='heart' size={20} color='red' />
+                                            <View style={[styles.icon, { right: 0, bottom: 15, flexDirection: 'row', alignContent: 'flex-end' }]}>
+                                                {startupItem.score >= 80 ? (
+                                                    <Icon name='grin-alt' size={20} color='green' />
+                                                ) : startupItem.score >= 50 ? (
+                                                    <Icon name='meh' size={20} color='orange' />
+                                                ) : (
+                                                    <Icon name='frown' size={20} color='red' />
+                                                )}
                                                 <Text style={styles.scoreText}>{startupItem.score}점</Text>
                                             </View>
                                         </View>
@@ -215,7 +227,7 @@ const styles = StyleSheet.create({
     },
 
     icon: {
-        justifyContent:'flex-end',
+        justifyContent: 'flex-end',
         marginTop: 45
     },
 

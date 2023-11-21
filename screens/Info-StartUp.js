@@ -6,7 +6,7 @@ import {
     ScrollView,
     StyleSheet,
 } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
+import Icon from 'react-native-vector-icons/FontAwesome5'
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 
@@ -109,7 +109,7 @@ const StartUpInfo = (props) => {
             const matchImage = imageUrl.find(item => item.name === startup.name);
             setFoundImage(matchImage);
         }
-        
+
     }, [imageUrl]);
 
 
@@ -120,7 +120,7 @@ const StartUpInfo = (props) => {
                 const adminMember = member.find(memberInfo => memberInfo.admin === 1);
                 if (adminMember) {
                     setAdmin(adminMember.perID);
-                    
+
                 }
             }
         };
@@ -160,8 +160,8 @@ const StartUpInfo = (props) => {
     return (
         <View style={styles.mainView}>
             <Header
-                navi = {props}
-                params = {{
+                navi={props}
+                params={{
                     num: num,
                     id: id,
                     pw: pw,
@@ -171,16 +171,22 @@ const StartUpInfo = (props) => {
                     image: image,
                 }}
                 iconNameL1='arrow-back-outline'
-                iconNameR1='notifications-outline'
-                iconNameR2='home-outline'
-                login = {num}
+                iconNameR1='notifications'
+                iconNameR2='home'
+                login={num}
             />
             <View style={styles.profileView}>
                 <View style={styles.profileInfoView}>
                     <Text style={styles.nameText}>{startup.name}</Text>
                 </View>
                 <View style={styles.likeView}>
-                    <Icon name='heart' size={20} color='red' />
+                    {startup.score >= 80 ? (
+                        <Icon name='grin-alt' size={20} color='green' />
+                    ) : startup.score >= 50 ? (
+                        <Icon name='meh' size={20} color='orange' />
+                    ) : (
+                        <Icon name='frown' size={20} color='red' />
+                    )}
                     <Text style={styles.likeText}>{startup.score}점</Text>
                 </View>
             </View>
@@ -247,7 +253,7 @@ const StartUpInfo = (props) => {
                             const matchingUserImage = userImage.find(userImg => userImg.name === item.perID);
 
                             return (
-                                <TouchableOpacity 
+                                <TouchableOpacity
                                     key={idx}
                                     onPress={() => {
                                         props.navigation.navigate('PeopleInfo', {
@@ -274,9 +280,9 @@ const StartUpInfo = (props) => {
                                             {item.name}{'\n'}
                                             <Text style={styles.userInfo}>{item.info}</Text>
                                         </Text>
-                                    </View>    
+                                    </View>
                                 </TouchableOpacity>
-                                
+
                             );
                         })}
                     </ScrollView>
@@ -286,7 +292,7 @@ const StartUpInfo = (props) => {
                 <View style={styles.btnView}>
                     <TouchableOpacity
                         style={[styles.chatBtn, { left: 0 }]}
-                        onPress={async() => {
+                        onPress={async () => {
                             await addJoin(admin, num, people)
                             alert('가입 신청 완료되었습니다')
                             props.navigation.navigate('Category', {
@@ -359,7 +365,7 @@ const styles = StyleSheet.create({
     },
 
 
-    
+
 
 
     //프로필 세션

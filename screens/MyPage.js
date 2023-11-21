@@ -5,7 +5,7 @@ import {
     Image,
     StyleSheet,
 } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
+import Icon from 'react-native-vector-icons/FontAwesome5'
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 
@@ -70,8 +70,8 @@ const MyPage = (props) => {
     return (
         <View style={styles.mainView}>
             <Header
-                navi = {props}
-                params = {{
+                navi={props}
+                params={{
                     num: num,
                     id: id,
                     pw: pw,
@@ -81,11 +81,11 @@ const MyPage = (props) => {
                     image: image,
                 }}
                 iconNameL1='arrow-back-outline'
-                iconNameR1='notifications-outline'
-                iconNameR2='home-outline'
-                login = {num}
+                iconNameR1='notifications'
+                iconNameR2='home'
+                login={num}
             />
-            
+
             <View style={styles.profileView}>
                 <Image
                     style={styles.profileImage}
@@ -94,7 +94,13 @@ const MyPage = (props) => {
                 <View style={styles.profileInfoView}>
                     <Text style={styles.nameText}>{name}</Text>
                     <View style={{ flexDirection: 'row', marginTop: 15 }}>
-                        <Icon name='heart' size={20} color='red' />
+                        {props.score >= 80 ? (
+                            <Icon name='grin-alt' size={20} color='green' />
+                        ) : props.score >= 50 ? (
+                            <Icon name='meh' size={20} color='orange' />
+                        ) : (
+                            <Icon name='frown' size={20} color='red' />
+                        )}
                         <Text style={styles.scoreText}>{user.score}점</Text>
                     </View>
                 </View>
@@ -131,7 +137,7 @@ const MyPage = (props) => {
                         })
                     }}
                 >
-                    <Icon name='person-outline' size={25} color='black' />
+                    <Icon name='user-alt' size={20} color='black' />
                     <Text style={styles.btnListText}>내 페이지 보기</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -148,7 +154,7 @@ const MyPage = (props) => {
                         })
                     }}
                 >
-                    <Icon name='create-outline' size={25} color='black' />
+                    <Icon name='pencil-alt' size={20} color='black' />
                     <Text style={styles.btnListText}>내 페이지 수정</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -165,7 +171,7 @@ const MyPage = (props) => {
                         })
                     }}
                 >
-                    <Icon name='business-outline' size={25} color='black' />
+                    <Icon name='briefcase' size={20} color='black' />
                     <Text style={styles.btnListText}>내 스타트업</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -182,7 +188,7 @@ const MyPage = (props) => {
                         })
                     }}
                 >
-                    <Icon name='bulb-outline' size={25} color='black' />
+                    <Icon name='question' size={20} color='black'/>
                     <Text style={styles.btnListText}>도움말</Text>
                 </TouchableOpacity>
             </View>
@@ -273,12 +279,12 @@ const styles = StyleSheet.create({
     },
     btnListSubView: {
         flexDirection: 'row',
-        marginBottom: 20,
+        marginBottom: 30,
     },
     btnListText: {
         fontSize: 14,
         fontWeight: 600,
-        lineHeight: 30,
+        lineHeight: 22,
         marginLeft: 10,
     },
 

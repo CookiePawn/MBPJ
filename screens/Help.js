@@ -58,7 +58,7 @@ const Help = (props) => {
                         }
                     }}
                 >
-                    <Icon name='notifications-outline' size={25} color='black' />
+                    <Icon name='notifications' size={25} color='black' />
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={[styles.icon, { right: 40, }]}
@@ -74,7 +74,7 @@ const Help = (props) => {
                         })
                     }}
                 >
-                    <Icon name='home-outline' size={25} color='black' />
+                    <Icon name='home' size={25} color='black' />
                 </TouchableOpacity>
             </View>
             

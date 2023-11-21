@@ -80,8 +80,8 @@ const LetterPage = (props) => {
                     image: image,
                 }}
                 iconNameL1='arrow-back-outline'
-                iconNameR1='notifications-outline'
-                iconNameR2='home-outline'
+                iconNameR1='notifications'
+                iconNameR2='home'
                 login = {num}
                 titleName='쪽지'
             />
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     
 
     inputView: {
-        backgroundColor: '#f1f1f1',
+        backgroundColor: 'white',
         flex: 1,
         width: '90%',
         borderRadius: '10',
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     },
 
     textView: {
-        backgroundColor: '#f1f1f1',
+        backgroundColor: 'white',
         borderRadius: '40',
         width: '100%',
         marginTop: 20,
@@ -210,8 +210,8 @@ const styles = StyleSheet.create({
     },
 
     smallText: {
-        color: '#767676',
-        fontSize: 16,
+        color: '#111111',
+        fontSize: 18,
         fontWeight: '400',
     },
 
@@ -219,6 +219,7 @@ const styles = StyleSheet.create({
     btnView: {
         flexDirection: 'row',
         width: '90%',
+        marginTop: 10
     },
     peopleText: {
         fontSize: 20,

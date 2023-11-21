@@ -16,6 +16,7 @@ import Header from '../components/Header'
 
 //DB
 import { addLetter, loadUserSelect } from '../DB/LoadDB'
+import { shadow } from 'react-native-paper'
 
 
 
@@ -63,8 +64,8 @@ const LetterPage = (props) => {
                     image: image,
                 }}
                 iconNameL1='arrow-back-outline'
-                iconNameR1='notifications-outline'
-                iconNameR2='home-outline'
+                iconNameR1='notifications'
+                iconNameR2='home'
                 login={num}
                 titleName='쪽지 쓰기'
             />
@@ -133,12 +134,12 @@ const styles = StyleSheet.create({
 
     // 텍스트 입력 뷰
     inputView: {
-        backgroundColor: '#f1f1f1',
+        backgroundColor: 'white',
         flex: 1,
         width: '90%',
         borderRadius: '10',
         borderWidth: 1,
-        borderColor: '#d9d9d9'
+        borderColor: '#d9d9d9',
     },
 
     // 텍스트 안내
@@ -155,7 +156,7 @@ const styles = StyleSheet.create({
         height: 60,
         width: '90%',
         marginBottom: 20,
-        marginTop: 10,
+        marginTop: 20,
         borderRadius: 30,
         alignItems: 'center',
         justifyContent: 'center',
@@ -167,8 +168,8 @@ const styles = StyleSheet.create({
     },
 
     smallText: {
-        color: '#767676',
-        fontSize: 16,
+        color: '#111111',
+        fontSize: 18,
         fontWeight: '400',
         marginBottom: 30,
         marginTop: 16,

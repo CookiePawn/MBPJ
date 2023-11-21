@@ -7,7 +7,7 @@ import {
     ScrollView,
     StyleSheet,
 } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
+import Icon from 'react-native-vector-icons/FontAwesome5'
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 
@@ -52,7 +52,7 @@ const CustomList = (props) => {
                         props.delete()
                     }}
                 >
-                    <Icon name='trash-outline' size={20} color='#767676' style={[styles.icon, { right: 10, top: 50, }]} />
+                    <Icon name='trash-alt' size={20} color='#767676' style={[styles.icon, { right: 10, top: 50, }]} />
                 </TouchableOpacity>
             </View>
         </TouchableOpacity>
@@ -216,8 +216,8 @@ const AlertPage = (props) => {
                     image: image,
                 }}
                 iconNameL1='arrow-back-outline'
-                iconNameR1='notifications-outline'
-                iconNameR2='home-outline'
+                iconNameR1='notifications'
+                iconNameR2='home'
                 login = {num}
                 titleName='알림 센터'
             />

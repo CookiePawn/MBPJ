@@ -92,7 +92,7 @@ const Login = (props) => {
         <View style={styles.mainView}>
             <Header
                 navi = {props}
-                iconNameR2='home-outline'
+                iconNameL1='arrow-back-outline'
                 titleName='로그인'
             />
             

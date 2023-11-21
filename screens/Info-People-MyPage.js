@@ -8,7 +8,7 @@ import {
     ScrollView,
     StyleSheet,
 } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
+import Icon from 'react-native-vector-icons/FontAwesome5'
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 
@@ -147,8 +147,8 @@ const SeeMyPage = (props) => {
     return (
         <View style={styles.mainView}>
             <Header
-                navi = {props}
-                params = {{
+                navi={props}
+                params={{
                     num: num,
                     id: id,
                     pw: pw,
@@ -158,11 +158,11 @@ const SeeMyPage = (props) => {
                     image: image,
                 }}
                 iconNameL1='arrow-back-outline'
-                iconNameR1='notifications-outline'
-                iconNameR2='home-outline'
-                login = {num}
+                iconNameR1='notifications'
+                iconNameR2='home'
+                login={num}
             />
-            
+
             <View style={styles.profileView}>
                 <Image
                     style={styles.profileImage}
@@ -172,11 +172,17 @@ const SeeMyPage = (props) => {
                     <Text style={styles.nameText}>{user.name}</Text>
                 </View>
                 <View style={styles.likeView}>
-                    <Icon name='heart' size={20} color='red' />
+                    {user.score >= 80 ? (
+                        <Icon name='grin-alt' size={20} color='green' />
+                    ) : user.score >= 50 ? (
+                        <Icon name='meh' size={20} color='orange' />
+                    ) : (
+                        <Icon name='frown' size={20} color='red' />
+                    )}
                     <Text style={styles.likeText}>{user.score}점</Text>
                 </View>
             </View>
-            <ScrollView 
+            <ScrollView
                 style={styles.inforView}
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
@@ -218,7 +224,7 @@ const SeeMyPage = (props) => {
                             const isAdmin = admin.includes(item.id);
 
                             return (
-                                <TouchableOpacity 
+                                <TouchableOpacity
                                     key={idx}
                                     onPress={() => {
                                         props.navigation.navigate('StartUpInfo', {
@@ -245,7 +251,7 @@ const SeeMyPage = (props) => {
                                             {item.name}{'\n'}
                                             <Text style={styles.userInfo}>{item.info}</Text>
                                         </Text>
-                                    </View>    
+                                    </View>
                                 </TouchableOpacity>
                             );
                         })}

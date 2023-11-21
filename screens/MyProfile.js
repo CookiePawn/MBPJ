@@ -157,8 +157,8 @@ const MyProfile = (props) => {
                     image: image,
                 }}
                 iconNameL1='arrow-back-outline'
-                iconNameR1='notifications-outline'
-                iconNameR2='home-outline'
+                iconNameR1='notifications'
+                iconNameR2='home'
                 login = {num}
                 titleName='내 프로필'
             />

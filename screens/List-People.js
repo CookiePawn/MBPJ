@@ -7,7 +7,7 @@ import {
     ScrollView,
     StyleSheet,
 } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
+import Icon from 'react-native-vector-icons/FontAwesome5'
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 
@@ -35,11 +35,18 @@ const CustomList = (props) => {
                 <View style={styles.listSubSubView}>
                     <Text style={styles.nameText}>{props.name}</Text>
                     <Text style={styles.infoText}>{props.info}</Text>
-                    
+
                     <View style={[styles.icon, { right: 0, bottom: 15, flexDirection: 'row', alignContent: 'flex-end' }]}>
-                        <Icon name='heart' size={20} color='red' />
+                        {props.score >= 80 ? (
+                            <Icon name='grin-alt' size={20} color='green' />
+                        ) : props.score >= 50 ? (
+                            <Icon name='meh' size={20} color='orange' />
+                        ) : (
+                            <Icon name='frown' size={20} color='red' />
+                        )}
                         <Text style={styles.scoreText}>{props.score}점</Text>
                     </View>
+
                 </View>
             </View>
         </TouchableOpacity>
@@ -97,8 +104,8 @@ const People = (props) => {
     return (
         <View style={styles.mainView}>
             <Header
-                navi = {props}
-                params = {{
+                navi={props}
+                params={{
                     num: num,
                     id: id,
                     pw: pw,
@@ -108,12 +115,12 @@ const People = (props) => {
                     image: image,
                 }}
                 iconNameL1='arrow-back-outline'
-                iconNameR1='notifications-outline'
-                iconNameR2='home-outline'
-                login = {num}
+                iconNameR1='notifications'
+                iconNameR2='home'
+                login={num}
                 titleName='이런 사람은 어때요?'
             />
-            
+
             <View style={styles.searchView}>
                 <TextInput
                     style={styles.searchTextinput}
@@ -247,7 +254,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     icon: {
-        justifyContent:'flex-end'
+        justifyContent: 'flex-end'
     },
 
 

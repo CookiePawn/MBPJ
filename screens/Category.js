@@ -204,7 +204,7 @@ const Category = (props) => {
                                     }
                                 }}
                             >
-                                <Icon name="notifications-outline" size={30} color="black" style={[styles.icon, { marginLeft: 5 }]}/>
+                                <Icon name="notifications" size={25} color="black" style={[styles.icon, { marginLeft: 5 }]}/>
                             </TouchableOpacity>
                             
                         </View>
