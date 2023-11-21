@@ -171,9 +171,9 @@ const PersonInfo = (props) => {
                     <Text style={styles.nameText}>{user.name}</Text>
                 </View>
                 <View style={styles.likeView}>
-                    {user.score >= 80 ? (
+                    {user.score >= 70 ? (
                         <Icon name='grin-alt' size={20} color='green' />
-                    ) : user.score >= 50 ? (
+                    ) : user.score >= 30 ? (
                         <Icon name='meh' size={20} color='orange' />
                     ) : (
                         <Icon name='frown' size={20} color='red' />

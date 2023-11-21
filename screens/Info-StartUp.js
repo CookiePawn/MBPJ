@@ -180,9 +180,9 @@ const StartUpInfo = (props) => {
                     <Text style={styles.nameText}>{startup.name}</Text>
                 </View>
                 <View style={styles.likeView}>
-                    {startup.score >= 80 ? (
+                    {startup.score >= 70 ? (
                         <Icon name='grin-alt' size={20} color='green' />
-                    ) : startup.score >= 50 ? (
+                    ) : startup.score >= 30 ? (
                         <Icon name='meh' size={20} color='orange' />
                     ) : (
                         <Icon name='frown' size={20} color='red' />

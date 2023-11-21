@@ -38,9 +38,9 @@ const CustomList = (props) => {
                     <Text style={styles.nameText}>{props.name}</Text>
                     <Text style={styles.infoText}>{props.info}</Text>
                     <View style={[styles.icon, { right: 0, bottom: 15, flexDirection: 'row', alignContent: 'flex-end' }]}>
-                        {props.score >= 80 ? (
+                        {props.score >= 70 ? (
                             <Icon name='grin-alt' size={20} color='green' />
-                        ) : props.score >= 50 ? (
+                        ) : props.score >= 30 ? (
                             <Icon name='meh' size={20} color='orange' />
                         ) : (
                             <Icon name='frown' size={20} color='red' />
