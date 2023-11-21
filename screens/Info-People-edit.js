@@ -7,7 +7,6 @@ import {
     ActivityIndicator,
     ScrollView,
     StyleSheet,
-    Modal,
 } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
@@ -15,6 +14,9 @@ import DropDownPicker from 'react-native-dropdown-picker'
 
 //헤더
 import Header from '../components/Header';
+
+//로딩 이벤트
+import { renderFullScreenLoading } from '../components/Loading'
 
 //db 로드
 import {
@@ -108,28 +110,9 @@ const PersonInfo = (props) => {
 
 
 
-    // 로딩 컴포넌트를 화면 전체에 표시하는 함수
-    const renderFullScreenLoading = () => {
-        return (
-            <Modal
-                visible={isLoading}
-                transparent={true}
-                animationType="none"
-            >
-                <View style={styles.fullScreenLoadingContainer}>
-                    <Image
-                        source={require('../assets/loading/loading-robot.gif')}
-                        style={styles.fullScreenLoadingImage}
-                    />
-                </View>
-            </Modal>
-        );
-    };
-
-
     return (
         <View style={styles.mainView}>
-            {renderFullScreenLoading()}
+            {renderFullScreenLoading(isLoading)}
             <Header
                 navi={props}
                 params={{
@@ -345,15 +328,5 @@ const styles = StyleSheet.create({
 
 
 
-    //로딩이벤트
-    fullScreenLoadingContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)', // 반투명 배경
-    },
-    fullScreenLoadingImage: {
-        width: 200,
-        height: 200
-    },
+    
 })

@@ -7,7 +7,6 @@ import {
     TextInput,
     ScrollView,
     StyleSheet,
-    Modal,
 } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
@@ -20,6 +19,9 @@ import { manipulateAsync } from 'expo-image-manipulator';
 
 //헤더
 import Header from '../components/Header';
+
+//로딩 이벤트
+import { renderFullScreenLoading } from '../components/Loading'
 
 
 //db 로드
@@ -68,10 +70,10 @@ const StartUpEdit = (props) => {
     const [pickerOpen, setPickerOpen] = useState(false);
     const [fieldValue, setFieldValue] = useState(null);
     const [fieldItems, setFieldItems] = useState([
-        {label : 'IT', value : 'IT'},
-        {label : 'Education', value : 'Education'},
-        {label : 'F&B', value : 'F&B'},
-        {label : 'Creative', value : 'Creative'},
+        { label: 'IT', value: 'IT' },
+        { label: 'Education', value: 'Education' },
+        { label: 'F&B', value: 'F&B' },
+        { label: 'Creative', value: 'Creative' },
     ])
     const [savedField, setSavedField] = useState('Choose Your Field');
 
@@ -90,17 +92,17 @@ const StartUpEdit = (props) => {
             setEIntroduce(users.introduce || '');
             setEStack(users.stack || '');
 
-            if(users.field != null) {
+            if (users.field != null) {
                 setSavedField(users.field || '');
                 setFieldValue(users.field || '')
             }
-            
+
             if (props.route.params?.address) {
                 setLocation(props.route.params.address)
             } else {
                 setLocation(users.location)
             }
-            
+
         };
 
         fetchImage();
@@ -123,7 +125,7 @@ const StartUpEdit = (props) => {
 
     useEffect(() => {
 
-        if(props.route.params?.address) {
+        if (props.route.params?.address) {
             setLocation(props.route.params.address)
         }
 
@@ -170,26 +172,6 @@ const StartUpEdit = (props) => {
     };
 
 
-    // 로딩 컴포넌트를 화면 전체에 표시하는 함수
-    const renderFullScreenLoading = () => {
-        return (
-            <Modal
-                visible={isLoading}
-                transparent={true}
-                animationType="none"
-            >
-                <View style={styles.fullScreenLoadingContainer}>
-                    <Image
-                        source={require('../assets/loading/loading-robot.gif')}
-                        style={styles.fullScreenLoadingImage}
-                    />
-                </View>
-            </Modal>
-        );
-    };
-
-
-
 
 
 
@@ -202,10 +184,10 @@ const StartUpEdit = (props) => {
 
     return (
         <View style={styles.mainView}>
-            {renderFullScreenLoading()}
+            {renderFullScreenLoading(isLoading)}
             <Header
-                navi = {props}
-                params = {{
+                navi={props}
+                params={{
                     num: num,
                     id: id,
                     pw: pw,
@@ -217,7 +199,7 @@ const StartUpEdit = (props) => {
                 iconNameL1='arrow-back-outline'
                 iconNameR1='notifications'
                 iconNameR2='home'
-                login = {num}
+                login={num}
             />
             <View style={styles.profileView}>
                 {
@@ -245,7 +227,11 @@ const StartUpEdit = (props) => {
                     <Text style={styles.imageBtnText}>사진 변경</Text>
                 </TouchableOpacity>
             </View>
-            <ScrollView style={styles.inforView}>
+            <ScrollView
+                style={styles.inforView}
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+            >
                 <View style={{ flex: 1 }}>
                     <TouchableOpacity
                         onPress={() => {
@@ -277,16 +263,16 @@ const StartUpEdit = (props) => {
 
                     <Text style={styles.bigText}>분야</Text>
                     <DropDownPicker
-                        open = {pickerOpen}
-                        value = {fieldValue}
-                        items = {fieldItems}
-                        setOpen = {setPickerOpen}
-                        setValue = {setFieldValue}
-                        setItems = {setFieldItems}
-                        placeholder= {savedField}
-                        theme = 'LIGHT'
+                        open={pickerOpen}
+                        value={fieldValue}
+                        items={fieldItems}
+                        setOpen={setPickerOpen}
+                        setValue={setFieldValue}
+                        setItems={setFieldItems}
+                        placeholder={savedField}
+                        theme='LIGHT'
                         listMode='MODAL'
-                        style = {{bottom : 5, top: 5, borderColor:'#d9d9d9', borderRadius: 15}}
+                        style={{ bottom: 5, top: 5, borderColor: '#d9d9d9', borderRadius: 15 }}
                     />
 
 
@@ -319,9 +305,9 @@ const StartUpEdit = (props) => {
                         maxLength={200}
                         multiline={true}
                     />
-                    <Text style = {styles.bigText}>주소 추가</Text>
+                    <Text style={styles.bigText}>주소 추가</Text>
                     <TouchableOpacity
-                        onPress = {() => {
+                        onPress={() => {
                             props.navigation.navigate("DaumPost", {
                                 num: num,
                                 id: id,
@@ -330,12 +316,12 @@ const StartUpEdit = (props) => {
                                 name: name,
                                 email: email,
                                 image: image,
-                                people : people,
+                                people: people,
                                 screen: "StartUpEdit",
                             })
                         }}
-                        >
-                        <Text style = {styles.smallText1}>{location}</Text>
+                    >
+                        <Text style={styles.smallText1}>{location}</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
@@ -344,7 +330,7 @@ const StartUpEdit = (props) => {
                 style={styles.chatBtn}
                 onPress={
                     async () => {
-                        if(people != '' && fieldValue != null && eInfo != '' && eIntroduce && eStack != '' && location != '') {
+                        if (people != '' && fieldValue != null && eInfo != '' && eIntroduce && eStack != '' && location != '') {
                             setIsLoading(true)
                             await updateStartUpProject(people, fieldValue, eInfo, eIntroduce, eStack, location);
                             props.navigation.navigate("StartUpInfo", {
@@ -360,8 +346,8 @@ const StartUpEdit = (props) => {
                         } else {
                             alert("입력하지 않은 것이 있는지 확인해주세요")
                         }
-                    } 
-            }
+                    }
+                }
             >
                 {isLoading ? (
                     <ActivityIndicator size="small" color="white" /> // 로딩 중에는 로딩 아이콘 표시
@@ -435,7 +421,7 @@ const styles = StyleSheet.create({
         width: '90%',
         height: 500,
         marginTop: 30,
-        
+
     },
     bigText: {
         color: '#111',
@@ -498,7 +484,9 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.5)', // 반투명 배경
     },
     fullScreenLoadingImage: {
-        width: 200,
-        height: 200
+        width: 250,
+        height: 250,
+        borderRadius: 100,
+        opacity: 1,
     },
 })

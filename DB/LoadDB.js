@@ -641,7 +641,7 @@ export const addStartUp = async (name, field, title, introduce, stack, location,
         if (imageUrl) {
             try {
                 await updateStartUpImage(imageUrl, name)
-                console.log('스타트업이 생성되었습니다')
+                alert('스타트업이 생성되었습니다')
             } catch (error) {
                 console.error(error)
             }

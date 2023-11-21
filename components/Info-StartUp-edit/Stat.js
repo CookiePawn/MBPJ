@@ -7,7 +7,6 @@ import {
     StyleSheet,
     ActivityIndicator,
     TouchableOpacity,
-    Modal,
 } from 'react-native'
 
 
@@ -17,6 +16,9 @@ import { useIsFocused } from '@react-navigation/native'
 
 import React, { useState, useEffect } from 'react'
 
+
+//로딩 이벤트
+import { renderFullScreenLoading } from '../../components/Loading'
 
 //DB
 import {
@@ -75,24 +77,6 @@ export const Stat0 = (props) => {
     ])
 
 
-    // 로딩 컴포넌트를 화면 전체에 표시하는 함수
-    const renderFullScreenLoading = () => {
-        return (
-            <Modal
-                visible={isLoading}
-                transparent={true}
-                animationType="none"
-            >
-                <View style={styles.fullScreenLoadingContainer}>
-                    <Image
-                        source={require('../../assets/loading/loading-robot.gif')}
-                        style={styles.fullScreenLoadingImage}
-                    />
-                </View>
-            </Modal>
-        );
-    };
-
 
 
 
@@ -100,7 +84,7 @@ export const Stat0 = (props) => {
 
     return (
         <View style={styles.mainView}>
-            {renderFullScreenLoading()}
+            {renderFullScreenLoading(isLoading)}
             <ScrollView
                 style={{ height: '100%' }}
                 showsHorizontalScrollIndicator={false}
@@ -189,7 +173,6 @@ export const Stat0 = (props) => {
                             props.navi.navigation.navigate('Category', props.params)
                         } else {
                             alert("모든 정보를 입력했는지 확인해주세요")
-                            console.log(suName, title, introduce, stack, location, fieldValue, props.perID)
 
                         }
                     }}
@@ -295,7 +278,11 @@ export const Stat1 = (props) => {
 
 
     return (
-        <ScrollView style={styles.mainView}>
+        <ScrollView 
+            style={styles.mainView}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+        >
             <View style={{ flex: 1 }}>
                 {getFilteredStartups().map((item, idx) => {
                     const matchingStartupImage = imageUrl.find(startupImg => startupImg.name === item.name);
@@ -393,8 +380,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0.5)', // 반투명 배경
     },
     fullScreenLoadingImage: {
-        width: 200,
-        height: 200
+        width: 250,
+        height: 250
     },
 
 

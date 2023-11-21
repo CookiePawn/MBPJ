@@ -143,7 +143,7 @@ export const startupDALLE = async (name, title, introduce) => {
         const response = await axios.post(
             'https://api.openai.com/v1/images/generations',
             {
-                prompt: `이 기업에 대한 이미지를 만들어줘. 이름은 ${name}이고 ${title}에 관한 기업이다. 소개글은 ${introduce}이다.`,
+                prompt: `Create an image for ${title}. I wish the photo had the letters ${name} in it.`,
                 n: 1, // 생성할 이미지의 수
                 size: "256x256" // 이미지의 크기
             },
