@@ -293,7 +293,8 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         margin: 10,
         marginRight: 20,
-        marginTop: 13
+        marginTop: 13,
+        marginLeft: 'auto'
     },
     listSubSubView: {
         flex: 1,

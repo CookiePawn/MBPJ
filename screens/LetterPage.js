@@ -68,7 +68,9 @@ const LetterPage = (props) => {
                 login={num}
                 titleName='쪽지 쓰기'
             />
+
             <Text style={styles.peopleText}>받는 사람: {user.name}</Text>
+
             <TouchableOpacity style={styles.inputView} onPress={handleContainerPress}>
                 <View>
                     <TextInput
@@ -82,7 +84,6 @@ const LetterPage = (props) => {
 
                 </View>
             </TouchableOpacity>
-
 
 
             <TouchableOpacity
@@ -132,10 +133,12 @@ const styles = StyleSheet.create({
 
     // 텍스트 입력 뷰
     inputView: {
-        backgroundColor: '#f7f7f7',
+        backgroundColor: '#f1f1f1',
+        flex: 1,
         width: '90%',
-        height: 580,
-        borderRadius: '20'
+        borderRadius: '10',
+        borderWidth: 1,
+        borderColor: '#d9d9d9'
     },
 
     // 텍스트 안내
@@ -168,13 +171,13 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '400',
         marginBottom: 30,
-        marginLeft: 20,
-        marginTop: 20,
+        marginTop: 16,
+        marginLeft: 16
     },
     peopleText: {
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 20,
-        color:'#767676',
-    }
+        color: '#767676',
+    },
 })

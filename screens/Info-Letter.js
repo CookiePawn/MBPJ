@@ -30,6 +30,7 @@ const LetterPage = (props) => {
     const image = params ? params.image : null;
     const people = params ? params.people : null;
 
+    const [user, setUser] = useState([])
 
 
     //DB
@@ -46,7 +47,18 @@ const LetterPage = (props) => {
         }
 
         fetchLetter()
+       
     }, [isFocused])
+
+    useEffect(()=> {
+        const fetchUser = async () => {
+            if(letter && letter.toID) {
+                const users = await loadUserSelect(letter.toID)
+                setUser(users)   
+            } 
+        }     
+        fetchUser()
+    }, [letter])
 
 
 
@@ -73,6 +85,7 @@ const LetterPage = (props) => {
                 login = {num}
                 titleName='쪽지'
             />
+            <Text style= {styles.peopleText}>보낸사람: {user.name}</Text>
             <View style={styles.inputView}>
                 <ScrollView
                     style={{ width: '90%' }}
@@ -120,7 +133,7 @@ const LetterPage = (props) => {
                         })
                     }}
                 >
-                    <Text style={styles.chatBtnText}>삭제하기</Text>
+                    <Text style={styles.chatBtnText1}>삭제</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -150,8 +163,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#f1f1f1',
         flex: 1,
         width: '90%',
-        borderRadius: '20',
+        borderRadius: '10',
         alignItems: 'center',
+        borderWidth: 1,
+        borderColor: '#d9d9d9',
     },
 
     textView: {
@@ -161,22 +176,13 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
 
-    // 텍스트 안내
-    explanation: {
-        fontSize: 16,
-        marginLeft: 20,
-        marginTop: 20,
-        color: '#999999',
-    },
-
-
     chatBtn: {
-        backgroundColor: '#5552E2',
+        backgroundColor: '#d9d9d9',
         height: 60,
-        width: '47%',
+        width: '24%',
         marginTop: 10,
         marginBottom: 20,
-        borderRadius: 100,
+        borderRadius: 300,
         alignItems: 'center',
         justifyContent: 'center',
         marginLeft: 'auto'
@@ -184,7 +190,7 @@ const styles = StyleSheet.create({
     chatBtn1: {
         backgroundColor: '#5552E2',
         height: 60,
-        width: '47%',
+        width: '72%',
         marginTop: 10,
         marginBottom: 20,
         borderRadius: 100,
@@ -194,6 +200,11 @@ const styles = StyleSheet.create({
     },
     chatBtnText: {
         color: 'white',
+        fontSize: 16,
+        fontWeight: 600,
+    },
+    chatBtnText1: {
+        color: '#767676',
         fontSize: 16,
         fontWeight: 600,
     },
@@ -208,6 +219,11 @@ const styles = StyleSheet.create({
     btnView: {
         flexDirection: 'row',
         width: '90%',
-        height: 100,
+    },
+    peopleText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        color:'#767676',
     },
 })
