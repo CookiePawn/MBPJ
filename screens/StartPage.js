@@ -6,12 +6,19 @@ import {
     Dimensions,
     TouchableOpacity,
 } from 'react-native'
-import React, { Component, useState } from 'react'
+import React, { Component, useEffect, useState } from 'react'
 import Swiper from 'react-native-swiper/src'
 const { width } = Dimensions.get('window')
 
+//깃허브 불러오기
+
+import { fetchLang } from '../components/GitHubREST'
 
 const StartPage = (props) => {
+
+    useEffect(() => {
+        fetchLang()
+    }, [])
 
 
 
