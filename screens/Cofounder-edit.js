@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
     profileView: {
         width: '90%',
         height: 180,
-        marginTop: 30,
+        marginTop: 10,
         alignItems: 'center',
     },
     profileImage: {

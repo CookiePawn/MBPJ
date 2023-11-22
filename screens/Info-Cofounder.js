@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
     profileView: {
         width: '90%',
         height: 60,
-        marginTop: 30,
+        marginTop: 10,
         flexDirection: 'row',
     },
 
@@ -317,6 +317,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     memberView: {
+        width: '100%',
         height: 100,
         marginRight: 20,
         flexDirection: 'row',
@@ -330,7 +331,7 @@ const styles = StyleSheet.create({
         width: 60,
         height: 60,
         borderRadius: 100,
-        marginLeft: 10,
+        marginLeft: 15,
         
     },
     userName: {

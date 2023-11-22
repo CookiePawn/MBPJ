@@ -127,17 +127,17 @@ const styles = StyleSheet.create({
 
     //5가지 단계 뷰
     stepView: {
-        width:'90%',
+        width:'100%',
         height: 560,
         backgroundColor: '#fafafa',
-
+        alignItems: 'center'
     },
     boxView: {
-        width: '100%',
+        width: '90%',
         height: 100,
         backgroundColor:'white',
         borderRadius: 13,
-        marginTop: 10
+        marginTop: 10,
     },
 
     bigText: {

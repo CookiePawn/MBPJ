@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     profileView: {
         width: '90%',
         height: 100,
-        marginTop: 30,
+        marginTop: 10,
         flexDirection: 'row',
     },
     profileImage: {

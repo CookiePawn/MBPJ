@@ -220,7 +220,7 @@ const StartUpInfo = (props) => {
                                 styles.smallText1,
                                 {
                                     position: 'absolute',
-                                    top: 30,
+                                    top: 28,
                                     right: 0,
                                 }
                             ]}>자세히 보기</Text>
@@ -270,7 +270,7 @@ const StartUpInfo = (props) => {
                                 >
                                     <View style={[styles.memberView, { borderColor: item.id === admin ? 'gold' : 'rgba(0, 0, 0, 0.05)' }]}>
                                         {item.id == admin && (
-                                            <Icon name='star' color='gold' size={25} style={{ marginLeft: 15 }} />
+                                            <Icon name='user-tie' color='gold' size={25} style={{ marginLeft: 15 }} />
                                         )}
                                         <Image
                                             style={styles.userImage}
@@ -372,7 +372,7 @@ const styles = StyleSheet.create({
     profileView: {
         width: '90%',
         height: 60,
-        marginTop: 30,
+        marginTop: 10,
         flexDirection: 'row',
     },
 
@@ -464,7 +464,7 @@ const styles = StyleSheet.create({
         width: 60,
         height: 60,
         borderRadius: 100,
-        marginLeft: 10,
+        marginLeft: 15,
     },
     userName: {
         marginLeft: 10,
