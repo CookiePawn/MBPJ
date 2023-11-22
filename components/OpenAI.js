@@ -1,7 +1,7 @@
 import axios from 'axios';
 
+import { openaiKey } from '../keys/Key'
 
-const apiKey = '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'
 
 
 
@@ -34,7 +34,7 @@ export const openAIStartup = async (title, introduce, stack) => {
             {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`,
+                    'Authorization': `Bearer ${openaiKey}`,
                 }
             }
         )
@@ -100,7 +100,7 @@ export const openAIUser = async (info, introduce, career, project) => {
             {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`,
+                    'Authorization': `Bearer ${openaiKey}`,
                 }
             }
         )
@@ -150,7 +150,7 @@ export const startupDALLE = async (name, title, introduce) => {
             {
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`
+                    'Authorization': `Bearer ${openaiKey}`
                 }
             }
         );

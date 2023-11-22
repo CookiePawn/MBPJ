@@ -13,7 +13,6 @@ export const fetchLang = async () => {
     try {
         const repos = await loadRepositories();
         if (repos) {
-            const languageCounts = {};
             for (const repo of repos) {
                 const response = await octokit.request('GET /repos/{owner}/{repo}/languages', {
                     owner: 'CookiePawn',
