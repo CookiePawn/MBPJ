@@ -1,4 +1,7 @@
 
+
+
+
 //github rest api
 import { Octokit } from "@octokit/core";
 
@@ -10,6 +13,8 @@ const octokit = new Octokit();
 
 //사용자 프로젝트 사용 코드 불러오기
 export const fetchLang = async () => {
+    let repoName = []
+    let repoLang = {}
     try {
         const repos = await loadRepositories();
         if (repos) {
@@ -18,12 +23,22 @@ export const fetchLang = async () => {
                     owner: 'CookiePawn',
                     repo: repo
                 });
-                console.log(`Languages for ${repo}:`, response.data);
+
+                repoName.push(repo)
+                
+                for (const language in response.data) {
+                    if (!repoLang[language]) {
+                        repoLang[language] = 0;
+                    }
+                    repoLang[language] += response.data[language];
+                }
             }
         }
     } catch (error) {
         console.error('Error fetching languages:', error);
     }
+    console.log(repoName)
+    console.log(repoLang)
 }
 
 

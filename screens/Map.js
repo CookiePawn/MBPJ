@@ -18,6 +18,10 @@ import Icon from 'react-native-vector-icons/Ionicons'
 //import { Polyline } from 'react-native-svg';
 
 
+//api 키
+import { googleKey } from '../keys/Key'
+
+
 
 //db 로드
 import { loadUsers } from '../DB/LoadDB';
@@ -37,7 +41,6 @@ const Map = (props) => {
     const name = params ? params.name : null;
     const email = params ? params.email : null;
     const phone = params ? params.phone : null;
-    const crn = params ? params.crn : null;
     const image = params ? params.image : null;
 
     const isFocused = useIsFocused();
@@ -140,7 +143,7 @@ const Map = (props) => {
     const getAddressCoordinates = async (address) => {
         try {
           const requests = address.map(address => 
-                axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyA3vnYV9dAnCW04ApXSFgJIow4XZtjXqOk`)
+                axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${googleKey}`)
           );
 
             const responses = await Promise.all(requests)

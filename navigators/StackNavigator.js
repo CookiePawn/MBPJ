@@ -10,7 +10,7 @@ import PersonSignUp from '../screens/SignUp-Person'
 import Category from '../screens/Category'
 import MyPage from '../screens/MyPage';
 import MyProfile from '../screens/MyProfile'
-import Map from '../screens/Map';
+//import Map from '../screens/Map';
 import People from '../screens/List-People';
 import CofounderList from '../screens/List-Cofounder';
 import CofounderEdit from '../screens/Cofounder-edit';
@@ -56,7 +56,6 @@ const StackNavigator = () => {
 
 
             {/*미완성*/}
-            <Stack.Screen name='Map' component={Map}/>
             <Stack.Screen name='People' component={People}/>
             <Stack.Screen name='PeopleInfo' component={PeopleInfo}/>
             <Stack.Screen name='EditPeopleInfo' component={EditPeopleInfo}/>
