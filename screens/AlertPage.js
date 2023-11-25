@@ -379,7 +379,8 @@ const styles = StyleSheet.create({
     btView: {
         flexDirection: 'row',
         width: '90%',
-        marginBottom: 5
+        marginBottom: 5,
+        position: 'relative'
     },
 
     letterView: (isActive) => ({
@@ -387,12 +388,12 @@ const styles = StyleSheet.create({
         width: 76,
         height: 34,
         borderRadius: 20,
+        justifyContent: 'center'
     }),
     letterText: (isActive) => ({
         fontWeight: 'light',
         color: isActive ? 'white' : '#999999',
         textAlign: 'center',
-        marginTop: 10
     }),
 
     joinView: (isActive) => ({
@@ -401,12 +402,12 @@ const styles = StyleSheet.create({
         height: 34,
         borderRadius: 20,
         marginLeft: 10,
+        justifyContent: 'center'
     }),
     joinText: (isActive) => ({
         fontWeight: 'light',
         color: isActive ? 'white' : '#999999',
         textAlign: 'center',
-        marginTop: 10
     }),
 
     choiceView: {
@@ -432,7 +433,7 @@ const styles = StyleSheet.create({
     choiceNoText: {
         fontSize: 16,
         color: 'red',
-        textAlign: 'right',
+        marginLeft: 28,
         marginTop: 35,
         fontWeight: 'bold',
     },

@@ -202,6 +202,8 @@ const StartUpInfo = (props) => {
                             source={foundImage ? { uri: foundImage.url } : require('../assets/start-solo.png')}
                         />
                     </View>
+                    
+                    <Text style={styles.bigText}>단계</Text>
                     <TouchableOpacity
                         onPress={() => {
                             props.navigation.navigate('StartupStep', {
@@ -215,17 +217,12 @@ const StartUpInfo = (props) => {
                             })
                         }}
                     >
-                        <Text
-                            style={[
-                                styles.smallText1,
-                                {
-                                    position: 'absolute',
-                                    top: 28,
-                                    right: 0,
-                                }
-                            ]}>자세히 보기</Text>
+                        <View style={styles.moreView}>
+                            <Text style={styles.smallText}>
+                                자세히 보기
+                            </Text>
+                        </View>
                     </TouchableOpacity>
-                    <Text style={styles.bigText}>단계</Text>
                     <Text style={styles.smallText}>{startup.step} 단계</Text>
 
                     <Text style={styles.bigText}>분야</Text>
@@ -268,9 +265,9 @@ const StartUpInfo = (props) => {
                                         })
                                     }}
                                 >
-                                    <View style={[styles.memberView, { borderColor: item.id === admin ? 'gold' : 'rgba(0, 0, 0, 0.05)' }]}>
+                                    <View style={styles.memberView}>
                                         {item.id == admin && (
-                                            <Icon name='user-tie' color='gold' size={25} style={{ marginLeft: 15 }} />
+                                            <Icon name='crown' color='gold' size={25} style={styles.crownView} />
                                         )}
                                         <Image
                                             style={styles.userImage}
@@ -419,6 +416,11 @@ const styles = StyleSheet.create({
         height: 500,
         marginTop: 0,
     },
+    moreView: {
+        position: 'absolute',
+        justifyContent: 'center',
+        right: 0,
+    },
     bigText: {
         color: '#111',
         fontSize: 20,
@@ -430,13 +432,6 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '400',
         marginBottom: 35,
-    },
-    smallText1: {
-        color: 'rgba(153, 153, 153, 0.60)',
-        fontSize: 14,
-        fontWeight: '400',
-        marginBottom: 35,
-        marginTop: 5
     },
     midText: {
         fontSize: 16,
@@ -455,9 +450,6 @@ const styles = StyleSheet.create({
         marginRight: 20,
         flexDirection: 'row',
         alignItems: 'center',
-        borderRadius: 30,
-        borderWidth: 1,
-        borderColor: 'rgba(0, 0, 0, 0.05)',
         marginBottom: 30,
     },
     userImage: {
@@ -477,6 +469,11 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: 400,
         lineHeight: 23,
+    },
+    crownView: {
+        position: 'absolute',
+        marginLeft: 30,
+        top: 0
     },
 
 

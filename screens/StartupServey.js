@@ -547,6 +547,7 @@ const styles = StyleSheet.create({
         height: 34,
         borderRadius: 20,
         position: 'relative',
+        justifyContent: 'center'
         //marginLeft: 90,
     },
     noBt: {
@@ -555,7 +556,8 @@ const styles = StyleSheet.create({
         height: 34,
         borderRadius: 20,
         position: 'relative',
-        marginLeft: 20
+        marginLeft: 20,
+        justifyContent: 'center'
     },
 
 
@@ -566,7 +568,6 @@ const styles = StyleSheet.create({
         fontWeight: 'light',
         color: '#999999',
         textAlign:'center',
-        marginTop: 10,
     },
 
     stepGoText: {

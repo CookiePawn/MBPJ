@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 import { useState, useEffect } from 'react'
 
-import Icon from 'react-native-vector-icons/Ionicons'
+import Icon from 'react-native-vector-icons/FontAwesome5'
 
 //헤더
 import Header from '../components/Header'

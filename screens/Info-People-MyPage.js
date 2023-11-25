@@ -239,9 +239,9 @@ const SeeMyPage = (props) => {
                                         })
                                     }}
                                 >
-                                    <View style={[styles.memberView, { borderColor: isAdmin ? 'gold' : 'rgba(0, 0, 0, 0.05)' }]}>
+                                    <View style={styles.memberView}>
                                         {isAdmin && (
-                                            <Icon name='user-tie' color='gold' size={25} style={{ marginLeft: 15 }} />
+                                            <Icon name='crown' color='gold' size={25} style={styles.crownView} />
                                         )}
                                         <Image
                                             style={styles.userImage}
@@ -350,13 +350,15 @@ const styles = StyleSheet.create({
     },
     memberView: {
         height: 100,
-        marginRight: 20,
+        marginRight: 10,
         flexDirection: 'row',
         alignItems: 'center',
-        borderRadius: 30,
-        borderWidth: 1,
-        borderColor: 'rgba(0, 0, 0, 0.05)',
         marginBottom: 30,
+    },
+    crownView:{
+        position:'absolute',
+        marginLeft: 30,
+        top: 0
     },
     userImage: {
         width: 60,

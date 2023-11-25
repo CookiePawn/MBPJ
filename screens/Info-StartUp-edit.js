@@ -233,6 +233,7 @@ const StartUpEdit = (props) => {
                 showsVerticalScrollIndicator={false}
             >
                 <View style={{ flex: 1 }}>
+                    <Text style={styles.bigText}>단계</Text>
                     <TouchableOpacity
                         onPress={() => {
                             props.navigation.navigate('StartupServey', {
@@ -247,17 +248,12 @@ const StartUpEdit = (props) => {
                             })
                         }}
                     >
-                        <Text
-                            style={[
-                                styles.smallText,
-                                {
-                                    position: 'absolute',
-                                    top: 26,
-                                    right: 0,
-                                }
-                            ]}>단계 재설정</Text>
+                        <View style={styles.retryView}>
+                            <Text style={styles.smallText}>
+                                단계 재설정
+                            </Text>
+                        </View>
                     </TouchableOpacity>
-                    <Text style={styles.bigText}>단계</Text>
                     <Text style={styles.smallText}>{eStep} 단계</Text>
 
 
@@ -321,7 +317,7 @@ const StartUpEdit = (props) => {
                             })
                         }}
                     >
-                        <Text style={styles.smallText1}>{location}</Text>
+                        <Text style={styles.smallText}>{location}</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
@@ -423,6 +419,11 @@ const styles = StyleSheet.create({
         marginTop: 30,
 
     },
+    retryView:{
+        position: 'absolute',
+        justifyContent: 'center',
+        right: 0,
+    },
     bigText: {
         color: '#111',
         fontSize: 20,
@@ -440,14 +441,7 @@ const styles = StyleSheet.create({
         color: 'rgba(153, 153, 153, 0.60)',
         fontSize: 14,
         fontWeight: '400',
-        marginBottom: 30,
-    },
-    smallText1: {
-        color: 'rgba(153, 153, 153, 0.60)',
-        fontSize: 14,
-        fontWeight: '400',
-        marginBottom: 30,
-        marginTop: 10,
+        marginBottom: 35,
     },
     midText: {
         fontSize: 16,

@@ -238,9 +238,9 @@ const PersonInfo = (props) => {
                                         })
                                     }}
                                 >
-                                    <View style={[styles.memberView, { borderColor: isAdmin ? 'gold' : 'rgba(0, 0, 0, 0.05)' }]}>
+                                    <View style={styles.memberView}>
                                         {isAdmin && (
-                                            <Icon name='user-tie' color='gold' size={25} style={{ marginLeft: 15 }} />
+                                            <Icon name='crown' color='gold' size={25} style={styles.crownView} />
                                         )}
                                         <Image
                                             style={styles.userImage}
@@ -389,9 +389,6 @@ const styles = StyleSheet.create({
         marginRight: 20,
         flexDirection: 'row',
         alignItems: 'center',
-        borderRadius: 30,
-        borderWidth: 1,
-        borderColor: 'rgba(0, 0, 0, 0.05)',
         marginBottom: 30,
     },
     userImage: {
@@ -411,6 +408,11 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: 400,
         lineHeight: 23,
+    },
+    crownView:{
+        position:'absolute',
+        marginLeft: 30,
+        top: 0
     },
 
 })

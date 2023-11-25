@@ -9,7 +9,7 @@ import {
 } from 'react-native'
 
 
-import Icon from 'react-native-vector-icons/Ionicons'
+import Icon from 'react-native-vector-icons/FontAwesome5'
 
 import { useIsFocused } from '@react-navigation/native'
 
@@ -135,9 +135,9 @@ export const Stat1 = (props) => {
                             }}
                         >
 
-                            <View style={[styles.startupView, { borderColor: isAdmin ? 'gold' : 'rgba(0, 0, 0, 0.05)' }]}>
+                            <View style={styles.startupView}>
                                 {isAdmin && (
-                                    <Icon name='user-tie' color='gold' size={25} style={{ marginLeft: 15 }} />
+                                    <Icon name='crown' color='gold' size={25} style={styles.crownView} />
                                 )}
                                 <Image
                                     style={styles.profileImage}
@@ -200,9 +200,6 @@ const styles = StyleSheet.create({
     //소속 스타트업 스타일
     startupView: {
         height: 100,
-        borderRadius: 30,
-        borderColor: 'rgba(0, 0, 0, 0.10)',
-        borderWidth: 1,
         marginTop: 30,
         flexDirection: 'row',
         alignItems: 'center',
@@ -223,6 +220,11 @@ const styles = StyleSheet.create({
         fontWeight: 400,
         color: 'rgba(0, 0, 0, 0.3)',
         lineHeight: 25,
+    },
+    crownView:{
+        position:'absolute',
+        marginLeft: 35,
+        top: -5
     },
 
 
