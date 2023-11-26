@@ -148,7 +148,7 @@ const Team = (props) => {
                             })
                         }}
                     >
-                        <Text style={{ textAlign: 'right' }}>글 작성하기</Text>
+                        <Text style={{ textAlign: 'right', fontWeight: 'bold', color: '#767676' }}>글 작성하기</Text>
                     </TouchableOpacity>
                 )}
             </View>

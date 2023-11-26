@@ -51,10 +51,10 @@ const StartUpEdit = (props) => {
     const [pickerOpen, setPickerOpen] = useState(false);
     const [fieldValue, setFieldValue] = useState(null);
     const [fieldItems, setFieldItems] = useState([
-        {label : 'IT', value : 'IT'},
-        {label : 'Education', value : 'Education'},
-        {label : 'F&B', value : 'F&B'},
-        {label : 'Creative', value : 'Creative'},
+        { label: 'IT', value: 'IT' },
+        { label: 'Education', value: 'Education' },
+        { label: 'F&B', value: 'F&B' },
+        { label: 'Creative', value: 'Creative' },
     ])
     const [savedField, setSavedField] = useState('Choose Your Field');
 
@@ -111,8 +111,8 @@ const StartUpEdit = (props) => {
     return (
         <View style={styles.mainView}>
             <Header
-                navi = {props}
-                params = {{
+                navi={props}
+                params={{
                     num: num,
                     id: id,
                     pw: pw,
@@ -124,7 +124,7 @@ const StartUpEdit = (props) => {
                 iconNameL1='arrow-back-outline'
                 iconNameR1='notifications'
                 iconNameR2='home'
-                login = {num}
+                login={num}
             />
             <View style={styles.profileView}>
 
@@ -213,7 +213,7 @@ const StartUpEdit = (props) => {
                 style={styles.chatBtn}
                 onPress={
                     async () => {
-                        if(num != '' && title != '' && fieldValue != null && idea != '' && info != '' && benefit != '' && profileImg != null) {
+                        if (num != '' && title != '' && fieldValue != null && idea != '' && info != '' && benefit != '' && profileImg != null) {
                             await addCofounder(num, title, fieldValue, idea, info, benefit, profileImg);
                             props.navigation.navigate("CofounderList", {
                                 num: num,
@@ -223,11 +223,11 @@ const StartUpEdit = (props) => {
                                 name: name,
                                 email: email,
                                 image: image,
-                        })
+                            })
                         } else {
                             alert("모든 정보를 입력했는지 확인해주세요")
                         }
-                        
+
                     }
 
                 }

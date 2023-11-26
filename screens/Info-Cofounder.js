@@ -322,9 +322,6 @@ const styles = StyleSheet.create({
         marginRight: 20,
         flexDirection: 'row',
         alignItems: 'center',
-        borderRadius: 30,
-        borderWidth: 1,
-        borderColor: 'rgba(0, 0, 0, 0.05)',
         marginBottom: 30,
     },
     userImage: {

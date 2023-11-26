@@ -146,8 +146,8 @@ const MyProfile = (props) => {
     return (
         <View style={styles.mainView}>
             <Header
-                navi = {props}
-                params = {{
+                navi={props}
+                params={{
                     num: num,
                     id: id,
                     pw: pw,
@@ -159,10 +159,10 @@ const MyProfile = (props) => {
                 iconNameL1='arrow-back-outline'
                 iconNameR1='notifications'
                 iconNameR2='home'
-                login = {num}
+                login={num}
                 titleName='내 프로필'
             />
-        
+
             <View style={styles.profileView}>
                 {
                     // profileImg가 null이 아니면 바로 profileImg를 사용하고,
@@ -234,7 +234,7 @@ const MyProfile = (props) => {
                         maxLength={20}
                     />
                 </View>
-                <View style={{alignItems:'center'}}>
+                <View style={{ alignItems: 'center' }}>
                     <TouchableOpacity
                         style={styles.saveBtn}
                         onPress={async () => {
@@ -263,7 +263,7 @@ const MyProfile = (props) => {
                         ) : (
                             <Text style={styles.saveBtnText}>저장하기</Text>
                         )}
-                    </TouchableOpacity>    
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>
@@ -378,6 +378,6 @@ const styles = StyleSheet.create({
     saveBtnText: {
         fontSize: 16,
         fontWeight: 600,
-        color:'white',
+        color: 'white',
     },
 })
