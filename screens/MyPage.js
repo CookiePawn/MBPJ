@@ -15,11 +15,7 @@ import Header from '../components/Header';
 
 
 //db 로드
-import { 
-    userImages,
-
-    loadUserSelect
-} from '../DB/LoadDB'
+import { loadUserImages, loadUserSelect } from '../DB/LoadDB'
 
 
 
@@ -45,15 +41,16 @@ const MyPage = (props) => {
     const isFocused = useIsFocused();
 
     useEffect(() => {
-        const fetchDB = async () => {
-            setImageUrl(userImages);
+        const fetchImage = async () => {
+            const images = await loadUserImages();
+            setImageUrl(images);
         };
         const fetchUser = async () => {
             const users = await loadUserSelect(num)
             setUser(users)
         }
 
-        fetchDB();
+        fetchImage();
         fetchUser()
     }, [isFocused]);
 

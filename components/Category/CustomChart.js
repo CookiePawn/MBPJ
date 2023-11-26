@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Dimensions,StyleSheet } from 'react-native';
 import { PieChart } from 'react-native-gifted-charts';
+import { loadConnect } from '../../DB/LoadDB';
 import Swiper from 'react-native-swiper/src'
 const { width } = Dimensions.get('window')
-
-
-//DB 로드
-import { connectDBs } from '../../DB/LoadDB';
 
 
 const CustomChart = () => {
@@ -16,10 +13,11 @@ const CustomChart = () => {
     const [chartList, setChartList] = useState([])
 
     useEffect(() => {
-        const fetchDB = async () => {
-            setConnect(connectDBs);
+        const fetchConnect = async () => {
+            const connects = await loadConnect();
+            setConnect(connects);
         };
-        fetchDB();
+        fetchConnect();
     }, []);
 
     useEffect(() => {

@@ -19,8 +19,7 @@ import Header from '../components/Header';
 
 //db 로드
 import {
-    addCofounder,
-    loadCofounder,
+    addCofounder
 } from '../DB/LoadDB'
 
 import DropDownPicker from 'react-native-dropdown-picker'
@@ -216,7 +215,6 @@ const StartUpEdit = (props) => {
                     async () => {
                         if(num != '' && title != '' && fieldValue != null && idea != '' && info != '' && benefit != '' && profileImg != null) {
                             await addCofounder(num, title, fieldValue, idea, info, benefit, profileImg);
-                            await loadCofounder()
                             props.navigation.navigate("CofounderList", {
                                 num: num,
                                 id: id,

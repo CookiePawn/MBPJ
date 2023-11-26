@@ -14,12 +14,7 @@ import { useIsFocused } from '@react-navigation/native';
 import Header from '../components/Header';
 
 //DB
-import { 
-    loadLetterSelect, 
-    deleteLetter, 
-    loadLetter,
-    loadUserSelect 
-} from '../DB/LoadDB'
+import { loadLetterSelect, deleteLetter, loadUserSelect } from '../DB/LoadDB'
 
 
 
@@ -127,7 +122,6 @@ const LetterPage = (props) => {
                     onPress={async() => {
                         alert('쪽지가 삭제되었습니다')
                         await deleteLetter(letter.id)
-                        await loadLetter()
                         props.navigation.navigate('AlertPage', {
                             num: num,
                             id: id,

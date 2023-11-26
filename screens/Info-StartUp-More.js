@@ -22,6 +22,7 @@ import {
 
 
 
+
 const StartUpEdit = (props) => {
     //로그인 확인
     const { params } = props.route;

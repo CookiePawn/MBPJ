@@ -22,13 +22,10 @@ import { renderFullScreenLoading } from '../../components/Loading'
 
 //DB
 import {
-    startupDBs,
-    startupImages,
-    memberDBs,
-
     addStartUp,
-
     loadStartUps,
+    loadStartUpImages,
+    loadMember,
 } from '../../DB/LoadDB'
 
 import DropDownPicker from 'react-native-dropdown-picker'
@@ -173,7 +170,6 @@ export const Stat0 = (props) => {
                         if (suName != '' && title != '' && introduce != '' && stack != '' && location != '주소를 입력해주세요' && fieldValue != null && props.perID != null) {
                             setIsLoading(true)
                             await addStartUp(suName, fieldValue, title, introduce, stack, location, props.perID)
-                            await loadStartUps()
                             props.navi.navigation.navigate('Category', props.params)
                         } else {
                             alert("모든 정보를 입력했는지 확인해주세요")
@@ -221,15 +217,19 @@ export const Stat1 = (props) => {
 
 
     useEffect(() => {
-        const fetchDB = async () => {
-            setImageUrl(startupImages)
-            setStartup(startupDBs)
-        }
-
+        const fetchStartUpImage = async () => {
+            const images = await loadStartUpImages()
+            setImageUrl(images)
+        };
+        const fetchStartups = async () => {
+            const startups = await loadStartUps()
+            setStartup(startups)
+        };
         const fetchMember = async () => {
+            const members = await loadMember();
             const newMembers = []; // 새로운 멤버를 임시 저장할 배열을 생성합니다.
 
-            memberDBs.forEach((item) => {
+            members.forEach((item) => {
                 if (props.perID === item.perID) {
                     newMembers.push({ suID: item.suID, admin: item.admin }); // 조건에 맞는 suID만 임시 배열에 추가합니다.
                 }
@@ -238,7 +238,8 @@ export const Stat1 = (props) => {
         };
 
 
-        fetchDB()
+        fetchStartUpImage()
+        fetchStartups()
         fetchMember()
     }, [isFocused])
 
