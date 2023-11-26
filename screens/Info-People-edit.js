@@ -20,11 +20,9 @@ import { renderFullScreenLoading } from '../components/Loading'
 
 //db 로드
 import {
-    userImages,
-    
+    loadUserImages,
     loadUserSelect,
     updateUserProject,
-    loadUsers,
 } from '../DB/LoadDB'
 
 
@@ -73,8 +71,9 @@ const PersonInfo = (props) => {
 
     useEffect(() => {
 
-        const fetchDB = async () => {
-            setImageUrl(userImages);
+        const fetchImage = async () => {
+            const images = await loadUserImages();
+            setImageUrl(images);
         };
         const fetchUserInfo = async () => {
             const users = await loadUserSelect(num);
@@ -92,7 +91,7 @@ const PersonInfo = (props) => {
 
         };
 
-        fetchDB();
+        fetchImage();
         fetchUserInfo();
 
     }, [isFocused]);
@@ -204,7 +203,6 @@ const PersonInfo = (props) => {
                         if (num != '' && fieldValue != null && eInfo != '' && eCareer != '' && eIntroduce != '' && eProject != '') {
                             setIsLoading(true)
                             await updateUserProject(num, fieldValue, eInfo, eCareer, eIntroduce, eProject);
-                            await loadUsers()
                             props.navigation.navigate("MyPage", {
                                 num: num,
                                 id: id,

@@ -6,7 +6,11 @@ import {
     StyleSheet,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
+import React, { useState, useEffect } from 'react'
 
+
+//db 로드
+import { updateStartUpStep } from '../DB/LoadDB'
 
 
 

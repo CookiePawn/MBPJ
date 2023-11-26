@@ -18,18 +18,14 @@ import Header from '../components/Header';
 
 //db 로드
 import {
-    userImages,
-    userDBs,
-    letterDBs,
-    joinDBs,
-    startupDBs,
-
-    deleteJoin,
-    loadJoin,
-    addMember,
-    loadMember,
-    deleteLetter,
+    loadUserImages,
+    loadUsers,
     loadLetter,
+    loadJoin,
+    loadStartUps,
+    deleteJoin,
+    addMember,
+    deleteLetter,
 } from '../DB/LoadDB'
 
 
@@ -143,16 +139,33 @@ const AlertPage = (props) => {
     const isFocused = useIsFocused();
 
     useEffect(() => {
-        const fetchDB = async () => {
-            setImageUrl(userImages);
-            setUser(userDBs);
-            setLetter(letterDBs);
-            setJoin(joinDBs);
-            setStartup(startupDBs)
+        const fetchImage = async () => {
+            const images = await loadUserImages();
+            setImageUrl(images);
+        };
+        const fetchUserInfo = async () => {
+            const users = await loadUsers();
+            setUser(users);
+        };
+        const fetchLetter = async () => {
+            const letters = await loadLetter();
+            setLetter(letters);
+        }
+        const fetchJoin = async () => {
+            const joins = await loadJoin();
+            setJoin(joins);
+        }
+        const fetchStartUp = async () => {
+            const startups = await loadStartUps()
+            setStartup(startups)
         }
 
-            fetchDB();
-        }, [isFocused]);
+        fetchImage();
+        fetchUserInfo();
+        fetchLetter();
+        fetchJoin();
+        fetchStartUp()
+    }, [isFocused]);
 
 
 
@@ -160,7 +173,6 @@ const AlertPage = (props) => {
     const handleDeleteJoin = async (joinId, perID, suID) => {
         try {
             await deleteJoin(joinId, perID, suID);
-            await loadJoin()
             // 삭제한 후에 배열을 다시 로드
             const joins = await loadJoin();
             setJoin(joins);
@@ -175,7 +187,6 @@ const AlertPage = (props) => {
         try {
             alert('쪽지가 삭제되었습니다')
             await deleteLetter(letterId);
-            await loadLetter()
             // 삭제한 후에 배열을 다시 로드
             const letters = await loadLetter();
             setLetter(letters);
@@ -194,8 +205,8 @@ const AlertPage = (props) => {
     return (
         <View style={styles.mainView}>
             <Header
-                navi={props}
-                params={{
+                navi = {props}
+                params = {{
                     num: num,
                     id: id,
                     pw: pw,
@@ -207,7 +218,7 @@ const AlertPage = (props) => {
                 iconNameL1='arrow-back-outline'
                 iconNameR1='notifications'
                 iconNameR2='home'
-                login={num}
+                login = {num}
                 titleName='알림 센터'
             />
             <View style={styles.btView}>
@@ -288,10 +299,7 @@ const AlertPage = (props) => {
                                     image: image,
                                     people: matchingUser.id,
                                 }}
-                                add={async () => {
-                                    await addMember(item.perID, item.suID)
-                                    await loadMember()
-                                }}
+                                add={async() => await addMember(item.perID, item.suID)}
                                 delete={() => handleDeleteJoin(item.id, item.perID, item.suID)}
                             />
                         );
@@ -320,7 +328,7 @@ const styles = StyleSheet.create({
 
 
 
-
+    
 
     //사람 목록
     listView: {

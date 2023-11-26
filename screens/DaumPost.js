@@ -1,6 +1,6 @@
 import Postcode from '@actbase/react-daum-postcode';
 
-const DaumPost = (props) => {
+const DaumPost = (props, navigation) => {
     //로그인 확인
     const { params } = props.route;
     const num = params ? params.num : null;
@@ -14,6 +14,13 @@ const DaumPost = (props) => {
     const people = params ? params.people : null;
 
 
+
+
+    const getAddress = {
+        zonecode: '',
+        address: '',
+        buildingName: '',
+    }
 
 
     const getData = (data) => {

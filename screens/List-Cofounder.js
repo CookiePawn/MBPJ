@@ -18,9 +18,9 @@ import Header from '../components/Header';
 
 //DB
 import {
-    cofounderDBs,
-    userDBs,
-    cofounderImages,
+    loadCofounder,
+    loadUsers,
+    loadCofounderImages,
 } from '../DB/LoadDB'
 
 
@@ -57,16 +57,27 @@ const Cofounder = (props) => {
 
 
     useEffect(() => {
-        const fetchDB = async () => {
-            setCofounder(cofounderDBs)
-            setImageurl(cofounderImages)
-            setUser(userDBs)
+        const fetchCofounder = async () => {
+            const cofounders = await loadCofounder();
+            setCofounder(cofounders);
+        };
+        const fetchImage = async () => {
+            const images = await loadCofounderImages()
+            setImageurl(images)
         }
 
-        fetchDB()
+        fetchCofounder()
+        fetchImage()
     }, [isFocused])
 
 
+    useEffect(() => {
+        const fetchUser = async () => {
+            const users = await loadUsers();
+            setUser(users);
+        };
+        fetchUser()
+    }, [cofounder])
 
 
 

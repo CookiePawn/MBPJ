@@ -14,7 +14,7 @@ import Header from '../components/Header';
 
 
 //db 로드
-import { userDBs } from '../DB/LoadDB'
+import { loadUsers } from '../DB/LoadDB'
 
 
 
@@ -50,11 +50,12 @@ const Login = (props) => {
 
 
     useEffect(() => {
-        const fetchDB = async () => {
-            setUser(userDBs);
+        const fetchUser = async () => {
+            const users = await loadUsers();
+            setUser(users);
         };
 
-        fetchDB();
+        fetchUser();
     }, [isFocused]);
 
 
