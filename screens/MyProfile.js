@@ -23,7 +23,17 @@ import Header from '../components/Header';
 
 
 //db 로드
-import { loadUserImages, updateUserProfile, updateUserImage, loadUserSelect } from '../DB/LoadDB'
+import {
+    userImages,
+
+    loadUsers,
+    loadUserImages,
+
+    updateUserProfile,
+
+    updateUserImage,
+    loadUserSelect
+} from '../DB/LoadDB'
 
 
 
@@ -53,9 +63,8 @@ const MyProfile = (props) => {
     const isFocused = useIsFocused();
 
     useEffect(() => {
-        const fetchImage = async () => {
-            const images = await loadUserImages();
-            setImageUrl(images);
+        const fetchDB = async () => {
+            setImageUrl(userImages);
         };
         const fetchUser = async () => {
             const users = await loadUserSelect(num);
@@ -66,7 +75,7 @@ const MyProfile = (props) => {
                 setLocation(users.location)
             }
         };
-        fetchImage()
+        fetchDB()
         fetchUser();
 
     }, [isFocused]);
@@ -128,7 +137,8 @@ const MyProfile = (props) => {
             );
 
             // 선택한 이미지를 Firebase Storage에 업로드하는 함수 호출
-            updateUserImage(resizedImage.uri, id);
+            await updateUserImage(resizedImage.uri, id);
+            await loadUserImages()
             setProfileImg(resizedImage.uri);
         }
     };
@@ -146,8 +156,8 @@ const MyProfile = (props) => {
     return (
         <View style={styles.mainView}>
             <Header
-                navi = {props}
-                params = {{
+                navi={props}
+                params={{
                     num: num,
                     id: id,
                     pw: pw,
@@ -159,10 +169,10 @@ const MyProfile = (props) => {
                 iconNameL1='arrow-back-outline'
                 iconNameR1='notifications'
                 iconNameR2='home'
-                login = {num}
+                login={num}
                 titleName='내 프로필'
             />
-        
+
             <View style={styles.profileView}>
                 {
                     // profileImg가 null이 아니면 바로 profileImg를 사용하고,
@@ -234,14 +244,14 @@ const MyProfile = (props) => {
                         maxLength={20}
                     />
                 </View>
-                <View style={{alignItems:'center'}}>
+                <View style={{ alignItems: 'center' }}>
                     <TouchableOpacity
                         style={styles.saveBtn}
                         onPress={async () => {
                             if (rePw != '') {
                                 setIsLoading(true)
                                 await updateUserProfile(num, rePw, location)
-
+                                await loadUsers()
                                 alert('개인정보가 변경되었습니다!')
                                 props.navigation.navigate('MyPage', {
                                     num: num,
@@ -263,7 +273,7 @@ const MyProfile = (props) => {
                         ) : (
                             <Text style={styles.saveBtnText}>저장하기</Text>
                         )}
-                    </TouchableOpacity>    
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>
@@ -378,6 +388,6 @@ const styles = StyleSheet.create({
     saveBtnText: {
         fontSize: 16,
         fontWeight: 600,
-        color:'white',
+        color: 'white',
     },
 })

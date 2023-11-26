@@ -15,8 +15,13 @@ import Header from '../components/Header'
 
 
 //DB
-import { addLetter, loadUserSelect } from '../DB/LoadDB'
-import { shadow } from 'react-native-paper'
+import { 
+    addLetter, 
+
+    loadLetter,
+
+    loadUserSelect,
+} from '../DB/LoadDB'
 
 
 
@@ -92,6 +97,7 @@ const LetterPage = (props) => {
                 onPress={async () => {
                     if (eInfo !== '') {
                         await addLetter(num, people, eInfo)
+                        await loadLetter()
                         alert('쪽지를 보냈습니다')
                         props.navigation.navigate('Category', {
                             num: num,

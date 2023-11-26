@@ -26,7 +26,12 @@ import { renderFullScreenLoading } from '../components/Loading'
 
 //db 로드
 import {
+    startupImages,
+    
+
+    loadStartUps,
     loadStartUpImages,
+
     loadStartUpSelect,
     updateStartUpProject,
     updateStartUpImage,
@@ -79,9 +84,8 @@ const StartUpEdit = (props) => {
 
     useEffect(() => {
 
-        const fetchImage = async () => {
-            const images = await loadStartUpImages();
-            setImageUrl(images);
+        const fetchDB = async () => {
+            setImageUrl(startupImages);
         };
         const fetchUserInfo = async () => {
             const users = await loadStartUpSelect(people);
@@ -105,7 +109,7 @@ const StartUpEdit = (props) => {
 
         };
 
-        fetchImage();
+        fetchDB();
         fetchUserInfo();
 
     }, [isFocused]);
@@ -166,7 +170,8 @@ const StartUpEdit = (props) => {
             );
 
             // 선택한 이미지를 Firebase Storage에 업로드하는 함수 호출
-            updateStartUpImage(resizedImage.uri, user.name);
+            await updateStartUpImage(resizedImage.uri, user.name);
+            await loadStartUpImages()
             setProfileImg(resizedImage.uri);
         }
     };
@@ -329,6 +334,7 @@ const StartUpEdit = (props) => {
                         if (people != '' && fieldValue != null && eInfo != '' && eIntroduce && eStack != '' && location != '') {
                             setIsLoading(true)
                             await updateStartUpProject(people, fieldValue, eInfo, eIntroduce, eStack, location);
+                            await loadStartUps()
                             props.navigation.navigate("StartUpInfo", {
                                 num: num,
                                 id: id,

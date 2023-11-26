@@ -16,7 +16,10 @@ import Header from '../components/Header';
 
 
 //db 로드
-import { loadUserImages, loadUsers } from '../DB/LoadDB'
+import { 
+    userDBs,
+    userImages,
+} from '../DB/LoadDB'
 
 
 
@@ -80,17 +83,12 @@ const People = (props) => {
     const isFocused = useIsFocused();
 
     useEffect(() => {
-        const fetchImage = async () => {
-            const images = await loadUserImages();
-            setImageUrl(images);
-        };
-        const fetchUserInfo = async () => {
-            const users = await loadUsers();
-            setUser(users);
+        const fetchDB = async () => {
+            setImageUrl(userImages)
+            setUser(userDBs)
         };
 
-        fetchImage();
-        fetchUserInfo();
+        fetchDB()
     }, [isFocused]);
 
 

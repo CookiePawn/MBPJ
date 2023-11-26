@@ -1,13 +1,7 @@
 import {
     View,
-    Text,
-    TouchableOpacity,
-    SafeAreaView,
     StyleSheet,
 } from 'react-native'
-import { useState, useEffect } from 'react'
-
-import Icon from 'react-native-vector-icons/FontAwesome5'
 
 //헤더
 import Header from '../components/Header'

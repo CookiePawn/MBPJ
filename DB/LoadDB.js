@@ -20,6 +20,20 @@ import { openAI, openAIStartup, openAIUser, startupDALLE } from '../components/O
 
 
 
+//이거 가져다가 쓰세요!
+export let userDBs = []
+export let userImages = []
+export let startupDBs = []
+export let startupImages = []
+export let memberDBs = []
+export let cofounderDBs = []
+export let cofounderImages = []
+export let letterDBs = []
+export let joinDBs = []
+export let teamDBs = []
+export let connectDBs = []
+
+
 
 
 
@@ -53,8 +67,203 @@ export const loadUserImages = async () => {
     } catch (error) {
         console.error('이미지 로딩 오류:', error);
     }
-    return imageUrls;
+    userImages = imageUrls
 };
+
+
+
+//모든 사용자 정보 로드 
+export const loadUsers = async () => {
+    let tempArray = [];
+    try {
+        const data = await getDocs(collection(db, 'userInfo'));
+
+        data.forEach((doc) => {
+            tempArray.push({ ...doc.data(), id: doc.id });
+        });
+    } catch (error) {
+        console.log("Error fetching data:", error.message);
+    }
+    userDBs = tempArray
+};
+
+
+
+
+
+
+//스타트업 이미지 로드  
+export const loadStartUpImages = async () => {
+    let imageUrls = [];
+    try {
+        const storageRef = ref(storage, '/startupProfile');
+        const result = await listAll(storageRef);
+
+        // 각 아이템의 URL과 이름을 가져와 imageUrls 배열에 저장
+        for (const item of result.items) {
+            const url = await getDownloadURL(item);
+            imageUrls.push({ url, name: item.name });
+        }
+    } catch (error) {
+        console.error('이미지 로딩 오류:', error);
+    }
+    startupImages = imageUrls
+};
+
+
+//모든 스타트업 정보 로드   
+export const loadStartUps = async () => {
+    let tempArray = [];
+    try {
+        const data = await getDocs(collection(db, 'startupInfo'));
+
+        data.forEach((doc) => {
+            tempArray.push({ ...doc.data(), id: doc.id });
+        });
+    } catch (error) {
+        console.log("Error fetching data:", error.message);
+    }
+    startupDBs = tempArray
+};
+
+
+
+
+//소속 스타트업 - 소속 스타트업 로드 
+export const loadMember = async () => {
+    let tempArray = [];
+    try {
+        const data = await getDocs(collection(db, 'startupMember'));
+
+        data.forEach((doc) => {
+            tempArray.push({ ...doc.data(), id: doc.id });
+        });
+    } catch (error) {
+        console.log("Error fetching data:", error.message);
+    }
+    memberDBs = tempArray
+};
+
+
+
+//공동 창업자 모집 - 공동 창업자 로드 
+export const loadCofounder = async () => {
+    let tempArray = [];
+    try {
+        const data = await getDocs(collection(db, 'cofounder'));
+
+        data.forEach((doc) => {
+            tempArray.push({ ...doc.data(), id: doc.id });
+        });
+    } catch (error) {
+        console.log("Error fetching data:", error.message);
+    }
+    cofounderDBs = tempArray
+};
+
+
+
+//공동 창업자 모집 - 이미지 로드
+export const loadCofounderImages = async () => {
+    let imageUrls = [];
+    try {
+        const storageRef = ref(storage, '/cofounderProfile');
+        const result = await listAll(storageRef);
+
+        // 각 아이템의 URL과 이름을 가져와 imageUrls 배열에 저장
+        for (const item of result.items) {
+            const url = await getDownloadURL(item);
+            imageUrls.push({ url, name: item.name });
+        }
+    } catch (error) {
+        console.error('이미지 로딩 오류:', error);
+    }
+    cofounderImages = imageUrls
+};
+
+
+
+
+//쪽지 로드
+export const loadLetter = async () => {
+    let tempArray = [];
+    try {
+        const data = await getDocs(collection(db, 'letter'));
+
+        data.forEach((doc) => {
+            tempArray.push({ ...doc.data(), id: doc.id });
+        });
+    } catch (error) {
+        console.log("Error fetching data:", error.message);
+    }
+    letterDBs = tempArray
+};
+
+
+
+// 가입 로드
+export const loadJoin = async () => {
+    let tempArray = [];
+    try {
+        const data = await getDocs(collection(db, 'join'));
+
+        data.forEach((doc) => {
+            tempArray.push({ ...doc.data(), id: doc.id });
+        });
+    } catch (error) {
+        console.log("Error fetching data:", error.message);
+    }
+    joinDBs = tempArray
+};
+
+
+
+// 팀원 모집 로드
+export const loadTeam = async () => {
+    let tempArray = [];
+    try {
+        const data = await getDocs(collection(db, 'team'));
+
+        data.forEach((doc) => {
+            tempArray.push({ ...doc.data(), id: doc.id });
+        });
+    } catch (error) {
+        console.log("Error fetching data:", error.message);
+    }
+    teamDBs = tempArray
+};
+
+
+
+//연결 결과 정보 로드 
+export const loadConnect = async () => {
+    let tempArray = [];
+    try {
+        const data = await getDocs(collection(db, 'connect'));
+
+        data.forEach((doc) => {
+            tempArray.push({ ...doc.data(), id: doc.id });
+        });
+    } catch (error) {
+        console.log("Error fetching data:", error.message);
+    }
+    connectDBs = tempArray
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -81,56 +290,8 @@ export const loadUserSelect = async (people) => {
 };
 
 
-//모든 사용자 정보 로드 
-export const loadUsers = async () => {
-    let tempArray = [];
-    try {
-        const data = await getDocs(collection(db, 'userInfo'));
-
-        data.forEach((doc) => {
-            tempArray.push({ ...doc.data(), id: doc.id });
-        });
-    } catch (error) {
-        console.log("Error fetching data:", error.message);
-    }
-    return tempArray
-};
 
 
-
-//스타트업 이미지 로드  
-export const loadStartUpImages = async () => {
-    let imageUrls = [];
-    try {
-        const storageRef = ref(storage, '/startupProfile');
-        const result = await listAll(storageRef);
-
-        // 각 아이템의 URL과 이름을 가져와 imageUrls 배열에 저장
-        for (const item of result.items) {
-            const url = await getDownloadURL(item);
-            imageUrls.push({ url, name: item.name });
-        }
-    } catch (error) {
-        console.error('이미지 로딩 오류:', error);
-    }
-    return imageUrls
-};
-
-
-//모든 스타트업 정보 로드   
-export const loadStartUps = async () => {
-    let tempArray = [];
-    try {
-        const data = await getDocs(collection(db, 'startupInfo'));
-
-        data.forEach((doc) => {
-            tempArray.push({ ...doc.data(), id: doc.id });
-        });
-    } catch (error) {
-        console.log("Error fetching data:", error.message);
-    }
-    return tempArray
-};
 
 
 //특정 스타트업 정보 로드 
@@ -157,57 +318,7 @@ export const loadStartUpSelect = async (people) => {
 
 
 
-//소속 스타트업 - 소속 스타트업 로드 
-export const loadMember = async () => {
-    let tempArray = [];
-    try {
-        const data = await getDocs(collection(db, 'startupMember'));
 
-        data.forEach((doc) => {
-            tempArray.push({ ...doc.data(), id: doc.id });
-        });
-    } catch (error) {
-        console.log("Error fetching data:", error.message);
-    }
-    return tempArray
-};
-
-
-
-//공동 창업자 모집 - 공동 창업자 로드 
-export const loadCofounder = async () => {
-    let tempArray = [];
-    try {
-        const data = await getDocs(collection(db, 'cofounder'));
-
-        data.forEach((doc) => {
-            tempArray.push({ ...doc.data(), id: doc.id });
-        });
-    } catch (error) {
-        console.log("Error fetching data:", error.message);
-    }
-    return tempArray
-};
-
-
-
-//공동 창업자 모집 - 이미지 로드
-export const loadCofounderImages = async () => {
-    let imageUrls = [];
-    try {
-        const storageRef = ref(storage, '/cofounderProfile');
-        const result = await listAll(storageRef);
-
-        // 각 아이템의 URL과 이름을 가져와 imageUrls 배열에 저장
-        for (const item of result.items) {
-            const url = await getDownloadURL(item);
-            imageUrls.push({ url, name: item.name });
-        }
-    } catch (error) {
-        console.error('이미지 로딩 오류:', error);
-    }
-    return imageUrls
-};
 
 
 
@@ -235,21 +346,6 @@ export const loadCofounderSelect = async (people) => {
 
 
 
-//쪽지 로드
-export const loadLetter = async () => {
-    let tempArray = [];
-    try {
-        const data = await getDocs(collection(db, 'letter'));
-
-        data.forEach((doc) => {
-            tempArray.push({ ...doc.data(), id: doc.id });
-        });
-    } catch (error) {
-        console.log("Error fetching data:", error.message);
-    }
-    return tempArray
-};
-
 
 
 //특정 쪽지 로드
@@ -276,54 +372,6 @@ export const loadLetterSelect = async (num) => {
 
 
 
-// 가입 로드
-export const loadJoin = async () => {
-    let tempArray = [];
-    try {
-        const data = await getDocs(collection(db, 'join'));
-
-        data.forEach((doc) => {
-            tempArray.push({ ...doc.data(), id: doc.id });
-        });
-    } catch (error) {
-        console.log("Error fetching data:", error.message);
-    }
-    return tempArray
-};
-
-
-
-// 팀원 모집 로드
-export const loadTeam = async () => {
-    let tempArray = [];
-    try {
-        const data = await getDocs(collection(db, 'team'));
-
-        data.forEach((doc) => {
-            tempArray.push({ ...doc.data(), id: doc.id });
-        });
-    } catch (error) {
-        console.log("Error fetching data:", error.message);
-    }
-    return tempArray
-};
-
-
-
-//연결 결과 정보 로드 
-export const loadConnect = async () => {
-    let tempArray = [];
-    try {
-        const data = await getDocs(collection(db, 'connect'));
-
-        data.forEach((doc) => {
-            tempArray.push({ ...doc.data(), id: doc.id });
-        });
-    } catch (error) {
-        console.log("Error fetching data:", error.message);
-    }
-    return tempArray
-};
 
 
 

@@ -13,7 +13,11 @@ import Header from '../components/Header'
 
 
 //db 로드
-import { updateStartUpStep } from '../DB/LoadDB'
+import { 
+    updateStartUpStep,
+
+    loadStartUps,
+} from '../DB/LoadDB'
 
 
 
@@ -451,6 +455,8 @@ const StartupServey = (props) => {
                             } else {
                                 alert('입력이 잘못 되었습니다!')
                             }
+
+                            await loadStartUps()
                             props.navigation.navigate('StartUpInfo', {
                                 num: num,
                                 id: id,

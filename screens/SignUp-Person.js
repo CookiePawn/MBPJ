@@ -13,7 +13,11 @@ import { useState, useEffect } from 'react'
 import Header from '../components/Header';
 
 //db 로드
-import { loadUsers, addUser } from '../DB/LoadDB'
+import { 
+    userDBs, 
+    addUser,
+    loadUsers,
+} from '../DB/LoadDB'
 
 
 
@@ -46,12 +50,11 @@ const SignUp = (props) => {
     const isFocused = useIsFocused();
 
     useEffect(() => {
-        const fetchUser = async () => {
-            const users = await loadUsers();
-            setUser(users);
+        const fetchDB = async () => {
+            setUser(userDBs);
         };
 
-        fetchUser();
+        fetchDB();
     }, [isFocused]);
 
 
@@ -76,6 +79,7 @@ const SignUp = (props) => {
             //db에 넣어라
             try {
                 await addUser(id, pw, name, email, phone)
+                await loadUsers()
                 alert('회원가입이 완료되었습니다!')
                 props.navigation.navigate("Category")
             } catch (error) {

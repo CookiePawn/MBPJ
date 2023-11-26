@@ -37,8 +37,8 @@ export const fetchLang = async () => {
     } catch (error) {
         console.error('Error fetching languages:', error);
     }
-    console.log(repoName)
-    console.log(repoLang)
+    //console.log(repoName)
+    //console.log(repoLang)
 }
 
 

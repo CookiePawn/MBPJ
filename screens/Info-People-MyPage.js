@@ -19,11 +19,12 @@ import Header from '../components/Header';
 
 //db 로드
 import {
-    loadUserImages,
+    userImages,
+    memberDBs,
+    startupDBs,
+    startupImages,
+
     loadUserSelect,
-    loadMember,
-    loadStartUps,
-    loadStartUpImages,
 } from '../DB/LoadDB'
 
 
@@ -55,32 +56,25 @@ const SeeMyPage = (props) => {
     const isFocused = useIsFocused();
 
     useEffect(() => {
-        const fetchImage = async () => {
-            const images = await loadUserImages();
-            setImageUrl(images);
-        };
         const fetchUserInfo = async () => {
             const users = await loadUserSelect(people);
             setUser(users);
         };
-        const fetchStartUpImage = async () => {
-            const images = await loadStartUpImages()
-            setStartupImage(images)
-        };
-        const fetchStartupInfo = async () => {
-            const startups = await loadStartUps();
-            setStartup(startups);
-        };
+
+        const fetchDB = async() => {
+            setImageUrl(userImages);
+            setStartup(startupDBs)
+            setStartupImage(startupImages)
+        }
 
 
 
 
 
         const fetchMember = async () => {
-            const members = await loadMember();
             const newMembers = []; // 새로운 멤버를 임시 저장할 배열을 생성합니다.
 
-            members.forEach((item) => {
+            memberDBs.forEach((item) => {
                 if (people === item.perID) {
                     newMembers.push({ suID: item.suID, admin: item.admin }); // 조건에 맞는 suID만 임시 배열에 추가합니다.
                 }
@@ -88,11 +82,10 @@ const SeeMyPage = (props) => {
             setMember(newMembers); // 상태를 한 번만 업데이트합니다.
         };
 
-        fetchImage()
+
+        fetchDB()
         fetchUserInfo()
         fetchMember()
-        fetchStartUpImage()
-        fetchStartupInfo()
     }, [isFocused]);
 
     useEffect(() => {

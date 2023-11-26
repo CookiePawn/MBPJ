@@ -14,10 +14,10 @@ import { useIsFocused } from '@react-navigation/native';
 
 //db 로드
 import {
-    loadUserImages,
-    loadUsers,
-    loadStartUpImages,
-    loadStartUps,
+    userImages,
+    userDBs,
+    startupDBs,
+    startupImages,
 } from '../DB/LoadDB'
 
 
@@ -120,29 +120,13 @@ const Category = (props) => {
     const isFocused = useIsFocused();
 
     useEffect(() => {
-        const fetchUserImage = async () => {
-            const images = await loadUserImages()
-            setUserImage(images)
+        const fetchDB = async () => {
+            setUser(userDBs)
+            setUserImage(userImages)
+            setStartup(startupDBs)
+            setStartupImage(startupImages)
         };
-        const fetchUsers = async () => {
-            const users = await loadUsers()
-            setUser(users)
-        }
-
-        const fetchStartUpImage = async () => {
-            const images = await loadStartUpImages()
-            setStartupImage(images)
-        };
-        const fetchStartUps = async () => {
-            const startups = await loadStartUps()
-            setStartup(startups)
-        }
-
-        fetchUserImage()
-        fetchUsers()
-        fetchStartUpImage()
-        fetchStartUps()
-
+        fetchDB()
     }, [isFocused]);
 
 

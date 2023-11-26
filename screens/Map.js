@@ -24,7 +24,7 @@ import { googleKey } from '../keys/Key'
 
 
 //db 로드
-import { loadUsers } from '../DB/LoadDB';
+import { userDBs } from '../DB/LoadDB';
 import { useIsFocused } from '@react-navigation/native';
 import axios from 'axios';
 
@@ -90,12 +90,11 @@ const Map = (props) => {
 
 
     useEffect(() => {
-        const fetchUser = async () => {
-            const users = await loadUsers();
-            setUser(users);
+        const fetchDB = async () => {
+            setUser(userDBs);
         };
 
-        fetchUser();
+        fetchDB();
 
     }, [isFocused]);
 

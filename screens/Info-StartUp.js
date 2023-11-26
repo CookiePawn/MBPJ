@@ -17,12 +17,16 @@ import Header from '../components/Header';
 
 //db 로드
 import {
-    loadStartUpImages,
+    startupImages,
+    userDBs,
+    userImages,
+    memberDBs,
+
     loadStartUpSelect,
-    loadUsers,
-    loadUserImages,
-    loadMember,
+
     addJoin,
+
+    loadJoin,
 } from '../DB/LoadDB'
 
 
@@ -67,27 +71,14 @@ const StartUpInfo = (props) => {
     const isFocused = useIsFocused();
 
     useEffect(() => {
-        const fetchStartUpImage = async () => {
-            const images = await loadStartUpImages()
-            setImageUrl(images)
-        };
         const fetchStartupInfo = async () => {
             const startups = await loadStartUpSelect(people);
             setStartup(startups);
         };
-        const fetchUserInfo = async () => {
-            const users = await loadUsers();
-            setUser(users);
-        };
-        const fetchUserImage = async () => {
-            const images = await loadUserImages()
-            setUserImage(images)
-        };
         const fetchMember = async () => {
-            const members = await loadMember();
             const newMembers = []; // 새로운 멤버를 임시 저장할 배열을 생성합니다.
 
-            members.forEach((item) => {
+            memberDBs.forEach((item) => {
                 if (people === item.suID) {
                     newMembers.push({ perID: item.perID, admin: item.admin }); // 조건에 맞는 suID만 임시 배열에 추가합니다.
                 }
@@ -95,11 +86,16 @@ const StartUpInfo = (props) => {
             setMember(newMembers); // 상태를 한 번만 업데이트합니다.
         };
 
-        fetchStartUpImage();
+        const fetchDB = async () => {
+            setImageUrl(startupImages)
+            setUser(userDBs)
+            setUserImage(userImages)
+
+        }
+
         fetchStartupInfo();
-        fetchUserInfo();
-        fetchUserImage();
         fetchMember()
+        fetchDB()
     }, [isFocused]);
 
 
@@ -291,6 +287,7 @@ const StartUpInfo = (props) => {
                         style={[styles.chatBtn, { left: 0 }]}
                         onPress={async () => {
                             await addJoin(admin, num, people)
+                            await loadJoin()
                             alert('가입 신청 완료되었습니다')
                             props.navigation.navigate('Category', {
                                 num: num,

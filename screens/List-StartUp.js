@@ -18,7 +18,10 @@ import Header from '../components/Header';
 
 
 //db 로드
-import { loadStartUpImages, loadStartUps } from '../DB/LoadDB'
+import { 
+    startupDBs,
+    startupImages,
+} from '../DB/LoadDB'
 
 
 
@@ -80,17 +83,12 @@ const StartUpList = (props) => {
     const isFocused = useIsFocused();
 
     useEffect(() => {
-        const fetchStartUpImage = async () => {
-            const images = await loadStartUpImages()
-            setImageUrl(images)
-        };
-        const fetchStartupInfo = async () => {
-            const startups = await loadStartUps();
-            setStartup(startups);
+        const fetchDB = async () => {
+            setImageUrl(startupImages)
+            setStartup(startupDBs)
         };
 
-        fetchStartUpImage();
-        fetchStartupInfo();
+        fetchDB()
     }, [isFocused]);
 
 

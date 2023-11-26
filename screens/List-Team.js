@@ -18,9 +18,9 @@ import Header from '../components/Header';
 
 //db 로드
 import {
-    loadStartUpImages,
-    loadStartUps,
-    loadTeam,
+    startupImages,
+    startupDBs,
+    teamDBs,
 } from '../DB/LoadDB'
 
 
@@ -83,24 +83,13 @@ const Team = (props) => {
     const isFocused = useIsFocused();
 
     useEffect(() => {
-        const fetchStartUpImage = async () => {
-            const images = await loadStartUpImages()
-            setStartupImage(images)
+        const fetchDB = async () => {
+            setStartup(startupDBs)
+            setStartupImage(startupImages)
+            setTeam(teamDBs)
         };
-        const fetchStartUps = async () => {
-            const startups = await loadStartUps()
-            setStartup(startups)
-        }
-        const fetchTeams = async () => {
-            const teams = await loadTeam()
-            setTeam(teams)
-        }
 
-
-        fetchStartUpImage()
-        fetchStartUps()
-        fetchTeams()
-
+        fetchDB()
     }, [isFocused]);
 
     return (

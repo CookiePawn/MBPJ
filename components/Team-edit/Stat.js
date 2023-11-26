@@ -18,9 +18,11 @@ import { useState, useEffect } from 'react'
 
 //DB
 import {
-    loadStartUps,
-    loadStartUpImages,
-    loadMember,
+    startupDBs,
+    startupImages,
+    memberDBs,
+    teamDBs,
+
     loadTeam,
     addTeam,
 } from '../../DB/LoadDB'
@@ -48,35 +50,27 @@ export const Stat1 = (props) => {
 
 
     useEffect(() => {
-        const fetchStartUpImage = async () => {
-            const images = await loadStartUpImages()
-            setImageUrl(images)
-        };
-        const fetchStartups = async () => {
-            const startups = await loadStartUps()
-            setStartup(startups)
-        };
         const fetchMember = async () => {
-            const members = await loadMember();
             const newMembers = []; // 새로운 멤버를 임시 저장할 배열을 생성합니다.
 
-            members.forEach((item) => {
+            memberDBs.forEach((item) => {
                 if (props.perID === item.perID) {
                     newMembers.push({ suID: item.suID, admin: item.admin }); // 조건에 맞는 suID만 임시 배열에 추가합니다.
                 }
             });
             setMember(newMembers); // 상태를 한 번만 업데이트합니다.
         };
-        const fetchTeam = async () => {
-            const teams = await loadTeam()
-            setTeam(teams)
-        };
 
 
-        fetchStartUpImage()
-        fetchStartups()
+        const fetchDB = async () => {
+            setImageUrl(startupImages)
+            setStartup(startupDBs)
+            setTeam(teamDBs)
+        }
+
+
         fetchMember()
-        fetchTeam()
+        fetchDB()
     }, [isFocused])
 
 
@@ -127,6 +121,7 @@ export const Stat1 = (props) => {
                             key={idx}
                             onPress={async() => {
                                 await addTeam(item.id);
+                                await loadTeam()
                                 props.navi.navigation.navigate('Category',
                                     {
                                         ...props.params,

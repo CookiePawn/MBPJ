@@ -15,10 +15,11 @@ import Header from '../components/Header';
 
 //db 로드
 import {
+    userImages,
+    cofounderImages,
+
     loadCofounderSelect,
     loadUserSelect,
-    loadCofounderImages,
-    loadUserImages,
 } from '../DB/LoadDB'
 
 
@@ -67,20 +68,14 @@ const StartUpInfo = (props) => {
             setCofounder(cofounder)
         }
 
-        const fetchCofounderImg = async () => {
-            const images = await loadCofounderImages()
-            setCofounderImg(images)
-        }
-
-        const fetchUserImg = async () => {
-            const images = await loadUserImages()
-            setUserImg(images)
+        const fetchDB = async () => {
+            setCofounderImg(cofounderImages)
+            setUserImg(userImages)
         }
 
 
         fetchCofounder()
-        fetchCofounderImg()
-        fetchUserImg()
+        fetchDB()
     }, [isFocused]);
 
 
