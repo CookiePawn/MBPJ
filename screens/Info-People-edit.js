@@ -83,7 +83,7 @@ const PersonInfo = (props) => {
             setEInfo(users.info || '');
             setECareer(users.infoCareer || '');
             setEIntroduce(users.infoIntroduce || '');
-            setEProject(users.infoProject || '');
+            setEProject(users.infoGitNickname || '');
 
             if (users.field != null) {
                 setSavedField(users.field || '');
@@ -140,7 +140,9 @@ const PersonInfo = (props) => {
                     <Text style={styles.nameText}>{user.name}</Text>
                 </View>
             </View>
-            <KeyboardAwareScrollView style={styles.inforView} >
+            <KeyboardAwareScrollView
+                style={styles.inforView}
+            >
                 <Text style={styles.bigText}>직종</Text>
                 <TextInput
                     style={styles.smallText}
@@ -176,58 +178,57 @@ const PersonInfo = (props) => {
                     scrollEnabled={false}
                 />
 
-                    <Text style={styles.bigText}>경력</Text>
-                    <TextInput
-                        style={styles.smallText}
-                        placeholder='경력을 입력해주세요'
-                        value={eCareer}
-                        onChangeText={(e) => { setECareer(e) }}
-                        maxLength={500}
-                        multiline={true}
-                    />
+                <Text style={styles.bigText}>경력</Text>
+                <TextInput
+                    style={styles.smallText}
+                    placeholder='경력을 입력해주세요'
+                    value={eCareer}
+                    onChangeText={(e) => { setECareer(e) }}
+                    maxLength={500}
+                    multiline={true}
+                />
 
-                    <Text style={styles.bigText}>깃허브 닉네임</Text>
-                    <TextInput
-                        style={styles.smallText}
-                        placeholder='깃허브 닉네임을 입력해주세요'
-                        value={eProject}
-                        onChangeText={(e) => { setEProject(e) }}
-                        maxLength={200}
-                    />
-                </View>
-            </ScrollView>
+                <Text style={styles.bigText}>깃허브 닉네임</Text>
+                <TextInput
+                    style={styles.smallText}
+                    placeholder='깃허브 닉네임을 입력해주세요'
+                    value={eProject}
+                    onChangeText={(e) => { setEProject(e) }}
+                    maxLength={200}
+                />
+            </KeyboardAwareScrollView >
 
-            <TouchableOpacity
-                style={styles.chatBtn}
-                onPress={
-                    async () => {
-                        if (num != '' && fieldValue != null && eInfo != '' && eCareer != '' && eIntroduce != '' && eProject != '') {
-                            setIsLoading(true)
-                            await updateUserProject(num, fieldValue, eInfo, eCareer, eIntroduce, eProject);
-                            props.navigation.navigate("MyPage", {
-                                num: num,
-                                id: id,
-                                pw: pw,
-                                phone: phone,
-                                name: name,
-                                email: email,
-                                image: image,
-                            })
-                        } else {
-                            alert("모든 정보를 입력했는지 확인해주세요")
-                        }
-
-                    }
-
+    <TouchableOpacity
+        style={styles.chatBtn}
+        onPress={
+            async () => {
+                if (num != '' && fieldValue != null && eInfo != '' && eCareer != '' && eIntroduce != '' && eProject != '') {
+                    setIsLoading(true)
+                    await updateUserProject(num, fieldValue, eInfo, eCareer, eIntroduce, eProject);
+                    props.navigation.navigate("MyPage", {
+                        num: num,
+                        id: id,
+                        pw: pw,
+                        phone: phone,
+                        name: name,
+                        email: email,
+                        image: image,
+                    })
+                } else {
+                    alert("모든 정보를 입력했는지 확인해주세요")
                 }
-            >
-                {isLoading ? (
-                    <ActivityIndicator size="small" color="white" /> // 로딩 중에는 로딩 아이콘 표시
-                ) : (
-                    <Text style={styles.chatBtnText}>저장하기</Text>
-                )}
-            </TouchableOpacity>
-        </View>
+
+            }
+
+        }
+    >
+        {isLoading ? (
+            <ActivityIndicator size="small" color="white" /> // 로딩 중에는 로딩 아이콘 표시
+        ) : (
+            <Text style={styles.chatBtnText}>저장하기</Text>
+        )}
+    </TouchableOpacity>
+        </View >
     )
 }
 
