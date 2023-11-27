@@ -11,6 +11,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
+import { BarChart } from 'react-native-chart-kit';
 
 
 //헤더
@@ -49,6 +50,10 @@ const SeeMyPage = (props) => {
     const [startup, setStartup] = useState([]);
     const [foundImage, setFoundImage] = useState(null);
     const [member, setMember] = useState()
+    const [data, setData] = useState({
+        labels: [],
+        datasets: [{ data: [] }],
+    });
 
     const [admin, setAdmin] = useState([]);
 
@@ -62,6 +67,7 @@ const SeeMyPage = (props) => {
         const fetchUserInfo = async () => {
             const users = await loadUserSelect(people);
             setUser(users);
+            console.log(user.infoProject)
         };
         const fetchStartUpImage = async () => {
             const images = await loadStartUpImages()
@@ -99,6 +105,31 @@ const SeeMyPage = (props) => {
         if (user.perID && imageUrl.length > 0) {
             const matchImage = imageUrl.find(item => item.name === user.perID);
             setFoundImage(matchImage);
+        }
+
+        if (user && user.infoGitLanguage) {
+            // 객체의 키와 값을 분리하여 두 개의 배열로 만듦
+            const labels = Object.keys(user.infoGitLanguage);
+            const data = Object.values(user.infoGitLanguage);
+
+            // 데이터를 내림차순으로 정렬하고, 레이블도 동일한 순서로 정렬
+            const sortedIndices = data
+                .map((value, index) => ({ value, index }))
+                .sort((a, b) => b.value - a.value)
+                .map(data => data.index);
+
+            const sortedLabels = sortedIndices.map(index => labels[index]);
+            const sortedData = sortedIndices.map(index => data[index]);
+
+            // 차트 데이터 상태 업데이트
+            setData({
+                labels: sortedLabels,
+                datasets: [
+                    {
+                        data: sortedData
+                    }
+                ]
+            });
         }
     }, [user, imageUrl]);
 
@@ -201,14 +232,48 @@ const SeeMyPage = (props) => {
                     <Text style={styles.bigText}>경력</Text>
                     <Text style={styles.smallText}>{user.infoCareer}</Text>
 
-                    <Text style={styles.bigText}>프로젝트</Text>
-                    <TouchableOpacity
-                        onPress={() => {
-                            Linking.openURL(user.infoProject);
+                    <Text style={styles.bigText}>깃허브 닉네임</Text>
+                    <Text style={styles.smallText}>{user.infoGitNickname}</Text>
+
+                    <Text style={styles.bigText}>사용 언어</Text>
+                    <BarChart
+                        data={data}
+                        width={350} // 가로 길이
+                        height={220} // 세로 길이
+                        chartConfig={{
+                            backgroundColor: '#e26a00',
+                            backgroundGradientFrom: '#fb8c00',
+                            backgroundGradientTo: '#ffa726',
+                            decimalPlaces: 0, // 소수점 자리 수
+                            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                            style: {
+                                borderRadius: 16
+                            }
                         }}
-                    >
-                        <Text style={[styles.smallText, { color: 'lightskyblue' }]}>{user.infoProject}</Text>
-                    </TouchableOpacity>
+                        verticalLabelRotation={30}
+                    />
+
+
+
+
+                    <Text style={styles.bigText}>프로젝트</Text>
+                    {
+                        user.infoProject.map((item, idx) => {
+                            return (
+                                <TouchableOpacity
+                                    key = {idx}
+                                    onPress={() => {
+                                        Linking.openURL(`https://github.com/${user.infoGitNickname}/${user.infoProject[idx]}`);
+                                    }}
+                                >
+                                    <Text style={[styles.smallText, { color: 'lightskyblue' }]}>https://github.com/{user.infoGitNickname}/{user.infoProject[idx]}</Text>
+                                </TouchableOpacity>
+                            )
+                        })    
+                    }
+                    
+
 
                     <Text style={styles.bigText}>GPT 평가</Text>
                     <Text style={styles.smallText}>{user.evaluation}</Text>
@@ -355,8 +420,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 30,
     },
-    crownView:{
-        position:'absolute',
+    crownView: {
+        position: 'absolute',
         marginLeft: 30,
         top: 0
     },

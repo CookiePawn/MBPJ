@@ -16,6 +16,13 @@ import {
 
 //GPT
 import { openAI, openAIStartup, openAIUser, startupDALLE } from '../components/OpenAI';
+import { fetchLang } from '../components/GitHubREST';
+
+
+
+
+
+export let connectDBs = []
 
 
 
@@ -322,7 +329,7 @@ export const loadConnect = async () => {
     } catch (error) {
         console.log("Error fetching data:", error.message);
     }
-    return tempArray
+    connectDBs = tempArray
 };
 
 
@@ -367,6 +374,9 @@ export const updateUserProject = async (num, eField, eInfo, eCareer, eIntroduce,
 
     const gptResult = await openAIUser(eInfo, eIntroduce, eCareer, eProject)
 
+    const gitRepo = await fetchLang(eProject)
+
+
     if (gptResult) {
         try {
             const docRef = doc(db, 'userInfo', num);
@@ -376,7 +386,9 @@ export const updateUserProject = async (num, eField, eInfo, eCareer, eIntroduce,
                 field: eField,
                 infoCareer: eCareer,
                 infoIntroduce: eIntroduce,
-                infoProject: eProject,
+                infoProject: gitRepo.repoName,
+                infoGitLanguage: gitRepo.repoLang, 
+                infoGitNickname: eProject,
                 score: gptResult.score,
                 evaluation: gptResult.evaluation,
             });

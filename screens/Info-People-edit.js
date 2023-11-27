@@ -184,14 +184,13 @@ const PersonInfo = (props) => {
                         multiline={true}
                     />
 
-                    <Text style={styles.bigText}>프로젝트</Text>
+                    <Text style={styles.bigText}>깃허브 닉네임</Text>
                     <TextInput
                         style={styles.smallText}
-                        placeholder='프로젝트 링크를 입력해주세요'
+                        placeholder='깃허브 닉네임을 입력해주세요'
                         value={eProject}
                         onChangeText={(e) => { setEProject(e) }}
                         maxLength={200}
-                        multiline={true}
                     />
                 </View>
             </ScrollView>

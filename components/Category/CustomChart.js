@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Dimensions,StyleSheet } from 'react-native';
 import { PieChart } from 'react-native-gifted-charts';
-import { loadConnect } from '../../DB/LoadDB';
+import { connectDBs } from '../../DB/LoadDB';
 import Swiper from 'react-native-swiper/src'
 const { width } = Dimensions.get('window')
 
@@ -10,12 +10,10 @@ const CustomChart = () => {
     const [connect, setConnect] = useState([]);
     const [perField, setPerField] = useState({});
     const [suField, setSuField] = useState({});
-    const [chartList, setChartList] = useState([])
 
     useEffect(() => {
         const fetchConnect = async () => {
-            const connects = await loadConnect();
-            setConnect(connects);
+            setConnect(connectDBs);
         };
         fetchConnect();
     }, []);

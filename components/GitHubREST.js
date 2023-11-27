@@ -12,7 +12,7 @@ const octokit = new Octokit();
 
 
 //사용자 프로젝트 사용 코드 불러오기
-export const fetchLang = async () => {
+export const fetchLang = async (nickname) => {
     let repoName = []
     let repoLang = {}
     try {
@@ -20,7 +20,7 @@ export const fetchLang = async () => {
         if (repos) {
             for (const repo of repos) {
                 const response = await octokit.request('GET /repos/{owner}/{repo}/languages', {
-                    owner: 'CookiePawn',
+                    owner: nickname,
                     repo: repo
                 });
 
@@ -37,8 +37,13 @@ export const fetchLang = async () => {
     } catch (error) {
         console.error('Error fetching languages:', error);
     }
-    console.log(repoName)
-    console.log(repoLang)
+
+    const array = {
+        repoName,
+        repoLang,
+    }
+
+    return array
 }
 
 

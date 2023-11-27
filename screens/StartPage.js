@@ -5,19 +5,32 @@ import {
     Image,
     Dimensions,
     TouchableOpacity,
+    ActivityIndicator,
 } from 'react-native'
 import React, { Component, useEffect, useState } from 'react'
 import Swiper from 'react-native-swiper/src'
 const { width } = Dimensions.get('window')
 
 //깃허브 불러오기
+import { loadConnect } from '../DB/LoadDB'
 
-import { fetchLang } from '../components/GitHubREST'
+
+//db 로드
+
+
 
 const StartPage = (props) => {
 
+    const [isLoading, setIsLoading] = useState(true);
+
+
     useEffect(() => {
-        fetchLang()
+        const fetchDB = async () => {
+            setIsLoading(true)
+            await loadConnect()
+            setIsLoading(false)
+        }
+        fetchDB()
     }, [])
 
 
@@ -61,14 +74,21 @@ const StartPage = (props) => {
                 </Swiper>
             </View>
             <View style={styles.buttonView}>
-                <TouchableOpacity
-                    style={styles.startButton}
-                    onPress={() => {
-                        props.navigation.navigate('Category')
-                    }}
-                >
-                    <Text style={styles.buttonText}>시작하기</Text>
-                </TouchableOpacity>
+                {isLoading ? (
+                    // 로딩 인디케이터 표시
+                    <ActivityIndicator size="large" color="#5552E2" />
+                ) : (
+                    // 로딩 완료 후 시작하기 버튼 표시
+                    <TouchableOpacity
+                        style={styles.startButton}
+                        onPress={() => {
+                            props.navigation.navigate('Category')
+                        }}
+                    >
+                        <Text style={styles.buttonText}>시작하기</Text>
+                    </TouchableOpacity>
+                )}
+
             </View>
         </View>
     )
