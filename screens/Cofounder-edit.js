@@ -8,7 +8,7 @@ import {
     StyleSheet,
 } from 'react-native'
 import React, { useState, useEffect } from 'react'
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 //이미지 선택
 import * as ImagePicker from 'expo-image-picker';
@@ -150,7 +150,7 @@ const StartUpEdit = (props) => {
                     <Text style={styles.imageBtnText}>사진 추가</Text>
                 </TouchableOpacity>
             </View>
-            <ScrollView style={styles.inforView}>
+            <KeyboardAwareScrollView style={styles.inforView}>
                 <View style={{ flex: 1 }}>
                     <Text style={[styles.bigText, { fontSize: 25, fontWeight: 'bold' }]}>제목</Text>
                     <TextInput
@@ -159,6 +159,7 @@ const StartUpEdit = (props) => {
                         value={title}
                         onChangeText={(e) => { setTitle(e) }}
                         maxLength={500}
+                        scrollEnabled={false}
                     />
 
                     <Text style={styles.bigText}>분야</Text>
@@ -185,6 +186,7 @@ const StartUpEdit = (props) => {
                         onChangeText={(e) => { setIdea(e) }}
                         maxLength={500}
                         multiline={true}
+                        scrollEnabled={false}
                     />
 
                     <Text style={styles.bigText}>상세내역</Text>
@@ -195,6 +197,7 @@ const StartUpEdit = (props) => {
                         onChangeText={(e) => { setInfo(e) }}
                         maxLength={500}
                         multiline={true}
+                        scrollEnabled={false}
                     />
 
                     <Text style={styles.bigText}>복리후생</Text>
@@ -205,9 +208,10 @@ const StartUpEdit = (props) => {
                         onChangeText={(e) => { setBenefit(e) }}
                         maxLength={200}
                         multiline={true}
+                        scrollEnabled={false}
                     />
                 </View>
-            </ScrollView>
+            </KeyboardAwareScrollView>
 
             <TouchableOpacity
                 style={styles.chatBtn}

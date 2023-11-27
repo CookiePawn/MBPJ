@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 import { useIsFocused } from '@react-navigation/native';
 import { useState, useEffect } from 'react'
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 //헤더
 import Header from '../components/Header';
@@ -91,7 +91,7 @@ const SignUp = (props) => {
             <Header
                 titleName='가입하기'
             />
-            <View style={styles.textInputView}>
+            <KeyboardAwareScrollView style={styles.textInputView}>
                 <CustomTextInput
                     name='이름'
                     named='을'
@@ -117,7 +117,7 @@ const SignUp = (props) => {
                     named='를'
                     onChangeText={(e) => setPW(e)}
                 />
-            </View>
+            </KeyboardAwareScrollView>
             <View style={styles.buttonView}>
                 <TouchableOpacity
                     style={styles.signButton}
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
 
     textInputView: {
         width: '90%',
-        height: 530,
+        flex: 1
     },
     textInputTitleText: {
         color: '#9EA3B2',
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
 
     buttonView: {
         width: '90%',
-        height: 150,
+        height: 180,
     },
     signButton: {
         height: 60,

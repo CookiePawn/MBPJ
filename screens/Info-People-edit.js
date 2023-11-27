@@ -11,6 +11,7 @@ import {
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 import DropDownPicker from 'react-native-dropdown-picker'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 //헤더
 import Header from '../components/Header';
@@ -139,40 +140,41 @@ const PersonInfo = (props) => {
                     <Text style={styles.nameText}>{user.name}</Text>
                 </View>
             </View>
-            <ScrollView style={styles.inforView}>
-                <View style={{ flex: 1 }}>
-                    <Text style={styles.bigText}>직종</Text>
-                    <TextInput
-                        style={styles.smallText}
-                        placeholder='직종을 입력해주세요'
-                        value={eInfo}
-                        onChangeText={(e) => { setEInfo(e) }}
-                        maxLength={30}
-                    />
+            <KeyboardAwareScrollView style={styles.inforView} >
+                <Text style={styles.bigText}>직종</Text>
+                <TextInput
+                    style={styles.smallText}
+                    placeholder='직종을 입력해주세요'
+                    value={eInfo}
+                    onChangeText={(e) => { setEInfo(e) }}
+                    maxLength={30}
+                    scrollEnabled={false}
+                />
 
-                    <Text style={styles.bigText}>분야</Text>
-                    <DropDownPicker
-                        open={pickerOpen}
-                        value={fieldValue}
-                        items={fieldItems}
-                        setOpen={setPickerOpen}
-                        setValue={setFieldValue}
-                        setItems={setFieldItems}
-                        placeholder={savedField}
-                        theme='LIGHT'
-                        listMode='MODAL'
-                        style={{ bottom: 5, top: 5, borderColor: '#d9d9d9', borderRadius: 15 }}
-                    />
+                <Text style={styles.bigText}>분야</Text>
+                <DropDownPicker
+                    open={pickerOpen}
+                    value={fieldValue}
+                    items={fieldItems}
+                    setOpen={setPickerOpen}
+                    setValue={setFieldValue}
+                    setItems={setFieldItems}
+                    placeholder={savedField}
+                    theme='LIGHT'
+                    listMode='MODAL'
+                    style={{ bottom: 5, top: 5, borderColor: '#d9d9d9', borderRadius: 15 }}
+                />
 
-                    <Text style={styles.bigText1}>설명</Text>
-                    <TextInput
-                        style={styles.smallText}
-                        placeholder='설명을 입력해주세요'
-                        value={eIntroduce}
-                        onChangeText={(e) => { setEIntroduce(e) }}
-                        maxLength={500}
-                        multiline={true}
-                    />
+                <Text style={styles.bigText1}>설명</Text>
+                <TextInput
+                    style={styles.smallText}
+                    placeholder='설명을 입력해주세요'
+                    value={eIntroduce}
+                    onChangeText={(e) => { setEIntroduce(e) }}
+                    maxLength={500}
+                    multiline={true}
+                    scrollEnabled={false}
+                />
 
                     <Text style={styles.bigText}>경력</Text>
                     <TextInput
@@ -280,7 +282,6 @@ const styles = StyleSheet.create({
     // 정보 세션
     inforView: {
         width: '90%',
-        height: 500,
         marginTop: 30,
     },
     bigText: {
@@ -327,5 +328,5 @@ const styles = StyleSheet.create({
 
 
 
-    
+
 })
