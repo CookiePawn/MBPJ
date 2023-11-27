@@ -606,7 +606,7 @@ const styles = StyleSheet.create({
         width: 55,
         height: 55,
         borderRadius: 10,
-        marginRight: 10,
+        marginRight: 15,
     },
     startUpInfoTextView: {
         flex: 1,
@@ -615,7 +615,7 @@ const styles = StyleSheet.create({
         borderColor: '#E8E8E8',
     },
     startUpNameText: {
-        paddingTop: 10,
+        paddingTop: 12,
         fontSize: 16,
         fontWeight: 'bold',
         lineHeight: 30,

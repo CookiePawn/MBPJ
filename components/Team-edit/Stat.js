@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
         height: 70,
         borderRadius: 100,
         marginLeft: 15,
-        marginRight: 10,
+        marginRight: 15,
     },
     startupName: {
         fontSize: 20,

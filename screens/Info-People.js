@@ -479,7 +479,7 @@ const styles = StyleSheet.create({
     userImage: {
         width: 60,
         height: 60,
-        borderRadius: 100,
+        borderRadius: 10,
         marginLeft: 15,
     },
     userName: {
