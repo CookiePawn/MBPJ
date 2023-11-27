@@ -26,6 +26,10 @@ import Header from '../components/Header';
 import { loadUserImages, updateUserProfile, updateUserImage, loadUserSelect } from '../DB/LoadDB'
 
 
+//주소변환
+import getAddressCoordinates from '../components/GeoCoding'
+
+
 
 
 const MyProfile = (props) => {
@@ -62,8 +66,10 @@ const MyProfile = (props) => {
             setUser(users);
             if (props.route.params?.address) {
                 setLocation(props.route.params.address);
-            } else {
+            } else if (users.location != null){
                 setLocation(users.location)
+            } else {
+                setLocation('주소를 입력해주세요')
             }
         };
         fetchImage()
@@ -238,22 +244,52 @@ const MyProfile = (props) => {
                     <TouchableOpacity
                         style={styles.saveBtn}
                         onPress={async () => {
-                            if (rePw != '') {
-                                setIsLoading(true)
-                                await updateUserProfile(num, rePw, location)
-
-                                alert('개인정보가 변경되었습니다!')
-                                props.navigation.navigate('MyPage', {
-                                    num: num,
-                                    id: id,
-                                    pw: rePw,
-                                    phone: phone,
-                                    name: name,
-                                    email: email,
-                                    image: image,
-                                })
-                            } else {
+                            if (rePw != '' && location != '주소를 입력해주세요') {
+                                if(location != user.location) {
+                                    setIsLoading(true)
+                                    try {
+                                        // 주소를 좌표로 변환
+                                        const coordinates = await getAddressCoordinates(location);
+                                        if (coordinates) {
+                                            const lat = coordinates.lat;
+                                            const lng = coordinates.lng;
+                                            // updateUserProfile에 좌표 정보도 함께 전달
+                                            await updateUserProfile(num, rePw, location, lat, lng);
+                                            alert('개인정보가 변경되었습니다!');
+                                        } else {
+                                            alert('개인정보가 변경을 실패했습니다!');
+                                        }
+                                    } catch (error) {
+                                        console.error('Error:', error);
+                                    }
+                                    props.navigation.navigate('MyPage', {
+                                        num: num,
+                                        id: id,
+                                        pw: rePw,
+                                        phone: phone,
+                                        name: name,
+                                        email: email,
+                                        image: image,
+                                    })
+                                } else {
+                                    setIsLoading(true)
+                                    await updateUserProfile(num, rePw, location, user.lat, user.lng)
+                                    alert('개인정보가 변경되었습니다!')
+                                    props.navigation.navigate('MyPage', {
+                                        num: num,
+                                        id: id,
+                                        pw: rePw,
+                                        phone: phone,
+                                        name: name,
+                                        email: email,
+                                        image: image,
+                                    })
+                                }
+                                
+                            } else if (rePw == '') {
                                 alert('비밀번호를 입력해주세요')
+                            } else {
+                                alert('주소를 입력해주세요')
                             }
 
                         }}

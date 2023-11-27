@@ -30,6 +30,8 @@ import {
 
 import DropDownPicker from 'react-native-dropdown-picker'
 
+import getAddressCoordinates from '../GeoCoding'
+
 
 
 
@@ -169,7 +171,22 @@ export const Stat0 = (props) => {
                     onPress={async () => {
                         if (suName != '' && title != '' && introduce != '' && stack != '' && location != '주소를 입력해주세요' && fieldValue != null && props.perID != null) {
                             setIsLoading(true)
-                            await addStartUp(suName, fieldValue, title, introduce, stack, location, props.perID)
+                            try {
+                                // 주소를 좌표로 변환
+                                const coordinates = await getAddressCoordinates(location);
+                                console.log(coordinates)
+                                if (coordinates) {
+                                    const lat = coordinates.lat;
+                                    const lng = coordinates.lng;
+                                    //addStartUp에 좌표 정보도 함께 전달
+                                    await addStartUp(suName, fieldValue, title, introduce, stack, location, lat, lng, props.perID)
+                                    alert('스타트업이 저장되었습니다!');
+                                } else {
+                                    alert('스타트업 저장을 실패했습니다!');
+                                }
+                            } catch (error) {
+                                console.error('Error:', error);
+                            }
                             props.navi.navigation.navigate('Category', props.params)
                         } else {
                             alert("모든 정보를 입력했는지 확인해주세요")
