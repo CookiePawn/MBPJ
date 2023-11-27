@@ -466,7 +466,7 @@ export const updateUserImage = async (uri, id) => {
 
 
 //내 스타트업 페이지 수정
-export const updateStartUpProject = async (num, eField, eInfo, eIntroduce, eStack, location) => {
+export const updateStartUpProject = async (num, eField, eInfo, eIntroduce, eStack, location, lat, lng) => {
 
 
     const gptResult = await openAIStartup(eInfo, eIntroduce, eStack)
@@ -481,6 +481,8 @@ export const updateStartUpProject = async (num, eField, eInfo, eIntroduce, eStac
                 introduce: eIntroduce,
                 stack: eStack,
                 location: location,
+                lat : lat,
+                lng, lng,
                 score: gptResult.score,
                 evaluation: gptResult.evaluation,
             });

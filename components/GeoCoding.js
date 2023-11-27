@@ -3,8 +3,6 @@ import axios from 'axios';
 
 const getAddressCoordinates = async (address) => {
     try {
-        console.log(address)
-        console.log(googleKey);
         if (!address) {
             return null; // 주소가 없을 경우 처리
         }

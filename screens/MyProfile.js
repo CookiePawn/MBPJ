@@ -258,7 +258,7 @@ const MyProfile = (props) => {
                                             await updateUserProfile(num, rePw, location, lat, lng);
                                             alert('개인정보가 변경되었습니다!');
                                         } else {
-                                            alert('개인정보가 변경을 실패했습니다!');
+                                            alert('개인정보 변경을 실패했습니다!');
                                         }
                                     } catch (error) {
                                         console.error('Error:', error);
