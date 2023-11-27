@@ -172,8 +172,6 @@ const PersonInfo = (props) => {
 
 
 
-
-
     return (
         <View style={styles.mainView}>
             <Header
@@ -234,27 +232,51 @@ const PersonInfo = (props) => {
                     <Text style={styles.smallText}>{user.infoGitNickname}</Text>
 
                     <Text style={styles.bigText}>사용 언어</Text>
-                    <BarChart
-                        data={data}
-                        width={350} // 가로 길이
-                        height={220} // 세로 길이
-                        chartConfig={{
-                            backgroundColor: '#e26a00',
-                            backgroundGradientFrom: '#fb8c00',
-                            backgroundGradientTo: '#ffa726',
-                            decimalPlaces: 0, // 소수점 자리 수
-                            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                            style: {
-                                borderRadius: 16
-                            }
-                        }}
-                        verticalLabelRotation={30}
-                    />
+                    <View>
+
+                    </View>
+                    <View style={styles.chartView}>
+                        <BarChart
+                            data={data}
+                            width={350}
+                            height={220}
+                            chartConfig={{
+                                backgroundGradientFrom: 'white',
+                                backgroundGradientTo: 'white',
+                                fillShadowGradient: '#7B78E7', // 막대의 그림자 색상
+                                fillShadowGradientOpacity: 0.7, // 막대의 그림자 불투명도
+                                color: (opacity = 1) => `rgba(85, 82, 226, ${opacity})`,
+                                labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                                strokeWidth: 2, // 막대의 선 두께
+                                barPercentage: 0.5,
+                                useShadowColorFromDataset: false, // 데이터셋에서 그림자 색상을 사용하지 않음
+                                // 세로축 라벨을 숨기는 옵션
+                                formatYLabel: () => '',
+                                propsForDots: {
+                                    r: "6",
+                                    strokeWidth: "2",
+                                    stroke: "#ffa726"
+                                },
+                                // 배경의 점선 무늬를 제거하는 옵션
+                                propsForBackgroundLines: {
+                                    stroke: 'transparent', // 배경 선을 투명하게 설정
+                                },
+                            }}
+                            style={{
+                                marginVertical: 8,
+                                borderRadius: 16,
+                                paddingRight: 10
+                            }}
+                            verticalLabelRotation={0}
+                        />
+                    </View>
+
+
+
 
                     <Text style={styles.bigText}>프로젝트</Text>
                     {
-            
+
                         user.infoProject && user.infoProject.map((item, idx) => {
                             return (
                                 <TouchableOpacity
@@ -419,60 +441,64 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#111',
     },
+    chartView: {
+        flex: 1,
+        marginBottom: 20
+    },
 
 
-    //채팅 세션
+        //채팅 세션
     chatBtn: {
-        backgroundColor: '#5552E2',
-        height: 60,
-        width: '90%',
-        marginTop: 10,
-        marginBottom: 20,
-        borderRadius: 30,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
+    backgroundColor: '#5552E2',
+    height: 60,
+    width: '90%',
+    marginTop: 10,
+    marginBottom: 20,
+    borderRadius: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+},
     chatBtnText: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 600,
-    },
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 600,
+},
 
 
 
     //소속 스타트업
     memberScrollView: {
-        flexDirection: 'row'
-    },
+    flexDirection: 'row'
+},
     memberView: {
-        height: 100,
-        marginRight: 20,
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 30,
-    },
+    height: 100,
+    marginRight: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 30,
+},
     userImage: {
-        width: 60,
-        height: 60,
-        borderRadius: 100,
-        marginLeft: 15,
-    },
+    width: 60,
+    height: 60,
+    borderRadius: 100,
+    marginLeft: 15,
+},
     userName: {
-        marginLeft: 10,
-        marginRight: 15,
-        fontWeight: 500,
-        fontSize: 20,
-    },
+    marginLeft: 10,
+    marginRight: 15,
+    fontWeight: 500,
+    fontSize: 20,
+},
     userInfo: {
-        color: 'rgba(0, 0, 0, 0.60)',
-        fontSize: 12,
-        fontWeight: 400,
-        lineHeight: 23,
-    },
+    color: 'rgba(0, 0, 0, 0.60)',
+    fontSize: 12,
+    fontWeight: 400,
+    lineHeight: 23,
+},
     crownView: {
-        position: 'absolute',
-        marginLeft: 30,
-        top: 0
-    },
+    position: 'absolute',
+    marginLeft: 30,
+    top: 0
+},
 
 })
