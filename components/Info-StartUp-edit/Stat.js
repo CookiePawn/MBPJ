@@ -9,7 +9,7 @@ import {
     TouchableOpacity,
 } from 'react-native'
 
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 
 import { useIsFocused } from '@react-navigation/native'
@@ -85,7 +85,7 @@ export const Stat0 = (props) => {
     return (
         <View style={styles.mainView}>
             {renderFullScreenLoading(isLoading)}
-            <ScrollView
+            <KeyboardAwareScrollView
                 style={{ height: '100%' }}
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
@@ -97,6 +97,7 @@ export const Stat0 = (props) => {
                     value={suName}
                     onChangeText={(e) => setSuName(e)}
                     maxLength={20}
+                    scrollEnabled={false}
                 />
 
                 <Text style={styles.title}>분야</Text>
@@ -128,6 +129,7 @@ export const Stat0 = (props) => {
                     value={title}
                     onChangeText={(e) => setTitle(e)}
                     maxLength={30}
+                    scrollEnabled={false}
                 />
                 <Text style={styles.title}>소개</Text>
                 <TextInput
@@ -137,6 +139,7 @@ export const Stat0 = (props) => {
                     onChangeText={(e) => setIntroduce(e)}
                     maxLength={1000}
                     multiline={true}
+                    scrollEnabled={false}
                 />
                 <Text style={styles.title}>기술 / 스택</Text>
                 <TextInput
@@ -146,6 +149,7 @@ export const Stat0 = (props) => {
                     onChangeText={(e) => setStack(e)}
                     maxLength={1000}
                     multiline={true}
+                    scrollEnabled={false}
                 />
 
                 <Text style={styles.title}>주소</Text>
@@ -183,7 +187,7 @@ export const Stat0 = (props) => {
                         <Text style={styles.saveBtnText}>저장하기</Text>
                     )}
                 </TouchableOpacity>
-            </ScrollView>
+            </KeyboardAwareScrollView>
 
         </View>
 
