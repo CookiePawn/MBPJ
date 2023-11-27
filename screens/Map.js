@@ -7,8 +7,7 @@ import {
     Animated,
     ScrollView,
     Dimensions,
-    Platform,
-    Image
+    Image,
 } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 //사용자 위치 가져오기
@@ -22,6 +21,9 @@ import Icon from 'react-native-vector-icons/Ionicons'
 //db 로드
 import { loadStartUps, loadUsers, loadUserImages, loadStartUpImages} from '../DB/LoadDB';
 import { useIsFocused } from '@react-navigation/native';
+
+//로딩화면
+import { renderFullScreenLoading } from '../components/Loading'
 
 const SCREEN_WIDTH = Dimensions.get('window').width
 const CARD_WIDTH = Dimensions.get('window').width * 0.95
@@ -39,6 +41,7 @@ const Map = (props) => {
     const image = params ? params.image : null;
 
     const isFocused = useIsFocused();
+    const [isLoading, setIsLoading] = useState(true)
 
     const [user, setUser] = useState([]);
     const [startUp, setStartUp] = useState([]);
@@ -46,8 +49,9 @@ const Map = (props) => {
     const [startUpImage, setStartUpImage] = useState(null);
     const [userImageUrl, setUserImageUrl] = useState([]);
     const [startUpImageUrl, setStartUpImageUrl] = useState([]);
-    const [userProfileImage, setUserProfileImage] = useState(null);
     const [foundImage, setFoundImage] = useState(null);
+    const [userFoundImage, setUserFoundImage] = useState(null);
+    const [startUpFoundImage, setStartUpFoundImage] = useState(null);
 
     //위치 정보
     const [region, setRegion] = useState({
@@ -113,6 +117,7 @@ const Map = (props) => {
             const startUps = await loadStartUps();
             const filteredStartUps = startUps.filter((item) => 'lat' in item);
             setStartUp(filteredStartUps);
+
         }
 
         fetchUserImage();
@@ -120,15 +125,38 @@ const Map = (props) => {
         fetchUser();
         fetchStartUp();
 
+        setTimeout(() => {
+            setIsLoading(false)
+        }, 5000)
+
     }, [isFocused]);
 
     useEffect(() => {
-        if (user.name && userImageUrl && userImageUrl.length > 0) {
-            const matchImage = userImageUrl.find(item => item.name === user.name);
-            setFoundImage(matchImage);
-            setUserProfileImage(matchImage)
+        if (user && userImageUrl && userImageUrl.length > 0) {
+            const matchedImages = user.map((user, index) => {
+                const matchedImage = userImageUrl.find((item) => item.name === user.perID);
+                return {
+                    ...matchedImage,
+                }
+            });
+            setUserFoundImage(matchedImages);
+            setFoundImage(matchedImages);
         }
     }, [user, userImageUrl]);
+
+    useEffect(() => {
+        if (startUp && startUpImageUrl && startUpImageUrl.length > 0) {
+            const matchedImages = startUp.map((startUp, index) => {
+                const matchedImage = startUpImageUrl.find((item) => item.name === startUp.name);
+                return {
+                    ...matchedImage,
+                }
+            });
+            setStartUpFoundImage(matchedImages);
+        }
+
+    }, [startUp, startUpImageUrl]);
+    
 
 
 
@@ -216,6 +244,7 @@ const Map = (props) => {
 
     return (
         <View style={{ flex: 1, backgroundColor: 'white', }}>
+            {renderFullScreenLoading(isLoading)}
             <View style={styles.titleView}>
                 <TouchableOpacity
                     style={[styles.icon, { left: 0, }]}
@@ -318,6 +347,7 @@ const Map = (props) => {
                 onPress={() => {
                     setCardList(user)
                     setSelectMarker(region)
+                    setFoundImage(userFoundImage)
                     setFollowUser(true)
                         setTimeout(() => {
                             setFollowUser(false)
@@ -333,6 +363,7 @@ const Map = (props) => {
                 onPress={() => {
                     setCardList(startUp)
                     setSelectMarker(region)
+                    setFoundImage(startUpFoundImage)
                     setFollowUser(true)
                         setTimeout(() => {
                             setFollowUser(false)
@@ -362,10 +393,39 @@ const Map = (props) => {
                 {
                     cardList.map((cardList, index) => {
                         return (
-                            <TouchableOpacity key={index} style={[{ width: CARD_WIDTH }, styles.card]}>
+                            <TouchableOpacity key={index} style={[{ width: CARD_WIDTH }, styles.card]}
+                                onPress = {() => {
+                                    if(cardList.perID != null) {
+                                        props.navigation.navigate("PeopleInfo", {
+                                            num: num,
+                                            id: id,
+                                            pw: pw,
+                                            phone: phone,
+                                            name: name,
+                                            email: email,
+                                            image: image,
+                                            people : cardList.id
+                                        })
+                                    } else {
+                                        props.navigation.navigate("StartUpInfo", {
+                                            num: num,
+                                            id: id,
+                                            pw : pw,
+                                            phone: phone,
+                                            name: name,
+                                            email: email,
+                                            image: image,
+                                            people : cardList.id
+                                        })
+                                    }
+                                    
+                                }}
+                                >
                                 <View style = {styles.cardView}>
-                                    <Image style = {styles.profileImage} source = {require('../assets/start-solo1.png')}/>
-
+                                           <Image
+                                               style={styles.profileImage}
+                                               source={foundImage ? { uri: foundImage[index].url } : require('../assets/start-solo1.png')}
+                                           />
                                     <View>
                                         <Text
                                             numberOfLines={1}

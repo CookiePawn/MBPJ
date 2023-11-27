@@ -255,7 +255,7 @@ const PersonInfo = (props) => {
                             }}
                             style={{
                                 marginVertical: 8,
-                                paddingRight: 30,
+                                paddingRight: 20,
                             }}
                         />
                     </View>
