@@ -34,6 +34,10 @@ import {
 } from '../DB/LoadDB'
 
 
+//주소변환
+import getAddressCoordinates from '../components/GeoCoding'
+
+
 const StartUpEdit = (props) => {
     //로그인 확인
     const { params } = props.route;
@@ -331,18 +335,49 @@ const StartUpEdit = (props) => {
                 onPress={
                     async () => {
                         if (people != '' && fieldValue != null && eInfo != '' && eIntroduce && eStack != '' && location != '') {
-                            setIsLoading(true)
-                            await updateStartUpProject(people, fieldValue, eInfo, eIntroduce, eStack, location);
-                            props.navigation.navigate("StartUpInfo", {
-                                num: num,
-                                id: id,
-                                pw: pw,
-                                phone: phone,
-                                name: name,
-                                email: email,
-                                image: image,
-                                people: people,
-                            })
+                            if(location != user.location) {
+                                setIsLoading(true)
+                                try {
+                                    // 주소를 좌표로 변환
+                                    const coordinates = await getAddressCoordinates(location);
+                                    console.log(coordinates)
+                                    if (coordinates) {
+                                        const lat = coordinates.lat;
+                                        const lng = coordinates.lng;
+                                        //addStartUp에 좌표 정보도 함께 전달
+                                        await updateStartUpProject(people, fieldValue, eInfo, eIntroduce, eStack, location, lat, lng);
+                                        alert('스타트업이 변경되었습니다!');
+                                    } else {
+                                        alert('스타트업 변경을 실패했습니다!');
+                                    }
+                                } catch (error) {
+                                    console.error('Error:', error);
+                                }
+
+                                props.navigation.navigate("StartUpInfo", {
+                                    num: num,
+                                    id: id,
+                                    pw: pw,
+                                    phone: phone,
+                                    name: name,
+                                    email: email,
+                                    image: image,
+                                    people: people,
+                                })
+                            } else {
+                                alert('저장된거랑 같음')
+                                await updateStartUpProject(people, fieldValue, eInfo, eIntroduce, eStack, location, user.lat, user.lng);
+                                props.navigation.navigate("StartUpInfo", {
+                                    num: num,
+                                    id: id,
+                                    pw: pw,
+                                    phone: phone,
+                                    name: name,
+                                    email: email,
+                                    image: image,
+                                    people: people,
+                                })
+                            }
                         } else {
                             alert("입력하지 않은 것이 있는지 확인해주세요")
                         }

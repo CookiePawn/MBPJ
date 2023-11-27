@@ -410,12 +410,12 @@ export const updateUserProject = async (num, eField, eInfo, eCareer, eIntroduce,
 
 
 //내 프로필 수정
-export const updateUserProfile = async (num, rePw, location) => {
+export const updateUserProfile = async (num, rePw, location, lat, lng) => {
     try {
         // Firestore에서 해당 문서의 참조 가져오기
         const userDocRef = doc(db, 'userInfo', num);
 
-        await updateDoc(userDocRef, { perPW: rePw, location: location });
+        await updateDoc(userDocRef, { perPW: rePw, location: location, lat : lat, lng : lng });
     } catch (error) {
         console.error('비밀번호 업데이트 오류:', error);
     }
@@ -612,7 +612,7 @@ export const addUser = async (id, pw, name, email, phone) => {
 
 
 //스타트업 추가
-export const addStartUp = async (name, field, title, introduce, stack, location, perID) => {
+export const addStartUp = async (name, field, title, introduce, stack, location, lat, lng, perID) => {
     try {
         // startupInfo 컬렉션에 문서 추가
         const docRef = await addDoc(collection(db, 'startupInfo'), {
@@ -622,6 +622,8 @@ export const addStartUp = async (name, field, title, introduce, stack, location,
             introduce: introduce,
             stack: stack,
             location: location,
+            lat : lat,
+            lng : lng,
             step: '준비',
         });
 
