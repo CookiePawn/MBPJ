@@ -67,7 +67,6 @@ const SeeMyPage = (props) => {
         const fetchUserInfo = async () => {
             const users = await loadUserSelect(people);
             setUser(users);
-            console.log(user.infoProject)
         };
         const fetchStartUpImage = async () => {
             const images = await loadStartUpImages()
@@ -248,25 +247,16 @@ const SeeMyPage = (props) => {
                                 fillShadowGradientOpacity: 0.7,
                                 color: (opacity = 1) => `rgba(85, 82, 226, ${opacity})`,
                                 labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                                strokeWidth: 2,
-                                barPercentage: 0.5,
-                                useShadowColorFromDataset: false,
+                                barPercentage: 0.8,
                                 formatYLabel: () => '',
-                                propsForDots: {
-                                    r: "6",
-                                    strokeWidth: "2",
-                                    stroke: "#ffa726"
-                                },
                                 propsForBackgroundLines: {
                                     stroke: 'transparent',
                                 },
                             }}
                             style={{
                                 marginVertical: 8,
-                                borderRadius: 16,
-                                paddingRight: 10
+                                paddingRight: 30,
                             }}
-                            verticalLabelRotation={0}
                         />
                     </View>
 
