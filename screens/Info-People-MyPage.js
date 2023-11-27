@@ -236,23 +236,39 @@ const SeeMyPage = (props) => {
                     <Text style={styles.smallText}>{user.infoGitNickname}</Text>
 
                     <Text style={styles.bigText}>사용 언어</Text>
-                    <BarChart
-                        data={data}
-                        width={350} // 가로 길이
-                        height={220} // 세로 길이
-                        chartConfig={{
-                            backgroundColor: '#e26a00',
-                            backgroundGradientFrom: '#fb8c00',
-                            backgroundGradientTo: '#ffa726',
-                            decimalPlaces: 0, // 소수점 자리 수
-                            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                            style: {
-                                borderRadius: 16
-                            }
-                        }}
-                        verticalLabelRotation={30}
-                    />
+                    <View style={styles.chartView}>
+                        <BarChart
+                            data={data}
+                            width={350}
+                            height={220}
+                            chartConfig={{
+                                backgroundGradientFrom: 'white',
+                                backgroundGradientTo: 'white',
+                                fillShadowGradient: '#7B78E7', 
+                                fillShadowGradientOpacity: 0.7, 
+                                color: (opacity = 1) => `rgba(85, 82, 226, ${opacity})`,
+                                labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                                strokeWidth: 2, 
+                                barPercentage: 0.5,
+                                useShadowColorFromDataset: false, 
+                                formatYLabel: () => '',
+                                propsForDots: {
+                                    r: "6",
+                                    strokeWidth: "2",
+                                    stroke: "#ffa726"
+                                },
+                                propsForBackgroundLines: {
+                                    stroke: 'transparent', 
+                                },
+                            }}
+                            style={{
+                                marginVertical: 8,
+                                borderRadius: 16,
+                                paddingRight: 10
+                            }}
+                            verticalLabelRotation={0}
+                        />
+                    </View>
 
 
 
@@ -262,7 +278,7 @@ const SeeMyPage = (props) => {
                         user.infoProject && user.infoProject.map((item, idx) => {
                             return (
                                 <TouchableOpacity
-                                    key = {idx}
+                                    key={idx}
                                     onPress={() => {
                                         Linking.openURL(`https://github.com/${user.infoGitNickname}/${item}`);
                                     }}
@@ -270,9 +286,9 @@ const SeeMyPage = (props) => {
                                     <Text style={[styles.smallText, { color: 'lightskyblue' }]}>https://github.com/{user.infoGitNickname}/{item}</Text>
                                 </TouchableOpacity>
                             )
-                        })    
+                        })
                     }
-                    
+
 
 
                     <Text style={styles.bigText}>GPT 평가</Text>
@@ -407,6 +423,10 @@ const styles = StyleSheet.create({
     midText: {
         fontSize: 16,
         color: '#111',
+    },
+    chartView: {
+        flex: 1,
+        marginBottom: 20
     },
 
     //소속 스타트업
