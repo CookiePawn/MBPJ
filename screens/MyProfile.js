@@ -11,7 +11,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons'
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 //이미지 선택
 import * as ImagePicker from 'expo-image-picker';
@@ -24,6 +24,7 @@ import Header from '../components/Header';
 
 //db 로드
 import { loadUserImages, updateUserProfile, updateUserImage, loadUserSelect } from '../DB/LoadDB'
+
 
 
 
@@ -162,7 +163,7 @@ const MyProfile = (props) => {
                 login={num}
                 titleName='내 프로필'
             />
-
+            
             <View style={styles.profileView}>
                 {
                     // profileImg가 null이 아니면 바로 profileImg를 사용하고,
@@ -186,7 +187,7 @@ const MyProfile = (props) => {
                     <Text style={styles.imageBtnText}>사진 변경</Text>
                 </TouchableOpacity>
             </View>
-            <View style={styles.changeProfileView}>
+            <KeyboardAwareScrollView style={styles.changeProfileView}>
                 <Text style={styles.changeProfileTitle}>개인정보 변경</Text>
                 <View style={styles.changeProfileSubView}>
                     <Text style={styles.changeProfileSubTitle}>이름</Text>
@@ -214,8 +215,8 @@ const MyProfile = (props) => {
                         })
                     }}>
                     <View style={styles.changeProfileSubView}>
-                        <Text style={styles.changeProfileSubTitle}> 주소 </Text>
-                        <Text style={styles.changeProfileSubInfo}> {location} </Text>
+                        <Text style={styles.changeProfileSubTitle}> 주소 </Text> 
+                        <Text style={styles.changeProfileSubInfo}> {location} </Text>        
                     </View>
                 </TouchableOpacity>
                 <Text style={styles.changeProfileTitle}>비밀번호 변경</Text>
@@ -265,7 +266,7 @@ const MyProfile = (props) => {
                         )}
                     </TouchableOpacity>
                 </View>
-            </View>
+            </KeyboardAwareScrollView>
         </View>
     )
 }
@@ -351,6 +352,9 @@ const styles = StyleSheet.create({
         lineHeight: 60,
         color: '#777',
         fontSize: 16,
+        overflow: 'hidden',
+        width: '80%',
+        textAlign: 'right'
     },
     changeProfileSubTextInput: {
         flex: 1,

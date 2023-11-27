@@ -11,6 +11,7 @@ import {
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 import DropDownPicker from 'react-native-dropdown-picker'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 //이미지 선택
 import * as ImagePicker from 'expo-image-picker';
@@ -227,7 +228,7 @@ const StartUpEdit = (props) => {
                     <Text style={styles.imageBtnText}>사진 변경</Text>
                 </TouchableOpacity>
             </View>
-            <ScrollView
+            <KeyboardAwareScrollView
                 style={styles.inforView}
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
@@ -280,6 +281,7 @@ const StartUpEdit = (props) => {
                         onChangeText={(e) => { setEInfo(e) }}
                         maxLength={500}
                         multiline={true}
+                        scrollEnabled={false}
                     />
 
                     <Text style={styles.bigText}>소개</Text>
@@ -290,6 +292,7 @@ const StartUpEdit = (props) => {
                         onChangeText={(e) => { setEIntroduce(e) }}
                         maxLength={500}
                         multiline={true}
+                        scrollEnabled={false}
                     />
 
                     <Text style={styles.bigText}>기술 / 스택</Text>
@@ -300,6 +303,7 @@ const StartUpEdit = (props) => {
                         onChangeText={(e) => { setEStack(e) }}
                         maxLength={200}
                         multiline={true}
+                        scrollEnabled={false}
                     />
                     <Text style={styles.bigText}>주소 추가</Text>
                     <TouchableOpacity
@@ -320,7 +324,7 @@ const StartUpEdit = (props) => {
                         <Text style={styles.smallText}>{location}</Text>
                     </TouchableOpacity>
                 </View>
-            </ScrollView>
+            </KeyboardAwareScrollView>
 
             <TouchableOpacity
                 style={styles.chatBtn}
@@ -417,7 +421,6 @@ const styles = StyleSheet.create({
         width: '90%',
         height: 500,
         marginTop: 30,
-
     },
     retryView:{
         position: 'absolute',
