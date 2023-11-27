@@ -150,7 +150,11 @@ const StartUpEdit = (props) => {
                     <Text style={styles.imageBtnText}>사진 추가</Text>
                 </TouchableOpacity>
             </View>
-            <KeyboardAwareScrollView style={styles.inforView}>
+            <KeyboardAwareScrollView
+                style={styles.inforView}
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+            >
                 <View style={{ flex: 1 }}>
                     <Text style={[styles.bigText, { fontSize: 25, fontWeight: 'bold' }]}>제목</Text>
                     <TextInput

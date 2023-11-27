@@ -91,7 +91,11 @@ const SignUp = (props) => {
             <Header
                 titleName='가입하기'
             />
-            <KeyboardAwareScrollView style={styles.textInputView}>
+            <KeyboardAwareScrollView
+                style={styles.textInputView}
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+            >
                 <CustomTextInput
                     name='이름'
                     named='을'
@@ -153,7 +157,7 @@ const styles = StyleSheet.create({
     },
 
 
-    
+
 
     textInputView: {
         width: '90%',

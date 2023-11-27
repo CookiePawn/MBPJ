@@ -67,7 +67,7 @@ const MyProfile = (props) => {
             setUser(users);
             if (props.route.params?.address) {
                 setLocation(props.route.params.address);
-            } else if (users.location != null){
+            } else if (users.location != null) {
                 setLocation(users.location)
             } else {
                 setLocation('주소를 입력해주세요')
@@ -169,7 +169,7 @@ const MyProfile = (props) => {
                 login={num}
                 titleName='내 프로필'
             />
-            
+
             <View style={styles.profileView}>
                 {
                     // profileImg가 null이 아니면 바로 profileImg를 사용하고,
@@ -193,7 +193,11 @@ const MyProfile = (props) => {
                     <Text style={styles.imageBtnText}>사진 변경</Text>
                 </TouchableOpacity>
             </View>
-            <KeyboardAwareScrollView style={styles.changeProfileView}>
+            <KeyboardAwareScrollView
+                style={styles.changeProfileView}
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
+            >
                 <Text style={styles.changeProfileTitle}>개인정보 변경</Text>
                 <View style={styles.changeProfileSubView}>
                     <Text style={styles.changeProfileSubTitle}>이름</Text>
@@ -221,8 +225,8 @@ const MyProfile = (props) => {
                         })
                     }}>
                     <View style={styles.changeProfileSubView}>
-                        <Text style={styles.changeProfileSubTitle}> 주소 </Text> 
-                        <Text style={styles.changeProfileSubInfo}> {location} </Text>        
+                        <Text style={styles.changeProfileSubTitle}> 주소 </Text>
+                        <Text style={styles.changeProfileSubInfo}> {location} </Text>
                     </View>
                 </TouchableOpacity>
                 <Text style={styles.changeProfileTitle}>비밀번호 변경</Text>
@@ -246,7 +250,7 @@ const MyProfile = (props) => {
                         style={styles.saveBtn}
                         onPress={async () => {
                             if (rePw != '' && location != '주소를 입력해주세요') {
-                                if(location != user.location) {
+                                if (location != user.location) {
                                     setIsLoading(true)
                                     try {
                                         // 주소를 좌표로 변환
@@ -286,7 +290,7 @@ const MyProfile = (props) => {
                                         image: image,
                                     })
                                 }
-                                
+
                             } else if (rePw == '') {
                                 alert('비밀번호를 입력해주세요')
                             } else {
