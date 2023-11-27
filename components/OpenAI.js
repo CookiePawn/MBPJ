@@ -92,7 +92,7 @@ export const openAIUser = async (info, introduce, career, project) => {
                     * 평가 기준: evaluation은 간단하고 일관성 있어야 하며, 몇 문장으로 요약됩니다.
                     * 엄격한 점수 기준: 직조 설명 경력 및 프로젝트 개수등 정보가 없다면 score가 20점, 정보가 많으면 score가 20점 이상`},
 
-                    { role: 'user', content: `이 글에 대한 점수를 알려줘 : 이 사람의 직종은 ${info}이다. 자신의 설명은 ${introduce}이고 경력은 ${career}이다. 프로젝트와 사용언어는 ${project}이다.` },
+                    { role: 'user', content: `이 글에 대한 점수를 알려줘 : 이 사람의 직종은 ${info}이다. 자신의 설명은 ${introduce}이고 경력은 ${career}이다. 이 글에 대한 점수를 한글로 알려줘 : 이 사람의 직종은 ${info}이다. 자신의 설명은 ${introduce}이고 경력은 ${career}이다. 프로젝트와 사용언어는 각각 JSON 형식으로 ${JSON.stringify(project.repoName)}}, ${JSON.stringify(project.repoLang)}이다.` },
                 ],
                 max_tokens: 500,
                 model: 'gpt-3.5-turbo'

@@ -142,6 +142,8 @@ const PersonInfo = (props) => {
             </View>
             <KeyboardAwareScrollView
                 style={styles.inforView}
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
             >
                 <Text style={styles.bigText}>직종</Text>
                 <TextInput
