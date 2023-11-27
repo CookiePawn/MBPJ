@@ -243,23 +243,21 @@ const PersonInfo = (props) => {
                             chartConfig={{
                                 backgroundGradientFrom: 'white',
                                 backgroundGradientTo: 'white',
-                                fillShadowGradient: '#7B78E7', // 막대의 그림자 색상
-                                fillShadowGradientOpacity: 0.7, // 막대의 그림자 불투명도
+                                fillShadowGradient: '#7B78E7',
+                                fillShadowGradientOpacity: 0.7,
                                 color: (opacity = 1) => `rgba(85, 82, 226, ${opacity})`,
                                 labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                                strokeWidth: 2, // 막대의 선 두께
+                                strokeWidth: 2,
                                 barPercentage: 0.5,
-                                useShadowColorFromDataset: false, // 데이터셋에서 그림자 색상을 사용하지 않음
-                                // 세로축 라벨을 숨기는 옵션
+                                useShadowColorFromDataset: false,
                                 formatYLabel: () => '',
                                 propsForDots: {
                                     r: "6",
                                     strokeWidth: "2",
                                     stroke: "#ffa726"
                                 },
-                                // 배경의 점선 무늬를 제거하는 옵션
                                 propsForBackgroundLines: {
-                                    stroke: 'transparent', // 배경 선을 투명하게 설정
+                                    stroke: 'transparent',
                                 },
                             }}
                             style={{
@@ -273,23 +271,24 @@ const PersonInfo = (props) => {
 
 
 
+                    <View style={styles.projectView}>
+                        <Text style={styles.bigText}>프로젝트</Text>
+                        {
 
-                    <Text style={styles.bigText}>프로젝트</Text>
-                    {
-
-                        user.infoProject && user.infoProject.map((item, idx) => {
-                            return (
-                                <TouchableOpacity
-                                    key={idx}
-                                    onPress={() => {
-                                        Linking.openURL(`https://github.com/${user.infoGitNickname}/${item}`);
-                                    }}
-                                >
-                                    <Text style={[styles.smallText, { color: 'lightskyblue' }]}>https://github.com/{user.infoGitNickname}/{item}</Text>
-                                </TouchableOpacity>
-                            )
-                        })
-                    }
+                            user.infoProject && user.infoProject.map((item, idx) => {
+                                return (
+                                    <TouchableOpacity
+                                        key={idx}
+                                        onPress={() => {
+                                            Linking.openURL(`https://github.com/${user.infoGitNickname}/${item}`);
+                                        }}
+                                    >
+                                        <Text style={[styles.smallText1, { color: 'lightskyblue' }]}>https://github.com/{user.infoGitNickname}/{item}</Text>
+                                    </TouchableOpacity>
+                                )
+                            })
+                        }
+                    </View>
 
                     <Text style={styles.bigText}>GPT 평가</Text>
                     <Text style={styles.smallText}>{user.evaluation}</Text>
@@ -437,6 +436,12 @@ const styles = StyleSheet.create({
         fontWeight: '400',
         marginBottom: 35,
     },
+    smallText1: {
+        color: 'rgba(153, 153, 153, 0.60)',
+        fontSize: 14,
+        fontWeight: '400',
+        marginBottom: 14,
+    },
     midText: {
         fontSize: 16,
         color: '#111',
@@ -445,60 +450,63 @@ const styles = StyleSheet.create({
         flex: 1,
         marginBottom: 20
     },
+    projectView: {
+        marginBottom: 35
+    },
 
 
-        //채팅 세션
+    //채팅 세션
     chatBtn: {
-    backgroundColor: '#5552E2',
-    height: 60,
-    width: '90%',
-    marginTop: 10,
-    marginBottom: 20,
-    borderRadius: 30,
-    alignItems: 'center',
-    justifyContent: 'center',
-},
+        backgroundColor: '#5552E2',
+        height: 60,
+        width: '90%',
+        marginTop: 10,
+        marginBottom: 20,
+        borderRadius: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     chatBtnText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 600,
-},
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 600,
+    },
 
 
 
     //소속 스타트업
     memberScrollView: {
-    flexDirection: 'row'
-},
+        flexDirection: 'row'
+    },
     memberView: {
-    height: 100,
-    marginRight: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 30,
-},
+        height: 100,
+        marginRight: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 30,
+    },
     userImage: {
-    width: 60,
-    height: 60,
-    borderRadius: 100,
-    marginLeft: 15,
-},
+        width: 60,
+        height: 60,
+        borderRadius: 100,
+        marginLeft: 15,
+    },
     userName: {
-    marginLeft: 10,
-    marginRight: 15,
-    fontWeight: 500,
-    fontSize: 20,
-},
+        marginLeft: 10,
+        marginRight: 15,
+        fontWeight: 500,
+        fontSize: 20,
+    },
     userInfo: {
-    color: 'rgba(0, 0, 0, 0.60)',
-    fontSize: 12,
-    fontWeight: 400,
-    lineHeight: 23,
-},
+        color: 'rgba(0, 0, 0, 0.60)',
+        fontSize: 12,
+        fontWeight: 400,
+        lineHeight: 23,
+    },
     crownView: {
-    position: 'absolute',
-    marginLeft: 30,
-    top: 0
-},
+        position: 'absolute',
+        marginLeft: 30,
+        top: 0
+    },
 
 })

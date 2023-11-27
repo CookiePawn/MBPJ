@@ -244,13 +244,13 @@ const SeeMyPage = (props) => {
                             chartConfig={{
                                 backgroundGradientFrom: 'white',
                                 backgroundGradientTo: 'white',
-                                fillShadowGradient: '#7B78E7', 
-                                fillShadowGradientOpacity: 0.7, 
+                                fillShadowGradient: '#7B78E7',
+                                fillShadowGradientOpacity: 0.7,
                                 color: (opacity = 1) => `rgba(85, 82, 226, ${opacity})`,
                                 labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                                strokeWidth: 2, 
+                                strokeWidth: 2,
                                 barPercentage: 0.5,
-                                useShadowColorFromDataset: false, 
+                                useShadowColorFromDataset: false,
                                 formatYLabel: () => '',
                                 propsForDots: {
                                     r: "6",
@@ -258,7 +258,7 @@ const SeeMyPage = (props) => {
                                     stroke: "#ffa726"
                                 },
                                 propsForBackgroundLines: {
-                                    stroke: 'transparent', 
+                                    stroke: 'transparent',
                                 },
                             }}
                             style={{
@@ -272,22 +272,24 @@ const SeeMyPage = (props) => {
 
 
 
+                    <View style={styles.projectView}>
+                        <Text style={styles.bigText}>프로젝트</Text>
+                        {
+                            user.infoProject && user.infoProject.map((item, idx) => {
+                                return (
+                                    <TouchableOpacity
+                                        key={idx}
+                                        onPress={() => {
+                                            Linking.openURL(`https://github.com/${user.infoGitNickname}/${item}`);
+                                        }}
+                                    >
+                                        <Text style={[styles.smallText1, { color: 'lightskyblue' }]}>https://github.com/{user.infoGitNickname}/{item}</Text>
+                                    </TouchableOpacity>
+                                )
+                            })
+                        }
+                    </View>
 
-                    <Text style={styles.bigText}>프로젝트</Text>
-                    {
-                        user.infoProject && user.infoProject.map((item, idx) => {
-                            return (
-                                <TouchableOpacity
-                                    key={idx}
-                                    onPress={() => {
-                                        Linking.openURL(`https://github.com/${user.infoGitNickname}/${item}`);
-                                    }}
-                                >
-                                    <Text style={[styles.smallText, { color: 'lightskyblue' }]}>https://github.com/{user.infoGitNickname}/{item}</Text>
-                                </TouchableOpacity>
-                            )
-                        })
-                    }
 
 
 
@@ -420,6 +422,12 @@ const styles = StyleSheet.create({
         fontWeight: '400',
         marginBottom: 35,
     },
+    smallText1: {
+        color: 'rgba(153, 153, 153, 0.60)',
+        fontSize: 14,
+        fontWeight: '400',
+        marginBottom: 14,
+    },
     midText: {
         fontSize: 16,
         color: '#111',
@@ -428,6 +436,9 @@ const styles = StyleSheet.create({
         flex: 1,
         marginBottom: 20
     },
+    projectView: {
+        marginBottom: 35
+    }, 
 
     //소속 스타트업
     memberScrollView: {
