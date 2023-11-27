@@ -16,7 +16,7 @@ export const fetchLang = async (nickname) => {
     let repoName = []
     let repoLang = {}
     try {
-        const repos = await loadRepositories();
+        const repos = await loadRepositories(nickname);
         if (repos) {
             for (const repo of repos) {
                 const response = await octokit.request('GET /repos/{owner}/{repo}/languages', {
@@ -48,10 +48,10 @@ export const fetchLang = async (nickname) => {
 
 
 //사용자 리포지토리 불러오기
-const loadRepositories = async () => {
+const loadRepositories = async (nickname) => {
     try {
         const response = await octokit.request('GET /users/{owner}/repos', {
-            owner: 'CookiePawn',
+            owner: nickname,
             per_page: 100  // 한 페이지당 최대 리포지토리 수 (최대 100)
         });
         return response.data.map(repo => repo.name);

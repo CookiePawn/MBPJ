@@ -372,9 +372,12 @@ export const loadConnect = async () => {
 //내 페이지 수정
 export const updateUserProject = async (num, eField, eInfo, eCareer, eIntroduce, eProject) => {
 
-    const gptResult = await openAIUser(eInfo, eIntroduce, eCareer, eProject)
-
+    //깃허브 정보 가져오기
     const gitRepo = await fetchLang(eProject)
+
+
+    //gpt 평가
+    const gptResult = await openAIUser(eInfo, eIntroduce, eCareer, gitRepo)
 
 
     if (gptResult) {

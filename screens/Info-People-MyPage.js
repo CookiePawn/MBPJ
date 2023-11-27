@@ -259,15 +259,15 @@ const SeeMyPage = (props) => {
 
                     <Text style={styles.bigText}>프로젝트</Text>
                     {
-                        user.infoProject.map((item, idx) => {
+                        user.infoProject && user.infoProject.map((item, idx) => {
                             return (
                                 <TouchableOpacity
                                     key = {idx}
                                     onPress={() => {
-                                        Linking.openURL(`https://github.com/${user.infoGitNickname}/${user.infoProject[idx]}`);
+                                        Linking.openURL(`https://github.com/${user.infoGitNickname}/${item}`);
                                     }}
                                 >
-                                    <Text style={[styles.smallText, { color: 'lightskyblue' }]}>https://github.com/{user.infoGitNickname}/{user.infoProject[idx]}</Text>
+                                    <Text style={[styles.smallText, { color: 'lightskyblue' }]}>https://github.com/{user.infoGitNickname}/{item}</Text>
                                 </TouchableOpacity>
                             )
                         })    
