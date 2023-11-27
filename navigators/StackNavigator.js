@@ -10,7 +10,7 @@ import PersonSignUp from '../screens/SignUp-Person'
 import Category from '../screens/Category'
 import MyPage from '../screens/MyPage';
 import MyProfile from '../screens/MyProfile'
-//import Map from '../screens/Map';
+import Map from '../screens/Map';
 import People from '../screens/List-People';
 import CofounderList from '../screens/List-Cofounder';
 import CofounderEdit from '../screens/Cofounder-edit';
@@ -50,6 +50,8 @@ const StackNavigator = () => {
             <Stack.Screen name='StartUpMore' component={StartUpMore}/>
             <Stack.Screen name='StartupServey' component={StartupServey}/>
             <Stack.Screen name='StartUpEdit' component={StartUpEdit}/>
+
+            <Stack.Screen name='Map' component={Map}/>
 
 
 

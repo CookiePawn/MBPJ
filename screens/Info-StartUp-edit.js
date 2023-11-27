@@ -340,13 +340,12 @@ const StartUpEdit = (props) => {
                                 try {
                                     // 주소를 좌표로 변환
                                     const coordinates = await getAddressCoordinates(location);
-                                    console.log(coordinates)
                                     if (coordinates) {
                                         const lat = coordinates.lat;
                                         const lng = coordinates.lng;
                                         //addStartUp에 좌표 정보도 함께 전달
                                         await updateStartUpProject(people, fieldValue, eInfo, eIntroduce, eStack, location, lat, lng);
-                                        alert('스타트업이 변경되었습니다!');
+                                        
                                     } else {
                                         alert('스타트업 변경을 실패했습니다!');
                                     }
@@ -365,7 +364,7 @@ const StartUpEdit = (props) => {
                                     people: people,
                                 })
                             } else {
-                                alert('저장된거랑 같음')
+                                alert('스타트업이 변경되었습니다!');
                                 await updateStartUpProject(people, fieldValue, eInfo, eIntroduce, eStack, location, user.lat, user.lng);
                                 props.navigation.navigate("StartUpInfo", {
                                     num: num,

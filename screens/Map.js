@@ -7,7 +7,8 @@ import {
     Animated,
     ScrollView,
     Dimensions,
-    Platform
+    Platform,
+    Image
 } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 //사용자 위치 가져오기
@@ -18,15 +19,9 @@ import Icon from 'react-native-vector-icons/Ionicons'
 //import { Polyline } from 'react-native-svg';
 
 
-//api 키
-import { googleKey } from '../keys/Key'
-
-
-
 //db 로드
-import { loadUsers } from '../DB/LoadDB';
+import { loadStartUps, loadUsers, loadUserImages, loadStartUpImages} from '../DB/LoadDB';
 import { useIsFocused } from '@react-navigation/native';
-import axios from 'axios';
 
 const SCREEN_WIDTH = Dimensions.get('window').width
 const CARD_WIDTH = Dimensions.get('window').width * 0.95
@@ -46,6 +41,13 @@ const Map = (props) => {
     const isFocused = useIsFocused();
 
     const [user, setUser] = useState([]);
+    const [startUp, setStartUp] = useState([]);
+    const [userImage, setUserImage] = useState(null);
+    const [startUpImage, setStartUpImage] = useState(null);
+    const [userImageUrl, setUserImageUrl] = useState([]);
+    const [startUpImageUrl, setStartUpImageUrl] = useState([]);
+    const [userProfileImage, setUserProfileImage] = useState(null);
+    const [foundImage, setFoundImage] = useState(null);
 
     //위치 정보
     const [region, setRegion] = useState({
@@ -56,7 +58,7 @@ const Map = (props) => {
     const [km, setKm] = useState(0)
     const [followsUser, setFollowUser] = useState(true)
 
-    const [state, setState] = useState([])
+    const [cardList, setCardList] = useState([])
 
     const [selectMarker, setSelectMarker] = useState({
         latitude: region.latitude,
@@ -90,39 +92,59 @@ const Map = (props) => {
 
 
     useEffect(() => {
-        const fetchUser = async () => {
-            const users = await loadUsers();
-            setUser(users);
+
+        const fetchUserImage = async () => {
+            const images = await loadUserImages();
+            setUserImageUrl(images);
         };
 
+        const fetchStartUpImage = async () => {
+            const images = await loadStartUpImages();
+            setStartUpImageUrl(images);
+        };
+
+        const fetchUser = async () => {
+            const users = await loadUsers();
+            const filteredUsers = users.filter((item) => 'lat' in item);
+            setUser(filteredUsers);
+        };
+
+        const fetchStartUp = async () => {
+            const startUps = await loadStartUps();
+            const filteredStartUps = startUps.filter((item) => 'lat' in item);
+            setStartUp(filteredStartUps);
+        }
+
+        fetchUserImage();
+        fetchStartUpImage();
         fetchUser();
+        fetchStartUp();
 
     }, [isFocused]);
 
     useEffect(() => {
+        if (user.name && userImageUrl && userImageUrl.length > 0) {
+            const matchImage = userImageUrl.find(item => item.name === user.name);
+            setFoundImage(matchImage);
+            setUserProfileImage(matchImage)
+        }
+    }, [user, userImageUrl]);
 
-        const filteredUsers = user.filter(user => user.location);
 
-      getAddressCoordinates(filteredUsers.map(user => user.location)).then(coordinates => {
-        const markerUsers = filteredUsers.map((user, index) => ({
-            ...user,
-            coordinate : {
-                latitude : coordinates[index].lat,
-                longitude : coordinates[index].lng,
-            }
-        }))
 
-        const distance = (marker) => {
+    useEffect(() => {
+
+        const distance = (user) => {
             return Geolib.getDistance(
                 region,
                 {
-                    latitude: marker.coordinate.latitude,
-                    longitude: marker.coordinate.longitude,
+                    latitude: user.lat,
+                    longitude: user.lng,
                 }
         )};
 
         const sortData = () => {
-            markerUsers.sort((a,b) => {
+            user.sort((a,b) => {
                 const userA = distance(a)
                 const userB = distance(b)
                 return userA - userB
@@ -131,47 +153,45 @@ const Map = (props) => {
 
         sortData()
 
-        if (markerUsers.length > 0) {
-            setState(markerUsers)
+        if (user.length > 0) {
+            setCardList(user)
         }
-
-    }) 
 
     }, [user])
 
-    
-    const getAddressCoordinates = async (address) => {
-        try {
-          const requests = address.map(address => 
-                axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${googleKey}`)
-          );
 
-            const responses = await Promise.all(requests)
 
-            const coordinates = responses.map((response, index) => {
-                if (response.data.status === 'OK' && response.data.results.length > 0) {
+    useEffect(() => {
 
-                    const location = response.data.results[0].geometry.location;
-                    return { ...address[index], lat : location.lat, lng : location.lng };
+        const distance = (startUp) => {
+            return Geolib.getDistance(
+                region,
+                {
+                    latitude: startUp.lat,
+                    longitude: startUp.lng,
+                }
+        )};
 
-                  } else {
-                    return null;
-                  }}
-                );
-
-            return coordinates;
-
-        } catch (error) {
-          console.error('Error fetching data:', error);
+        const sortData = () => {
+            startUp.sort((a,b) => {
+                const startUpA = distance(a)
+                const startUpB = distance(b)
+                return startUpA - startUpB
+            })
         }
-      };
+
+        sortData()
+
+    }, [startUp])
+    
+    
 
 
     //스크롤 이벤트 발생 시 실행
     const handleOnScroll = event => {
         let index = parseInt(event.nativeEvent.contentOffset.x / Dimensions.get('window').width)
-        if (index >= state.length) {
-            index = state.length - 1
+        if (index >= cardList.length) {
+            index = cardList.length - 1
         }
         if (index <= 0) {
             index = 0
@@ -180,17 +200,19 @@ const Map = (props) => {
         const regionTimeout = setTimeout(() => {
             if (mapIndex != index || (mapIndex == 0 && index == 0)) {
                 mapIndex = index
-                const { coordinate } = state[index]
-                setSelectMarker(state[index].coordinate)
+                const coordinate = {latitude : cardList[index].lat, longitude : cardList[index].lng}
+                setSelectMarker(coordinate)
                 _map.current.animateToRegion(
                     {
                         ...coordinate,
-                        region: state[index].coordinate.latitude,
-                        region: state[index].coordinate.longitude,
+                        region: cardList[index].lat,
+                        region: cardList[index].lng,
                     }, 350);
             }
         }, 10)
     }
+
+
 
     return (
         <View style={{ flex: 1, backgroundColor: 'white', }}>
@@ -245,23 +267,28 @@ const Map = (props) => {
             >
 
                 { 
-                    state.map((markerUsers, index) => {
+                    cardList.map((cardList, index) => {
                         return (
                             <Marker
                                 key={index}
-                                coordinate={markerUsers.coordinate}
-                                title={markerUsers.name}
+                                coordinate={{
+                                    latitude : cardList.lat,
+                                    longitude : cardList.lng,
+                                }}
+                                title={cardList.name}
                                 onPress={() => {
                                     const distance = Geolib.getDistance(
                                         region,
                                         {
-                                            latitude: markerUsers.coordinate.latitude,
-                                            longitude: markerUsers.coordinate.longitude,
+                                            latitude: cardList.lat,
+                                            longitude: cardList.lng,
                                         }
                                     );
                                     setKm(distance)
-                                    console.log(distance)
-                                    setSelectMarker(markerUsers.coordinate)
+                                    setSelectMarker({
+                                        latitude : cardList.lat,
+                                        longitude : cardList.lng,
+                                    })
                                 }}
                             >
 
@@ -286,12 +313,42 @@ const Map = (props) => {
             </MapView>
 
 
+            <TouchableOpacity
+                style = {styles.userButton}
+                onPress={() => {
+                    setCardList(user)
+                    setSelectMarker(region)
+                    setFollowUser(true)
+                        setTimeout(() => {
+                            setFollowUser(false)
+                        }, 1000);
+                }}
+                >
+                <Icon name='person-outline' size={40} color='black' />
+            </TouchableOpacity>
+
+
+            <TouchableOpacity
+                style = {styles.startUpButton}
+                onPress={() => {
+                    setCardList(startUp)
+                    setSelectMarker(region)
+                    setFollowUser(true)
+                        setTimeout(() => {
+                            setFollowUser(false)
+                        }, 1000);
+                }}
+                >
+                <Icon name='business-outline' size={40} color='black' />
+            </TouchableOpacity>
+
+
             <Animated.ScrollView
                 horizontal
                 scrollEventThrottle={3}
                 showsHorizontalScrollIndicator={false}
                 style={styles.scrollView}
-                contentContainerStyle={[{ width: `${state.length * 100}%` }]}
+                contentContainerStyle={[{ width: `${cardList.length * 100}%` }]}
                 pagingEnabled
                 onScroll={e => handleOnScroll(e)}
                 snapToAlignment="center"
@@ -303,20 +360,26 @@ const Map = (props) => {
                 }}
             >
                 {
-                    state.map((markerUsers, index) => {
+                    cardList.map((cardList, index) => {
                         return (
                             <TouchableOpacity key={index} style={[{ width: CARD_WIDTH }, styles.card]}>
-                                <Text
-                                    numberOfLines={1}
-                                    style={styles.cardTitle}
-                                >
-                                    {markerUsers.name}
-                                </Text>
-                                <Text
-                                    numberOfLines={1}
-                                    style = {styles.cardTitle}>
-                                        {markerUsers.infoCareer}
-                                    </Text>
+                                <View style = {styles.cardView}>
+                                    <Image style = {styles.profileImage} source = {require('../assets/start-solo1.png')}/>
+
+                                    <View>
+                                        <Text
+                                            numberOfLines={1}
+                                            style={styles.cardTitle}
+                                        >
+                                            {cardList.name}
+                                        </Text>
+                                        <Text
+                                            numberOfLines={3}
+                                            style = {styles.cardDescription}>
+                                                {cardList.infoCareer || cardList.info}
+                                        </Text>
+                                    </View>
+                                </View>
                             </TouchableOpacity>
                         )
                     })
@@ -360,9 +423,22 @@ const styles = StyleSheet.create({
 
     userButton: {
         position : 'absolute',
-        right : 10,
-        bottom : 10,
+        right : '15%',
+        bottom : '25%',
+        borderRadius : 5,
+        backgroundColor : 'white',
     },
+
+
+    startUpButton : {
+        position : 'absolute',
+        right : '3%',
+        bottom : '25%',
+        borderRadius : 5,
+        backgroundColor : 'white',
+    },
+
+
 
     distanceText: {
         position: 'absolute',
@@ -390,7 +466,6 @@ const styles = StyleSheet.create({
     },
 
     card: {
-        alignItems: 'center',
         backgroundColor: "#fff",
         marginHorizontal: SCREEN_WIDTH * 0.025,
         overflow: 'hidden',
@@ -401,10 +476,31 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(0, 0, 0, 0.1)',
     },
 
+    cardView : {
+        alignContent : 'center',
+        flexDirection : 'row',
+        width : '100%',
+        height : '100%'
+    },
+
+    profileImage: {
+        width: '40%',
+        height: '90%',
+        borderRadius: 30,
+        margin: 10,
+    },
+
     cardTitle: {
         fontSize: 20,
         fontWeight: "bold",
         marginTop: 16,
+    },
+
+    cardDescription : {
+        fontSize : 15,
+        fontWeight : "300",
+        marginTop : 14,
+        color : 'gray'
     },
 
     headerView : {
