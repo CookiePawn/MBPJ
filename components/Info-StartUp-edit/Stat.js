@@ -124,6 +124,7 @@ export const Stat0 = (props) => {
                 >
                     <Text style={[styles.textInput, { color: '#999' }]}>초기 단계는 준비입니다. {'\n'}이후 등급 재설정을 통해 등급을 정할 수 있습니다.{'\n'}{'\n'}자세한 내용은 클릭 후 확인 가능합니다.</Text>
                 </TouchableOpacity>
+
                 <Text style={styles.title}>주제</Text>
                 <TextInput
                     style={styles.textInput}
@@ -135,7 +136,7 @@ export const Stat0 = (props) => {
                 />
                 <Text style={styles.title}>소개</Text>
                 <TextInput
-                    style={styles.textInput}
+                    style={styles.textInput1}
                     placeholder='소개를 입력해주세요'
                     value={introduce}
                     onChangeText={(e) => setIntroduce(e)}
@@ -145,7 +146,7 @@ export const Stat0 = (props) => {
                 />
                 <Text style={styles.title}>기술 / 스택</Text>
                 <TextInput
-                    style={styles.textInput}
+                    style={styles.textInput1}
                     placeholder='기술 및 스택을 입력해주세요'
                     value={stack}
                     onChangeText={(e) => setStack(e)}
@@ -366,13 +367,17 @@ const styles = StyleSheet.create({
     },
     textInput: {
         fontSize: 16,
-        marginTop: 5,
+        marginTop: 5
+    },
+    textInput1: {
+        fontSize: 16,
     },
     smallText: {
         color: 'rgba(153, 153, 153, 0.60)',
         fontSize: 16,
         fontWeight: '400',
         marginBottom: 30,
+        marginTop: 5
     },
 
 
@@ -420,9 +425,9 @@ const styles = StyleSheet.create({
     profileImage: {
         width: 70,
         height: 70,
-        borderRadius: 100,
+        borderRadius: 10,
         marginLeft: 15,
-        marginRight: 10,
+        marginRight: 15,
     },
     startupName: {
         fontSize: 20,

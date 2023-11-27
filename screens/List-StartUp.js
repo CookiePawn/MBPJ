@@ -296,9 +296,9 @@ const styles = StyleSheet.create({
     profileImage: {
         width: 60,
         height: 60,
-        borderRadius: 100,
+        borderRadius: 10,
         margin: 10,
-        marginRight: 20,
+        marginRight: 15,
         marginTop: 13,
         marginLeft: 'auto'
     },
@@ -307,7 +307,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderColor: '#E8E8E8',
         justifyContent: 'center',
-        marginTop: 20
+        marginTop: 18
     },
     nameText: {
         fontSize: 18,
