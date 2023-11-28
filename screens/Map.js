@@ -14,12 +14,13 @@ import MapView, { Marker, Polyline } from 'react-native-maps';
 import * as Location from 'expo-location';
 //위도 경도로 거리 계산하기
 import * as Geolib from 'geolib';
-import Icon from 'react-native-vector-icons/Ionicons'
+import Icon from 'react-native-vector-icons/FontAwesome5'
 //import { Polyline } from 'react-native-svg';
 
+import Header from '../components/Header';
 
 //db 로드
-import { loadStartUps, loadUsers, loadUserImages, loadStartUpImages} from '../DB/LoadDB';
+import { loadStartUps, loadUsers, loadUserImages, loadStartUpImages } from '../DB/LoadDB';
 import { useIsFocused } from '@react-navigation/native';
 
 //로딩화면
@@ -156,7 +157,7 @@ const Map = (props) => {
         }
 
     }, [startUp, startUpImageUrl]);
-    
+
 
 
 
@@ -169,10 +170,11 @@ const Map = (props) => {
                     latitude: user.lat,
                     longitude: user.lng,
                 }
-        )};
+            )
+        };
 
         const sortData = () => {
-            user.sort((a,b) => {
+            user.sort((a, b) => {
                 const userA = distance(a)
                 const userB = distance(b)
                 return userA - userB
@@ -198,10 +200,11 @@ const Map = (props) => {
                     latitude: startUp.lat,
                     longitude: startUp.lng,
                 }
-        )};
+            )
+        };
 
         const sortData = () => {
-            startUp.sort((a,b) => {
+            startUp.sort((a, b) => {
                 const startUpA = distance(a)
                 const startUpB = distance(b)
                 return startUpA - startUpB
@@ -211,8 +214,8 @@ const Map = (props) => {
         sortData()
 
     }, [startUp])
-    
-    
+
+
 
 
     //스크롤 이벤트 발생 시 실행
@@ -228,7 +231,7 @@ const Map = (props) => {
         const regionTimeout = setTimeout(() => {
             if (mapIndex != index || (mapIndex == 0 && index == 0)) {
                 mapIndex = index
-                const coordinate = {latitude : cardList[index].lat, longitude : cardList[index].lng}
+                const coordinate = { latitude: cardList[index].lat, longitude: cardList[index].lng }
                 setSelectMarker(coordinate)
                 _map.current.animateToRegion(
                     {
@@ -244,47 +247,26 @@ const Map = (props) => {
 
     return (
         <View style={{ flex: 1, backgroundColor: 'white', }}>
+
             {renderFullScreenLoading(isLoading)}
             <View style={styles.titleView}>
-                <TouchableOpacity
-                    style={[styles.icon, { left: 0, }]}
-                    onPress={() => {
-                        props.navigation.goBack()
+                <Header
+                    navi={props}
+                    params={{
+                        num: num,
+                        id: id,
+                        pw: pw,
+                        phone: phone,
+                        name: name,
+                        email: email,
+                        image: image,
                     }}
-                >
-                    <Icon name='arrow-back-outline' size={25} color='black' />
-                </TouchableOpacity>
-                <Text style={styles.titleText}>
-                    내 주변 기업 찾기
-                </Text>
-                <TouchableOpacity
-                    style={[styles.icon, {right: 0,}]}
-                    onPress={() => {
-                        setFollowUser(true)
-                        setTimeout(() => {
-                            setFollowUser(false)
-                        }, 1000);
-                    }}
-                >
-                    <Icon name="location" size={25} color="black" />
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={[styles.icon, { right: 40, }]}
-                    onPress={() => {
-                        props.navigation.navigate('Category', {
-                            num: num,
-                            id: id,
-                            pw: pw,
-                            phone: phone,
-                            name: name,
-                            email: email,
-                            image: image,
-                        })
-                    }}
-                >
-                    <Icon name='home' size={25} color='black' />
-                </TouchableOpacity>
+                    iconNameL1='arrow-back-outline'
+                    iconNameR1='notifications'
+                    iconNameR2='home'
+                    login={num}
+                    titleName='주변 기업/사람 보기'
+                />
             </View>
 
             <MapView
@@ -295,14 +277,14 @@ const Map = (props) => {
                 ref={_map}
             >
 
-                { 
+                {
                     cardList.map((cardList, index) => {
                         return (
                             <Marker
                                 key={index}
                                 coordinate={{
-                                    latitude : cardList.lat,
-                                    longitude : cardList.lng,
+                                    latitude: cardList.lat,
+                                    longitude: cardList.lng,
                                 }}
                                 title={cardList.name}
                                 onPress={() => {
@@ -315,8 +297,8 @@ const Map = (props) => {
                                     );
                                     setKm(distance)
                                     setSelectMarker({
-                                        latitude : cardList.lat,
-                                        longitude : cardList.lng,
+                                        latitude: cardList.lat,
+                                        longitude: cardList.lng,
                                     })
                                 }}
                             >
@@ -343,34 +325,34 @@ const Map = (props) => {
 
 
             <TouchableOpacity
-                style = {styles.userButton}
+                style={styles.userButton}
                 onPress={() => {
                     setCardList(user)
                     setSelectMarker(region)
                     setFoundImage(userFoundImage)
                     setFollowUser(true)
-                        setTimeout(() => {
-                            setFollowUser(false)
-                        }, 1000);
+                    setTimeout(() => {
+                        setFollowUser(false)
+                    }, 1000);
                 }}
-                >
-                <Icon name='person' size={30} color='black' />
+            >
+                <Icon name='child' size={30} color='black' />
             </TouchableOpacity>
 
 
             <TouchableOpacity
-                style = {styles.startUpButton}
+                style={styles.startUpButton}
                 onPress={() => {
                     setCardList(startUp)
                     setSelectMarker(region)
                     setFoundImage(startUpFoundImage)
                     setFollowUser(true)
-                        setTimeout(() => {
-                            setFollowUser(false)
-                        }, 1000);
+                    setTimeout(() => {
+                        setFollowUser(false)
+                    }, 1000);
                 }}
-                >
-                <Icon name='business' size={30} color='black' />
+            >
+                <Icon name='hotel' size={30} color='black' />
             </TouchableOpacity>
 
 
@@ -392,10 +374,11 @@ const Map = (props) => {
             >
                 {
                     cardList.map((cardList, index) => {
+
                         return (
                             <TouchableOpacity key={index} style={[{ width: CARD_WIDTH }, styles.card]}
-                                onPress = {() => {
-                                    if(cardList.perID != null) {
+                                onPress={() => {
+                                    if (cardList.perID != null) {
                                         props.navigation.navigate("PeopleInfo", {
                                             num: num,
                                             id: id,
@@ -404,28 +387,28 @@ const Map = (props) => {
                                             name: name,
                                             email: email,
                                             image: image,
-                                            people : cardList.id
+                                            people: cardList.id
                                         })
                                     } else {
                                         props.navigation.navigate("StartUpInfo", {
                                             num: num,
                                             id: id,
-                                            pw : pw,
+                                            pw: pw,
                                             phone: phone,
                                             name: name,
                                             email: email,
                                             image: image,
-                                            people : cardList.id
+                                            people: cardList.id
                                         })
                                     }
-                                    
+
                                 }}
-                                >
-                                <View style = {styles.cardView}>
-                                           <Image
-                                               style={styles.profileImage}
-                                               source={foundImage ? { uri: foundImage[index].url } : require('../assets/start-solo1.png')}
-                                           />
+                            >
+                                <View style={styles.cardView}>
+                                    <Image
+                                        style={styles.profileImage}
+                                        source={foundImage ? { uri: foundImage[index].url } : require('../assets/start-solo1.png')}
+                                    />
                                     <View>
                                         <Text
                                             numberOfLines={1}
@@ -435,8 +418,22 @@ const Map = (props) => {
                                         </Text>
                                         <Text
                                             numberOfLines={3}
-                                            style = {styles.cardDescription}>
-                                                {cardList.infoCareer || cardList.info}
+                                            style={styles.cardDescription}>
+                                            {cardList.info}
+                                        </Text>
+                                        <Text
+                                            numberOfLines={5}
+                                            style={styles.cardNum}>
+                                            {cardList.score >= 70 ? (
+                                                <Icon name='grin-alt' size={20} color='green' />
+                                            ) : cardList.score >= 30 ? (
+                                                <Icon name='meh' size={20} color='orange' />
+                                            ) : (
+                                                <Icon name='frown' size={20} color='red' />
+                                            )}
+                                            <View>
+                                                 <Text style={{ marginLeft: 5 }}>{cardList.score}점</Text>
+                                            </View>
                                         </Text>
                                     </View>
                                 </View>
@@ -458,11 +455,9 @@ const styles = StyleSheet.create({
 
     //아이콘 뷰
     titleView: {
-        width: '90%',
         height: 100,
         alignItems: 'center',
         marginBottom: 30,
-        marginLeft: 16,
     },
     icon: {
         position: 'absolute',
@@ -476,26 +471,24 @@ const styles = StyleSheet.create({
     },
 
     homeButton: {
-        position : 'absolute',
-        right : 40,
-        bottom : 10,
+        position: 'absolute',
+        right: 40,
+        bottom: 10,
     },
 
     userButton: {
-        position : 'absolute',
-        right : '15%',
-        bottom : '25%',
-        borderRadius : 5,
-        // backgroundColor : 'white',
+        position: 'absolute',
+        right: '20%',
+        bottom: '25%',
+        borderRadius: 5,
     },
 
 
-    startUpButton : {
-        position : 'absolute',
-        right : '3%',
-        bottom : '25%',
-        borderRadius : 5,
-        // backgroundColor : 'white',
+    startUpButton: {
+        position: 'absolute',
+        right: '5%',
+        bottom: '25%',
+        borderRadius: 5,
     },
 
 
@@ -526,62 +519,69 @@ const styles = StyleSheet.create({
     },
 
     card: {
-        backgroundColor: "#fff",
+        backgroundColor: 'rgba(255, 255, 255, 0.8)',
         marginHorizontal: SCREEN_WIDTH * 0.025,
         overflow: 'hidden',
         marginTop: 10,
-        height: '90%',
-        borderRadius: 40,
+        height: '100%',
+        borderTopLeftRadius: 50,     // 왼쪽 위
+        borderTopRightRadius: 50,    // 오른쪽 위
+        borderBottomLeftRadius: 0,  // 왼쪽 아래
+        borderBottomRightRadius: 0, // 오른쪽 아래
         borderWidth: 1,
         borderColor: 'rgba(0, 0, 0, 0.1)',
     },
 
-    cardView : {
-        alignContent : 'center',
-        flexDirection : 'row',
-        width : '100%',
-        height : '100%'
+    cardView: {
+        alignContent: 'center',
+        flexDirection: 'row',
+        width: '100%',
+        height: '100%'
     },
 
     profileImage: {
         width: '40%',
-        height: '90%',
+        height: '80%',
         borderRadius: 30,
-        margin: 10,
-        marginLeft: 10
+        margin: 20
     },
 
     cardTitle: {
-        fontSize: 24,
+        fontSize: 20,
         fontWeight: "bold",
-        marginTop: 16,
-        marginLeft: 5
+        marginTop: 20,
     },
 
-    cardDescription : {
-        fontSize : 14,
-        fontWeight : "300",
-        marginTop : 14,
-        color : 'gray',
-        marginLeft: 5,
+    cardDescription: {
+        fontSize: 15,
+        fontWeight: "300",
+        marginTop: 14,
+        color: 'gray'
     },
 
-    headerView : {
-        width : SCREEN_WIDTH,
-        backgroundColor : '#FFF',
-        alignItems : 'flex-end',
-        flexDirection : 'row'
+    cardNum: {
+        fontSize: 15,
+        fontWeight: "300",
+        marginTop: 14,
+        color: 'gray',
     },
 
-    headerText : {
-        fontWeight : 'bold',
-        fontSize : 23,
+    headerView: {
+        width: SCREEN_WIDTH,
+        backgroundColor: '#FFF',
+        alignItems: 'flex-end',
+        flexDirection: 'row'
+    },
+
+    headerText: {
+        fontWeight: 'bold',
+        fontSize: 23,
         textAlign: 'center',
     },
 
-    headerIcon : {
-        left : 10,
-        bottom : 10,
+    headerIcon: {
+        left: 10,
+        bottom: 10,
     },
 
 })
