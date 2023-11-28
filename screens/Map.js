@@ -8,6 +8,7 @@ import {
     ScrollView,
     Dimensions,
     Image,
+    _ScrollView,
 } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 //사용자 위치 가져오기
@@ -244,6 +245,38 @@ const Map = (props) => {
     }
 
 
+    // 마커를 선택할 때 호출되는 함수
+    const handleMarkerPress = (selectedMarker) => {
+        // 선택한 마커의 좌표를 가져옵니다.
+        const coordinate = {
+            latitude: selectedMarker.lat,
+            longitude: selectedMarker.lng,
+        };
+
+        setSelectMarker(coordinate)
+
+        // 선택한 마커의 인덱스를 찾습니다.
+        const selectedIndex = cardList.findIndex((card) => {
+            return card.lat === coordinate.latitude && card.lng === coordinate.longitude;
+        });
+
+        if (selectedIndex !== -1) {
+            // 선택한 마커의 인덱스를 기반으로 스크롤뷰를 스크롤합니다.
+            _scrollView.current.scrollTo({ x: selectedIndex * SCREEN_WIDTH, animated: true });
+
+            // 맵을 선택한 마커를 중심으로 이동합니다.
+            _map.current.animateToRegion(
+                {
+                    ...coordinate,
+                },
+                350
+            );
+        }
+    };
+
+
+
+
 
     return (
         <View style={{ flex: 1, backgroundColor: 'white', }}>
@@ -287,20 +320,9 @@ const Map = (props) => {
                                     longitude: cardList.lng,
                                 }}
                                 title={cardList.name}
-                                onPress={() => {
-                                    const distance = Geolib.getDistance(
-                                        region,
-                                        {
-                                            latitude: cardList.lat,
-                                            longitude: cardList.lng,
-                                        }
-                                    );
-                                    setKm(distance)
-                                    setSelectMarker({
-                                        latitude: cardList.lat,
-                                        longitude: cardList.lng,
-                                    })
-                                }}
+                                onPress={() => 
+                                    handleMarkerPress(cardList)
+                                }
                             >
 
                             </Marker>
@@ -328,12 +350,22 @@ const Map = (props) => {
                 style={styles.userButton}
                 onPress={() => {
                     setCardList(user)
-                    setSelectMarker(region)
                     setFoundImage(userFoundImage)
                     setFollowUser(true)
-                    setTimeout(() => {
-                        setFollowUser(false)
-                    }, 1000);
+                    _scrollView.current.scrollTo({x : 0, animated : true})
+                        setTimeout(() => {
+                            setFollowUser(false)
+                            setSelectMarker(region)
+                            _map.current.animateToRegion(
+                                {
+                                  latitude: region.latitude,
+                                  longitude: region.longitude,
+                                  latitudeDelta: 0.01, // 이 값을 조절하여 맵의 확대 수준을 조절할 수 있습니다.
+                                  longitudeDelta: 0.01,
+                                },
+                                350
+                              );
+                        }, 1000);
                 }}
             >
                 <Icon name='child' size={30} color='black' />
@@ -344,12 +376,22 @@ const Map = (props) => {
                 style={styles.startUpButton}
                 onPress={() => {
                     setCardList(startUp)
-                    setSelectMarker(region)
                     setFoundImage(startUpFoundImage)
                     setFollowUser(true)
-                    setTimeout(() => {
-                        setFollowUser(false)
-                    }, 1000);
+                    _scrollView.current.scrollTo({x : 0, animated : true})
+                        setTimeout(() => {
+                            setFollowUser(false)
+                            setSelectMarker(region)
+                            _map.current.animateToRegion(
+                                {
+                                  latitude: region.latitude,
+                                  longitude: region.longitude,
+                                  latitudeDelta: 0.01, // 이 값을 조절하여 맵의 확대 수준을 조절할 수 있습니다.
+                                  longitudeDelta: 0.01,
+                                },
+                                350
+                              );
+                        }, 1000);
                 }}
             >
                 <Icon name='hotel' size={30} color='black' />
@@ -358,6 +400,7 @@ const Map = (props) => {
 
             <Animated.ScrollView
                 horizontal
+                ref = {_scrollView}
                 scrollEventThrottle={3}
                 showsHorizontalScrollIndicator={false}
                 style={styles.scrollView}
