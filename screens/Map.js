@@ -266,7 +266,7 @@ const Map = (props) => {
                         }, 1000);
                     }}
                 >
-                    <Icon name="location-outline" size={25} color="black" />
+                    <Icon name="location" size={25} color="black" />
                 </TouchableOpacity>
 
                 <TouchableOpacity
@@ -283,7 +283,7 @@ const Map = (props) => {
                         })
                     }}
                 >
-                    <Icon name='home-outline' size={25} color='black' />
+                    <Icon name='home' size={25} color='black' />
                 </TouchableOpacity>
             </View>
 
@@ -354,7 +354,7 @@ const Map = (props) => {
                         }, 1000);
                 }}
                 >
-                <Icon name='person-outline' size={40} color='black' />
+                <Icon name='person' size={30} color='black' />
             </TouchableOpacity>
 
 
@@ -370,7 +370,7 @@ const Map = (props) => {
                         }, 1000);
                 }}
                 >
-                <Icon name='business-outline' size={40} color='black' />
+                <Icon name='business' size={30} color='black' />
             </TouchableOpacity>
 
 
@@ -486,7 +486,7 @@ const styles = StyleSheet.create({
         right : '15%',
         bottom : '25%',
         borderRadius : 5,
-        backgroundColor : 'white',
+        // backgroundColor : 'white',
     },
 
 
@@ -495,7 +495,7 @@ const styles = StyleSheet.create({
         right : '3%',
         bottom : '25%',
         borderRadius : 5,
-        backgroundColor : 'white',
+        // backgroundColor : 'white',
     },
 
 
@@ -531,7 +531,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         marginTop: 10,
         height: '90%',
-        borderRadius: 50,
+        borderRadius: 40,
         borderWidth: 1,
         borderColor: 'rgba(0, 0, 0, 0.1)',
     },
@@ -548,19 +548,22 @@ const styles = StyleSheet.create({
         height: '90%',
         borderRadius: 30,
         margin: 10,
+        marginLeft: 10
     },
 
     cardTitle: {
-        fontSize: 20,
+        fontSize: 24,
         fontWeight: "bold",
         marginTop: 16,
+        marginLeft: 5
     },
 
     cardDescription : {
-        fontSize : 15,
+        fontSize : 14,
         fontWeight : "300",
         marginTop : 14,
-        color : 'gray'
+        color : 'gray',
+        marginLeft: 5,
     },
 
     headerView : {

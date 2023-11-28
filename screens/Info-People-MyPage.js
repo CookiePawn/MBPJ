@@ -7,6 +7,7 @@ import {
     Linking,
     ScrollView,
     StyleSheet,
+    Dimensions,
 } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 import React, { useState, useEffect } from 'react'
@@ -159,7 +160,24 @@ const SeeMyPage = (props) => {
         );
     };
 
+    const chartConfig = {
+        backgroundGradientFrom: 'white',
+        backgroundGradientFromOpacity: 'white',
+        backgroundGradientTo: 'white',
+        fillShadowGradient: '#302E98',
+        fillShadowGradientOpacity: 1,
+        color: (opacity = 1) => `rgba(85, 82, 226, ${opacity})`,
+        formatYLabel: () => '',
+        barPercentage: 0.3,
+        barRadius: 5,
+        yAxisWidth: 0,
+        propsForBackgroundLines: {
+            stroke: 'transparent',
+        },
+    };
 
+    const screenWidth = Dimensions.get('window').width;
+    const chartMarginLeft = screenWidth * -0.1;
 
 
 
@@ -235,28 +253,16 @@ const SeeMyPage = (props) => {
                     <Text style={styles.smallText}>{user.infoGitNickname}</Text>
 
                     <Text style={styles.bigText}>사용 언어</Text>
-                    <View style={styles.chartView}>
+                    <View style={[styles.chartView, { marginLeft: chartMarginLeft }]}>
                         <BarChart
                             data={data}
                             width={350}
-                            height={220}
-                            chartConfig={{
-                                backgroundGradientFrom: 'white',
-                                backgroundGradientTo: 'white',
-                                fillShadowGradient: '#7B78E7',
-                                fillShadowGradientOpacity: 0.7,
-                                color: (opacity = 1) => `rgba(85, 82, 226, ${opacity})`,
-                                labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                                barPercentage: 0.8,
-                                formatYLabel: () => '',
-                                propsForBackgroundLines: {
-                                    stroke: 'transparent',
-                                },
-                            }}
-                            style={{
-                                marginVertical: 8,
-                                paddingRight: 30,
-                            }}
+                            height={200}
+                            chartConfig={chartConfig}
+                            showBarTops={false}
+                            yAxisLabel={''}
+                            fromZero={true}
+                            segments={2}
                         />
                     </View>
 
@@ -428,7 +434,7 @@ const styles = StyleSheet.create({
     },
     projectView: {
         marginBottom: 35
-    }, 
+    },
 
     //소속 스타트업
     memberScrollView: {
