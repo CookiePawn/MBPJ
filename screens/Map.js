@@ -277,7 +277,6 @@ const Map = (props) => {
 
 
 
-
     return (
         <View style={{ flex: 1, backgroundColor: 'white', }}>
 
@@ -320,7 +319,7 @@ const Map = (props) => {
                                     longitude: cardList.lng,
                                 }}
                                 title={cardList.name}
-                                onPress={() => 
+                                onPress={() =>
                                     handleMarkerPress(cardList)
                                 }
                             >
@@ -352,23 +351,24 @@ const Map = (props) => {
                     setCardList(user)
                     setFoundImage(userFoundImage)
                     setFollowUser(true)
-                    _scrollView.current.scrollTo({x : 0, animated : true})
-                        setTimeout(() => {
-                            setFollowUser(false)
-                            setSelectMarker(region)
-                            _map.current.animateToRegion(
-                                {
-                                  latitude: region.latitude,
-                                  longitude: region.longitude,
-                                  latitudeDelta: 0.01, // 이 값을 조절하여 맵의 확대 수준을 조절할 수 있습니다.
-                                  longitudeDelta: 0.01,
-                                },
-                                350
-                              );
-                        }, 1000);
+                    _scrollView.current.scrollTo({ x: 0, animated: true })
+                    setTimeout(() => {
+                        setFollowUser(false)
+                        setSelectMarker(region)
+                        _map.current.animateToRegion(
+                            {
+                                latitude: region.latitude,
+                                longitude: region.longitude,
+                                latitudeDelta: 0.01, // 이 값을 조절하여 맵의 확대 수준을 조절할 수 있습니다.
+                                longitudeDelta: 0.01,
+                            },
+                            350
+                        );
+                    }, 1000);
                 }}
             >
-                <Icon name='child' size={30} color='black' />
+                <Icon name='male' size={30} color='black' />
+                <Text style={styles.btText}>사람</Text>
             </TouchableOpacity>
 
 
@@ -378,29 +378,49 @@ const Map = (props) => {
                     setCardList(startUp)
                     setFoundImage(startUpFoundImage)
                     setFollowUser(true)
-                    _scrollView.current.scrollTo({x : 0, animated : true})
-                        setTimeout(() => {
-                            setFollowUser(false)
-                            setSelectMarker(region)
-                            _map.current.animateToRegion(
-                                {
-                                  latitude: region.latitude,
-                                  longitude: region.longitude,
-                                  latitudeDelta: 0.01, // 이 값을 조절하여 맵의 확대 수준을 조절할 수 있습니다.
-                                  longitudeDelta: 0.01,
-                                },
-                                350
-                              );
-                        }, 1000);
+                    _scrollView.current.scrollTo({ x: 0, animated: true })
+                    setTimeout(() => {
+                        setFollowUser(false)
+                        setSelectMarker(region)
+                        _map.current.animateToRegion(
+                            {
+                                latitude: region.latitude,
+                                longitude: region.longitude,
+                                latitudeDelta: 0.01, // 이 값을 조절하여 맵의 확대 수준을 조절할 수 있습니다.
+                                longitudeDelta: 0.01,
+                            },
+                            350
+                        );
+                    }, 1000);
                 }}
             >
-                <Icon name='hotel' size={30} color='black' />
+                <Icon name='building' size={30} color='black' />
+                <Text style={styles.btText}>스타트업</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                style={styles.locationButton}
+                onPress={() => {
+                    setFollowUser(true);
+                    setTimeout(() => {
+                        setFollowUser(false);
+                        _map.current.animateToRegion({
+                            latitude: region.latitude,
+                            longitude: region.longitude,
+                            latitudeDelta: 0.01,
+                            longitudeDelta: 0.01,
+                        }, 1000);
+                    }, 2000);
+                }}
+            >
+                <Icon name='map-marker-alt' size={30} color='red' />
+                <Text style={styles.btText}>내 위치로 가기</Text>
             </TouchableOpacity>
 
 
             <Animated.ScrollView
                 horizontal
-                ref = {_scrollView}
+                ref={_scrollView}
                 scrollEventThrottle={3}
                 showsHorizontalScrollIndicator={false}
                 style={styles.scrollView}
@@ -475,7 +495,7 @@ const Map = (props) => {
                                                 <Icon name='frown' size={20} color='red' />
                                             )}
                                             <View>
-                                                 <Text style={{ marginLeft: 5 }}>{cardList.score}점</Text>
+                                                <Text style={{ marginLeft: 5 }}>{cardList.score}점</Text>
                                             </View>
                                         </Text>
                                     </View>
@@ -522,16 +542,28 @@ const styles = StyleSheet.create({
     userButton: {
         position: 'absolute',
         right: '20%',
-        bottom: '25%',
-        borderRadius: 5,
+        bottom: '22%',
+        alignItems: 'center'
     },
 
 
     startUpButton: {
         position: 'absolute',
         right: '5%',
-        bottom: '25%',
-        borderRadius: 5,
+        bottom: '22%',
+        alignItems: 'center'
+    },
+
+    locationButton: {
+        position: 'absolute',
+        right: '5%',
+        bottom: '76%',
+        alignItems: 'center'
+    },
+    btText: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginTop: 10
     },
 
 
@@ -557,8 +589,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#00ff0000',
         position: 'absolute',
         left: 0,
-        bottom: 10,
-        height: 200,
+        bottom: 0,
+        height: 180,
     },
 
     card: {
@@ -567,10 +599,10 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         marginTop: 10,
         height: '100%',
-        borderTopLeftRadius: 50,     // 왼쪽 위
-        borderTopRightRadius: 50,    // 오른쪽 위
-        borderBottomLeftRadius: 0,  // 왼쪽 아래
-        borderBottomRightRadius: 0, // 오른쪽 아래
+        borderTopLeftRadius: 50,
+        borderTopRightRadius: 50,
+        borderBottomLeftRadius: 0,
+        borderBottomRightRadius: 0,
         borderWidth: 1,
         borderColor: 'rgba(0, 0, 0, 0.1)',
     },
@@ -583,10 +615,12 @@ const styles = StyleSheet.create({
     },
 
     profileImage: {
-        width: '40%',
-        height: '80%',
+        width: '23%',
+        height: '48%',
         borderRadius: 30,
-        margin: 20
+        marginLeft: 20,
+        marginTop: 20,
+        marginRight: 14
     },
 
     cardTitle: {
@@ -596,14 +630,14 @@ const styles = StyleSheet.create({
     },
 
     cardDescription: {
-        fontSize: 15,
+        fontSize: 14,
         fontWeight: "300",
         marginTop: 14,
         color: 'gray'
     },
 
     cardNum: {
-        fontSize: 15,
+        fontSize: 14,
         fontWeight: "300",
         marginTop: 14,
         color: 'gray',
