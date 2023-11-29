@@ -380,7 +380,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
     },
     changeProfileSubTitle: {
-        width: '20%',
+        width: '25%',
         fontSize: 16,
         fontWeight: 600,
         lineHeight: 60,
@@ -393,7 +393,7 @@ const styles = StyleSheet.create({
         color: '#777',
         fontSize: 16,
         overflow: 'hidden',
-        width: '80%',
+        width: '75%',
         textAlign: 'right'
     },
     changeProfileSubTextInput: {
