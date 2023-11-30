@@ -21,7 +21,7 @@ export const openAIStartup = async (title, introduce, stack) => {
                     조건
                     
                     
-                    * 응답 형식: 챗봇은 JSON 형식으로 응답합니다. {"score": "", "evaluation": ""}
+                    * 응답 형식: {"score": "", "evaluation": ""}
                     * 점수 계산: score는 1의 자리수까지 계산되며, 소수점은 없고, 100점 만점입니다.
                     * 평가 기준: evaluation은 간단하고 일관성 있어야 하며, 몇 문장으로 요약됩니다.
                     * 엄격한 점수 기준: 스타트업 이름, 주요 사업 영역, 소개, 기술 및 스택, 시장 적합성 및  경쟁력, 팀 및 경험이 없다면 score가 20점 아래로 있다면 score가 20점 이상`},
@@ -74,7 +74,7 @@ export const openAIStartup = async (title, introduce, stack) => {
 
 
 //사용자 정보 gpt 평가
-export const openAIUser = async (info, introduce, career, project) => {
+export const openAIUser = async (introduce, career, project) => {
     try {
         const response = await axios.post(
             'https://api.openai.com/v1/chat/completions',
@@ -87,12 +87,12 @@ export const openAIUser = async (info, introduce, career, project) => {
                     조건
                     
                     
-                    * 응답 형식: 챗봇은 JSON 형식으로 응답합니다. {"score": "", "evaluation": ""}
+                    * 응답 형식: {"score": "", "evaluation": ""}
                     * 점수 계산: score는 1의 자리수까지 계산되며, 소수점은 없고, 100점 만점입니다.
                     * 평가 기준: evaluation은 간단하고 일관성 있어야 하며, 몇 문장으로 요약됩니다.
                     * 엄격한 점수 기준: 직조 설명 경력 및 프로젝트 개수등 정보가 없다면 score가 20점, 정보가 많으면 score가 20점 이상`},
 
-                    { role: 'user', content: `이 글에 대한 점수를 알려줘 : 이 사람의 직종은 ${info}이다. 자신의 설명은 ${introduce}이고 경력은 ${career}이다. 이 글에 대한 점수를 한글로 알려줘 : 이 사람의 직종은 ${info}이다. 자신의 설명은 ${introduce}이고 경력은 ${career}이다. 프로젝트와 사용언어는 각각 JSON 형식으로 ${JSON.stringify(project.repoName)}}, ${JSON.stringify(project.repoLang)}이다.` },
+                    { role: 'user', content: `이 글에 대한 점수를 알려줘 : 자신의 설명은 ${introduce}이고 경력은 ${career}이다. 프로젝트와 사용언어는 각각 JSON 형식으로 ${JSON.stringify(project.repoName)}}, ${JSON.stringify(project.repoLang)}이다.` },
                 ],
                 max_tokens: 500,
                 model: 'gpt-3.5-turbo'

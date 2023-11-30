@@ -148,7 +148,7 @@ const People = (props) => {
                                         key={idx}
                                         image={{ uri: urlItem.url }}
                                         name={userItem.name}
-                                        info={userItem.info}
+                                        info={userItem.field}
                                         score={userItem.score}
                                         navi={props}
                                         params={{
@@ -170,7 +170,7 @@ const People = (props) => {
                                     key={idx}
                                     image={require('../assets/start-solo.png')}
                                     name={userItem.name}
-                                    info={userItem.info}
+                                    info={userItem.field}
                                     score={userItem.score}
                                     navi={props}
                                     params={{
@@ -192,7 +192,7 @@ const People = (props) => {
                                         key={idx}
                                         image={{ uri: urlItem.url }}
                                         name={userItem.name}
-                                        info={userItem.info}
+                                        info={userItem.field}
                                         score={userItem.score}
                                         navi={props}
                                         params={{
@@ -214,7 +214,7 @@ const People = (props) => {
                                     key={idx}
                                     image={require('../assets/start-solo.png')}
                                     name={userItem.name}
-                                    info={userItem.info}
+                                    info={userItem.field}
                                     score={userItem.score}
                                     navi={props}
                                     params={{

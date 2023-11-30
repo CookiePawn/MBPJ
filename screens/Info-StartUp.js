@@ -275,7 +275,7 @@ const StartUpInfo = (props) => {
                                         />
                                         <Text style={styles.userName}>
                                             {item.name}{'\n'}
-                                            <Text style={styles.userInfo}>{item.info}</Text>
+                                            <Text style={styles.userInfo}>{item.field}</Text>
                                         </Text>
                                     </View>
                                 </TouchableOpacity>

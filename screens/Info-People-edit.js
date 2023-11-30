@@ -43,7 +43,6 @@ const PersonInfo = (props) => {
 
 
     //정보 수정
-    const [eInfo, setEInfo] = useState('')
     const [eIntroduce, setEIntroduce] = useState('')
     const [eCareer, setECareer] = useState('')
     const [eProject, setEProject] = useState('')
@@ -61,10 +60,10 @@ const PersonInfo = (props) => {
     const [pickerOpen, setPickerOpen] = useState(false);
     const [fieldValue, setFieldValue] = useState(null);
     const [fieldItems, setFieldItems] = useState([
-        { label: 'IT', value: 'IT' },
-        { label: 'Education', value: 'Education' },
-        { label: 'F&B', value: 'F&B' },
-        { label: 'Creative', value: 'Creative' },
+        { label: 'Frontend Developer', value: 'Frontend Developer' },
+        { label: 'Backend Developer', value: 'Backend Developer' },
+        { label: 'Full-Stack Developer', value: 'Full-Stack Developer' },
+        { label: 'UI/UX Designer', value: 'UI/UX Designer' },
     ])
     const [savedField, setSavedField] = useState('Choose Your Field');
 
@@ -80,7 +79,6 @@ const PersonInfo = (props) => {
             const users = await loadUserSelect(num);
             setUser(users);
 
-            setEInfo(users.info || '');
             setECareer(users.infoCareer || '');
             setEIntroduce(users.infoIntroduce || '');
             setEProject(users.infoGitNickname || '');
@@ -145,16 +143,6 @@ const PersonInfo = (props) => {
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
             >
-                <Text style={styles.bigText}>직종</Text>
-                <TextInput
-                    style={styles.smallText}
-                    placeholder='직종을 입력해주세요'
-                    value={eInfo}
-                    onChangeText={(e) => { setEInfo(e) }}
-                    maxLength={30}
-                    scrollEnabled={false}
-                />
-
                 <Text style={styles.bigText}>분야</Text>
                 <DropDownPicker
                     open={pickerOpen}
@@ -206,9 +194,9 @@ const PersonInfo = (props) => {
                 style={styles.chatBtn}
                 onPress={
                     async () => {
-                        if (num != '' && fieldValue != null && eInfo != '' && eCareer != '' && eIntroduce != '' && eProject != '') {
+                        if (num != '' && fieldValue != null && eCareer != '' && eIntroduce != '' && eProject != '') {
                             setIsLoading(true)
-                            await updateUserProject(num, fieldValue, eInfo, eCareer, eIntroduce, eProject);
+                            await updateUserProject(num, fieldValue, eCareer, eIntroduce, eProject);
                             props.navigation.navigate("MyPage", {
                                 num: num,
                                 id: id,

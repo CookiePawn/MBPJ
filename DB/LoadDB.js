@@ -370,14 +370,14 @@ export const loadConnect = async () => {
 
 
 //내 페이지 수정
-export const updateUserProject = async (num, eField, eInfo, eCareer, eIntroduce, eProject) => {
+export const updateUserProject = async (num, eField, eCareer, eIntroduce, eProject) => {
 
     //깃허브 정보 가져오기
     const gitRepo = await fetchLang(eProject)
 
 
     //gpt 평가
-    const gptResult = await openAIUser(eInfo, eIntroduce, eCareer, gitRepo)
+    const gptResult = await openAIUser(eIntroduce, eCareer, gitRepo)
 
 
     if (gptResult) {
@@ -385,7 +385,6 @@ export const updateUserProject = async (num, eField, eInfo, eCareer, eIntroduce,
             const docRef = doc(db, 'userInfo', num);
 
             await updateDoc(docRef, {
-                info: eInfo,
                 field: eField,
                 infoCareer: eCareer,
                 infoIntroduce: eIntroduce,
@@ -819,7 +818,8 @@ export const addMember = async (perID, suID) => {
             perID: perID,
             suID: suID,
         });
-
+    
+        await loadConnect()
 
     } catch (error) {
         console.log(error)

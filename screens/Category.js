@@ -307,7 +307,7 @@ const Category = (props) => {
                                         key={idx}
                                         image={{ uri: urlItem.url }}
                                         name={userItem.name}
-                                        info={userItem.info}
+                                        info={userItem.field}
                                         navi={props}
                                         params={{
                                             num: num,
@@ -328,7 +328,7 @@ const Category = (props) => {
                                     key={idx}
                                     image={require('../assets/start-solo.png')}
                                     name={userItem.name}
-                                    info={userItem.info}
+                                    info={userItem.field}
                                     navi={props}
                                     params={{
                                         num: num,
