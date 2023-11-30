@@ -52,6 +52,7 @@ const CustomCategory = (props) => {
 
 
 const CustomPeople = (props) => {
+
     return (
         <TouchableOpacity
             onPress={() => {
@@ -64,7 +65,9 @@ const CustomPeople = (props) => {
                     source={props.image}
                 />
                 <Text style={styles.peopleListNameText}>{props.name}</Text>
-                <Text style={styles.peopleListInfoText}>{props.info}</Text>
+                <Text numberOfLines={1} style={styles.peopleListInfoText}>
+                    {props.info}
+                </Text>
             </View>
         </TouchableOpacity>
     )

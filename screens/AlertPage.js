@@ -45,7 +45,12 @@ const CustomList = (props) => {
 
                 <View style={styles.listSubSubView}>
                     <Text style={styles.nameText}>{props.name}</Text>
-                    <Text style={styles.infoText}>{props.info.substring(0, 20)}</Text>
+
+                    <Text numberOfLines={1} style={styles.infoText}>
+                        <Text numberOfLines={1} style={styles.infoText}>
+                            {props.info.substring(0, 20)}
+                        </Text>
+                    </Text>
                 </View>
                 <TouchableOpacity
                     onPress={() => {
@@ -205,8 +210,8 @@ const AlertPage = (props) => {
     return (
         <View style={styles.mainView}>
             <Header
-                navi = {props}
-                params = {{
+                navi={props}
+                params={{
                     num: num,
                     id: id,
                     pw: pw,
@@ -218,7 +223,7 @@ const AlertPage = (props) => {
                 iconNameL1='arrow-back-outline'
                 iconNameR1='notifications'
                 iconNameR2='home'
-                login = {num}
+                login={num}
                 titleName='알림 센터'
             />
             <View style={styles.btView}>
@@ -299,7 +304,7 @@ const AlertPage = (props) => {
                                     image: image,
                                     people: matchingUser.id,
                                 }}
-                                add={async() => await addMember(item.perID, item.suID)}
+                                add={async () => await addMember(item.perID, item.suID)}
                                 delete={() => handleDeleteJoin(item.id, item.perID, item.suID)}
                             />
                         );
@@ -328,7 +333,7 @@ const styles = StyleSheet.create({
 
 
 
-    
+
 
     //사람 목록
     listView: {

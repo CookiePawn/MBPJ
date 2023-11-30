@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Dimensions,StyleSheet } from 'react-native';
+import { View, Text, Dimensions, StyleSheet } from 'react-native';
 import { PieChart } from 'react-native-gifted-charts';
 import { connectDBs } from '../../DB/LoadDB';
 import Swiper from 'react-native-swiper/src'
@@ -28,14 +28,14 @@ const CustomChart = () => {
         setPerField({ maxKey: perFieldMax.maxKey, maxValue: perFieldMax.maxValue.toFixed(2) });
         setSuField({ maxKey: suFieldMax.maxKey, maxValue: suFieldMax.maxValue.toFixed(2) });
     }, [connect]);
-    
-    
+
+
     const handlePieChartPress = (data, name) => {
         // 포커스된 데이터의 value 값을 출력
         if (name == 'perField') {
-            setPerField({maxKey: data.label, maxValue: data.value.toFixed(2)})
+            setPerField({ maxKey: data.label, maxValue: data.value.toFixed(2) })
         } else if (name == 'suField') {
-            setSuField({maxKey: data.label, maxValue: data.value.toFixed(2)})
+            setSuField({ maxKey: data.label, maxValue: data.value.toFixed(2) })
         }
     };
 
@@ -96,9 +96,7 @@ const CustomChart = () => {
     };
 
     const renderLegendComponent = (fieldCounts, fieldName) => {
-        const pieData1 = convertToPieData(fieldCounts).slice(0, 2);
-        const pieData2 = convertToPieData(fieldCounts).slice(2, 4);
-        const pieData3 = convertToPieData(fieldCounts).slice(4, 6);
+        const pieData = convertToPieData(fieldCounts);
 
         let maxKey, maxValue;
         if (fieldName === 'perField') {
@@ -112,42 +110,23 @@ const CustomChart = () => {
 
         return (
             <>
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        marginBottom: 10,
-                        marginLeft: 50,
-                    }}
-                >
-                    {pieData1.map((data, index) => (
-                        <View key={index} style={{ flexDirection: 'row', alignItems: 'center', marginRight: 30 }}>
+                {pieData.map((data, index) => (
+                    <View
+                        key={index}
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            marginBottom: 10,
+                            marginLeft: 50,
+                        }}
+                    >
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 30 }}>
                             {renderDot(data.color)}
                             <Text style={{ color: 'black' }}>{`${data.label}: ${data.percentageValue}`}</Text>
                         </View>
-                    ))}
-                </View>
-                <View style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    marginBottom: 10,
-                    marginLeft: 50,
-                }}>
-                    {pieData2.map((data, index) => (
-                        <View key={index} style={{ flexDirection: 'row', alignItems: 'center', marginRight: 30 }}>
-                            {renderDot(data.color)}
-                            <Text style={{ color: 'black' }}>{`${data.label}: ${data.percentageValue}`}</Text>
-                        </View>
-                    ))}
-                </View>
-                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                    {pieData3.map((data, index) => (
-                        <View key={index} style={{ flexDirection: 'row', alignItems: 'center', marginRight: 30 }}>
-                            {renderDot(data.color)}
-                            <Text style={{ color: 'black' }}>{`${data.label}: ${data.percentageValue}`}</Text>
-                        </View>
-                    ))}
-                </View>
+                    </View>
+                ))}
+
             </>
         );
 
@@ -187,13 +166,13 @@ const CustomChart = () => {
     return (
         <View style={{ marginBottom: 50 }}>
             <Swiper
-                style={{ height: 450 }}
+                style={{ height: 500 }}
                 loop={false}
                 dotStyle={{ backgroundColor: '#D9D9D9' }}
                 activeDotStyle={{ width: 30, backgroundColor: '#5552E2' }}
             >
-                <View style = {styles.chartView}>
-                    <Text style = {styles.chartText}>개인 트렌드</Text>
+                <View style={styles.chartView}>
+                    <Text style={styles.chartText}>개인 트렌드</Text>
                     <View style={{ padding: 20, alignItems: 'center' }}>
                         <PieChart
                             data={convertToPieData(calculatePerFieldCounts())}
@@ -215,8 +194,8 @@ const CustomChart = () => {
                     {renderLegendComponent(calculatePerFieldCounts(), 'perField')}
                 </View>
 
-                <View style = {styles.chartView}>
-                    <Text style = {styles.chartText}>스타트업 트렌드</Text>
+                <View style={styles.chartView}>
+                    <Text style={styles.chartText}>스타트업 트렌드</Text>
                     <View style={{ padding: 20, alignItems: 'center' }}>
                         <PieChart
                             data={convertToPieData(calculateSuFieldCounts())}

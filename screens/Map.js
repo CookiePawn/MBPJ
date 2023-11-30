@@ -482,7 +482,7 @@ const Map = (props) => {
                                         <Text
                                             numberOfLines={3}
                                             style={styles.cardDescription}>
-                                            {cardList.info}
+                                            {cardList.field}
                                         </Text>
                                         <Text
                                             numberOfLines={5}

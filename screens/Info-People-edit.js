@@ -64,6 +64,14 @@ const PersonInfo = (props) => {
         { label: 'Backend Developer', value: 'Backend Developer' },
         { label: 'Full-Stack Developer', value: 'Full-Stack Developer' },
         { label: 'UI/UX Designer', value: 'UI/UX Designer' },
+        { label: 'Data Scientist', value: 'Data Scientist' },
+        { label: 'Machine Learning Engineer', value: 'Machine Learning Engineer' },
+        { label: 'Mobile Developer', value: 'Mobile Developer' },
+        { label: 'Game Developer', value: 'Game Developer' },
+        { label: 'Embedded Systems Developer', value: 'Embedded Systems Developer' },
+        { label: 'Security Engineer', value: 'Security Engineer' },
+        { label: 'Cloud Engineer', value: 'Cloud Engineer' },
+        { label: 'DevOps Engineer', value: 'Devops Engineer' },
     ])
     const [savedField, setSavedField] = useState('Choose Your Field');
 
