@@ -18,6 +18,7 @@ import * as Geolib from 'geolib';
 import Icon from 'react-native-vector-icons/FontAwesome5'
 //import { Polyline } from 'react-native-svg';
 
+//헤더
 import Header from '../components/Header';
 
 //db 로드
@@ -42,13 +43,13 @@ const Map = (props) => {
     const phone = params ? params.phone : null;
     const image = params ? params.image : null;
 
+    //화면 접근 및 로딩
     const isFocused = useIsFocused();
     const [isLoading, setIsLoading] = useState(true)
 
+    //DB에서 불러오는 정보를 저장할 변수
     const [user, setUser] = useState([]);
     const [startUp, setStartUp] = useState([]);
-    const [userImage, setUserImage] = useState(null);
-    const [startUpImage, setStartUpImage] = useState(null);
     const [userImageUrl, setUserImageUrl] = useState([]);
     const [startUpImageUrl, setStartUpImageUrl] = useState([]);
     const [foundImage, setFoundImage] = useState(null);
@@ -61,18 +62,21 @@ const Map = (props) => {
         longitude: 0,
     });
 
+    //맵 관련 변수
     const [km, setKm] = useState(0)
     const [followsUser, setFollowUser] = useState(true)
 
+    //화면 하단에 띄울 카드
     const [cardList, setCardList] = useState([])
 
+    //사용자가 선택한 마커
     const [selectMarker, setSelectMarker] = useState({
         latitude: region.latitude,
         longitude: region.longitude,
     })
 
+    //맵 관련 변수
     let mapIndex = 0
-    let mapAnimation = new Animated.Value(0)
     const _map = useRef(null)
     const _scrollView = React.useRef(null)
 
@@ -97,6 +101,7 @@ const Map = (props) => {
     }, []); // 빈 배열을 전달하여 componentDidMount와 같이 처음 한 번만 실행
 
 
+    //DB에서 정보 불러오기
     useEffect(() => {
 
         const fetchUserImage = async () => {
@@ -133,6 +138,7 @@ const Map = (props) => {
 
     }, [isFocused]);
 
+    //개인사용자 프로필 이미지 찾기
     useEffect(() => {
         if (user && userImageUrl && userImageUrl.length > 0) {
             const matchedImages = user.map((user, index) => {
@@ -146,6 +152,7 @@ const Map = (props) => {
         }
     }, [user, userImageUrl]);
 
+    //스타트업 프로필 이미지 찾기
     useEffect(() => {
         if (startUp && startUpImageUrl && startUpImageUrl.length > 0) {
             const matchedImages = startUp.map((startUp, index) => {
@@ -160,8 +167,7 @@ const Map = (props) => {
     }, [startUp, startUpImageUrl]);
 
 
-
-
+    //개인 사용자를 현재 위치에서 거리순으로 정렬
     useEffect(() => {
 
         const distance = (user) => {
@@ -191,7 +197,7 @@ const Map = (props) => {
     }, [user])
 
 
-
+    //스타트업을 현재위치에서 거리별로 정렬
     useEffect(() => {
 
         const distance = (startUp) => {
@@ -234,6 +240,7 @@ const Map = (props) => {
                 mapIndex = index
                 const coordinate = { latitude: cardList[index].lat, longitude: cardList[index].lng }
                 setSelectMarker(coordinate)
+                //스크롤 발생 시 카드에 해당하는 위치로 맵 이동
                 _map.current.animateToRegion(
                     {
                         ...coordinate,
@@ -280,6 +287,7 @@ const Map = (props) => {
     return (
         <View style={{ flex: 1, backgroundColor: 'white', }}>
 
+            {/* 데이터로드를 위한 로딩화면 */}
             {renderFullScreenLoading(isLoading)}
             <View style={styles.titleView}>
                 <Header
@@ -309,6 +317,7 @@ const Map = (props) => {
                 ref={_map}
             >
 
+                {/* 카드 정보에 따른 마커생성 */}
                 {
                     cardList.map((cardList, index) => {
                         return (
@@ -329,7 +338,7 @@ const Map = (props) => {
                     })
                 }
 
-
+                 {/* 사용자 위치와 마커를 잇는 라인 */}
                 <Polyline
                     coordinates={[
                         { latitude: region.latitude, longitude: region.longitude },
@@ -344,7 +353,7 @@ const Map = (props) => {
 
             </MapView>
 
-
+            {/* 개인사용자 목록 버튼 */}
             <TouchableOpacity
                 style={styles.userButton}
                 onPress={() => {
@@ -371,7 +380,7 @@ const Map = (props) => {
                 <Text style={styles.btText}>사람</Text>
             </TouchableOpacity>
 
-
+            {/* 스타트업 목록 버튼 */}
             <TouchableOpacity
                 style={styles.startUpButton}
                 onPress={() => {
@@ -398,6 +407,7 @@ const Map = (props) => {
                 <Text style={styles.btText}>스타트업</Text>
             </TouchableOpacity>
 
+            {/* 내 위치로 이동하는 버튼 */}
             <TouchableOpacity
                 style={styles.locationButton}
                 onPress={() => {
@@ -417,7 +427,7 @@ const Map = (props) => {
                 <Text style={styles.btText}>내 위치로 가기</Text>
             </TouchableOpacity>
 
-
+            {/* 카드를 담을 스크롤뷰 */}
             <Animated.ScrollView
                 horizontal
                 ref={_scrollView}
@@ -435,11 +445,13 @@ const Map = (props) => {
                     right: SPACING_CARD,
                 }}
             >
+                {/* 카드 생성 */}
                 {
                     cardList.map((cardList, index) => {
 
                         return (
                             <TouchableOpacity key={index} style={[{ width: CARD_WIDTH }, styles.card]}
+                                //개인, 스타트업 사용자 카드 클릭 시 해당 정보 페이지로 이동
                                 onPress={() => {
                                     if (cardList.perID != null) {
                                         props.navigation.navigate("PeopleInfo", {
@@ -467,6 +479,7 @@ const Map = (props) => {
 
                                 }}
                             >
+                                {/* 카드 정보 구성 */}
                                 <View style={styles.cardView}>
                                     <Image
                                         style={styles.profileImage}
@@ -513,7 +526,7 @@ const Map = (props) => {
 export default Map
 
 
-
+//스타일
 const styles = StyleSheet.create({
 
     //아이콘 뷰
@@ -590,7 +603,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         bottom: 0,
-        height: 180,
+        height: '22%',
     },
 
     card: {
@@ -598,11 +611,12 @@ const styles = StyleSheet.create({
         marginHorizontal: SCREEN_WIDTH * 0.025,
         overflow: 'hidden',
         marginTop: 10,
-        height: '100%',
+        marginBottom: 30,
+        height: '80%',
         borderTopLeftRadius: 50,
         borderTopRightRadius: 50,
-        borderBottomLeftRadius: 0,
-        borderBottomRightRadius: 0,
+        borderBottomLeftRadius: 50,
+        borderBottomRightRadius: 50,
         borderWidth: 1,
         borderColor: 'rgba(0, 0, 0, 0.1)',
     },
@@ -615,8 +629,8 @@ const styles = StyleSheet.create({
     },
 
     profileImage: {
-        width: '23%',
-        height: '48%',
+        width: '25%',
+        height: '70%',
         borderRadius: 30,
         marginLeft: 20,
         marginTop: 20,
