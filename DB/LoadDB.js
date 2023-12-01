@@ -602,8 +602,6 @@ export const addUser = async (id, pw, name, email, phone) => {
             name: name,
             perEmail: email,
             perPhone: phone,
-            infoHeart: 0,
-            infoGroup: '없음',
         });
     } catch (error) {
         console.log(error)
