@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Dimensions, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { PieChart } from 'react-native-gifted-charts';
 import { connectDBs } from '../../DB/LoadDB';
 import Swiper from 'react-native-swiper/src'
-const { width } = Dimensions.get('window')
 
-
+//차트 생성
 const CustomChart = () => {
     const [connect, setConnect] = useState([]);
     const [perField, setPerField] = useState({});
     const [suField, setSuField] = useState({});
 
+    //DB 연결
     useEffect(() => {
         const fetchConnect = async () => {
             setConnect(connectDBs);
@@ -18,6 +18,7 @@ const CustomChart = () => {
         fetchConnect();
     }, []);
 
+    //개인, 스타트업 분야 데이터 카운트
     useEffect(() => {
         const perFieldCounts = calculatePerFieldCounts();
         const suFieldCounts = calculateSuFieldCounts();
@@ -39,7 +40,7 @@ const CustomChart = () => {
         }
     };
 
-
+    //개인 분야 카운트
     const calculatePerFieldCounts = () => {
         const perFieldCounts = {};
 
@@ -56,6 +57,7 @@ const CustomChart = () => {
         return perFieldCounts;
     };
 
+    //스타트업 분야 카운트
     const calculateSuFieldCounts = () => {
         const suFieldCounts = {};
 
@@ -72,6 +74,7 @@ const CustomChart = () => {
         return suFieldCounts;
     };
 
+    //카운트한 분야를 원형차트로 구성
     const convertToPieData = (fieldCounts) => {
         const pieData = Object.keys(fieldCounts).map((key, index) => {
             const value = fieldCounts[key];
@@ -90,15 +93,18 @@ const CustomChart = () => {
         return pieData;
     };
 
+    //분야별로 색 지정
     const getColor = (index) => {
         const colors = ['#009FFF', '#93FCF8', '#BDB2FA', '#FFA5BA', 'yellow', 'lightgreen'];
         return colors[index % colors.length];
     };
 
+    //그래프 렌더링
     const renderLegendComponent = (fieldCounts, fieldName) => {
         const pieData = convertToPieData(fieldCounts);
 
         let maxKey, maxValue;
+
         if (fieldName === 'perField') {
             maxKey = perField.maxKey;
             maxValue = perField.maxValue;
@@ -120,6 +126,7 @@ const CustomChart = () => {
                             marginLeft: 50,
                         }}
                     >
+                        {/* 분야들을 원형차트 아래에 텍스트로 출력 */}
                         <View style={{ flexDirection: 'row', alignItems: 'center', marginRight: 30 }}>
                             {renderDot(data.color)}
                             <Text style={{ color: 'black' }}>{`${data.label}: ${data.percentageValue}`}</Text>
@@ -130,10 +137,9 @@ const CustomChart = () => {
             </>
         );
 
-
-        //여기에 pieData를 돌면서 chartList 배열에 저장하고싶다
     };
 
+    //가장 많은 분야 수 도출
     const findMaxValue = (fieldCounts) => {
         let maxValue = 0;
         let maxKey = null;
@@ -149,6 +155,7 @@ const CustomChart = () => {
         return { maxValue, maxKey };
     };
 
+    //원형차트 아래에 있는 텍스트 옆에 들어갈 도트
     const renderDot = (color) => {
         return (
             <View
