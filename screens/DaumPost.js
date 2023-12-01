@@ -14,20 +14,13 @@ const DaumPost = (props, navigation) => {
     const people = params ? params.people : null;
 
 
-
-
-    const getAddress = {
-        zonecode: '',
-        address: '',
-        buildingName: '',
-    }
-
-
     const getData = (data) => {
 
+        //주소와 우편번호 저장
         let address = ""
         let zonecode = data.zonecode
 
+        //건물 & 아파트 이름 저장
         if (data.buildingName === 'N') {
             address = (data.address + " " + data.apartment);
         } else {

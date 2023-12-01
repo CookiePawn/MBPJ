@@ -28,16 +28,19 @@ import {
     loadMember,
 } from '../../DB/LoadDB'
 
+//픽커
 import DropDownPicker from 'react-native-dropdown-picker'
 
+//주소-좌표 변환
 import getAddressCoordinates from '../GeoCoding'
 
 
 
 
-
+//스타트업 생성
 export const Stat0 = (props) => {
 
+    //로그인 확인
     const params = props.params
     const num = params ? params.num : null;
     const id = params ? params.id : null;
@@ -57,6 +60,7 @@ export const Stat0 = (props) => {
 
     const isFocused = useIsFocused();
 
+    //DaumPost에서 받아온 주소 출력 없으면 기본텍스트
     useEffect(() => {
         const address = props.params.location
 
@@ -267,10 +271,10 @@ export const Stat1 = (props) => {
 
 
 
-
+    //소속 스타트업 찾아내기
     const getFilteredStartups = () => {
         if (!member || member.length === 0) {
-            return []; // 빈 배열을 반환하거나 이 경우를 적절히 처리하세요.
+            return [];
         }
 
         return startup.filter((item) =>
@@ -281,7 +285,7 @@ export const Stat1 = (props) => {
 
 
 
-
+    //본인이 팀장인 스타트업 찾기
     useEffect(() => {
         const fetchAdmins = () => {
             if (member && member.length > 0) {
@@ -306,6 +310,7 @@ export const Stat1 = (props) => {
             showsVerticalScrollIndicator={false}
         >
             <View style={{ flex: 1 }}>
+                {/* 배열로 이루어진 소속 스타트업 출력 */}
                 {getFilteredStartups().map((item, idx) => {
                     const matchingStartupImage = imageUrl.find(startupImg => startupImg.name === item.name);
                     const isAdmin = admin.includes(item.id);
@@ -324,6 +329,7 @@ export const Stat1 = (props) => {
                         >
 
                             <View style={styles.startupView}>
+                                {/* 팀장일 경우 왕관 아이콘 출력 */}
                                 {isAdmin && (
                                     <Icon name='crown' color='gold' size={25} style={styles.crownView} />
                                 )}

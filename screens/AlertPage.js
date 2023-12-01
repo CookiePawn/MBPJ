@@ -2,7 +2,6 @@ import {
     View,
     Text,
     Image,
-    TextInput,
     TouchableOpacity,
     ScrollView,
     StyleSheet,
@@ -143,6 +142,7 @@ const AlertPage = (props) => {
 
     const isFocused = useIsFocused();
 
+    //DB에서 정보 불러오기
     useEffect(() => {
         const fetchImage = async () => {
             const images = await loadUserImages();
@@ -248,6 +248,7 @@ const AlertPage = (props) => {
                     showsHorizontalScrollIndicator={false}
                     showsVerticalScrollIndicator={false}
                 >
+                    {/* 쪽지 확인 화면 */}
                     {state == 0 && letter.filter(item => item.fromID === num).map((item, idx) => {
 
                         const matchingUser = user.find(u => u.id === item.toID);
@@ -278,6 +279,8 @@ const AlertPage = (props) => {
                             />
                         );
                     })}
+
+                    {/* 가입 신청 화면 */}
                     {state == 1 && join.filter(item => item.adminID === num).map((item, idx) => {
                         const matchingUser = user.find(u => u.id === item.perID);
                         const userName = matchingUser ? matchingUser.name : "Unknown User";

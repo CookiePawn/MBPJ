@@ -20,15 +20,13 @@ import {
     loadStartUps,
 } from '../DB/LoadDB'
 
-
 //차트
 import CustomChart from '../components/Category/CustomChart';
 
 
 
 
-
-
+//카테고리
 const CustomCategory = (props) => {
     return (
         <View style={styles.categoryListSubView}>
@@ -50,7 +48,7 @@ const CustomCategory = (props) => {
     )
 }
 
-
+//개인
 const CustomPeople = (props) => {
 
     return (
@@ -73,7 +71,7 @@ const CustomPeople = (props) => {
     )
 }
 
-
+//스타트업
 const CustomStartUp = (props) => {
     return (
         <TouchableOpacity
@@ -122,6 +120,7 @@ const Category = (props) => {
 
     const isFocused = useIsFocused();
 
+    //DB에서 정보 불러오기
     useEffect(() => {
         const fetchUserImage = async () => {
             const images = await loadUserImages()

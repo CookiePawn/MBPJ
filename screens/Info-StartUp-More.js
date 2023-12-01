@@ -45,7 +45,7 @@ const StartUpEdit = (props) => {
             setLocation(props.route.params.address)
         }
 
-    }, [props.route.params.address]); // 의존성 배열에 route.params를 추가합니다.
+    }, [props.route.params.address]);
 
 
 
@@ -72,6 +72,7 @@ const StartUpEdit = (props) => {
             />
             
             <View style={styles.choiceView}>
+                {/* 스타트업 생성 탭으로 이동 */}
                 <TouchableOpacity
                     style={[styles.choiceBtn, { right: 0 }]}
                     onPress={() => {
@@ -80,6 +81,8 @@ const StartUpEdit = (props) => {
                 >
                     <Text style={[styles.choiceText, stat === 1 ? styles.selectedText : styles.unselectedText]}>소속 스타트업</Text>
                 </TouchableOpacity>
+
+                {/* 소속 스타트업 탭으로 이동 */}
                 <TouchableOpacity
                     style={[styles.choiceBtn, { left: 0 }]}
                     onPress={() => {
@@ -90,6 +93,7 @@ const StartUpEdit = (props) => {
                 </TouchableOpacity>
             </View>
             {
+                // stat 변수에 따라 화면 변환
                 stat === 0 ? <Stat0 perID = {num} navi = {props} params = {{
                     num: num,
                     id: id,
