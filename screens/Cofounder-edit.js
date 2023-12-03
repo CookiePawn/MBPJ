@@ -234,6 +234,8 @@ const StartUpEdit = (props) => {
 
 export default StartUpEdit
 
+
+
 const styles = StyleSheet.create({
 
     mainView: {

@@ -36,7 +36,6 @@ import getAddressCoordinates from '../GeoCoding'
 
 
 
-
 //스타트업 생성
 export const Stat0 = (props) => {
 
@@ -81,10 +80,6 @@ export const Stat0 = (props) => {
         { label: 'F&B', value: 'F&B' },
         { label: 'Creative', value: 'Creative' },
     ])
-
-
-
-
 
 
 
@@ -226,9 +221,6 @@ export const Stat0 = (props) => {
 
 
 
-
-
-
 //소속 스타트업
 export const Stat1 = (props) => {
 
@@ -239,8 +231,6 @@ export const Stat1 = (props) => {
     const [admin, setAdmin] = useState([]);
 
     const isFocused = useIsFocused();
-
-
 
     useEffect(() => {
         const fetchStartUpImage = async () => {
@@ -269,8 +259,6 @@ export const Stat1 = (props) => {
         fetchMember()
     }, [isFocused])
 
-
-
     //소속 스타트업 찾아내기
     const getFilteredStartups = () => {
         if (!member || member.length === 0) {
@@ -281,9 +269,6 @@ export const Stat1 = (props) => {
             member.some(memberInfo => memberInfo.suID === item.id)
         );
     };
-
-
-
 
     //본인이 팀장인 스타트업 찾기
     useEffect(() => {
@@ -297,9 +282,6 @@ export const Stat1 = (props) => {
 
         fetchAdmins();
     }, [member]);
-
-
-
 
 
 
@@ -354,15 +336,11 @@ export const Stat1 = (props) => {
 
 
 
-
-
-
 const styles = StyleSheet.create({
     mainView: {
         width: '90%',
         height: '80%',
     },
-
 
     //스타트업 생성 스타일  
     title: {
@@ -371,13 +349,16 @@ const styles = StyleSheet.create({
         marginTop: 40,
         marginBottom: 10,
     },
+
     textInput: {
         fontSize: 16,
         marginTop: 5
     },
+
     textInput1: {
         fontSize: 16,
     },
+
     smallText: {
         color: 'rgba(153, 153, 153, 0.60)',
         fontSize: 16,
@@ -385,8 +366,6 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         marginTop: 5
     },
-
-
 
     saveBtn: {
         backgroundColor: '#5552E2',
@@ -397,12 +376,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+
     saveBtnText: {
         color: 'white',
         fontSize: 16,
         fontWeight: 600,
     },
-
 
     //로딩이벤트
     fullScreenLoadingContainer: {
@@ -411,15 +390,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.5)', // 반투명 배경
     },
+
     fullScreenLoadingImage: {
         width: 250,
         height: 250
     },
-
-
-
-
-
 
     //소속 스타트업 스타일
     startupView: {
@@ -428,6 +403,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
+
     profileImage: {
         width: 70,
         height: 70,
@@ -435,16 +411,19 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
     },
+
     startupName: {
         fontSize: 20,
         fontWeight: 600,
     },
+
     startupInfo: {
         fontSize: 16,
         fontWeight: 400,
         color: 'rgba(0, 0, 0, 0.3)',
         lineHeight: 25,
     },
+    
     crownView:{
         position:'absolute',
         marginLeft: 35,

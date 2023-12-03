@@ -2,7 +2,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 
 
-
 //스크린
 import StartPage from '../screens/StartPage';
 import PersonLogin from '../screens/Login-Person'
@@ -50,14 +49,7 @@ const StackNavigator = () => {
             <Stack.Screen name='StartUpMore' component={StartUpMore}/>
             <Stack.Screen name='StartupServey' component={StartupServey}/>
             <Stack.Screen name='StartUpEdit' component={StartUpEdit}/>
-
             <Stack.Screen name='Map' component={Map}/>
-
-
-
-
-
-            {/*미완성*/}
             <Stack.Screen name='People' component={People}/>
             <Stack.Screen name='PeopleInfo' component={PeopleInfo}/>
             <Stack.Screen name='EditPeopleInfo' component={EditPeopleInfo}/>

@@ -60,10 +60,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 20,
     },
+
     icon: {
         position: 'absolute',
         bottom: 0,
     },
+    
     titleText: {
         position: 'absolute',
         bottom: 0,

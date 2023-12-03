@@ -43,9 +43,6 @@ export let connectDBs = []
 
 
 
-
-
-
 //유저 이미지 로드  
 export const loadUserImages = async () => {
     const imageUrls = [];
@@ -367,18 +364,14 @@ export const loadConnect = async () => {
 
 
 
-
-
 //내 페이지 수정
 export const updateUserProject = async (num, eField, eCareer, eIntroduce, eProject) => {
 
     //깃허브 정보 가져오기
     const gitRepo = await fetchLang(eProject)
 
-
     //gpt 평가
     const gptResult = await openAIUser(eIntroduce, eCareer, gitRepo)
-
 
     if (gptResult) {
         try {
@@ -400,8 +393,6 @@ export const updateUserProject = async (num, eField, eCareer, eIntroduce, eProje
         }
 
     }
-
-
 
 }
 
@@ -429,7 +420,6 @@ export const updateUserImage = async (uri, id) => {
     const response = await fetch(uri);
     const blob = await response.blob();
 
-
     const metadata = {
         contentType: 'image/jpeg',
     };
@@ -437,7 +427,6 @@ export const updateUserImage = async (uri, id) => {
     // Firebase Storage의 참조를 만듭니다. 여기서 `ref`는 import한 함수를 사용합니다.
     const storageRef = ref(storage, `/userProfile/${id}`);
     const uploadTask = uploadBytesResumable(storageRef, blob, metadata);
-
 
     uploadTask.on(
         "state_changed",
@@ -467,7 +456,6 @@ export const updateUserImage = async (uri, id) => {
 //내 스타트업 페이지 수정
 export const updateStartUpProject = async (num, eField, eInfo, eIntroduce, eStack, location, lat, lng) => {
 
-
     const gptResult = await openAIStartup(eInfo, eIntroduce, eStack)
 
     if (gptResult) {
@@ -491,8 +479,6 @@ export const updateStartUpProject = async (num, eField, eInfo, eIntroduce, eStac
         }
 
     }
-
-
 
 }
 
@@ -519,7 +505,6 @@ export const updateStartUpImage = async (uri, id) => {
     const response = await fetch(uri);
     const blob = await response.blob();
 
-
     const metadata = {
         contentType: 'image/jpeg',
     };
@@ -527,7 +512,6 @@ export const updateStartUpImage = async (uri, id) => {
     // Firebase Storage의 참조를 만듭니다. 여기서 `ref`는 import한 함수를 사용합니다.
     const storageRef = ref(storage, `/startupProfile/${id}`);
     const uploadTask = uploadBytesResumable(storageRef, blob, metadata);
-
 
     uploadTask.on(
         "state_changed",
@@ -665,12 +649,6 @@ export const addStartUp = async (name, field, title, introduce, stack, location,
             console.log("이미지 생성 실패");
         }
 
-
-
-
-
-
-
     } catch (error) {
         console.log("Error adding startupInfo document:", error);
     }
@@ -687,7 +665,6 @@ export const addLetter = async (toID, fromID, content) => {
             content: content,
             DATE: new Date(),
         });
-
 
     } catch (error) {
         console.log(error)
@@ -709,15 +686,10 @@ export const addCofounder = async (num, title, field, idea, info, benefit, uri) 
             DATE: new Date(),
         });
 
-
-
         const cofounderID = docRef.id
-
-
 
         const response = await fetch(uri);
         const blob = await response.blob();
-
 
         const metadata = {
             contentType: 'image/jpeg',
@@ -726,7 +698,6 @@ export const addCofounder = async (num, title, field, idea, info, benefit, uri) 
         // Firebase Storage의 참조를 만듭니다. 여기서 `ref`는 import한 함수를 사용합니다.
         const storageRef = ref(storage, `/cofounderProfile/${cofounderID}`);
         const uploadTask = uploadBytesResumable(storageRef, blob, metadata);
-
 
         uploadTask.on(
             "state_changed",
@@ -765,7 +736,6 @@ export const addJoin = async (adminID, perID, suID) => {
             suID: suID,
             DATE: new Date(),
         });
-
 
     } catch (error) {
         console.log(error)
@@ -836,7 +806,6 @@ export const addConnect = async (perField, suField) => {
             suField: suField,
         });
 
-
     } catch (error) {
         console.log(error)
     }
@@ -878,7 +847,6 @@ export const deleteJoin = async (num, perID, suID) => {
 
         if (documentSnapshot.exists()) {
             await deleteDoc(documentRef);
-
 
             const user = await loadUserSelect(perID);
             const startup = await loadStartUpSelect(suID);

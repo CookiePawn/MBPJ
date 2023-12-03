@@ -7,9 +7,6 @@ import {
 
 
 
-
-
-
 // 로딩 컴포넌트를 화면 전체에 표시하는 함수
 export const renderFullScreenLoading = (isLoading) => {
     return (
@@ -31,6 +28,7 @@ export const renderFullScreenLoading = (isLoading) => {
 
 
 const styles = StyleSheet.create({
+    
     //로딩이벤트
     fullScreenLoadingContainer: {
         flex: 1,
@@ -38,6 +36,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.5)', // 반투명 배경
     },
+
     fullScreenLoadingImage: {
         width: 250,
         height: 250

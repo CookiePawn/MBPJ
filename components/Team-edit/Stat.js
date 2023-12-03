@@ -8,13 +8,11 @@ import {
     TouchableOpacity,
 } from 'react-native'
 
-
 import Icon from 'react-native-vector-icons/FontAwesome5'
 
 import { useIsFocused } from '@react-navigation/native'
 
 import { useState, useEffect } from 'react'
-
 
 //DB
 import {
@@ -24,12 +22,6 @@ import {
     loadTeam,
     addTeam,
 } from '../../DB/LoadDB'
-
-
-
-
-
-
 
 
 
@@ -46,7 +38,7 @@ export const Stat1 = (props) => {
     const isFocused = useIsFocused();
 
 
-
+    //개인, 스타트업 관련 정보 불러오기
     useEffect(() => {
         const fetchStartUpImage = async () => {
             const images = await loadStartUpImages()
@@ -72,13 +64,11 @@ export const Stat1 = (props) => {
             setTeam(teams)
         };
 
-
         fetchStartUpImage()
         fetchStartups()
         fetchMember()
         fetchTeam()
     }, [isFocused])
-
 
 
 
@@ -95,9 +85,7 @@ export const Stat1 = (props) => {
     };
 
 
-
-
-
+    //팀장 불러오기
     useEffect(() => {
         const fetchAdmins = () => {
             if (member && member.length > 0) {
@@ -109,9 +97,6 @@ export const Stat1 = (props) => {
 
         fetchAdmins();
     }, [member]);
-
-
-
 
 
 
@@ -168,7 +153,6 @@ const styles = StyleSheet.create({
         width: '90%',
     },
 
-
     //스타트업 생성 스타일  
     title: {
         fontSize: 20,
@@ -176,26 +160,20 @@ const styles = StyleSheet.create({
         marginTop: 40,
         marginBottom: 10,
     },
+
     textInput: {
         fontSize: 16,
     },
 
-
-
     saveBtn: {
         marginTop: 50,
     },
+
     saveBtnText: {
         fontSize: 16,
         fontWeight: 600,
         textAlign: 'right',
     },
-
-
-
-
-
-
 
     //소속 스타트업 스타일
     startupView: {
@@ -204,6 +182,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
+
     profileImage: {
         width: 70,
         height: 70,
@@ -211,16 +190,19 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         marginRight: 15,
     },
+
     startupName: {
         fontSize: 20,
         fontWeight: 600,
     },
+
     startupInfo: {
         fontSize: 16,
         fontWeight: 400,
         color: 'rgba(0, 0, 0, 0.3)',
         lineHeight: 25,
     },
+
     crownView:{
         position:'absolute',
         marginLeft: 35,

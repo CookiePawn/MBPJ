@@ -1,15 +1,10 @@
 
-
-
-
 //github rest api
 import { Octokit } from "@octokit/core";
 
 
 
-
 const octokit = new Octokit();
-
 
 //사용자 프로젝트 사용 코드 불러오기
 export const fetchLang = async (nickname) => {
@@ -47,6 +42,7 @@ export const fetchLang = async (nickname) => {
 }
 
 
+
 //사용자 리포지토리 불러오기
 const loadRepositories = async (nickname) => {
     try {
@@ -59,7 +55,3 @@ const loadRepositories = async (nickname) => {
         console.error("Error fetching user repositories:", error);
     }
 }
-
-
-
-

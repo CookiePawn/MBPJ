@@ -16,7 +16,6 @@ import * as Location from 'expo-location';
 //위도 경도로 거리 계산하기
 import * as Geolib from 'geolib';
 import Icon from 'react-native-vector-icons/FontAwesome5'
-//import { Polyline } from 'react-native-svg';
 
 //헤더
 import Header from '../components/Header';

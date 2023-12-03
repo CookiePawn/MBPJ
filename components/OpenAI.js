@@ -4,9 +4,6 @@ import { openaiKey } from '../keys/Key'
 
 
 
-
-
-
 //스타트업 정보 gpt 평가
 export const openAIStartup = async (title, introduce, stack) => {
     try {
@@ -39,9 +36,6 @@ export const openAIStartup = async (title, introduce, stack) => {
             }
         )
 
-        //대답
-        //console.log(response.data.choices[0].message.content)
-
         try {
             // 데이터를 파싱하여 점수와 평가를 추출합니다.
             const content = JSON.parse(response.data.choices[0].message.content);  
@@ -55,11 +49,6 @@ export const openAIStartup = async (title, introduce, stack) => {
         } catch (error) {
             console.error('JSON Parse error:', error)
         }
-
-        
-
-        
-
 
     } catch (error) {
         console.error('Error text: ', error.response.data.error.message)
@@ -105,9 +94,6 @@ export const openAIUser = async (introduce, career, project) => {
             }
         )
 
-        //대답
-        //console.log(response.data.choices[0].message.content)
-
         try {
             // 데이터를 파싱하여 점수와 평가를 추출합니다.
             const content = JSON.parse(response.data.choices[0].message.content);  
@@ -121,11 +107,6 @@ export const openAIUser = async (introduce, career, project) => {
         } catch (error) {
             console.error('JSON Parse error:', error)
         }
-
-        
-
-        
-
 
     } catch (error) {
         console.error('Error text: ', error.response.data.error.message)
