@@ -4,10 +4,9 @@ import {
     Image,
     TouchableOpacity,
     TextInput,
-    ScrollView,
     StyleSheet,
 } from 'react-native'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 //이미지 선택
@@ -25,6 +24,7 @@ import {
 import DropDownPicker from 'react-native-dropdown-picker'
 
 
+
 const StartUpEdit = (props) => {
     //로그인 확인
     const { params } = props.route;
@@ -36,8 +36,6 @@ const StartUpEdit = (props) => {
     const phone = params ? params.phone : null;
     const image = params ? params.image : null;
 
-
-
     //정보 수정
     const [title, setTitle] = useState('')
     const [info, setInfo] = useState('')
@@ -45,7 +43,6 @@ const StartUpEdit = (props) => {
     const [benefit, setBenefit] = useState('')
 
     const [profileImg, setProfileImg] = useState(null)
-
 
     //DropDownPicker 관련
     const [pickerOpen, setPickerOpen] = useState(false);
@@ -58,8 +55,6 @@ const StartUpEdit = (props) => {
     ])
     const [savedField, setSavedField] = useState('Choose Your Field');
 
-
-
     const requestGalleryPermission = async () => {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== 'granted') {
@@ -68,7 +63,6 @@ const StartUpEdit = (props) => {
         }
         return true;
     };
-
 
     const pickImage = async () => {
         // 갤러리 접근 권한 요청
@@ -95,16 +89,6 @@ const StartUpEdit = (props) => {
             setProfileImg(resizedImage.uri);
         }
     };
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -258,8 +242,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-
-
     //프로필 세션
     profileView: {
         width: '90%',
@@ -267,15 +249,18 @@ const styles = StyleSheet.create({
         marginTop: 10,
         alignItems: 'center',
     },
+
     profileImage: {
         width: 100,
         height: 100,
         borderRadius: 30,
         margin: 10,
     },
+
     profileInfoView: {
         justifyContent: 'center',
     },
+
     imageBtn: {
         width: 90,
         height: 37,
@@ -287,21 +272,23 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#111111'
     },
+
     imageBtnText: {
         color: '#111111',
         fontSize: 16,
         fontWeight: 600,
     },
+
     nameText: {
         fontSize: 20,
         fontWeight: 'bold',
     },
+
     infoText: {
         fontSize: 14,
         color: 'rgba(153, 153, 153, 0.60)',
         marginTop: 25,
     },
-
 
     // 정보 세션
     inforView: {
@@ -309,12 +296,14 @@ const styles = StyleSheet.create({
         height: 500,
         marginTop: 30,
     },
+
     bigText: {
         color: '#111',
         fontSize: 20,
         fontWeight: '500',
         marginBottom: 10,
     },
+
     bigText1: {
         color: '#111',
         fontSize: 20,
@@ -322,6 +311,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginTop: 30,
     },
+
     smallText: {
         color: 'rgba(153, 153, 153, 0.60)',
         fontSize: 14,
@@ -329,11 +319,11 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         marginTop: 3,
     },
+
     midText: {
         fontSize: 16,
         color: '#111',
     },
-
 
     //채팅 세션
     chatBtn: {
@@ -346,6 +336,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+
     chatBtnText: {
         color: 'white',
         fontSize: 16,

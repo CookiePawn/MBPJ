@@ -5,7 +5,6 @@ import {
     TouchableOpacity,
     ScrollView,
     StyleSheet,
-    Dimensions,
 } from 'react-native'
 
 import Icon from 'react-native-vector-icons/Ionicons'
@@ -22,7 +21,6 @@ import {
 
 //차트
 import CustomChart from '../components/Category/CustomChart';
-
 
 
 
@@ -48,6 +46,7 @@ const CustomCategory = (props) => {
     )
 }
 
+
 //개인
 const CustomPeople = (props) => {
 
@@ -70,6 +69,7 @@ const CustomPeople = (props) => {
         </TouchableOpacity>
     )
 }
+
 
 //스타트업
 const CustomStartUp = (props) => {
@@ -94,10 +94,6 @@ const CustomStartUp = (props) => {
         </TouchableOpacity>
     )
 }
-
-
-
-
 
 
 const Category = (props) => {
@@ -146,11 +142,6 @@ const Category = (props) => {
         fetchStartUps()
 
     }, [isFocused]);
-
-
-
-
-
 
 
     return (
@@ -464,14 +455,17 @@ const styles = StyleSheet.create({
         width: '90%',
         margin: 50,
     },
+
     categoryTitleView: {
         flex: 0.3,
         flexDirection: 'row',
     },
+
     categoryTitleTextView: {
         flex: 0.71,
         justifyContent: 'center',
     },
+
     categoryTitleText: {
         marginTop: 20,
         lineHeight: 25,
@@ -479,40 +473,46 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: 'bold'
     },
+
     categoryTitleSubText: {
         marginTop: 10,
         color: 'rgba(153, 153, 153, 0.60)',
         fontSize: 16,
         fontWeight: 400,
     },
+
     categoryTitleIconView: {
         flex: 0.29,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
     },
+
     icon: {
         marginLeft: 10,
         marginRight: 10,
     },
 
-
     categoryListView: {
         flex: 1,
         marginTop: 20,
     },
+
     categoryListScrollView: {
         flex: 1,
         flexDirection: 'row',
     },
+
     categoryListSubView: {
         flex: 1,
         flexDirection: 'row',
     },
+
     categoryListSubSubView: {
         alignItems: 'center',
         justifyContent: 'center',
     },
+
     categoryButton: {
         width: 230,
         height: 230,
@@ -522,6 +522,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         overflow: 'hidden',
     },
+
     categoryButtonText: {
         color: 'white',
         fontSize: 16,
@@ -530,13 +531,11 @@ const styles = StyleSheet.create({
         top: 17,
         left: 17,
     },
+
     categoryButtonImage: {
         width: '100%',
         height: '100%',
     },
-
-
-
 
     //사람 추천 뷰
     peopleView: {
@@ -545,6 +544,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 94,
     },
+
     moreText: {
         color: '#999',
         fontSize: 12,
@@ -552,10 +552,12 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginLeft: 15
     },
+
     peopleListScrollView: {
         marginTop: 20,
         flexDirection: 'row',
     },
+
     peopleListView: {
         width: 158,
         height: 222,
@@ -567,24 +569,24 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+
     peopleListImage: {
         width: 94,
         height: 94,
         borderRadius: 100,
     },
+
     peopleListNameText: {
         marginTop: 15,
         fontSize: 16,
         fontWeight: 'bold',
         lineHeight: 34,
     },
+
     peopleListInfoText: {
         color: 'rgba(0, 0, 0, 0.60)',
         fontSize: 12,
     },
-
-
-
 
     //스타트업 추천 뷰
     startUpView: {
@@ -593,9 +595,11 @@ const styles = StyleSheet.create({
         marginBottom: 80,
         overflow: 'hidden',
     },
+
     startUpListView: {
         marginTop: 10,
     },
+
     startUpListSubView: {
         width: '100%',
         height: 80,
@@ -604,35 +608,33 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
+
     startUpListImage: {
         width: 55,
         height: 55,
         borderRadius: 10,
         marginRight: 15,
     },
+
     startUpInfoTextView: {
         flex: 1,
         height: 80,
         borderBottomWidth: 1,
         borderColor: '#E8E8E8',
     },
+
     startUpNameText: {
         paddingTop: 12,
         fontSize: 16,
         fontWeight: 'bold',
         lineHeight: 30,
     },
+
     startUpInfoText: {
         fontSize: 12,
         color: 'rgba(0, 0, 0, 0.60)',
         fontWeight: 'light'
     },
-
-
-
-
-
-
 
     //트랜드 뷰
     trendView: {

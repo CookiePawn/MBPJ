@@ -6,20 +6,14 @@ import {
 } from 'react-native'
 import { useState, useEffect} from 'react'
 
-
 //헤더
 import Header from '../components/Header'
-
 
 //선택 된 페이지 불러오기
 import {
     Stat0,
     Stat1,
 } from '../components/Info-StartUp-edit/Stat'
-
-
-
-
 
 
 
@@ -34,7 +28,6 @@ const StartUpEdit = (props) => {
     const phone = params ? params.phone : null;
     const image = params ? params.image : null;
 
-
     const [stat, setStat] = useState(1)
 
     const [location, setLocation] = useState('')
@@ -46,7 +39,6 @@ const StartUpEdit = (props) => {
         }
 
     }, [props.route.params.address]);
-
 
 
 
@@ -126,18 +118,12 @@ export default StartUpEdit
 
 
 
-
-
-
 const styles = StyleSheet.create({
     mainView: {
         flex: 1,
         alignItems: 'center',
         backgroundColor: 'white'
     },
-
-
-
 
     //선택 뷰
     choiceView: {
@@ -146,17 +132,21 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 20,
     },
+
     choiceBtn: {
         marginLeft: 30,
         marginRight: 30,
     },
+
     choiceText: {
         fontSize: 16,
         fontWeight: 600,
     },
+
     selectedText: {
         color: 'black', // 선택된 상태의 글자 색상
     },
+    
     unselectedText: {
         color: '#DDD', // 선택되지 않은 상태의 글자 색상
     },

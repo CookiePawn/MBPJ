@@ -10,10 +10,8 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 
-
 //헤더
 import Header from '../components/Header';
-
 
 //db 로드
 import {
@@ -26,7 +24,6 @@ import {
     addMember,
     deleteLetter,
 } from '../DB/LoadDB'
-
 
 // 쪽지 용 CustomList
 const CustomList = (props) => {
@@ -116,9 +113,6 @@ const CustomList1 = (props) => {
 }
 
 
-
-
-
 const AlertPage = (props) => {
     //로그인 확인
     const { params } = props.route;
@@ -201,12 +195,6 @@ const AlertPage = (props) => {
     };
 
 
-
-
-
-
-
-
     return (
         <View style={styles.mainView}>
             <Header
@@ -238,8 +226,6 @@ const AlertPage = (props) => {
                         <Text style={styles.joinText(state === 1)}>가입</Text>
                     </View>
                 </TouchableOpacity>
-
-
             </View>
 
             <View style={styles.listView}>
@@ -334,19 +320,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-
-
-
-
     //사람 목록
     listView: {
         width: '90%',
     },
+
     listSubView: {
         width: '100%',
         height: 90,
         flexDirection: 'row',
     },
+
     profileImage: {
         width: 60,
         height: 60,
@@ -355,12 +339,14 @@ const styles = StyleSheet.create({
         marginRight: 20,
         marginTop: 13
     },
+
     listSubSubView: {
         flex: 1,
         borderBottomWidth: 1,
         borderColor: '#E8E8E8',
         justifyContent: 'center',
     },
+
     listSubSubView1: {
         borderBottomWidth: 1,
         borderColor: '#E8E8E8',
@@ -368,21 +354,23 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         width: 140
     },
+
     nameText: {
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 15,
     },
+
     nameText1: {
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 15,
     },
+
     infoText: {
         fontSize: 14,
         color: 'rgba(0, 0, 0, 0.60)',
     },
-
 
     btView: {
         flexDirection: 'row',

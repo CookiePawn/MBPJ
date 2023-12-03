@@ -7,7 +7,6 @@ import {
 } from 'react-native'
 import React, { useState, useEffect } from 'react'
 
-
 import { useIsFocused } from '@react-navigation/native';
 
 //헤더
@@ -31,7 +30,6 @@ const LetterPage = (props) => {
     const people = params ? params.people : null;
 
     const [user, setUser] = useState([])
-
 
     //DB
     const [letter, setLetter] = useState([])
@@ -59,10 +57,6 @@ const LetterPage = (props) => {
         }     
         fetchUser()
     }, [letter])
-
-
-
-
 
 
 
@@ -98,7 +92,6 @@ const LetterPage = (props) => {
                 </ScrollView>
             </View>
 
- 
             <View style={styles.btnView}>
                 <TouchableOpacity 
                     style={styles.chatBtn1}
@@ -157,8 +150,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-    
-
     inputView: {
         backgroundColor: 'white',
         flex: 1,
@@ -187,6 +178,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginLeft: 'auto'
     },
+
     chatBtn1: {
         backgroundColor: '#5552E2',
         height: 60,
@@ -198,11 +190,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginRight: 'auto'
     },
+
     chatBtnText: {
         color: 'white',
         fontSize: 16,
         fontWeight: 600,
     },
+
     chatBtnText1: {
         color: '#767676',
         fontSize: 16,
@@ -215,12 +209,12 @@ const styles = StyleSheet.create({
         fontWeight: '400',
     },
 
-
     btnView: {
         flexDirection: 'row',
         width: '90%',
         marginTop: 10
     },
+    
     peopleText: {
         fontSize: 20,
         fontWeight: 'bold',

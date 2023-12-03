@@ -15,9 +15,6 @@ const { width } = Dimensions.get('window')
 import { loadConnect } from '../DB/LoadDB'
 
 
-//db 로드
-
-
 
 const StartPage = (props) => {
 

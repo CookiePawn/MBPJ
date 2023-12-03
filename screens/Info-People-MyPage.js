@@ -3,7 +3,6 @@ import {
     Text,
     Image,
     TouchableOpacity,
-    ActivityIndicator,
     Linking,
     ScrollView,
     StyleSheet,
@@ -14,10 +13,8 @@ import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 import { BarChart } from 'react-native-chart-kit';
 
-
 //헤더
 import Header from '../components/Header';
-
 
 //db 로드
 import {
@@ -27,6 +24,7 @@ import {
     loadStartUps,
     loadStartUpImages,
 } from '../DB/LoadDB'
+
 
 
 const SeeMyPage = (props) => {
@@ -40,9 +38,6 @@ const SeeMyPage = (props) => {
     const phone = params ? params.phone : null;
     const image = params ? params.image : null;
     const people = params ? params.people : null;
-
-
-
 
     //db
     const [imageUrl, setImageUrl] = useState([]);
@@ -77,11 +72,6 @@ const SeeMyPage = (props) => {
             const startups = await loadStartUps();
             setStartup(startups);
         };
-
-
-
-
-
         const fetchMember = async () => {
             const members = await loadMember();
             const newMembers = []; // 새로운 멤버를 임시 저장할 배열을 생성합니다.
@@ -133,8 +123,6 @@ const SeeMyPage = (props) => {
         }
     }, [user, imageUrl]);
 
-
-
     useEffect(() => {
         const fetchAdmins = () => {
             if (member && member.length > 0) {
@@ -146,9 +134,6 @@ const SeeMyPage = (props) => {
 
         fetchAdmins();
     }, [member]);
-
-
-
 
     const getFilteredStartups = () => {
         if (!member || member.length === 0) {
@@ -178,17 +163,6 @@ const SeeMyPage = (props) => {
 
     const screenWidth = Dimensions.get('window').width;
     const chartMarginLeft = screenWidth * -0.1;
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -286,9 +260,6 @@ const SeeMyPage = (props) => {
                         }
                     </View>
 
-
-
-
                     <Text style={styles.bigText}>GPT 평가</Text>
                     <Text style={styles.smallText}>{user.evaluation}</Text>
 
@@ -353,10 +324,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-
-
-
-
     //프로필 세션
     profileView: {
         width: '90%',
@@ -364,6 +331,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         flexDirection: 'row',
     },
+
     profileImage: {
         width: 80,
         height: 80,
@@ -372,26 +340,31 @@ const styles = StyleSheet.create({
         marginLeft: 0,
         marginRight: 20,
     },
+
     profileInfoView: {
         flex: 1,
         justifyContent: 'center',
     },
+
     nameText: {
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 40,
     },
+
     infoText: {
         fontSize: 14,
         color: 'rgba(153, 153, 153, 0.60)',
         marginTop: 25,
     },
+
     likeView: {
         position: 'absolute',
         right: 10,
         top: 20,
         flexDirection: 'row',
     },
+
     likeText: {
         lineHeight: 20,
         paddingLeft: 5,
@@ -399,39 +372,44 @@ const styles = StyleSheet.create({
         marginTop: 1
     },
 
-
     // 정보 세션
     inforView: {
         width: '90%',
         height: 500,
         marginTop: 30,
     },
+
     bigText: {
         color: '#111',
         fontSize: 20,
         fontWeight: '500',
         marginBottom: 15,
     },
+
     smallText: {
         color: 'rgba(153, 153, 153, 0.60)',
         fontSize: 14,
         fontWeight: '400',
         marginBottom: 35,
     },
+
     smallText1: {
         color: 'rgba(153, 153, 153, 0.60)',
         fontSize: 14,
         fontWeight: '400',
         marginBottom: 14,
     },
+
     midText: {
         fontSize: 16,
         color: '#111',
     },
+
     chartView: {
         flex: 1,
         marginBottom: 20
     },
+
     projectView: {
         marginBottom: 35
     },
@@ -440,6 +418,7 @@ const styles = StyleSheet.create({
     memberScrollView: {
         flexDirection: 'row'
     },
+
     memberView: {
         height: 100,
         marginRight: 10,
@@ -447,23 +426,27 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 30,
     },
+
     crownView: {
         position: 'absolute',
         marginLeft: 30,
         top: 0
     },
+
     userImage: {
         width: 60,
         height: 60,
         borderRadius: 100,
         marginLeft: 15,
     },
+
     userName: {
         marginLeft: 10,
         marginRight: 15,
         fontWeight: 500,
         fontSize: 20,
     },
+    
     userInfo: {
         color: 'rgba(0, 0, 0, 0.60)',
         fontSize: 12,

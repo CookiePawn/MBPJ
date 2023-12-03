@@ -28,7 +28,6 @@ import {
 
 
 
-
 const PersonInfo = (props) => {
     //로그인 확인
     const { params } = props.route;
@@ -39,8 +38,6 @@ const PersonInfo = (props) => {
     const email = params ? params.email : null;
     const phone = params ? params.phone : null;
     const image = params ? params.image : null;
-
-
 
     //정보 수정
     const [eIntroduce, setEIntroduce] = useState('')
@@ -54,7 +51,6 @@ const PersonInfo = (props) => {
     const [user, setUser] = useState([])
 
     const isFocused = useIsFocused();
-
 
     //DropDownPicker 관련
     const [pickerOpen, setPickerOpen] = useState(false);
@@ -102,7 +98,6 @@ const PersonInfo = (props) => {
         fetchUserInfo();
 
     }, [isFocused]);
-
 
 
 
@@ -244,11 +239,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-
-
-
-
-
     //프로필 세션
     profileView: {
         width: '90%',
@@ -256,6 +246,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         flexDirection: 'row',
     },
+
     profileImage: {
         width: 80,
         height: 80,
@@ -264,33 +255,37 @@ const styles = StyleSheet.create({
         marginLeft: 0,
         marginRight: 20,
     },
+
     profileInfoView: {
         flex: 1,
         justifyContent: 'center',
     },
+
     nameText: {
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 40
     },
+
     infoText: {
         fontSize: 14,
         color: 'rgba(153, 153, 153, 0.60)',
         marginTop: 25,
     },
 
-
     // 정보 세션
     inforView: {
         width: '90%',
         marginTop: 30,
     },
+
     bigText: {
         color: '#111',
         fontSize: 20,
         fontWeight: '500',
         marginBottom: 10,
     },
+
     bigText1: {
         color: '#111',
         fontSize: 20,
@@ -298,17 +293,18 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginTop: 30,
     },
+
     smallText: {
         color: 'rgba(153, 153, 153, 0.60)',
         fontSize: 14,
         fontWeight: '400',
         marginBottom: 30,
     },
+
     midText: {
         fontSize: 16,
         color: '#111',
     },
-
 
     //채팅 세션
     chatBtn: {
@@ -321,13 +317,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+
     chatBtnText: {
         color: 'white',
         fontSize: 16,
         fontWeight: 600,
     },
-
-
-
 
 })

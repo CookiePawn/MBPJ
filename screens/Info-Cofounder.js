@@ -9,7 +9,6 @@ import {
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 
-
 //헤더
 import Header from '../components/Header';
 
@@ -20,17 +19,6 @@ import {
     loadCofounderImages,
     loadUserImages,
 } from '../DB/LoadDB'
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -45,9 +33,6 @@ const StartUpInfo = (props) => {
     const phone = params ? params.phone : null;
     const image = params ? params.image : null;
     const people = params ? params.people : null;
-
-
-
 
     //db
     const [cofounderImg, setCofounderImg] = useState([]);
@@ -84,6 +69,7 @@ const StartUpInfo = (props) => {
     }, [isFocused]);
 
 
+
     useEffect(() => {
         const fetchUser = async () => {
             if (cofounder.perID) {
@@ -107,10 +93,6 @@ const StartUpInfo = (props) => {
             setFoundCofounderImage(matchImage);
         }
     }, [user, userImg, cofounder, cofounderImg]);
-
-
-
-
 
 
 
@@ -166,6 +148,7 @@ const StartUpInfo = (props) => {
                     <Text style={styles.smallText}>{cofounder.benefit}</Text>
 
                     <Text style={styles.bigText}>공고자</Text>
+
                     <TouchableOpacity
                         onPress={() => {
                             props.navigation.navigate('PeopleInfo', {
@@ -180,6 +163,7 @@ const StartUpInfo = (props) => {
                             })
                         }}
                     >
+
                         <View style={styles.memberView}>
                             {foundUserImage ? (
                                 <Image
@@ -200,6 +184,7 @@ const StartUpInfo = (props) => {
                     </TouchableOpacity>
                 </View>
             </ScrollView >
+
             {num !== null && (
                 <View style={styles.btnView}>
                     <TouchableOpacity
@@ -237,10 +222,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-
-
-
-
     //프로필 세션
     profileView: {
         width: '90%',
@@ -255,36 +236,41 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         marginTop: 10,
     },
+
     profileImage: {
         width: '100%',
         height: 400,
         borderRadius: 30,
     },
+
     profileInfoView: {
         flex: 1,
         justifyContent: 'center',
     },
+
     nameText: {
         fontSize: 20,
         fontWeight: 'bold',
     },
+
     infoText: {
         fontSize: 14,
         color: 'rgba(153, 153, 153, 0.60)',
         marginTop: 25,
     },
+
     likeView: {
         position: 'absolute',
         right: 10,
         top: 20,
         flexDirection: 'row',
     },
+
     likeText: {
         lineHeight: 20,
         paddingLeft: 5,
         color: 'rgba(153, 153, 153, 0.60)',
     },
-
 
     // 정보 세션
     inforView: {
@@ -292,30 +278,31 @@ const styles = StyleSheet.create({
         height: 500,
         marginTop: 0,
     },
+
     bigText: {
         color: '#111',
         fontSize: 20,
         fontWeight: '500',
         marginBottom: 15,
     },
+
     smallText: {
         color: 'rgba(153, 153, 153, 0.60)',
         fontSize: 14,
         fontWeight: '400',
         marginBottom: 35,
     },
+
     midText: {
         fontSize: 16,
         color: '#111',
     },
 
-
-
-
     //멤버
     memberScrollView: {
         flexDirection: 'row'
     },
+
     memberView: {
         width: '100%',
         height: 100,
@@ -324,19 +311,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 30,
     },
+
     userImage: {
         width: 60,
         height: 60,
         borderRadius: 100,
         marginLeft: 15,
-        
     },
+
     userName: {
         marginLeft: 15,
         marginRight: 15,
         fontWeight: 500,
         fontSize: 20,
     },
+
     userInfo: {
         color: 'rgba(0, 0, 0, 0.60)',
         fontSize: 12,
@@ -344,18 +333,13 @@ const styles = StyleSheet.create({
         lineHeight: 23,
     },
 
-
-
-
-
-
-
     //채팅 세션
     btnView: {
         flexDirection: 'row',
         width: '90%',
         height: 100,
     },
+
     chatBtn: {
         backgroundColor: '#5552E2',
         height: 60,
@@ -367,11 +351,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         position: 'absolute',
     },
+
     chatBtnText: {
         color: 'white',
         fontSize: 16,
         fontWeight: 600,
     },
+    
     TitleText: {
         color: '#111',
         fontSize: 24,

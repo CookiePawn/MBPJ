@@ -1,19 +1,11 @@
 import {
     View,
     Text,
-    TouchableOpacity,
-    Image,
     StyleSheet,
     ScrollView
 } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
 import React, { useState, useEffect } from 'react'
 import Header from '../components/Header'
-
-//db 로드
-import { updateStartUpStep } from '../DB/LoadDB'
-
-
 
 const Help = (props) => {
     //로그인 확인
@@ -91,11 +83,7 @@ const Help = (props) => {
     )
 }
 
-
-
 export default Help
-
-
 
 
 
@@ -114,10 +102,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 30,
     },
+
     icon: {
         position: 'absolute',
         bottom: 0,
     },
+
     titleText: {
         position: 'absolute',
         bottom: 0,
@@ -125,24 +115,24 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 
-
     helpView1: {
         backgroundColor: 'white',
         height: 50,
         marginBottom: 40,
         marginTop: 10
     },
+
     helpView: {
         backgroundColor: 'white',
         height: 50,
         marginBottom: 40
     },
 
-
     mainText: {
         fontSize: 20,
         fontWeight: 'bold',
     },
+
     subText: {
         fontSize: 16,
         color: '#767676',

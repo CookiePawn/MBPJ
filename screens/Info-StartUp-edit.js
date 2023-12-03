@@ -5,7 +5,6 @@ import {
     TouchableOpacity,
     ActivityIndicator,
     TextInput,
-    ScrollView,
     StyleSheet,
 } from 'react-native'
 import React, { useState, useEffect } from 'react'
@@ -17,13 +16,11 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import * as ImagePicker from 'expo-image-picker';
 import { manipulateAsync } from 'expo-image-manipulator';
 
-
 //헤더
 import Header from '../components/Header';
 
 //로딩 이벤트
 import { renderFullScreenLoading } from '../components/Loading'
-
 
 //db 로드
 import {
@@ -33,9 +30,9 @@ import {
     updateStartUpImage,
 } from '../DB/LoadDB'
 
-
 //주소변환
 import getAddressCoordinates from '../components/GeoCoding'
+
 
 
 const StartUpEdit = (props) => {
@@ -50,8 +47,6 @@ const StartUpEdit = (props) => {
     const image = params ? params.image : null;
     const people = params ? params.people : null;
 
-
-
     //정보 수정
     const [eStep, setEStep] = useState('')
     const [eInfo, setEInfo] = useState('')
@@ -61,7 +56,6 @@ const StartUpEdit = (props) => {
 
     const [profileImg, setProfileImg] = useState(null)
 
-
     const [isLoading, setIsLoading] = useState(false);
 
     //db
@@ -69,7 +63,6 @@ const StartUpEdit = (props) => {
     const [user, setUser] = useState([])
 
     const isFocused = useIsFocused();
-
 
     //DropDownPicker 관련
     const [pickerOpen, setPickerOpen] = useState(false);
@@ -115,9 +108,6 @@ const StartUpEdit = (props) => {
 
     }, [isFocused]);
 
-
-
-
     const [foundImage, setFoundImage] = useState(null);
 
     useEffect(() => {
@@ -136,9 +126,6 @@ const StartUpEdit = (props) => {
 
     }, [props.route.params.address]); // 의존성 배열에 route.params를 추가합니다.
 
-
-
-
     const requestGalleryPermission = async () => {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== 'granted') {
@@ -147,7 +134,6 @@ const StartUpEdit = (props) => {
         }
         return true;
     };
-
 
     const pickImage = async () => {
         // 갤러리 접근 권한 요청
@@ -175,15 +161,6 @@ const StartUpEdit = (props) => {
             setProfileImg(resizedImage.uri);
         }
     };
-
-
-
-
-
-
-
-
-
 
 
 
@@ -405,8 +382,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-
-
     //프로필 세션
     profileView: {
         width: '90%',
@@ -414,15 +389,18 @@ const styles = StyleSheet.create({
         marginTop: 10,
         alignItems: 'center',
     },
+
     profileImage: {
         width: 100,
         height: 100,
         borderRadius: 30,
         margin: 10,
     },
+
     profileInfoView: {
         justifyContent: 'center',
     },
+
     imageBtn: {
         width: 90,
         height: 37,
@@ -434,21 +412,23 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#111111'
     },
+
     imageBtnText: {
         color: '#111111',
         fontSize: 16,
         fontWeight: 600,
     },
+
     nameText: {
         fontSize: 20,
         fontWeight: 'bold',
     },
+
     infoText: {
         fontSize: 14,
         color: 'rgba(153, 153, 153, 0.60)',
         marginTop: 25,
     },
-
 
     // 정보 세션
     inforView: {
@@ -456,17 +436,20 @@ const styles = StyleSheet.create({
         height: 500,
         marginTop: 30,
     },
+
     retryView:{
         position: 'absolute',
         justifyContent: 'center',
         right: 0,
     },
+
     bigText: {
         color: '#111',
         fontSize: 20,
         fontWeight: '500',
         marginBottom: 10,
     },
+
     bigText1: {
         color: '#111',
         fontSize: 20,
@@ -474,17 +457,18 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         marginTop: 30,
     },
+
     smallText: {
         color: 'rgba(153, 153, 153, 0.60)',
         fontSize: 14,
         fontWeight: '400',
         marginBottom: 35,
     },
+
     midText: {
         fontSize: 16,
         color: '#111',
     },
-
 
     //채팅 세션
     chatBtn: {
@@ -497,15 +481,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+
     chatBtnText: {
         color: 'white',
         fontSize: 16,
         fontWeight: 600,
     },
-
-
-
-
 
     //로딩이벤트
     fullScreenLoadingContainer: {
@@ -514,6 +495,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: 'rgba(0, 0, 0, 0.5)', // 반투명 배경
     },
+    
     fullScreenLoadingImage: {
         width: 250,
         height: 250,

@@ -1,6 +1,6 @@
 import Postcode from '@actbase/react-daum-postcode';
 
-const DaumPost = (props, navigation) => {
+const DaumPost = (props) => {
     //로그인 확인
     const { params } = props.route;
     const num = params ? params.num : null;
