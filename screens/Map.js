@@ -11,8 +11,10 @@ import {
     _ScrollView,
 } from 'react-native';
 import MapView, { Marker, Polyline } from 'react-native-maps';
+
 //사용자 위치 가져오기
 import * as Location from 'expo-location';
+
 //위도 경도로 거리 계산하기
 import * as Geolib from 'geolib';
 import Icon from 'react-native-vector-icons/FontAwesome5'
@@ -60,9 +62,6 @@ const Map = (props) => {
         latitude: 0,
         longitude: 0,
     });
-
-    //맵 관련 변수
-    const [km, setKm] = useState(0)
     const [followsUser, setFollowUser] = useState(true)
 
     //화면 하단에 띄울 카드
@@ -78,6 +77,8 @@ const Map = (props) => {
     let mapIndex = 0
     const _map = useRef(null)
     const _scrollView = React.useRef(null)
+
+
 
     //사용자 위치 받기
     useEffect(() => {
@@ -98,6 +99,7 @@ const Map = (props) => {
         })();
 
     }, []); // 빈 배열을 전달하여 componentDidMount와 같이 처음 한 번만 실행
+
 
 
     //DB에서 정보 불러오기
@@ -137,6 +139,8 @@ const Map = (props) => {
 
     }, [isFocused]);
 
+
+
     //개인사용자 프로필 이미지 찾기
     useEffect(() => {
         if (user && userImageUrl && userImageUrl.length > 0) {
@@ -151,6 +155,8 @@ const Map = (props) => {
         }
     }, [user, userImageUrl]);
 
+
+
     //스타트업 프로필 이미지 찾기
     useEffect(() => {
         if (startUp && startUpImageUrl && startUpImageUrl.length > 0) {
@@ -164,6 +170,7 @@ const Map = (props) => {
         }
 
     }, [startUp, startUpImageUrl]);
+
 
 
     //개인 사용자를 현재 위치에서 거리순으로 정렬
@@ -196,9 +203,9 @@ const Map = (props) => {
     }, [user])
 
 
+
     //스타트업을 현재위치에서 거리별로 정렬
     useEffect(() => {
-
         const distance = (startUp) => {
             return Geolib.getDistance(
                 region,
@@ -220,7 +227,6 @@ const Map = (props) => {
         sortData()
 
     }, [startUp])
-
 
 
 
@@ -249,6 +255,7 @@ const Map = (props) => {
             }
         }, 10)
     }
+
 
 
     // 마커를 선택할 때 호출되는 함수
@@ -283,9 +290,9 @@ const Map = (props) => {
 
 
 
+
     return (
         <View style={{ flex: 1, backgroundColor: 'white', }}>
-
             {/* 데이터로드를 위한 로딩화면 */}
             {renderFullScreenLoading(isLoading)}
             <View style={styles.titleView}>
@@ -522,7 +529,12 @@ const Map = (props) => {
     );
 };
 
+
+
 export default Map
+
+
+
 
 
 //스타일
@@ -534,10 +546,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 30,
     },
+
     icon: {
         position: 'absolute',
         bottom: 0,
     },
+
     titleText: {
         position: 'absolute',
         bottom: 0,
@@ -572,28 +586,11 @@ const styles = StyleSheet.create({
         bottom: '76%',
         alignItems: 'center'
     },
+
     btText: {
         fontSize: 14,
         fontWeight: 'bold',
         marginTop: 10
-    },
-
-
-
-    distanceText: {
-        position: 'absolute',
-        top: 50,
-        left: 20,
-        backgroundColor: 'white',
-        borderRadius: 10,
-        padding: 5,
-        shadowColor: 'black',
-        shadowOffset: {
-            width: 3,
-            height: 3,
-        },
-        shadowOpacity: 0.45,
-        shadowRadius: 10,
     },
 
     scrollView: {

@@ -1,12 +1,8 @@
 import {
     View,
     Text,
-    TouchableOpacity,
-    Image,
     StyleSheet,
 } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
-
 
 //헤더
 import Header from '../components/Header';
@@ -23,6 +19,7 @@ const StartupStep = (props) => {
     const email = params ? params.email : null;
     const phone = params ? params.phone : null;
     const image = params ? params.image : null;
+
 
 
 
@@ -81,8 +78,6 @@ const StartupStep = (props) => {
             <View>
                 <Text style = {styles.inforText}>각 단계의 진행을 마무리 해야 다음 단계로 갈 수 있습니다</Text>
             </View>
-
-            
         </View>
     )
 }
@@ -103,8 +98,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         alignItems: 'center',
     },
-
-    
 
     //스타트업 진행 단계 설명 뷰
     explanationView: {
@@ -132,6 +125,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fafafa',
         alignItems: 'center'
     },
+
     boxView: {
         width: '90%',
         height: 100,
@@ -146,6 +140,7 @@ const styles = StyleSheet.create({
         marginTop: 24,
         marginLeft: 30,
     },
+
     smallText: {
         fontSize: 12,
         marginTop: 10,
@@ -153,16 +148,10 @@ const styles = StyleSheet.create({
         color: '#999999',
     },
 
-
     inforText: {
         fontSize: 14,
         marginTop: 10,
         color: '#777777',
     }
-
-
-
-
- 
 
 })

@@ -11,14 +11,13 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 
-
-
 //헤더
 import Header from '../components/Header';
 
-
 //db 로드
 import { loadStartUpImages, loadStartUps } from '../DB/LoadDB'
+
+
 
 
 
@@ -55,8 +54,6 @@ const CustomList = (props) => {
 
 
 
-
-
 const StartUpList = (props) => {
     //로그인 확인
     const { params } = props.route;
@@ -68,10 +65,8 @@ const StartUpList = (props) => {
     const phone = params ? params.phone : null;
     const image = params ? params.image : null;
 
-
     //검색
     const [search, setSearch] = useState('')
-
 
     //db
     const [imageUrl, setImageUrl] = useState([]);
@@ -92,10 +87,6 @@ const StartUpList = (props) => {
         fetchStartUpImage();
         fetchStartupInfo();
     }, [isFocused]);
-
-
-
-
 
 
 
@@ -244,6 +235,7 @@ export default StartUpList
 
 
 
+
 const styles = StyleSheet.create({
 
     //메인 뷰
@@ -252,14 +244,10 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         alignItems: 'center',
     },
+
     icon: {
         justifyContent: 'flex-end',
     },
-
-
-
-
-
 
     //검색창
     searchView: {
@@ -270,6 +258,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginBottom: 20,
     },
+
     searchTextinput: {
         flex: 1,
         backgroundColor: '#F6F6F6',
@@ -278,21 +267,18 @@ const styles = StyleSheet.create({
         marginLeft: 5
     },
 
-
-
-
-
-
     //사람 목록
     listView: {
         flex: 1,
         width: '90%',
     },
+
     listSubView: {
         width: '100%',
         height: 90,
         flexDirection: 'row',
     },
+
     profileImage: {
         width: 60,
         height: 60,
@@ -302,6 +288,7 @@ const styles = StyleSheet.create({
         marginTop: 13,
         marginLeft: 'auto'
     },
+
     listSubSubView: {
         flex: 1,
         borderBottomWidth: 1,
@@ -309,11 +296,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 18
     },
+
     nameText: {
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 15
     },
+    
     infoText: {
         fontSize: 12,
         color: 'rgba(0, 0, 0, 0.60)'

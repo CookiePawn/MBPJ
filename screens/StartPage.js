@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     ActivityIndicator,
 } from 'react-native'
-import React, { Component, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Swiper from 'react-native-swiper/src'
 const { width } = Dimensions.get('window')
 
@@ -19,6 +19,7 @@ import { loadConnect } from '../DB/LoadDB'
 const StartPage = (props) => {
 
     const [isLoading, setIsLoading] = useState(true);
+
 
 
     useEffect(() => {
@@ -91,7 +92,12 @@ const StartPage = (props) => {
     )
 }
 
+
+
 export default StartPage
+
+
+
 
 
 const styles = StyleSheet.create({
@@ -104,7 +110,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-
     //이미지 슬라이드
     wrapper: {},
     slide: {
@@ -113,31 +118,35 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: 'transparent',
     },
+
     text: {
         color: '#fff',
         fontSize: 32,
         fontWeight: 'bold',
     },
+
     subText: {
         color: '#fff',
         fontSize: 14,
         marginTop: 12,
     },
+
     image: {
         width,
         flex: 1,
     },
+
     paginationStyle: {
         height: '50%',
         position: 'absolute',
         bottom: 10,
         right: 10
     },
+
     paginationText: {
         color: 'white',
         fontSize: 20
     },
-
 
     //시작 버튼
     startButton: {
@@ -148,6 +157,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    
     buttonText: {
         color: 'white',
         fontSize: 20,

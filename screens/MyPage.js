@@ -9,10 +9,8 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 
-
 //헤더
 import Header from '../components/Header';
-
 
 //db 로드
 import { loadUserImages, loadUserSelect } from '../DB/LoadDB'
@@ -30,15 +28,14 @@ const MyPage = (props) => {
     const phone = params ? params.phone : null;
     const image = params ? params.image : null;
 
-
-
-
     //db
     const [imageUrl, setImageUrl] = useState([]);
     const [user, setUser] = useState([])
-
+    const [foundImage, setFoundImage] = useState(null);
 
     const isFocused = useIsFocused();
+
+
 
     useEffect(() => {
         const fetchImage = async () => {
@@ -54,8 +51,7 @@ const MyPage = (props) => {
         fetchUser()
     }, [isFocused]);
 
-
-    const [foundImage, setFoundImage] = useState(null);
+    
 
     useEffect(() => {
         if (imageUrl.length > 0) {
@@ -63,6 +59,7 @@ const MyPage = (props) => {
             setFoundImage(matchImage);
         }
     }, [imageUrl]);
+
 
 
 
@@ -222,7 +219,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-
     //프로필 뷰
     profileView: {
         width: '90%',
@@ -230,6 +226,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         flexDirection: 'row',
     },
+
     profileImage: {
         width: 80,
         height: 80,
@@ -237,21 +234,22 @@ const styles = StyleSheet.create({
         margin: 10,
         marginRight: 20,
     },
+
     profileInfoView: {
         flex: 1,
         justifyContent: 'center',
     },
+
     nameText: {
         fontSize: 20,
         fontWeight: 'bold',
     },
+
     infoText: {
         fontSize: 14,
         color: 'rgba(153, 153, 153, 0.60)',
         marginTop: 25,
     },
-
-
 
     //프로필 보기 버튼
     profileBtn: {
@@ -263,12 +261,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+
     profileBtnText: {
         fontSize: 16,
         fontWeight: 600,
         color: 'white'
     },
-
 
     //버튼 리스트 뷰
     btnListView: {
@@ -277,10 +275,12 @@ const styles = StyleSheet.create({
         borderColor: '#DDD',
         borderBottomWidth: 1
     },
+
     btnListSubView: {
         flexDirection: 'row',
         marginBottom: 30,
     },
+
     btnListText: {
         fontSize: 14,
         fontWeight: 600,
@@ -288,18 +288,16 @@ const styles = StyleSheet.create({
         marginLeft: 10,
     },
 
-
-
     //로그아웃
     logoutBtn: {
         width: '90%',
         marginTop: 30,
     },
+
     logoutBtnText: {
         fontSize: 14,
         fontWeight: 600,
     },
-
 
     scoreText: {
         marginLeft: 5,

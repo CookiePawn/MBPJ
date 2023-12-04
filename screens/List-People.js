@@ -14,7 +14,6 @@ import { useIsFocused } from '@react-navigation/native';
 //헤더
 import Header from '../components/Header';
 
-
 //db 로드
 import { loadUserImages, loadUsers } from '../DB/LoadDB'
 
@@ -55,8 +54,6 @@ const CustomList = (props) => {
 
 
 
-
-
 const People = (props) => {
     //로그인 확인
     const { params } = props.route;
@@ -68,16 +65,16 @@ const People = (props) => {
     const phone = params ? params.phone : null;
     const image = params ? params.image : null;
 
-
     //검색
     const [search, setSearch] = useState('')
-
 
     //db
     const [imageUrl, setImageUrl] = useState([]);
     const [user, setUser] = useState([])
 
     const isFocused = useIsFocused();
+
+
 
     useEffect(() => {
         const fetchImage = async () => {
@@ -92,10 +89,6 @@ const People = (props) => {
         fetchImage();
         fetchUserInfo();
     }, [isFocused]);
-
-
-
-
 
 
 
@@ -245,6 +238,7 @@ export default People
 
 
 
+
 const styles = StyleSheet.create({
 
     //메인 뷰
@@ -257,9 +251,6 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end'
     },
 
-
-
-
     //검색창
     searchView: {
         width: '90%',
@@ -269,6 +260,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginBottom: 20,
     },
+
     searchTextinput: {
         flex: 1,
         backgroundColor: '#F6F6F6',
@@ -277,21 +269,18 @@ const styles = StyleSheet.create({
         marginLeft: 5
     },
 
-
-
-
-
-
     //사람 목록
     listView: {
         flex: 1,
         width: '90%',
     },
+
     listSubView: {
         width: '100%',
         height: 90,
         flexDirection: 'row',
     },
+
     profileImage: {
         width: 60,
         height: 60,
@@ -301,6 +290,7 @@ const styles = StyleSheet.create({
         marginTop: 13,
         marginLeft: 'auto'
     },
+
     listSubSubView: {
         flex: 1,
         borderBottomWidth: 1,
@@ -308,11 +298,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 20,
     },
+
     nameText: {
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 15,
     },
+    
     infoText: {
         fontSize: 12,
         color: 'rgba(0, 0, 0, 0.60)'

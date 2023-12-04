@@ -8,7 +8,6 @@ import {
     ScrollView,
     StyleSheet,
 } from 'react-native'
-import Icon from 'react-native-vector-icons/Ionicons'
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -17,14 +16,11 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import * as ImagePicker from 'expo-image-picker';
 import { manipulateAsync } from 'expo-image-manipulator';
 
-
 //헤더
 import Header from '../components/Header';
 
-
 //db 로드
 import { loadUserImages, updateUserProfile, updateUserImage, loadUserSelect } from '../DB/LoadDB'
-
 
 //주소변환
 import getAddressCoordinates from '../components/GeoCoding'
@@ -54,8 +50,11 @@ const MyProfile = (props) => {
     //db
     const [imageUrl, setImageUrl] = useState([]);
     const [user, setUser] = useState([]);
+    const [foundImage, setFoundImage] = useState(null);
 
     const isFocused = useIsFocused();
+
+
 
     useEffect(() => {
         const fetchImage = async () => {
@@ -78,6 +77,8 @@ const MyProfile = (props) => {
 
     }, [isFocused]);
 
+
+
     useEffect(() => {
         // route.params가 변경되면 상태를 업데이트합니다.
 
@@ -89,16 +90,12 @@ const MyProfile = (props) => {
 
 
 
-    const [foundImage, setFoundImage] = useState(null);
-
     useEffect(() => {
         if (imageUrl.length > 0) {
             const matchImage = imageUrl.find(item => item.name === id);
             setFoundImage(matchImage);
         }
     }, [imageUrl]);
-
-
 
 
 
@@ -139,12 +136,6 @@ const MyProfile = (props) => {
             setProfileImg(resizedImage.uri);
         }
     };
-
-
-
-
-
-
 
 
 
@@ -318,6 +309,7 @@ export default MyProfile
 
 
 
+
 const styles = StyleSheet.create({
 
     //메인 뷰
@@ -327,10 +319,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-
-
-
-
     //프로필 뷰
     profileView: {
         width: '90%',
@@ -338,11 +326,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+
     image: {
         width: 80,
         height: 80,
         borderRadius: 100,
     },
+
     imageBtn: {
         width: 90,
         height: 37,
@@ -354,31 +344,32 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#111111'
     },
+
     imageBtnText: {
         color: '#111111',
         fontSize: 16,
         fontWeight: 600,
     },
 
-
-
-
     //개인정보 변경 뷰
     changeProfileView: {
         width: '100%',
         marginTop: 20,
     },
+
     changeProfileTitle: {
         width: '100%',
         lineHeight: 55,
         paddingLeft: 20,
         backgroundColor: '#F6F6F6',
     },
+
     changeProfileSubView: {
         flexDirection: 'row',
         borderColor: '#DDD',
         borderBottomWidth: 1,
     },
+
     changeProfileSubTitle: {
         width: '25%',
         fontSize: 16,
@@ -386,6 +377,7 @@ const styles = StyleSheet.create({
         lineHeight: 60,
         paddingLeft: 20,
     },
+
     changeProfileSubInfo: {
         position: 'absolute',
         right: 20,
@@ -396,6 +388,7 @@ const styles = StyleSheet.create({
         width: '75%',
         textAlign: 'right'
     },
+
     changeProfileSubTextInput: {
         flex: 1,
         height: 60,
@@ -403,10 +396,6 @@ const styles = StyleSheet.create({
         textAlign: 'right',
         paddingRight: 20,
     },
-
-
-
-
 
     //저장하기 버튼
     saveBtn: {
@@ -419,6 +408,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    
     saveBtnText: {
         fontSize: 16,
         fontWeight: 600,

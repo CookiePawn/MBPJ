@@ -11,10 +11,8 @@ import Icon from 'react-native-vector-icons/FontAwesome5'
 import React, { useState, useEffect } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 
-
 //헤더
 import Header from '../components/Header';
-
 
 //db 로드
 import {
@@ -58,8 +56,6 @@ const CustomList = (props) => {
 
 
 
-
-
 const Team = (props) => {
     //로그인 확인
     const { params } = props.route;
@@ -71,7 +67,6 @@ const Team = (props) => {
     const phone = params ? params.phone : null;
     const image = params ? params.image : null;
 
-
     //검색
     const [search, setSearch] = useState('')
 
@@ -81,6 +76,8 @@ const Team = (props) => {
     const [team, setTeam] = useState([])
 
     const isFocused = useIsFocused();
+
+
 
     useEffect(() => {
         const fetchStartUpImage = async () => {
@@ -102,6 +99,10 @@ const Team = (props) => {
         fetchTeams()
 
     }, [isFocused]);
+
+
+
+
 
     return (
         <View style={styles.mainView}>
@@ -203,8 +204,6 @@ const Team = (props) => {
                         return null; // team과 매치되지 않는 경우 아무것도 렌더링하지 않음
                     })}
                 </ScrollView>
-
-
             </View>
         </View>
     )
@@ -213,6 +212,7 @@ const Team = (props) => {
 
 
 export default Team
+
 
 
 
@@ -231,10 +231,6 @@ const styles = StyleSheet.create({
         marginTop: 45
     },
 
-
-
-
-
     //검색창
     searchView: {
         width: '90%',
@@ -244,6 +240,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginBottom: 20,
     },
+
     searchTextinput: {
         flex: 1,
         backgroundColor: '#F6F6F6',
@@ -252,28 +249,23 @@ const styles = StyleSheet.create({
         marginLeft: 5
     },
 
-
-
     //글 작성하기 버튼
     createView: {
         width: '90%',
     },
-
-
-
-
-
 
     //스타트업 리스트
     listView: {
         flex: 1,
         width: '90%',
     },
+
     listSubView: {
         width: '100%',
         height: 110,
         flexDirection: 'row',
     },
+
     profileImage: {
         width: 85,
         height: 85,
@@ -281,17 +273,20 @@ const styles = StyleSheet.create({
         margin: 10,
         marginRight: 20,
     },
+
     listSubSubView: {
         flex: 1,
         borderBottomWidth: 1,
         borderColor: '#E8E8E8',
     },
+
     nameText: {
         fontSize: 18,
         fontWeight: 'bold',
         lineHeight: 40,
         marginTop: 5
     },
+    
     infoText: {
         fontSize: 12,
         color: 'rgba(0, 0, 0, 0.60)',

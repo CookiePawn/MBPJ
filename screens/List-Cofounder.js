@@ -10,11 +10,8 @@ import {
 import React, { useEffect, useState } from 'react'
 import { useIsFocused } from '@react-navigation/native';
 
-
-
 //헤더
 import Header from '../components/Header';
-
 
 //DB
 import {
@@ -22,9 +19,6 @@ import {
     loadUsers,
     loadCofounderImages,
 } from '../DB/LoadDB'
-
-
-
 
 
 
@@ -41,16 +35,13 @@ const Cofounder = (props) => {
     const phone = params ? params.phone : null;
     const image = params ? params.image : null;
 
-
     //검색
     const [search, setSearch] = useState('')
-
 
     //DB
     const [cofounder, setCofounder] = useState([])
     const [imageUrls, setImageurl] = useState([])
     const [user, setUser] = useState([])
-
 
     const isFocused = useIsFocused();
 
@@ -71,6 +62,7 @@ const Cofounder = (props) => {
     }, [isFocused])
 
 
+
     useEffect(() => {
         const fetchUser = async () => {
             const users = await loadUsers();
@@ -78,11 +70,6 @@ const Cofounder = (props) => {
         };
         fetchUser()
     }, [cofounder])
-
-
-
-
-
 
 
 
@@ -192,6 +179,7 @@ export default Cofounder
 
 
 
+
 const styles = StyleSheet.create({
 
     //메인 뷰
@@ -200,10 +188,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         alignItems: 'center',
     },
-
-
-    
-
 
     //검색창
     searchView: {
@@ -214,6 +198,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginBottom: 20,
     },
+
     searchTextinput: {
         flex: 1,
         backgroundColor: '#F6F6F6',
@@ -222,28 +207,24 @@ const styles = StyleSheet.create({
         marginLeft: 5
     },
 
-
-
-
     //글 작성하기 버튼
     createView: {
         width: '90%',
         marginBottom: 10
     },
 
-
-
-
     //스타트업 리스트
     listView: {
         flex: 1,
         width: '90%',
     },
+
     listSubView: {
         width: '100%',
         height: 110,
         flexDirection: 'row',
     },
+
     profileImage: {
         width: 85,
         height: 85,
@@ -251,17 +232,20 @@ const styles = StyleSheet.create({
         margin: 10,
         marginRight: 20,
     },
+
     listSubSubView: {
         flex: 1,
         borderBottomWidth: 1,
         borderColor: '#E8E8E8',
     },
+
     nameText: {
         fontSize: 18,
         fontWeight: 'bold',
         lineHeight: 40,
         marginTop:5
     },
+    
     infoText: {
         fontSize: 12,
         color: 'rgba(0, 0, 0, 0.60)',

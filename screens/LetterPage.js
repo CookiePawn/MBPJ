@@ -9,14 +9,14 @@ import {
 } from 'react-native'
 import React, { useState, useEffect } from 'react'
 
-
 //헤더
 import Header from '../components/Header'
-
 
 //DB
 import { addLetter, loadUserSelect } from '../DB/LoadDB'
 import { shadow } from 'react-native-paper'
+
+
 
 
 
@@ -34,6 +34,10 @@ const LetterPage = (props) => {
 
     const [user, setUser] = useState([])
 
+    const [eInfo, setEInfo] = useState('')
+
+
+
     useEffect(() => {
         const fetchUser = async () => {
             const users = await loadUserSelect(people)
@@ -47,7 +51,6 @@ const LetterPage = (props) => {
         Keyboard.dismiss();
     };
 
-    const [eInfo, setEInfo] = useState('')
 
 
     return (
@@ -85,7 +88,6 @@ const LetterPage = (props) => {
 
                 </View>
             </TouchableOpacity>
-
 
             <TouchableOpacity
                 style={styles.chatBtn}
@@ -130,8 +132,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-
-
     // 텍스트 입력 뷰
     inputView: {
         backgroundColor: 'white',
@@ -150,7 +150,6 @@ const styles = StyleSheet.create({
         color: '#999999',
     },
 
-
     chatBtn: {
         backgroundColor: '#5552E2',
         height: 60,
@@ -161,6 +160,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+
     chatBtnText: {
         color: 'white',
         fontSize: 16,
@@ -175,6 +175,7 @@ const styles = StyleSheet.create({
         marginTop: 16,
         marginLeft: 16
     },
+    
     peopleText: {
         fontSize: 20,
         fontWeight: 'bold',

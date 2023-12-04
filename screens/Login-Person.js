@@ -8,10 +8,8 @@ import {
 import { useIsFocused } from '@react-navigation/native';
 import { useState, useEffect } from 'react'
 
-
 //헤더
 import Header from '../components/Header';
-
 
 //db 로드
 import { loadUsers } from '../DB/LoadDB'
@@ -38,8 +36,6 @@ const CustomTextInput = (props) => {
 
 
 
-
-
 const Login = (props) => {
     const [user, setUser] = useState([])
     const [id, setID] = useState('')
@@ -57,6 +53,7 @@ const Login = (props) => {
 
         fetchUser();
     }, [isFocused]);
+
 
 
     const login = () => {
@@ -84,6 +81,7 @@ const Login = (props) => {
             setPW('')
         }
     }
+
 
 
 
@@ -132,6 +130,7 @@ const Login = (props) => {
 }
 
 
+
 export default Login
 
 
@@ -148,15 +147,16 @@ const styles = StyleSheet.create({
 
     },
 
-
     textInputView: {
         flex: 0.3,
         width: '90%',
         justifyContent: 'center',
     },
+
     textInputTitleText: {
         color: '#9EA3B2',
     },
+
     textInput: {
         height: 60,
         backgroundColor: '#D9D9D9',
@@ -164,18 +164,16 @@ const styles = StyleSheet.create({
         borderWidth: 0,
         marginTop: 8,
         marginBottom: 20,
-
         color: '#9EA3B2',
         paddingLeft: 14,
         fontSize: 14,
     },
 
-
-
     buttonView: {
         flex: 0.45,
         width: '90%',
     },
+
     signButton: {
         height: 60,
         borderRadius: 16,
@@ -184,19 +182,23 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 10
     },
+
     signButtonText: {
         color: 'white',
         fontSize: 16,
     },
+
     loginButtonText: {
         color: '#9EA3B2',
         fontSize: 14,
     },
+
     loginButtonSubText: {
         color: 'black',
         textDecorationLine: 'underline',
         marginLeft: 8
     },
+    
     buttonSubView: {
         width: '100%',
         height: 100,

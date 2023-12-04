@@ -7,10 +7,8 @@ import {
 } from 'react-native'
 import React, { useState, useEffect } from 'react'
 
-
 //헤더
 import Header from '../components/Header'
-
 
 //db 로드
 import { updateStartUpStep } from '../DB/LoadDB'
@@ -28,8 +26,6 @@ const StartupServey = (props) => {
     const phone = params ? params.phone : null;
     const image = params ? params.image : null;
     const people = params ? params.people : null;
-
-    
 
     // 설문 (질문)
     const [isYesSelected1, setIsYesSelected1] = useState(false);
@@ -100,6 +96,8 @@ const StartupServey = (props) => {
         }
     };
       
+
+
       const handleNoButtonPress = (questionNumber) => {
         // "아니오"를 선택한 경우 해당 질문의 상태를 변경하고 "예"는 모두 해제
         switch (questionNumber) {
@@ -155,7 +153,6 @@ const StartupServey = (props) => {
       
 
 
-      
 
     return (
         <View style={styles.mainView}>
@@ -491,9 +488,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-    
-
-
     //단계 안내 텍스트
     stepText: {
         fontSize: 12,
@@ -525,6 +519,7 @@ const styles = StyleSheet.create({
         color: '#111111',
         textAlign:'center',
     },
+
     questionMainText1: {
         fontSize: 18,
         fontWeight: 'bold',
@@ -532,6 +527,7 @@ const styles = StyleSheet.create({
         textAlign:'center',
         marginTop: 34
     },
+
     questionSubText: {
         fontSize: 12,
         fontWeight: 'light',
@@ -550,6 +546,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
         //marginLeft: 90,
     },
+
     noBt: {
         backgroundColor:'#f1f1f1',
         width: 76,
@@ -559,9 +556,6 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         justifyContent: 'center'
     },
-
-
-
 
     //버튼 내부 텍스트
     yesText: {

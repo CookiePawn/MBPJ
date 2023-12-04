@@ -33,7 +33,6 @@ const CustomTextInput = (props) => {
 
 
 
-
 const SignUp = (props) => {
 
     const [user, setUser] = useState([])
@@ -45,6 +44,8 @@ const SignUp = (props) => {
 
     const isFocused = useIsFocused();
 
+
+
     useEffect(() => {
         const fetchUser = async () => {
             const users = await loadUsers();
@@ -53,6 +54,7 @@ const SignUp = (props) => {
 
         fetchUser();
     }, [isFocused]);
+
 
 
     const signUp = async () => {
@@ -83,6 +85,8 @@ const SignUp = (props) => {
             }
         }
     }
+
+
 
 
 
@@ -145,7 +149,10 @@ const SignUp = (props) => {
 }
 
 
+
 export default SignUp
+
+
 
 
 
@@ -156,16 +163,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 
-
-
-
     textInputView: {
         width: '90%',
         flex: 1
     },
+
     textInputTitleText: {
         color: '#9EA3B2',
     },
+
     textInput: {
         height: 60,
         backgroundColor: '#D9D9D9',
@@ -178,12 +184,11 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
 
-
-
     buttonView: {
         width: '90%',
         height: 180,
     },
+
     signButton: {
         height: 60,
         borderRadius: 16,
@@ -191,19 +196,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+
     signButtonText: {
         color: 'white',
         fontSize: 16,
     },
+
     loginButtonText: {
         color: '#9EA3B2',
         fontSize: 14,
     },
+
     loginButtonSubText: {
         color: 'black',
         textDecorationLine: 'underline',
         marginLeft: 8
     },
+    
     buttonSubView: {
         width: '100%',
         height: 100,

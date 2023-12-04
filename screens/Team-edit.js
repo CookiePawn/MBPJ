@@ -1,13 +1,7 @@
 import {
     View,
-    Text,
-    TouchableOpacity,
-    SafeAreaView,
     StyleSheet,
 } from 'react-native'
-import { useState, useEffect } from 'react'
-
-import Icon from 'react-native-vector-icons/FontAwesome5'
 
 //헤더
 import Header from '../components/Header'
@@ -16,10 +10,6 @@ import Header from '../components/Header'
 import {
     Stat1,
 } from '../components/Team-edit/Stat'
-
-
-
-
 
 
 
@@ -75,9 +65,7 @@ const StartUpEdit = (props) => {
 
 
 
-
 export default StartUpEdit
-
 
 
 
@@ -90,11 +78,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     },
 
-
-   
-
-
-
     //선택 뷰
     choiceView: {
         width: '90%',
@@ -102,17 +85,21 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 20,
     },
+
     choiceBtn: {
         marginLeft: 30,
         marginRight: 30,
     },
+
     choiceText: {
         fontSize: 16,
         fontWeight: 600,
     },
+
     selectedText: {
         color: 'black', // 선택된 상태의 글자 색상
     },
+    
     unselectedText: {
         color: '#DDD', // 선택되지 않은 상태의 글자 색상
     },
