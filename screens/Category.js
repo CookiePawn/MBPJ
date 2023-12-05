@@ -124,7 +124,21 @@ const Category = (props) => {
         };
         const fetchUsers = async () => {
             const users = await loadUsers()
-            setUser(users)
+
+            //점수 높은 순으로 정렬
+            const sortUser = () => {
+                users.sort((a, b) => {
+                    const userA = a.score
+                    const userB = b.score
+                    return userB - userA
+                })
+            }
+
+            sortUser();
+
+            const topFourUsers = users.slice(0, 4)
+
+            setUser(topFourUsers)
         }
 
         const fetchStartUpImage = async () => {
@@ -142,6 +156,7 @@ const Category = (props) => {
         fetchStartUps()
 
     }, [isFocused]);
+
 
 
     return (
